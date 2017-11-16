@@ -2,6 +2,7 @@ const path = require('path')
 const precss = require('precss')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
 const env = process.env.NODE_ENV || 'development'
 
@@ -37,6 +38,8 @@ module.exports = {
   },
 
   plugins: [
+    new ProgressBarPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(env) }
