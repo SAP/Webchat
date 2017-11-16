@@ -8,6 +8,8 @@
     "build": "npm run build && NODE_ENV=production npw run build:webpack",
     "build:webpack": "babel-node bin/build.js",
     "start": "npm run clean && node bin/build-dev",
+    "prettier": "prettier --write \"src/**/*.?(js|?(s)css|json)\" && eslint --fix src",
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -49,6 +51,7 @@
     "path": "^0.12.7",
     "postcss-loader": "^2.0.8",
     "precss": "^2.0.0",
+    "prettier": "^1.8.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
     "webpack": "^3.8.1",
