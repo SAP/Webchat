@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './style.scss'
 
 const Expander = ({ onClick }) => (
-  <div onClick={onClick} className='Expander'>
+  <div onClick={onClick} className="Expander">
     {'Call to action'}
   </div>
 )

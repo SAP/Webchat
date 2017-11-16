@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import Chat from 'containers/Chat'
 import Expander from 'components/Expander'
 
 import './style.scss'
@@ -18,18 +19,13 @@ class App extends Component {
     const { expanded } = this.state
 
     return (
-      <div className='RecastApp'>
+      <div className="RecastApp">
         {!expanded && <Expander onClick={this.toggleChat} />}
 
-        {expanded && (
-          <div>
-            {'lol'}
-          </div>
-        )}
+        {expanded && <Chat />}
       </div>
     )
   }
-
 }
 
 export default App
