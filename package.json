@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run build && NODE_ENV=production npw run build:webpack",
+    "build:webpack": "babel-node bin/build.js",
+    "start": "npm run clean && node bin/build-dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
