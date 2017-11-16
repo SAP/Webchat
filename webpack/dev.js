@@ -1,7 +1,5 @@
 const path = require('path')
-const precss = require('precss')
 const webpack = require('webpack')
-const autoprefixer = require('autoprefixer')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
 const env = process.env.NODE_ENV || 'development'
@@ -28,11 +26,23 @@ module.exports = {
       loader: 'babel-loader',
       exclude: /node-modules/,
       options: {
+        presets: ['react'],
         cacheDirectory: true,
       },
     }, {
       test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
+      use: [
+        'style-loader',
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            ident: 'postcss',
+            plugins: () => [require('autoprefixer')],
+          },
+        },
+        'sass-loader',
+      ],
       exclude: /node_modules/,
     }]
   },

@@ -1,0 +1,3 @@
+{
+  "extends": ["zavatta", "zavatta-react", "prettier", "prettier/react"],
+}
