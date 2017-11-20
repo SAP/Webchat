@@ -6,9 +6,9 @@
   border-radius: 3px 3px 0 0;
 
   &--logo {
-    height: 55px;
-    width: 55px;
-    padding: 5px;
+    height: 65px;
+    width: 65px;
+    padding: 10px;
   }
 
   &--title {
@@ -19,7 +19,8 @@
   &--btn {
     cursor: pointer;
     font-size: 18px;
-    padding-right: 5px;
+    font-weight: bold;
+    margin: 1rem;
   }
   
 }
