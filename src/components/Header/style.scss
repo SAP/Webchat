@@ -1,0 +1,25 @@
+.RecastApp .Header {
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: #E05A47;
+  border-radius: 3px 3px 0 0;
+
+  &--logo {
+    height: 55px;
+    width: 55px;
+    padding: 5px;
+  }
+
+  &--title {
+    font-weight: bold;
+    flex-grow: 1;
+  }
+
+  &--btn {
+    cursor: pointer;
+    font-size: 18px;
+    padding-right: 5px;
+  }
+  
+}
