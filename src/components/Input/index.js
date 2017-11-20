@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 
+import './style.scss'
+
 class Input extends Component {
 
   render () {
     return (
-      <div>
-        {'Input'}
+      <div className='Input'>
+        <form>
+          <input
+            placeholder={'Write a reply...'}
+          />
+        </form>
       </div>
     )
   }

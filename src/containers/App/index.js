@@ -22,7 +22,7 @@ class App extends Component {
       <div className="RecastApp">
         {!expanded && <Expander onClick={this.toggleChat} />}
 
-        {expanded && <Chat />}
+        {expanded && <Chat closeWebchat={this.toggleChat} />}
       </div>
     )
   }
