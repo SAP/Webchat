@@ -1,0 +1,48 @@
+.RecastApp .Message {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1rem 0.5rem;
+
+  &--logo {
+    width: 35px;
+    height: 35px;
+    margin: 0 0.5rem 0 0;
+    align-self: flex-end;
+  }
+
+  &.bot {
+    flex-direction: row-reverse;
+
+    .Message--logo {
+      margin: 0 0 0 0.5rem !important;
+    }
+  }
+
+  .Text {
+    width: 300px;
+    margin: 0 0.5rem 0 0;
+    padding: 0.5rem;
+    border-radius: 3px;
+
+    word-break: break-word;
+
+    color: grey;
+    background-color: lightgrey;
+
+    &.bot {
+      margin: 0 0 0 0.5rem;
+      color: white;
+      background-color: #E05A47;
+    }
+  }
+
+  .Picture {
+    width: 270px;
+    max-height: 270px;
+
+    border-radius: 3px;
+    border: 1px solid lightgrey;
+  }
+
+}
