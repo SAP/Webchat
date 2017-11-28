@@ -11,7 +11,7 @@ import './style.scss'
 class Message extends Component {
 
   render () {
-    const { message } = this.props
+    const { message, isLastMessage, sendMessage } = this.props
     const { type, content } = message.attachment
     const isBot = message.participant.isBot
 
@@ -26,7 +26,14 @@ class Message extends Component {
 
         {type === 'picture' && <Picture content={content} isBot={isBot} />}
 
-        {type === 'quickReplies' && <QuickReplies content={content} isBot={isBot} />}
+        {type === 'quickReplies' && (
+          <QuickReplies
+            content={content}
+            isBot={isBot}
+            sendMessage={sendMessage}
+            isLastMessage={isLastMessage}
+          />
+        )}
 
       </div>
     )
@@ -35,6 +42,8 @@ class Message extends Component {
 
 Message.propTypes = {
   message: PropTypes.object,
+  sendMessage: PropTypes.func,
+  isLastMessage: PropTypes.bool,
 }
 
 export default Message

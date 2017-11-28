@@ -68,7 +68,7 @@ class Chat extends Component {
       <div className='Chat'>
         <Header closeWebchat={closeWebchat} />
 
-        <Live messages={messages} />
+        <Live messages={messages} sendMessage={this.sendMessage} />
 
         <Input onSubmit={this.sendMessage} />
       </div>

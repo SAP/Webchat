@@ -44,23 +44,55 @@
   }
 
   .QuickReplies {
-    &--container {
-      display: flex;
-      margin-top: 0.5rem;
-      max-width: 270px;
+    display: flex;
+    flex-direction: column;
 
-      overflow: hidden;
-      overflow-x: scroll;
-      background-color: green;
+    .Text {
+      align-self: flex-end;
+    }
+
+    &--slider {
+      margin-top: 0.5rem;
+      max-width: 290px;
+
+      .slick-prev:before {
+        content: '<' !important;
+        width: 17px;
+        text-align: center;
+        font-weight: bold;
+        font-size: medium;
+
+        color: black;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+      }
+
+      .slick-next:before {
+        content: '>' !important;
+        width: 17px;
+        text-align: center;
+        font-weight: bold;
+        font-size: medium;
+
+        color: black;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+      }
     }
 
     &--button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      max-height: 30px;
       padding: 0.5rem;
+      margin-left: 0.5rem;
+
+      cursor: pointer;
       font-weight: bold;
       border: 1px solid lightgrey;
       border-radius: 25px;
-
-      margin-left: 0.5rem;
     }
   }
 

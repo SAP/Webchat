@@ -13,14 +13,16 @@ class Live extends Component {
   }
 
   render () {
-    const { messages } = this.props
+    const { messages, sendMessage } = this.props
 
     return (
       <div className='Live'>
-        {messages.map(message => (
+        {messages.map((message, index) => (
           <Message
             key={message.id}
             message={message}
+            sendMessage={sendMessage}
+            isLastMessage={messages.length === index + 1}
           />
         ))}
       </div>
@@ -31,6 +33,7 @@ class Live extends Component {
 
 Live.propTypes = {
   messages: PropTypes.array,
+  sendMessage: PropTypes.func,
 }
 
 export default Live
