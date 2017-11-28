@@ -31,19 +31,19 @@ class Chat extends Component {
   sendMessage = (attachment) => {
     const { token, channelId, chatId } = this.props
     const { isPolling } = this.state
+    const payload = { message: { attachment }, chatId }
 
-    this.props.postMessage(channelId, token, {
-      message: { attachment },
-      chatId,
-    })
+    this.props.postMessage(channelId, token, payload)
+      .then(() => {
+        if (!isPolling) {
+          this.doMessagesPolling()
+        }
+      })
 
-    if (!isPolling) {
-      this.doMessagesPolling()
-    }
   }
 
   doMessagesPolling = async () => {
-    this.setState({ isPolling: true})
+    this.setState({ isPolling: true })
     const { token, channelId, conversationId } = this.props
     let shouldPoll = true
 

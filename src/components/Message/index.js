@@ -4,6 +4,7 @@ import cx from 'classnames'
 
 import Text from './Text'
 import Picture from './Picture'
+import QuickReplies from './QuickReplies'
 
 import './style.scss'
 
@@ -24,6 +25,9 @@ class Message extends Component {
         {type === 'text' && <Text content={content} isBot={isBot} />}
 
         {type === 'picture' && <Picture content={content} isBot={isBot} />}
+
+        {type === 'quickReplies' && <QuickReplies content={content} isBot={isBot} />}
+
       </div>
     )
   }

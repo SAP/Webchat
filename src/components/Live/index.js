@@ -7,6 +7,11 @@ import './style.scss'
 
 class Live extends Component {
 
+  componentDidUpdate () {
+    const container = document.querySelector('.Live')
+    container.scrollTop = container.scrollHeight
+  }
+
   render () {
     const { messages } = this.props
 

@@ -20,8 +20,7 @@
   }
 
   .Text {
-    width: 300px;
-    margin: 0 0.5rem 0 0;
+    max-width: 270px;
     padding: 0.5rem;
     border-radius: 3px;
 
@@ -31,7 +30,6 @@
     background-color: lightgrey;
 
     &.bot {
-      margin: 0 0 0 0.5rem;
       color: white;
       background-color: #E05A47;
     }
@@ -43,6 +41,27 @@
 
     border-radius: 3px;
     border: 1px solid lightgrey;
+  }
+
+  .QuickReplies {
+    &--container {
+      display: flex;
+      margin-top: 0.5rem;
+      max-width: 270px;
+
+      overflow: hidden;
+      overflow-x: scroll;
+      background-color: green;
+    }
+
+    &--button {
+      padding: 0.5rem;
+      font-weight: bold;
+      border: 1px solid lightgrey;
+      border-radius: 25px;
+
+      margin-left: 0.5rem;
+    }
   }
 
 }
