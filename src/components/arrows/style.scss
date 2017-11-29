@@ -1,0 +1,13 @@
+.RecastApp .Arrow {
+  background: white;
+  display: flex;
+  z-index: 2;
+
+  &.prev {
+    left: 0;
+  }
+
+  &.next {
+    right: 0;
+  }
+}
