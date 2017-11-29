@@ -9,6 +9,10 @@ class Input extends Component {
     value: '',
   }
 
+  componentDidMount () {
+    this._input.focus()
+  }
+
   sendMessage = (e) => {
     const content = this.state.value.trim()
 
@@ -26,6 +30,7 @@ class Input extends Component {
       <div className='Input'>
         <form onSubmit={this.sendMessage}>
           <input
+            ref={i => this._input = i}
             type='text'
             value={value}
             style={{ width: '100%' }}
