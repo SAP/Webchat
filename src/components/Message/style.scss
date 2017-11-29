@@ -4,6 +4,25 @@
   align-items: center;
   margin: 1rem 0.5rem;
 
+  &--logo {
+    width: 35px;
+    height: 35px;
+    margin: 0 0.5rem 0 0;
+    align-self: flex-end;
+  }
+
+  &.bot {
+    flex-direction: row-reverse;
+
+    .Message--logo {
+      margin: 0 0 0 0.5rem !important;
+    }
+  }
+
+  /*
+   * Slider
+   */
+
   .Slider {
     max-width: 300px;
 
@@ -32,20 +51,9 @@
     }
   }
 
-  &--logo {
-    width: 35px;
-    height: 35px;
-    margin: 0 0.5rem 0 0;
-    align-self: flex-end;
-  }
-
-  &.bot {
-    flex-direction: row-reverse;
-
-    .Message--logo {
-      margin: 0 0 0 0.5rem !important;
-    }
-  }
+  /*
+   * Text
+   */
 
   .Text {
     max-width: 270px;
@@ -63,6 +71,10 @@
     }
   }
 
+  /*
+   * Picture
+   */
+
   .Picture {
     width: 270px;
     max-height: 270px;
@@ -70,6 +82,10 @@
     border-radius: 3px;
     border: 1px solid lightgrey;
   }
+
+  /*
+   * QuickReplies
+   */
 
   .QuickReplies {
     display: flex;
@@ -100,6 +116,10 @@
     }
   }
 
+  /*
+   * Card
+   */
+
   .Card {
     width: 270px;
 
@@ -127,6 +147,53 @@
       }
     }
 
+  }
+
+  /*
+   * List
+   */
+
+  .List {
+    .ListElement {
+      display: flex;
+      width: 290px;
+      border: 1px solid lightgrey;
+
+      &--img {
+        width: 80px;
+        height: 80px;
+
+        padding: 0.2rem;
+        border-right: 1px solid lightgrey;
+      }
+
+      &--container {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        padding: 0.2rem;
+      }
+
+      &--title {
+        font-weight: bold;
+      }
+
+      &--subtitle {
+        font-size: 14px;
+        font-weight: lighter;
+        flex-grow: 1;
+      }
+
+      &--button {
+        align-self: flex-end;
+
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        color: cornflowerblue;
+      }
+    }
   }
 
 }

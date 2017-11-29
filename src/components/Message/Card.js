@@ -22,9 +22,9 @@ const Card = ({ content, isBot, sendMessage }) => {
 }
 
 Card.propTypes = {
+  isBot: PropTypes.bool,
   content: PropTypes.object,
   sendMessage: PropTypes.func,
-  isBot: PropTypes.bool,
 }
 
 export default Card
