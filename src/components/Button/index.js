@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './style.scss'
+import { truncate } from 'helpers'
 
-// TODO
-// title: 20 chars max
+import './style.scss'
 
 const Button = ({ button, sendMessage }) => {
   const { value, title } = button
@@ -14,7 +13,7 @@ const Button = ({ button, sendMessage }) => {
       className='Button'
       onClick={() => sendMessage({ type: 'text', content: value })}
     >
-      {title}
+      {truncate(title, 20)}
     </div>
   )
 }

@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Slider from 'react-slick'
 
+import { truncate } from 'helpers'
+
 import Text from './Text'
 import { PrevArrow, NextArrow } from 'components/arrows'
-
-// TODO
-// quickReplies: 20 chars
 
 class QuickReplies extends Component {
 
@@ -47,7 +46,7 @@ class QuickReplies extends Component {
                 className='QuickReplies--button'
                 onClick={() => this.doSendMessage({ type: 'text', content: b.value })}
               >
-                {b.title}
+                {truncate(b.title, 20)}
               </div>
             ))}
           </Slider>
