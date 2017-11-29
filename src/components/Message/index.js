@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import Text from './Text'
+import Card from './Card'
 import Picture from './Picture'
+import Carousel from './Carousel'
 import QuickReplies from './QuickReplies'
 
 import './style.scss'
@@ -25,6 +27,10 @@ class Message extends Component {
         {type === 'text' && <Text content={content} isBot={isBot} />}
 
         {type === 'picture' && <Picture content={content} isBot={isBot} />}
+
+        {type === 'card' && <Card content={content} isBot={isBot} sendMessage={sendMessage} />}
+
+        {type === 'carousel' && <Carousel content={content} isBot={isBot} sendMessage={sendMessage} />}
 
         {type === 'quickReplies' && (
           <QuickReplies
