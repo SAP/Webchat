@@ -5,6 +5,8 @@
   margin: 1rem 0.5rem;
 
   .Slider {
+    max-width: 300px;
+
     .slick-prev:before {
       content: '<' !important;
       width: 17px;
@@ -99,7 +101,7 @@
   }
 
   .Card {
-    max-width: 270px;
+    width: 270px;
 
     border: 1px solid lightgrey;
     border-radius: 3px;

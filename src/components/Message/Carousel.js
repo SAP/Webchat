@@ -8,28 +8,34 @@ import { PrevArrow, NextArrow } from 'components/arrows'
 
 import './style.scss'
 
-const Carousel = ({ content, isBot, sendMessage }) => {
-  console.log(content)
+// TODO
+// title: 80 chars
+// subtitle: 80 chars
+// buttons: 0-3 buttons
 
+const Carousel = ({ content, isBot, sendMessage }) => {
   return (
     <div className={cx('Carousel', { bot: isBot })}>
       <Slider
         arrows
-        variableWidth
+        centerMode
+        centerPadding={10}
         speed={200}
+        infinite={false}
         draggable={false}
         slidesToScroll={1}
+        className='Slider'
         prevArrow={<PrevArrow />}
         nextArrow={<NextArrow />}
-        className='Slider'
       >
         {content.map((card, i) => (
-          <Card
-            key={i}
-            content={card}
-            isBot={isBot}
-            sendMessage={sendMessage}
-          />
+          <div key={i}>
+            <Card
+              content={card}
+              isBot={isBot}
+              sendMessage={sendMessage}
+            />
+          </div>
         ))}
       </Slider>
     </div>

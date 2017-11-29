@@ -6,6 +6,9 @@ import Slider from 'react-slick'
 import Text from './Text'
 import { PrevArrow, NextArrow } from 'components/arrows'
 
+// TODO
+// quickReplies: 20 chars
+
 class QuickReplies extends Component {
 
   state = {
@@ -29,9 +32,9 @@ class QuickReplies extends Component {
         {displayQuickReplies && (
           <Slider
             arrows
-            infinite
             variableWidth
             speed={200}
+            infinite={false}
             draggable={false}
             slidesToScroll={2}
             prevArrow={<PrevArrow />}

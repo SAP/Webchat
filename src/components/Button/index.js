@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 
 import './style.scss'
 
+// TODO
+// title: 20 chars max
+
 const Button = ({ button, sendMessage }) => {
   const { value, title } = button
 
