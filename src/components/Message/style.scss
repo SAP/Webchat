@@ -154,10 +154,12 @@
    */
 
   .List {
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+
     .ListElement {
       display: flex;
       width: 290px;
-      border: 1px solid lightgrey;
 
       &--img {
         width: 80px;
@@ -193,6 +195,10 @@
         font-weight: bold;
         color: cornflowerblue;
       }
+    }
+
+    .ListElement + .ListElement {
+      border-top: 1px solid lightgrey;
     }
   }
 
