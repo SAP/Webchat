@@ -36,7 +36,7 @@ class QuickReplies extends Component {
             slidesToScroll={2}
             prevArrow={<PrevArrow />}
             nextArrow={<NextArrow />}
-            className='QuickReplies--slider'
+            className='Slider QuickReplies--slider'
           >
             {buttons.map((b, i) => (
               <div

@@ -4,6 +4,32 @@
   align-items: center;
   margin: 1rem 0.5rem;
 
+  .Slider {
+    .slick-prev:before {
+      content: '<' !important;
+      width: 17px;
+      text-align: center;
+      font-weight: bold;
+      font-size: medium;
+
+      color: black;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+    }
+
+    .slick-next:before {
+      content: '>' !important;
+      width: 17px;
+      text-align: center;
+      font-weight: bold;
+      font-size: medium;
+
+      color: black;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+    }
+  }
+
   &--logo {
     width: 35px;
     height: 35px;
@@ -54,30 +80,6 @@
     &--slider {
       margin-top: 0.5rem;
       max-width: 290px;
-
-      .slick-prev:before {
-        content: '<' !important;
-        width: 17px;
-        text-align: center;
-        font-weight: bold;
-        font-size: medium;
-
-        color: black;
-        border: 1px solid lightgrey;
-        border-radius: 3px;
-      }
-
-      .slick-next:before {
-        content: '>' !important;
-        width: 17px;
-        text-align: center;
-        font-weight: bold;
-        font-size: medium;
-
-        color: black;
-        border: 1px solid lightgrey;
-        border-radius: 3px;
-      }
     }
 
     &--button {
@@ -94,6 +96,35 @@
       border: 1px solid lightgrey;
       border-radius: 25px;
     }
+  }
+
+  .Card {
+    max-width: 270px;
+
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+
+    &--img {
+      width: 270px;
+      max-height: 270px;
+
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+
+    &--text {
+      padding: 0.4rem;
+
+      &-title {
+        font-weight: bold;
+      }
+
+      &-subtitle {
+        font-size: 14px;
+        font-weight: lighter;
+      }
+    }
+
   }
 
 }
