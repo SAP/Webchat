@@ -9,7 +9,9 @@ export const PrevArrow = ({ className, style, onClick }) => (
     className={cx('Arrow prev', className)}
     style={{ ...style }}
     onClick={onClick}
-  />
+  >
+    {'<'}
+  </div>
 )
 
 export const NextArrow = ({ className, style, onClick }) => (
@@ -17,7 +19,9 @@ export const NextArrow = ({ className, style, onClick }) => (
     className={cx('Arrow next', className)}
     style={{ ...style }}
     onClick={onClick}
-  />
+  >
+    {'>'}
+  </div>
 )
 
 const arrowPropTypes = {

@@ -26,28 +26,38 @@
   .Slider {
     max-width: 300px;
 
-    .slick-prev:before {
-      content: '<' !important;
-      width: 17px;
-      text-align: center;
-      font-weight: bold;
-      font-size: medium;
+    .Arrow {
+      width: 15px;
+      height: 20px;
 
-      color: black;
+      font-size: 20px;
+      line-height: 17px;
+
+      color: grey !important;
+      background-color: white;
       border: 1px solid lightgrey;
       border-radius: 3px;
+      text-align: center;
+
+      &.slick-disabled {
+        display: none !important;
+      }
+    }
+
+    .slick-next {
+      @extend .Arrow;
+    }
+
+    .slick-prev {
+      @extend .Arrow;
+    }
+
+    .slick-prev:before {
+      display: none !important;
     }
 
     .slick-next:before {
-      content: '>' !important;
-      width: 17px;
-      text-align: center;
-      font-weight: bold;
-      font-size: medium;
-
-      color: black;
-      border: 1px solid lightgrey;
-      border-radius: 3px;
+      display: none !important;
     }
   }
 
