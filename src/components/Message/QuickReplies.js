@@ -1,76 +1,57 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Slider from 'react-slick'
 
 import Text from './Text'
+import { PrevArrow, NextArrow } from 'components/arrows'
 
-function SamplePrevArrow(props) {
-  const {className, style, onClick} = props
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        background: 'white',
-        left: 0,
-        zIndex: 2,
-        display: 'flex',
-      }}
-      onClick={onClick}
-    />
-  )
-}
+class QuickReplies extends Component {
 
-function SampleNextArrow(props) {
-  const {className, style, onClick} = props
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        background: 'white',
-        right: 0,
-        zIndex: 2,
-        display: 'flex',
-      }}
-      onClick={onClick}
-    />
-  )
-}
+  state = {
+    displayQuickReplies: this.props.isLastMessage,
+  }
 
-const QuickReplies = ({ content, isBot, sendMessage, isLastMessage }) => {
-  const { title, buttons } = content
+  doSendMessage = (message) => {
+    this.props.sendMessage(message)
+    this.setState({ displayQuickReplies: false })
+  }
 
-  return (
-    <div className={cx('QuickReplies', { bot: isBot })}>
-      <Text content={title} isBot={isBot} />
+  render () {
+    const { content, isBot } = this.props
+    const { displayQuickReplies } = this.state
+    const { title, buttons } = content
 
-      {isLastMessage && (
-        <Slider
-          className='QuickReplies--slider'
-          arrows
-          infinite
-          variableWidth
-          speed={300}
-          draggable={false}
-          slidesToScroll={2}
-          prevArrow={<SamplePrevArrow />}
-          nextArrow={<SampleNextArrow />}
-        >
-          {buttons.map((b, i) => (
-            <div
-              key={i}
-              className='QuickReplies--button'
-              onClick={() => sendMessage({ type: 'text', content: b.value })}
-            >
-              {b.title}
-            </div>
-          ))}
-        </Slider>
-      )}
-    </div>
-  )
+    return (
+      <div className={cx('QuickReplies', { bot: isBot })}>
+        <Text content={title} isBot={isBot} />
+
+        {displayQuickReplies && (
+          <Slider
+            arrows
+            infinite
+            variableWidth
+            speed={200}
+            draggable={false}
+            slidesToScroll={2}
+            prevArrow={<PrevArrow />}
+            nextArrow={<NextArrow />}
+            className='QuickReplies--slider'
+          >
+            {buttons.map((b, i) => (
+              <div
+                key={i}
+                className='QuickReplies--button'
+                onClick={() => this.doSendMessage({ type: 'text', content: b.value })}
+              >
+                {b.title}
+              </div>
+            ))}
+          </Slider>
+        )}
+      </div>
+    )
+  }
 }
 
 QuickReplies.propTypes = {
