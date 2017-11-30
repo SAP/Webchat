@@ -157,6 +157,10 @@
       }
     }
 
+    &--button-container {
+      border-top: 1px solid lightgrey;
+    }
+
   }
 
   /*
@@ -166,6 +170,10 @@
   .List {
     border: 1px solid lightgrey;
     border-radius: 3px;
+
+    &--button {
+      border-top: 1px solid lightgrey;
+    }
 
     .ListElement {
       display: flex;

@@ -18,11 +18,13 @@ const Card = ({ content, isBot, sendMessage }) => {
         {subtitle && <p className='Card--text-subtitle'>{truncate(subtitle, 80)}</p>}
       </div>
 
-      {
-        buttons
-          .slice(0, 3)
-          .map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)
-      }
+      <div className='Card--button-container'>
+        {
+          buttons
+            .slice(0, 3)
+            .map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)
+        }
+      </div>
     </div>
   )
 }

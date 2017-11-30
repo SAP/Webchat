@@ -4,6 +4,8 @@ import cx from 'classnames'
 
 import { truncate } from 'helpers'
 
+import Button from 'components/Button'
+
 const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const button = buttons[0]
 
@@ -37,6 +39,8 @@ ListElement.propTypes = {
 }
 
 const List = ({ content, isBot, sendMessage }) => {
+  const button = content.buttons && content.buttons[0]
+
   return (
     <div className={cx('List', { bot: isBot })}>
       {content.elements.map((element, i) => (
@@ -46,6 +50,12 @@ const List = ({ content, isBot, sendMessage }) => {
           sendMessage={sendMessage}
         />
       ))}
+
+      {button && (
+        <div className='List--button'>
+          <Button button={button} sendMessage={sendMessage} />
+        </div>
+      )}
     </div>
   )
 }
