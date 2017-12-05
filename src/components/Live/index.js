@@ -6,20 +6,16 @@ import Message from 'components/Message'
 import './style.scss'
 
 class Live extends Component {
-
-  componentDidUpdate () {
+  componentDidUpdate() {
     const container = document.querySelector('.Live')
     container.scrollTop = container.scrollHeight
   }
 
-  render () {
+  render() {
     const { messages, sendMessage, preferences } = this.props
 
     return (
-      <div
-        className='Live'
-        style={{ backgroundColor: preferences.backgroundColor }}
-      >
+      <div className="Live" style={{ backgroundColor: preferences.backgroundColor }}>
         {messages.map((message, index) => (
           <Message
             key={message.id}
@@ -32,7 +28,6 @@ class Live extends Component {
       </div>
     )
   }
-
 }
 
 Live.propTypes = {

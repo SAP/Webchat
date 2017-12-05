@@ -4,16 +4,15 @@ import PropTypes from 'prop-types'
 import './style.scss'
 
 class Input extends Component {
-
   state = {
     value: '',
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._input.focus()
   }
 
-  sendMessage = (e) => {
+  sendMessage = e => {
     const content = this.state.value.trim()
 
     e.preventDefault()
@@ -23,15 +22,15 @@ class Input extends Component {
     }
   }
 
-  render () {
+  render() {
     const { value } = this.state
 
     return (
-      <div className='Input'>
+      <div className="Input">
         <form onSubmit={this.sendMessage}>
           <input
-            ref={i => this._input = i}
-            type='text'
+            ref={i => (this._input = i)}
+            type="text"
             value={value}
             style={{ width: '100%' }}
             placeholder={'Write a reply...'}

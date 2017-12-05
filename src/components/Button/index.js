@@ -9,10 +9,7 @@ const Button = ({ button, sendMessage }) => {
   const { value, title } = button
 
   return (
-    <div
-      className='Button'
-      onClick={() => sendMessage({ type: 'text', content: value })}
-    >
+    <div className="Button" onClick={() => sendMessage({ type: 'text', content: value })}>
       {truncate(title, 20)}
     </div>
   )

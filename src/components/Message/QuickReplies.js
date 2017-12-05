@@ -8,17 +8,16 @@ import Text from './Text'
 import { PrevArrow, NextArrow } from 'components/arrows'
 
 class QuickReplies extends Component {
-
   state = {
     displayQuickReplies: this.props.isLastMessage,
   }
 
-  doSendMessage = (message) => {
+  doSendMessage = message => {
     this.props.sendMessage(message)
     this.setState({ displayQuickReplies: false })
   }
 
-  render () {
+  render() {
     const { content, style } = this.props
     const { displayQuickReplies } = this.state
     const { title, buttons } = content
@@ -37,14 +36,17 @@ class QuickReplies extends Component {
             slidesToScroll={2}
             prevArrow={<PrevArrow />}
             nextArrow={<NextArrow />}
-            className='Slider QuickReplies--slider'
+            className="Slider QuickReplies--slider"
           >
             {buttons.map((b, i) => (
               <div
                 key={i}
-                className='QuickReplies--button'
+                className="QuickReplies--button"
                 onClick={() => this.doSendMessage({ type: 'text', content: b.value })}
-                style={{ border: `1px solid ${style.backgroundColor}`, color: style.backgroundColor }}
+                style={{
+                  border: `1px solid ${style.backgroundColor}`,
+                  color: style.backgroundColor,
+                }}
               >
                 {truncate(b.title, 20)}
               </div>

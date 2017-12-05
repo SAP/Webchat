@@ -5,19 +5,17 @@ import './style.scss'
 
 const Header = ({ closeWebchat, preferences }) => (
   <div
-    className='Header'
+    className="Header"
     style={{
       color: preferences.complementaryColor,
       backgroundColor: preferences.accentColor,
     }}
   >
-    <img className='Header--logo' src={preferences.headerLogo} />
+    <img className="Header--logo" src={preferences.headerLogo} />
 
-    <div className='Header--title'>
-      {preferences.headerTitle}
-    </div>
+    <div className="Header--title">{preferences.headerTitle}</div>
 
-    <div className='Header--btn' onClick={closeWebchat}>
+    <div className="Header--btn" onClick={closeWebchat}>
       {'X'}
     </div>
   </div>

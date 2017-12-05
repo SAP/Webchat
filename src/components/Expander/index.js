@@ -6,7 +6,7 @@ import './style.scss'
 const Expander = ({ onClick, preferences }) => (
   <div
     onClick={onClick}
-    className='Expander'
+    className="Expander"
     style={{
       color: preferences.complementaryColor,
       backgroundColor: preferences.accentColor,

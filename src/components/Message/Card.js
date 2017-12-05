@@ -10,19 +10,15 @@ const Card = ({ content, sendMessage }) => {
 
   return (
     <div className={'Card'}>
-      {imageUrl && <img src={imageUrl} className='Card--img' />}
+      {imageUrl && <img src={imageUrl} className="Card--img" />}
 
-      <div className='Card--text'>
-        <p className='Card--text-title'>{truncate(title, 80)}</p>
-        {subtitle && <p className='Card--text-subtitle'>{truncate(subtitle, 80)}</p>}
+      <div className="Card--text">
+        <p className="Card--text-title">{truncate(title, 80)}</p>
+        {subtitle && <p className="Card--text-subtitle">{truncate(subtitle, 80)}</p>}
       </div>
 
-      <div className='Card--button-container'>
-        {
-          buttons
-            .slice(0, 3)
-            .map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)
-        }
+      <div className="Card--button-container">
+        {buttons.slice(0, 3).map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)}
       </div>
     </div>
   )

@@ -9,16 +9,16 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const button = buttons[0]
 
   return (
-    <div className='ListElement'>
-      {imageUrl && <img src={imageUrl} className='ListElement--img' />}
+    <div className="ListElement">
+      {imageUrl && <img src={imageUrl} className="ListElement--img" />}
 
-      <div className='ListElement--container'>
-        <p className='ListElement--title'>{truncate(title, 25)}</p>
-        <p className='ListElement--subtitle'>{truncate(subtitle, 50)}</p>
+      <div className="ListElement--container">
+        <p className="ListElement--title">{truncate(title, 25)}</p>
+        <p className="ListElement--subtitle">{truncate(subtitle, 50)}</p>
 
         {button && (
           <div
-            className='ListElement--button'
+            className="ListElement--button"
             onClick={() => sendMessage({ type: 'text', content: button.value })}
           >
             {truncate(button.title, 20)}
@@ -43,15 +43,11 @@ const List = ({ content, sendMessage }) => {
   return (
     <div className={'List'}>
       {content.elements.map((element, i) => (
-        <ListElement
-          key={i}
-          {...element}
-          sendMessage={sendMessage}
-        />
+        <ListElement key={i} {...element} sendMessage={sendMessage} />
       ))}
 
       {button && (
-        <div className='List--button'>
+        <div className="List--button">
           <Button button={button} sendMessage={sendMessage} />
         </div>
       )}

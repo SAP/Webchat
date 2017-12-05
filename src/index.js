@@ -15,17 +15,12 @@ const channelId = script.getAttribute('channelId')
 const token = script.getAttribute('token')
 
 if (root && channelId && token) {
-  getChannelPreferences(channelId, token)
-    .then(preferences => {
-      ReactDOM.render(
-        <Provider store={store}>
-          <App
-            token={token}
-            channelId={channelId}
-            preferences={preferences}
-          />
-        </Provider>,
-        root,
-      )
-    })
+  getChannelPreferences(channelId, token).then(preferences => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <App token={token} channelId={channelId} preferences={preferences} />
+      </Provider>,
+      root,
+    )
+  })
 }

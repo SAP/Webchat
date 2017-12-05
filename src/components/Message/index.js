@@ -12,8 +12,7 @@ import QuickReplies from './QuickReplies'
 import './style.scss'
 
 class Message extends Component {
-
-  render () {
+  render() {
     const { message, isLastMessage, sendMessage, preferences } = this.props
     const {
       botPicture,
@@ -38,10 +37,7 @@ class Message extends Component {
 
     return (
       <div className={cx('Message', { bot: isBot })}>
-        <img
-          className='Message--logo'
-          src={image}
-        />
+        <img className="Message--logo" src={image} />
 
         {type === 'text' && <Text {...messageProps} />}
 
@@ -54,13 +50,8 @@ class Message extends Component {
         {type === 'list' && <List {...messageProps} sendMessage={sendMessage} />}
 
         {type === 'quickReplies' && (
-          <QuickReplies
-            {...messageProps}
-            sendMessage={sendMessage}
-            isLastMessage={isLastMessage}
-          />
+          <QuickReplies {...messageProps} sendMessage={sendMessage} isLastMessage={isLastMessage} />
         )}
-
       </div>
     )
   }

@@ -11,35 +11,35 @@ import Input from 'components/Input'
 
 import './style.scss'
 
-@connect(state => ({
-  token: state.conversation.token,
-  chatId: state.conversation.chatId,
-  channelId: state.conversation.channelId,
-  conversationId: state.conversation.conversationId,
-  lastMessageId: getLastMessageId(state),
-  messages: state.messages,
-}), {
-  postMessage,
-  pollMessages,
-})
+@connect(
+  state => ({
+    token: state.conversation.token,
+    chatId: state.conversation.chatId,
+    channelId: state.conversation.channelId,
+    conversationId: state.conversation.conversationId,
+    lastMessageId: getLastMessageId(state),
+    messages: state.messages,
+  }),
+  {
+    postMessage,
+    pollMessages,
+  },
+)
 class Chat extends Component {
-
   state = {
     isPolling: false,
   }
 
-  sendMessage = (attachment) => {
+  sendMessage = attachment => {
     const { token, channelId, chatId } = this.props
     const { isPolling } = this.state
     const payload = { message: { attachment }, chatId }
 
-    this.props.postMessage(channelId, token, payload)
-      .then(() => {
-        if (!isPolling) {
-          this.doMessagesPolling()
-        }
-      })
-
+    this.props.postMessage(channelId, token, payload).then(() => {
+      if (!isPolling) {
+        this.doMessagesPolling()
+      }
+    })
   }
 
   doMessagesPolling = async () => {
@@ -51,7 +51,12 @@ class Chat extends Component {
       const { lastMessageId } = this.props
 
       try {
-        const { waitTime } = await this.props.pollMessages(channelId, token, conversationId, lastMessageId)
+        const { waitTime } = await this.props.pollMessages(
+          channelId,
+          token,
+          conversationId,
+          lastMessageId,
+        )
         shouldPoll = waitTime === 0
       } catch (err) {
         shouldPoll = false
@@ -61,24 +66,19 @@ class Chat extends Component {
     this.setState({ isPolling: false })
   }
 
-  render () {
+  render() {
     const { closeWebchat, messages, preferences } = this.props
 
     return (
-      <div className='Chat'>
+      <div className="Chat">
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
-        <Live
-          messages={messages}
-          preferences={preferences}
-          sendMessage={this.sendMessage}
-        />
+        <Live messages={messages} preferences={preferences} sendMessage={this.sendMessage} />
 
         <Input onSubmit={this.sendMessage} />
       </div>
     )
   }
-
 }
 
 Chat.propTypes = {

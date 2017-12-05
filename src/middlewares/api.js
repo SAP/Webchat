@@ -2,7 +2,6 @@ import config from 'config'
 import qs from 'query-string'
 
 export default store => next => action => {
-
   console.log(action)
 
   if (!action.type.startsWith('API:')) {

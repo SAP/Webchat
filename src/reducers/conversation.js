@@ -7,16 +7,16 @@ const initialState = {
   conversationId: '',
 }
 
-export default handleActions({
+export default handleActions(
+  {
+    SET_CREDENTIALS: (state, { payload }) => {
+      return { ...state, ...payload }
+    },
 
-  SET_CREDENTIALS: (state, { payload }) => {
-    return { ...state, ...payload }
+    CREATE_CONVERSATION_SUCCESS: (state, { payload: conversation }) => {
+      const { id, chatId } = conversation
+      return { ...state, chatId, conversationId: id }
+    },
   },
-
-  CREATE_CONVERSATION_SUCCESS: (state, { payload: conversation }) => {
-    const { id, chatId } = conversation
-    return { ...state, chatId, conversationId: id }
-  },
-
-}, initialState)
-
+  initialState,
+)

@@ -8,16 +8,11 @@ import './style.scss'
 
 const Text = ({ content, style }) => {
   return (
-    <div
-      style={style}
-      className={'Text'}
-    >
-      {
-        sanitizeHtml(truncate(content, 640))
-          .replace(/&amp;/g, 'g')
-          .replace(/&lt;/g, '<')
-          .replace(/&gt;/g, '>')
-      }
+    <div style={style} className={'Text'}>
+      {sanitizeHtml(truncate(content, 640))
+        .replace(/&amp;/g, 'g')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')}
     </div>
   )
 }
@@ -28,4 +23,3 @@ Text.propTypes = {
 }
 
 export default Text
-

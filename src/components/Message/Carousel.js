@@ -18,16 +18,13 @@ const Carousel = ({ content, sendMessage }) => {
         infinite={false}
         draggable={false}
         slidesToScroll={1}
-        className='Slider'
+        className="Slider"
         prevArrow={<PrevArrow />}
         nextArrow={<NextArrow />}
       >
         {content.map((card, i) => (
           <div key={i}>
-            <Card
-              content={card}
-              sendMessage={sendMessage}
-            />
+            <Card content={card} sendMessage={sendMessage} />
           </div>
         ))}
       </Slider>
