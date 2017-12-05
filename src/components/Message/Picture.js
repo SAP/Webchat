@@ -1,22 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import './style.scss'
 
-const Picture = ({ content, isBot }) => {
+const Picture = ({ content }) => {
 
   return (
     <img
       src={content}
-      className={cx('Picture', { bot: isBot })}
+      className={'Picture'}
     />
   )
 
 }
 
 Picture.propTypes = {
-  isBot: PropTypes.bool,
   content: PropTypes.string,
 }
 

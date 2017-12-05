@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 import Slider from 'react-slick'
 
 import { truncate } from 'helpers'
@@ -20,13 +19,13 @@ class QuickReplies extends Component {
   }
 
   render () {
-    const { content, isBot } = this.props
+    const { content, style } = this.props
     const { displayQuickReplies } = this.state
     const { title, buttons } = content
 
     return (
-      <div className={cx('QuickReplies', { bot: isBot })}>
-        <Text content={title} isBot={isBot} />
+      <div className={'QuickReplies'}>
+        <Text content={title} style={style} />
 
         {displayQuickReplies && (
           <Slider
@@ -45,6 +44,7 @@ class QuickReplies extends Component {
                 key={i}
                 className='QuickReplies--button'
                 onClick={() => this.doSendMessage({ type: 'text', content: b.value })}
+                style={{ border: `1px solid ${style.backgroundColor}`, color: style.backgroundColor }}
               >
                 {truncate(b.title, 20)}
               </div>
@@ -57,8 +57,8 @@ class QuickReplies extends Component {
 }
 
 QuickReplies.propTypes = {
+  style: PropTypes.object,
   content: PropTypes.object,
-  isBot: PropTypes.bool,
   sendMessage: PropTypes.func,
 }
 

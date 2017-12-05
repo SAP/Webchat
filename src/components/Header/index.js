@@ -3,12 +3,18 @@ import PropTypes from 'prop-types'
 
 import './style.scss'
 
-const Header = ({ closeWebchat }) => (
-  <div className='Header'>
-    <img className='Header--logo' src='https://blog.recast.ai/wp-content/uploads/2017/05/recast-ai-logo-small.png' />
+const Header = ({ closeWebchat, preferences }) => (
+  <div
+    className='Header'
+    style={{
+      color: preferences.complementaryColor,
+      backgroundColor: preferences.accentColor,
+    }}
+  >
+    <img className='Header--logo' src={preferences.headerLogo} />
 
     <div className='Header--title'>
-      {'My awesome title'}
+      {preferences.headerTitle}
     </div>
 
     <div className='Header--btn' onClick={closeWebchat}>
@@ -19,6 +25,7 @@ const Header = ({ closeWebchat }) => (
 
 Header.propTypes = {
   closeWebchat: PropTypes.func,
+  preferences: PropTypes.object,
 }
 
 export default Header

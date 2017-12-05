@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import { truncate } from 'helpers'
 
 import Button from 'components/Button'
 
-const Card = ({ content, isBot, sendMessage }) => {
+const Card = ({ content, sendMessage }) => {
   const { title, subtitle, imageUrl, buttons } = content
 
   return (
-    <div className={cx('Card', { bot: isBot })}>
+    <div className={'Card'}>
       {imageUrl && <img src={imageUrl} className='Card--img' />}
 
       <div className='Card--text'>
@@ -30,7 +29,6 @@ const Card = ({ content, isBot, sendMessage }) => {
 }
 
 Card.propTypes = {
-  isBot: PropTypes.bool,
   content: PropTypes.object,
   sendMessage: PropTypes.func,
 }

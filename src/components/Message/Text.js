@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 import sanitizeHtml from 'sanitize-html'
 
 import { truncate } from 'helpers'
 
 import './style.scss'
 
-const Text = ({ content, isBot }) => {
+const Text = ({ content, style }) => {
   return (
-    <div className={cx('Text', { bot: isBot })}>
+    <div
+      style={style}
+      className={'Text'}
+    >
       {
         sanitizeHtml(truncate(content, 640))
           .replace(/&amp;/g, 'g')
@@ -21,7 +23,7 @@ const Text = ({ content, isBot }) => {
 }
 
 Text.propTypes = {
-  isBot: PropTypes.bool,
+  style: PropTypes.object,
   content: PropTypes.string,
 }
 

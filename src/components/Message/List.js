@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import { truncate } from 'helpers'
 
@@ -38,11 +37,11 @@ ListElement.propTypes = {
   sendMessage: PropTypes.func,
 }
 
-const List = ({ content, isBot, sendMessage }) => {
+const List = ({ content, sendMessage }) => {
   const button = content.buttons && content.buttons[0]
 
   return (
-    <div className={cx('List', { bot: isBot })}>
+    <div className={'List'}>
       {content.elements.map((element, i) => (
         <ListElement
           key={i}
@@ -61,7 +60,6 @@ const List = ({ content, isBot, sendMessage }) => {
 }
 
 List.propTypes = {
-  isBot: PropTypes.bool,
   content: PropTypes.object,
   sendMessage: PropTypes.func,
 }

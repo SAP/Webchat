@@ -13,15 +13,19 @@ class Live extends Component {
   }
 
   render () {
-    const { messages, sendMessage } = this.props
+    const { messages, sendMessage, preferences } = this.props
 
     return (
-      <div className='Live'>
+      <div
+        className='Live'
+        style={{ backgroundColor: preferences.backgroundColor }}
+      >
         {messages.map((message, index) => (
           <Message
             key={message.id}
             message={message}
             sendMessage={sendMessage}
+            preferences={preferences}
             isLastMessage={messages.length === index + 1}
           />
         ))}
@@ -34,6 +38,7 @@ class Live extends Component {
 Live.propTypes = {
   messages: PropTypes.array,
   sendMessage: PropTypes.func,
+  preferences: PropTypes.object,
 }
 
 export default Live

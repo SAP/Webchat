@@ -14,31 +14,48 @@ import './style.scss'
 class Message extends Component {
 
   render () {
-    const { message, isLastMessage, sendMessage } = this.props
+    const { message, isLastMessage, sendMessage, preferences } = this.props
+    const {
+      botPicture,
+      userPicture,
+      accentColor,
+      complementaryColor,
+      botMessageColor,
+      botMessageBackgroundColor,
+    } = preferences
     const { type, content } = message.attachment
     const isBot = message.participant.isBot
+
+    const image = isBot ? botPicture : userPicture
+    const messageProps = {
+      isBot,
+      content,
+      style: {
+        color: isBot ? botMessageColor : complementaryColor,
+        backgroundColor: isBot ? botMessageBackgroundColor : accentColor,
+      },
+    }
 
     return (
       <div className={cx('Message', { bot: isBot })}>
         <img
           className='Message--logo'
-          src='https://cdn.recast.ai/bots/desjardins/icon-dialogue-chatbot.png'
+          src={image}
         />
 
-        {type === 'text' && <Text content={content} isBot={isBot} />}
+        {type === 'text' && <Text {...messageProps} />}
 
-        {type === 'picture' && <Picture content={content} isBot={isBot} />}
+        {type === 'picture' && <Picture {...messageProps} />}
 
-        {type === 'card' && <Card content={content} isBot={isBot} sendMessage={sendMessage} />}
+        {type === 'card' && <Card {...messageProps} sendMessage={sendMessage} />}
 
-        {type === 'carousel' && <Carousel content={content} isBot={isBot} sendMessage={sendMessage} />}
+        {type === 'carousel' && <Carousel {...messageProps} sendMessage={sendMessage} />}
 
-        {type === 'list' && <List content={content} isBot={isBot} sendMessage={sendMessage} />}
+        {type === 'list' && <List {...messageProps} sendMessage={sendMessage} />}
 
         {type === 'quickReplies' && (
           <QuickReplies
-            content={content}
-            isBot={isBot}
+            {...messageProps}
             sendMessage={sendMessage}
             isLastMessage={isLastMessage}
           />
@@ -52,6 +69,7 @@ class Message extends Component {
 Message.propTypes = {
   message: PropTypes.object,
   sendMessage: PropTypes.func,
+  preferences: PropTypes.object,
   isLastMessage: PropTypes.bool,
 }
 

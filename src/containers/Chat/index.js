@@ -62,13 +62,17 @@ class Chat extends Component {
   }
 
   render () {
-    const { closeWebchat, messages } = this.props
+    const { closeWebchat, messages, preferences } = this.props
 
     return (
       <div className='Chat'>
-        <Header closeWebchat={closeWebchat} />
+        <Header closeWebchat={closeWebchat} preferences={preferences} />
 
-        <Live messages={messages} sendMessage={this.sendMessage} />
+        <Live
+          messages={messages}
+          preferences={preferences}
+          sendMessage={this.sendMessage}
+        />
 
         <Input onSubmit={this.sendMessage} />
       </div>
@@ -86,6 +90,7 @@ Chat.propTypes = {
   lastMessageId: PropTypes.string,
   conversationId: PropTypes.string,
   messages: PropTypes.array,
+  preferences: PropTypes.object,
 }
 
 export default Chat

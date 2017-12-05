@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 import Slider from 'react-slick'
 
 import Card from './Card'
@@ -8,14 +7,9 @@ import { PrevArrow, NextArrow } from 'components/arrows'
 
 import './style.scss'
 
-// TODO
-// title: 80 chars
-// subtitle: 80 chars
-// buttons: 0-3 buttons
-
-const Carousel = ({ content, isBot, sendMessage }) => {
+const Carousel = ({ content, sendMessage }) => {
   return (
-    <div className={cx('Carousel', { bot: isBot })}>
+    <div className={'Carousel'}>
       <Slider
         arrows
         centerMode
@@ -32,7 +26,6 @@ const Carousel = ({ content, isBot, sendMessage }) => {
           <div key={i}>
             <Card
               content={card}
-              isBot={isBot}
               sendMessage={sendMessage}
             />
           </div>
@@ -43,7 +36,6 @@ const Carousel = ({ content, isBot, sendMessage }) => {
 }
 
 Carousel.propTypes = {
-  isBot: PropTypes.bool,
   content: PropTypes.array,
   sendMessage: PropTypes.func,
 }
