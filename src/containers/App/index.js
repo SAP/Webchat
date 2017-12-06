@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Chat from 'containers/Chat'
 import Expander from 'components/Expander'
 import { setCredentials, createConversation } from 'actions/conversation'
+import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
 
 import './style.scss'
 
@@ -18,14 +19,21 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { channelId, token } = this.props
-    this.props.setCredentials({ channelId, token })
-    this.props.createConversation(channelId, token)
-    // TODO
-    // check cookies for existing conversation
-    // if there is, try to get the messages for this conversation
-    // if not, or if the get messages has failed, create a new conversation
-    // and stock it in the cookies
+    const { channelId, token, preferences } = this.props
+    const credentials = getCredentialsFromCookie()
+    const payload = { channelId, token }
+
+    if (credentials) {
+      Object.assign(payload, credentials)
+    } else {
+      this.props
+        .createConversation(channelId, token)
+        .then(({ id, chatId }) =>
+          storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive),
+        )
+    }
+
+    this.props.setCredentials(payload)
   }
 
   toggleChat = () => {

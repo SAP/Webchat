@@ -30,13 +30,16 @@ class Chat extends Component {
     isPolling: false,
   }
 
+  componentDidMount() {
+    this.doMessagesPolling()
+  }
+
   sendMessage = attachment => {
     const { token, channelId, chatId } = this.props
-    const { isPolling } = this.state
     const payload = { message: { attachment }, chatId }
 
     this.props.postMessage(channelId, token, payload).then(() => {
-      if (!isPolling) {
+      if (!this.state.isPolling) {
         this.doMessagesPolling()
       }
     })

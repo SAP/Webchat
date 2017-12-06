@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-// import Cookies from 'cookies-js'
 import { store } from 'store'
 
 import { getChannelPreferences } from 'actions/channel'
