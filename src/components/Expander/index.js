@@ -12,7 +12,9 @@ const Expander = ({ onClick, preferences }) => (
       backgroundColor: preferences.accentColor,
     }}
   >
-    {'Call to action'}
+    {preferences.expanderLogo && <img className="Expander--logo" src={preferences.expanderLogo} />}
+
+    {preferences.expanderTitle}
   </div>
 )
 

@@ -2,9 +2,17 @@
   position: fixed;
   right: 10px;
   bottom: 10px;
+  display: flex;
+  align-items: center;
 
   padding: 0.5rem 1rem;
   cursor: pointer;
 
   border-radius: 3px;
+
+  &--logo {
+    margin-right: 0.5rem;
+    width: 30px;
+    height: 30px;
+  }
 }

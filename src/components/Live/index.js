@@ -16,15 +16,19 @@ class Live extends Component {
 
     return (
       <div className="Live" style={{ backgroundColor: preferences.backgroundColor }}>
-        {messages.map((message, index) => (
-          <Message
-            key={message.id}
-            message={message}
-            sendMessage={sendMessage}
-            preferences={preferences}
-            isLastMessage={messages.length === index + 1}
-          />
-        ))}
+        <div className="Live--message-container">
+          {messages.map((message, index) => (
+            <Message
+              key={message.id}
+              message={message}
+              sendMessage={sendMessage}
+              preferences={preferences}
+              isLastMessage={messages.length === index + 1}
+            />
+          ))}
+        </div>
+
+        <div className="Live--slogan">{'We run with Recast.AI'}</div>
       </div>
     )
   }

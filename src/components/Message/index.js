@@ -37,7 +37,7 @@ class Message extends Component {
 
     return (
       <div className={cx('Message', { bot: isBot })}>
-        <img className="Message--logo" src={image} />
+        {image && <img className="Message--logo" src={image} />}
 
         {type === 'text' && <Text {...messageProps} />}
 

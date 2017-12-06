@@ -1,5 +1,21 @@
 .RecastApp .Live {
   height: 460px;
+  display: flex;
+  flex-direction: column;
 
   overflow-y: scroll;
+
+  &--message-container {
+    flex-grow: 1;
+  }
+
+  &--slogan {
+    padding: 0.2rem;
+    font-size: 14px;
+    font-weight: bold;
+
+    text-align: center;
+    color: lightgrey;
+    box-shadow: 0 4px 2px -2px lightgrey;
+  }
 }

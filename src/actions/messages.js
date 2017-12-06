@@ -19,6 +19,6 @@ export const pollMessages = createAction(
     url: `/webhook/${channelId}/conversations/${conversationId}/poll`,
     method: 'get',
     headers: { Authorization: token },
-    query: { last_message_id: lastMessageId },
+    query: { last_message_id: lastMessageId }, // eslint-disable-line camelcase
   }),
 )
