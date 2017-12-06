@@ -15,6 +15,10 @@ const Expander = ({ onClick, preferences }) => (
     {preferences.expanderLogo && <img className="Expander--logo" src={preferences.expanderLogo} />}
 
     {preferences.expanderTitle}
+
+    {preferences.onboardingMessage && (
+      <div className="Expander--onboarding">{preferences.onboardingMessage}</div>
+    )}
   </div>
 )
 
