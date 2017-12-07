@@ -49,6 +49,7 @@ class Chat extends Component {
     this.setState({ isPolling: true })
     const { token, channelId, conversationId } = this.props
     let shouldPoll = true
+    let index = 0
 
     do {
       const { lastMessageId } = this.props
@@ -64,7 +65,8 @@ class Chat extends Component {
       } catch (err) {
         shouldPoll = false
       }
-    } while (shouldPoll)
+      index++
+    } while (shouldPoll || index < 4)
 
     this.setState({ isPolling: false })
   }
