@@ -7,6 +7,11 @@ import IsTyping from 'components/Message/isTyping'
 import './style.scss'
 
 class Live extends Component {
+  componentDidMount() {
+    const container = document.querySelector('.Live')
+    container.scrollTop = container.scrollHeight
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.messages.length !== this.props.messages.length) {
       const container = document.querySelector('.Live')
