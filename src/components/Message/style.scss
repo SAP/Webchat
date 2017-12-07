@@ -9,6 +9,11 @@
     height: 35px;
     margin: 0 0 0 0.5rem;
     align-self: flex-end;
+    opacity: 0;
+
+    &.visible {
+      opacity: 1 !important;
+    }
   }
 
   &.bot {
@@ -71,7 +76,7 @@
 
   .Text {
     max-width: 270px;
-    padding: 0.5rem;
+    padding: 0.8rem;
     border-radius: 3px;
 
     word-break: break-word;
@@ -96,10 +101,6 @@
   .QuickReplies {
     display: flex;
     flex-direction: column;
-
-    .Text {
-      align-self: flex-end;
-    }
 
     &--slider {
       margin-top: 0.5rem;
@@ -203,6 +204,7 @@
       &--button {
         align-self: flex-end;
 
+        padding: 0.2rem;
         cursor: pointer;
         font-size: 14px;
         font-weight: bold;

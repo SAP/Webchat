@@ -22,6 +22,7 @@ class Message extends Component {
       botMessageColor,
       botMessageBackgroundColor,
     } = preferences
+    const { displayIcon } = message
     const { type, content } = message.attachment
     const isBot = message.participant.isBot
 
@@ -36,8 +37,10 @@ class Message extends Component {
     }
 
     return (
-      <div className={cx('Message', { bot: isBot })}>
-        {image && <img className="Message--logo" src={image} />}
+      <div className={cx('Message', { bot: isBot, user: !isBot })}>
+        {image && (
+          <img className={cx('Message--logo', { visible: displayIcon })} src={image} style={{}} />
+        )}
 
         {type === 'text' && <Text {...messageProps} />}
 

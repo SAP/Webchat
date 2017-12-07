@@ -17,14 +17,7 @@
     height: 30px;
   }
 
-  &:hover {
-    .Expander--onboarding {
-      display: block !important;
-    }
-  }
-
   &--onboarding {
-    display: none;
     background-color: white;
 
     position: absolute;

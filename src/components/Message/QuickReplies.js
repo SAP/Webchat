@@ -12,6 +12,10 @@ class QuickReplies extends Component {
     displayQuickReplies: this.props.isLastMessage,
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ displayQuickReplies: nextProps.isLastMessage })
+  }
+
   doSendMessage = message => {
     this.props.sendMessage(message)
     this.setState({ displayQuickReplies: false })

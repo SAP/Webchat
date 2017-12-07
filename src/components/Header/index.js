@@ -16,7 +16,7 @@ const Header = ({ closeWebchat, preferences }) => (
     <div className="Header--title">{preferences.headerTitle}</div>
 
     <div className="Header--btn" onClick={closeWebchat}>
-      {'X'}
+      <img src="https://cdn.recast.ai/webchat/close.svg" />
     </div>
   </div>
 )
