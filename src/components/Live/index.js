@@ -20,6 +20,11 @@ class Live extends Component {
     }
   }
 
+  onImageLoaded = () => {
+    const container = document.querySelector('.Live')
+    container.scrollTop = container.scrollHeight
+  }
+
   fmtMessages = () => {
     const messages = reduceRight(
       this.props.messages,
@@ -50,6 +55,7 @@ class Live extends Component {
               message={message}
               sendMessage={sendMessage}
               preferences={preferences}
+              onImageLoaded={this.onImageLoaded}
               isLastMessage={messages.length === index + 1}
             />
           ))}

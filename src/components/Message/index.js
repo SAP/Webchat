@@ -13,7 +13,7 @@ import './style.scss'
 
 class Message extends Component {
   render() {
-    const { message, isLastMessage, sendMessage, preferences } = this.props
+    const { message, isLastMessage, sendMessage, preferences, onImageLoaded } = this.props
     const {
       botPicture,
       userPicture,
@@ -30,6 +30,7 @@ class Message extends Component {
     const messageProps = {
       isBot,
       content,
+      onImageLoaded,
       style: {
         color: isBot ? botMessageColor : complementaryColor,
         backgroundColor: isBot ? botMessageBackgroundColor : accentColor,
@@ -65,6 +66,7 @@ Message.propTypes = {
   sendMessage: PropTypes.func,
   preferences: PropTypes.object,
   isLastMessage: PropTypes.bool,
+  onImageLoaded: PropTypes.func,
 }
 
 export default Message

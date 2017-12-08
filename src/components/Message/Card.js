@@ -5,12 +5,12 @@ import { truncate } from 'helpers'
 
 import Button from 'components/Button'
 
-const Card = ({ content, sendMessage }) => {
+const Card = ({ content, sendMessage, onImageLoaded }) => {
   const { title, subtitle, imageUrl, buttons } = content
 
   return (
     <div className={'Card'}>
-      {imageUrl && <img src={imageUrl} className="Card--img" />}
+      {imageUrl && <img src={imageUrl} onLoad={onImageLoaded} className="Card--img" />}
 
       <div className="Card--text">
         <p className="Card--text-title">{truncate(title, 80)}</p>
@@ -27,6 +27,7 @@ const Card = ({ content, sendMessage }) => {
 Card.propTypes = {
   content: PropTypes.object,
   sendMessage: PropTypes.func,
+  onImageLoaded: PropTypes.func,
 }
 
 export default Card
