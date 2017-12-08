@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run build && NODE_ENV=production npw run build:webpack",
-    "build:webpack": "babel-node bin/build.js",
+    "build": "npm run clean && NODE_ENV=production npm run build:webpack",
+    "build:webpack": "node bin/build.js",
     "start": "npm run clean && node bin/build-dev",
     "prettier": "prettier --write \"src/**/*.?(js|?(s)css|json)\" && eslint --fix src",
     "lint": "eslint src",
