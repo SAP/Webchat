@@ -5,7 +5,7 @@ import './style.scss'
 
 const IsTyping = ({ image }) => (
   <div className="Message bot">
-    {image && <img className="Message--logo" src={image} />}
+    {image && <img className="Message--logo visible" src={image} />}
 
     <img src="https://cdn.recast.ai/webchat/istyping.gif" />
   </div>
