@@ -30,19 +30,18 @@ module.exports = {
       },
     }, {
       test: /\.scss$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          'css-loader', {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugin: () => [require('autoprefixer')()],
-            },
+      use: [
+        'style-loader',
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            ident: 'postcss',
+            plugins: () => [require('autoprefixer')],
           },
-          'sass-loader',
-        ]
-      }),
+        },
+        'sass-loader',
+      ],
       exclude: /node_modules/,
     }]
   },
@@ -50,7 +49,6 @@ module.exports = {
   plugins: [
     new webpack.NamedModulesPlugin(),
 
-    new ExtractTextPlugin('styles-[hash].css'),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
