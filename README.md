@@ -1,3 +1,5 @@
+![Bot Connector Logo](https://cdn.recast.ai/bot-connector/bot-connector-logo.png)
+
 # Webchat
 
 This webchat is usable with the **Webchat** channel on [Recast.AI](https://recast.ai). You can use it to embed a chat linked to your bot on your website.
@@ -6,6 +8,7 @@ A version of this website is already hosted, and you can customize it directly o
 
 This webchat is built using the [React](https://github.com/facebook/react) library, along with [Redux](https://github.com/reactjs/redux) for state managment.
 
+![Webchat screenshot](https://cdn.recast.ai/webchat/webchat-github.png)
 
 ## Usage
 
