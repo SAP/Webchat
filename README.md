@@ -4,7 +4,7 @@ This webchat is usable with the **Webchat** channel on [Recast.AI](https://recas
 
 A version of this website is already hosted, and you can customize it directly on [Recast.AI](https://recast.ai). But if you want to go in more details, feel free to fork it!
 
-This webchat is built using the [React](https://github.com/facebook/react), along with [Redux](https://github.com/reactjs/redux) for state managment.
+This webchat is built using the [React](https://github.com/facebook/react) library, along with [Redux](https://github.com/reactjs/redux) for state managment.
 
 
 ## Usage
