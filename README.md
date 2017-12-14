@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/header-webchat.png" />
+</div>
+
 | [Default Usage](#usage) | [Self-Hosted Installation](#self-hosted-webchat) | [Getting Started on Recast.AI]( #getting-started-with-recastai) | [License](#license) |
 |---|---|---|---|
 &nbsp;
