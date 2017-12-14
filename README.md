@@ -28,12 +28,12 @@ Once you're satisfied with the settings, click on the **SAVE** button. A script 
 in your web page to embed the webchat.
 
 ```
-<script>
+<script
   src="https://cdn.recast.ai/webchat/webchat.js"
   channelId="YOUR_CHANNEL_ID"
   token="YOUR_CHANNEL_TOKEN"
   id="recast-webchat"
-</script>
+></script>
 ```
 
 However, if you want to customize the webchat in more details, you can fork this project!
