@@ -7,11 +7,16 @@
 
 # What is Webchat?
 
-With webchat, you can **deploy a bot straight to a website**. It will be embed and available through a chat box on your pages.
+Webchat let you **deploy a bot straight to a website**. It will be embed and available through a chat box on your pages.
 Webchat is one of the many channels available on [Recast.AI](https://recast.ai), and end-to-end bot building platform.
 This webchat is built using the [React](https://github.com/facebook/react) library, along with [Redux](https://github.com/reactjs/redux) for state managment.
 
 ![Webchat screenshot](assets/webchat-github.png)
+
+## Compatibility
+
+Webchat is supported by all mobile and desktop browsers in their latest versions.
+Internet Explorer support starts at version 9.0.
 
 ## Usage
 
@@ -22,10 +27,14 @@ Two different installations on the webchat module are possible.
 ### Default webchat
 
 To use the webchat, you need an account on [Recast.AI](https://recast.ai) and a bot.
-Then, go to the **Connect** tab and click on **Webchat**. It will open a window that lets you adjust your webchat settings, including: color scheme, header customization, bot and user pictures, webchat logo and call to action, and conversation duration.
+Then, go to the **Connect** tab and click on **Webchat**. It will open a window that lets you adjust your webchat settings, including: 
+* color scheme, 
+* header customization, 
+* bot and user pictures, 
+* webchat logo and call to action,  
+* conversation duration
 
-Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it
-in your web page to embed the webchat.
+Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it in your web page to embed the webchat. The script must be placed in the <body> tag.
 
 ```
 <script
