@@ -1,7 +1,5 @@
-![Bot Connector Logo](https://cdn.recast.ai/bot-connector/bot-connector-logo.png)
-
-| [Default Usage](#usage) | [Self-Hosted Installation](#self-hosted-webchat) | [License](#license) | [Getting Started on Recast.AI]( #getting-started-with-recastai) | [Contribute](https://github.com/RecastAI/Recast.AI/blob/master/README.md#contribute-or-create-new-sdks-for-our-api) | [Service Status](https://status.recast.ai/)
-|---|---|---|---|---|---|
+| [Default Usage](#usage) | [Self-Hosted Installation](#self-hosted-webchat) | [Getting Started on Recast.AI]( #getting-started-with-recastai) | [License](#license) |
+|---|---|---|---|
 
 **[ :speech_balloon: Questions / Comments? Join the discussion on our community Slack channel!](https://slack.recast.ai/)**
 
