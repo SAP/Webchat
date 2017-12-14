@@ -1,7 +1,7 @@
 ![Bot Connector Logo](https://cdn.recast.ai/bot-connector/bot-connector-logo.png)
 
-| [Installation](https://github.com/RecastAI/Recast.AI/blob/master/README.md#getting-started) | [Usage](https://recast.ai/docs/api-reference/) | [Builder Guide](https://recast.ai/docs/create-your-bot) | [Updates Status](https://github.com/RecastAI/Recast.AI/blob/master/README.md#status---major-updates) | [Contribute](https://github.com/RecastAI/Recast.AI/blob/master/README.md#contribute-or-create-new-sdks-for-our-api) | [Service Status](https://status.recast.ai/) | [License](https://recast.ai/terms) |
-|---|---|---|---|---|---|---|
+| [Usage](#usage) | [Installation](#installation) | [NLP API Documentation](https://recast.ai/docs/api-reference/) | [Contribute](https://github.com/RecastAI/Recast.AI/blob/master/README.md#contribute-or-create-new-sdks-for-our-api) | [Service Status](https://status.recast.ai/) | [License](#license) |
+|---|---|---|---|---|---|
 
 
 **[ :speech_balloon: Questions / Comments? Join the discussion on our community Slack channel!](https://slack.recast.ai/)**
