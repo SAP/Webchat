@@ -1,17 +1,17 @@
 ![Bot Connector Logo](https://cdn.recast.ai/bot-connector/bot-connector-logo.png)
 
-| [Usage](#usage) | [Self-Hosted](#self-hosted-webchat) | [License](#license) | [NLP API Documentation](https://recast.ai/docs/api-reference/) | [Contribute](https://github.com/RecastAI/Recast.AI/blob/master/README.md#contribute-or-create-new-sdks-for-our-api) | [Service Status](https://status.recast.ai/)
+| [Usage](#usage) | [Self-Hosted](#self-hosted-webchat) | [License](#license) | [Getting Started on Recast.AI]( #getting-started-with-recastai) | [Contribute](https://github.com/RecastAI/Recast.AI/blob/master/README.md#contribute-or-create-new-sdks-for-our-api) | [Service Status](https://status.recast.ai/)
 |---|---|---|---|---|---|
 
 **[ :speech_balloon: Questions / Comments? Join the discussion on our community Slack channel!](https://slack.recast.ai/)**
 
 # What is Webchat?
 
-With webchat, you can deploy a bot straight to a website. It will be embed and available through a chat box on your pages.
+With webchat, you can **deploy a bot straight to a website**. It will be embed and available through a chat box on your pages.
 Webchat is one of the many channels available on [Recast.AI](https://recast.ai), and end-to-end bot building platform.
 This webchat is built using the [React](https://github.com/facebook/react) library, along with [Redux](https://github.com/reactjs/redux) for state managment.
 
-![Webchat screenshot](https://cdn.recast.ai/webchat/webchat-github.png)
+![Webchat screenshot](assets/webchat-github.png)
 
 ## Usage
 
@@ -69,6 +69,19 @@ $> npm run prettier
 ```
 $> npm run build
 ```
+
+## Getting started with Recast.AI
+
+We build products to help brands and individuals have a better understanding of user inputs.
+
+-   **NLP API**: a unique API for text processing, and augmented training.
+-   **Bot Building Tools**: all you need to create smart bots powered by Recast.AI's NLP API. Design even the most complex conversation flow, use all rich messaging formats and connect to external APIs and services.
+-   **Bot Connector API**: standardizes the messaging format across all channels, letting you connect your bots to any channel in minutes.
+
+Learn more about:
+
+| [API Documentation](https://recast.ai/docs/api-reference/) | [Builder Guide](https://recast.ai/docs/create-your-bot) | [First bot tutorial](https://recast.ai/blog/build-your-first-bot-with-recast-ai/) | [Advanced usage tutorial](https://recast.ai/blog/nodejs-chatbot-movie-bot/) | [Python tutorial](https://recast.ai/blog/python-cryptobot/) |
+|---|---|---|---|---|
 
 ## License
 
