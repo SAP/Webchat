@@ -78,7 +78,7 @@ We build products to help enterprises and developers have a better understanding
 
 Learn more about:
 
-| [API Documentation](https://recast.ai/docs/api-reference/) | [Builder Guide](https://recast.ai/docs/create-your-bot) | [First bot tutorial](https://recast.ai/blog/build-your-first-bot-with-recast-ai/) | [Advanced usage tutorial](https://recast.ai/blog/nodejs-chatbot-movie-bot/) | [Python tutorial](https://recast.ai/blog/python-cryptobot/) |
+| [API Documentation](https://recast.ai/docs/api-reference/) | [Discover the platform](https://recast.ai/docs/create-your-bot) | [First bot tutorial](https://recast.ai/blog/build-your-first-bot-with-recast-ai/) | [Advanced NodeJS tutorial](https://recast.ai/blog/nodejs-chatbot-movie-bot/) | [Advanced Python tutorial](https://recast.ai/blog/python-cryptobot/) |
 |---|---|---|---|---|
 
 ## License
