@@ -1,7 +1,9 @@
 | [Default Usage](#usage) | [Self-Hosted Installation](#self-hosted-webchat) | [Getting Started on Recast.AI]( #getting-started-with-recastai) | [License](#license) |
 |---|---|---|---|
-
-**[ :speech_balloon: Questions / Comments? Join the discussion on our community Slack channel!](https://slack.recast.ai/)**
+&nbsp;
+<div align="center">
+<a href="https://slack.recast.ai/">💬 Questions / Comments? Join the discussion on our community Slack channel!</a>
+</div>
 
 # What is Webchat?
 
@@ -37,7 +39,7 @@ Then, go to the **Connect** tab and click on **Webchat**. It will open a window 
 Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it in your web page to embed the webchat. The script must be placed in the `<body>` tag.
 
 <div align="center">
-  <img src="https://cdn.recast.ai/webchat/webchat-600.gif" />
+  <img src="assets/webchat-600.gif" />
 </div>
 
 However, if you want to customize the webchat in more details, you can fork this project!
