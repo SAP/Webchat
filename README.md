@@ -37,7 +37,7 @@ Then, go to the **Connect** tab and click on **Webchat**. It will open a window 
 Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it in your web page to embed the webchat. The script must be placed in the `<body>` tag.
 
 <div align="center">
-  <img src="https://cdn.recast.ai/webchat/webchat.gif" />
+  <img src="https://cdn.recast.ai/webchat/webchat-600.gif" />
 </div>
 
 However, if you want to customize the webchat in more details, you can fork this project!
