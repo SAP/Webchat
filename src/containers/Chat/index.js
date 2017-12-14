@@ -66,6 +66,10 @@ class Chat extends Component {
         shouldPoll = false
       }
       index++
+
+      if (!shouldPoll && index < 4) {
+        await new Promise(resolve => setTimeout(resolve, 300))
+      }
     } while (shouldPoll || index < 4)
 
     this.setState({ isPolling: false })
