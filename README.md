@@ -9,9 +9,9 @@ Webchat let you **deploy a bot straight to a website**. It will be embed and ava
 Webchat is one of the many channels available on [Recast.AI](https://recast.ai), and end-to-end bot building platform.
 This webchat is built using the [React](https://github.com/facebook/react) library, along with [Redux](https://github.com/reactjs/redux) for state managment.
 
-<p align="center">
+<div align="center">
   <img src="assets/webchat-github.png" />
-</p>
+</div>
 
 ## Compatibility
 
@@ -35,6 +35,10 @@ Then, go to the **Connect** tab and click on **Webchat**. It will open a window 
 * conversation duration
 
 Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it in your web page to embed the webchat. The script must be placed in the `<body>` tag.
+
+<div align="center">
+  <img src="https://cdn.recast.ai/webchat/webchat.gif" />
+</div>
 
 However, if you want to customize the webchat in more details, you can fork this project!
 
