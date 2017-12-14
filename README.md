@@ -32,7 +32,7 @@ Then, go to the **Connect** tab and click on **Webchat**. It will open a window 
 * webchat logo and call to action,  
 * conversation duration
 
-Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it in your web page to embed the webchat. The script must be placed in the <body> tag.
+Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it in your web page to embed the webchat. The script must be placed in the `<body>` tag.
 
 ```
 <script
