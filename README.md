@@ -4,7 +4,7 @@
 # Recast.AI Webchat
 | [Default Usage](#usage) | [Self-Hosted Installation](#self-hosted-webchat) | [Getting Started on Recast.AI]( #getting-started-with-recastai) | [License](#license) |
 |---|---|---|---|
-<div align="center">
+<div>
 <a href="https://slack.recast.ai/">💬 Questions / Comments? Join the discussion on our community Slack channel!</a>
 </div>
 
