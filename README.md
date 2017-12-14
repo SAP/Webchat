@@ -1,16 +1,17 @@
 <div align="center">
   <img src="assets/header-webchat.png" />
 </div>
+# Recast.AI Webchat
 | [Default Usage](#usage) | [Self-Hosted Installation](#self-hosted-webchat) | [Getting Started on Recast.AI]( #getting-started-with-recastai) | [License](#license) |
 |---|---|---|---|
 <div align="center">
 <a href="https://slack.recast.ai/">💬 Questions / Comments? Join the discussion on our community Slack channel!</a>
 </div>
 
-# What is Webchat?
+## What is a webchat?
 
-Webchat let you **deploy a bot straight to a website**. It will be embed and available through a chat box on your pages.
-Webchat is one of the many channels available on [Recast.AI](https://recast.ai), and end-to-end bot building platform.
+The Recast.AI webchat let you **deploy a bot straight to a website**. It will be embed and available through a chat box on your pages.
+The webchat is one of the many channels available on [Recast.AI](https://recast.ai), and end-to-end bot building platform.
 This webchat is built using the [React](https://github.com/facebook/react) library, along with [Redux](https://github.com/reactjs/redux) for state managment.
 
 <div align="center">
@@ -19,7 +20,7 @@ This webchat is built using the [React](https://github.com/facebook/react) libra
 
 ## Compatibility
 
-Webchat is supported by all mobile and desktop browsers in their latest versions.
+This webchat is supported by all mobile and desktop browsers in their latest versions.
 Internet Explorer support starts at version 9.0.
 
 ## Usage
