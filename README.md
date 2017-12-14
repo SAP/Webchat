@@ -34,15 +34,6 @@ Then, go to the **Connect** tab and click on **Webchat**. It will open a window 
 
 Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it in your web page to embed the webchat. The script must be placed in the `<body>` tag.
 
-```
-<script
-  src="https://cdn.recast.ai/webchat/webchat.js"
-  channelId="YOUR_CHANNEL_ID"
-  token="YOUR_CHANNEL_TOKEN"
-  id="recast-webchat"
-></script>
-```
-
 However, if you want to customize the webchat in more details, you can fork this project!
 
 ### Self-hosted webchat
