@@ -1,43 +1,48 @@
 ![Bot Connector Logo](https://cdn.recast.ai/bot-connector/bot-connector-logo.png)
 
-| [Usage](#usage) | [Installation](#installation) | [NLP API Documentation](https://recast.ai/docs/api-reference/) | [Contribute](https://github.com/RecastAI/Recast.AI/blob/master/README.md#contribute-or-create-new-sdks-for-our-api) | [Service Status](https://status.recast.ai/) | [License](#license) |
+| [Usage](#usage) | [Installation](#installation) | [License](#license) | [NLP API Documentation](https://recast.ai/docs/api-reference/) | [Contribute](https://github.com/RecastAI/Recast.AI/blob/master/README.md#contribute-or-create-new-sdks-for-our-api) | [Service Status](https://status.recast.ai/)
 |---|---|---|---|---|---|
-
 
 **[ :speech_balloon: Questions / Comments? Join the discussion on our community Slack channel!](https://slack.recast.ai/)**
 
-# Webchat
+# What is Webchat?
 
-This webchat is usable with the **Webchat** channel on [Recast.AI](https://recast.ai). You can use it to embed a chat linked to your bot on your website.
-
-A version of this website is already hosted, and you can customize it directly on [Recast.AI](https://recast.ai). But if you want to go in more details, feel free to fork it!
-
+With webchat, you can deploy a bot straight to a website. It will be embed and available through a chat box on your pages.
+Webchat is one of the many channels available on [Recast.AI](https://recast.ai), and end-to-end bot building platform.
 This webchat is built using the [React](https://github.com/facebook/react) library, along with [Redux](https://github.com/reactjs/redux) for state managment.
 
 ![Webchat screenshot](https://cdn.recast.ai/webchat/webchat-github.png)
 
 ## Usage
 
-To use this webchat, you first need to create a **Webchat** channel on [Recast.AI](https://recast.ai).
-Go on your bot, in the **Connect** tab, and click on **Webchat**. A modal where you can modify your preferences opens.
-You can set the colors of the webchat, the icons used for the bot and the user, the onboarding message and much more.
+Two different installations on the webchat module are possible.
+- The default is the simplest and fatest route, and offers some customization options.
+- The self-hosted webchat offers even more customization option, but you'll have to deal with the hosting and maintenance of the module.
+
+### Default webchat
+
+To use the webchat, you need an account on [Recast.AI](https://recast.ai) and a bot.
+Then, go to the **Connect** tab and click on **Webchat**. It will open a window that lets you adjust your webchat settings, including: color scheme, header customization, bot and user pictures, webchat logo and call to action, and conversation duration.
 
 Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it
 in your web page to embed the webchat.
 
 ```
-<script
+<script>
   src="https://cdn.recast.ai/webchat/webchat.js"
   channelId="YOUR_CHANNEL_ID"
   token="YOUR_CHANNEL_TOKEN"
   id="recast-webchat"
-></script>
+</script>
 ```
 
-However, if you want to customize the webchat in more details, you can fork this project! Once you're done, build it,
-host it, and modify the *src* field of the script.
+However, if you want to customize the webchat in more details, you can fork this project!
 
-## Installation
+### Self-hosted webchat
+
+Once you're done, build it, host it, and modify the *src* field of the script.
+
+#### Installation
 
 Clone the repository and install the dependencies.
 
