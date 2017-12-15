@@ -49,7 +49,7 @@ Once you're satisfied with the settings, click on the **SAVE** button. A script 
 
 ### Self-hosted webchat
 
-If you want to customize the webchat in more details, you can fork this project!
+If you want to customize your webchat even more, you can opt for a self-hosted installatiton. Just fork this project to get started!
 
 #### Installation
 
@@ -82,8 +82,8 @@ $> npm run build
 #### Use your webchat
 
 Once you're done, build it and host it.
-To use it instead of the default one provided by recast.AI, you need to set up the Webchat channel in the **CONNECT** tab of your bot.
-But instead of copy-paste the default script, modify the **src** field with your URL ;)
+To use it instead of the default one provided by Recast.AI, you need to set up the Webchat channel in the **CONNECT** tab of your bot.
+You'll be using the same script as the default installation, but you have **to replace the src field by your own URL**.
 
 
 ```
