@@ -33,7 +33,7 @@ Two different installations on the webchat module are possible.
 ### Default webchat
 
 To use the webchat, you need an account on [Recast.AI](https://recast.ai) and a bot.
-Then, go to the **Connect** tab and click on **Webchat**. It will open a window that lets you adjust your webchat settings, including: 
+Then, go to the **CONNECT** tab and click on **Webchat**. It will open a window that lets you adjust your webchat settings, including: 
 * color scheme, 
 * header customization, 
 * bot and user pictures, 
@@ -46,18 +46,17 @@ Once you're satisfied with the settings, click on the **SAVE** button. A script 
   <img src="assets/webchat-600.gif" />
 </div>
 
-However, if you want to customize the webchat in more details, you can fork this project!
 
 ### Self-hosted webchat
 
-Once you're done, build it, host it, and modify the *src* field of the script.
+If you want to customize the webchat in more details, you can fork this project!
 
 #### Installation
 
-Clone the repository and install the dependencies.
+Clone the repository you forked, and install the dependencies.
 
 ```
-$> git clone GITHUB_URL
+$> git clone YOUR_REPO_URL
 $> cd webchat
 $> npm install
 ```
@@ -79,6 +78,21 @@ $> npm run prettier
 ```
 $> npm run build
 ```
+
+#### Use your webchat
+
+Once you're done, build it and host it.
+To use it instead of the default one provided by recast.AI, you need to set up the Webchat channel in the **CONNECT** tab of your bot.
+But instead of copy-paste the default script, modify the **src** field with your URL ;)
+
+
+```
+<script
+  src="YOUR_WEBCHAT_URL"
+  ...
+></script>
+```
+
 
 ## Getting started with Recast.AI
 
