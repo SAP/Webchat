@@ -63,8 +63,6 @@ class Live extends Component {
           {lastMessage &&
             lastMessage.participant.isBot === false && <IsTyping image={preferences.botPicture} />}
         </div>
-
-        <div className="Live--slogan">{'We run with Recast.AI'}</div>
       </div>
     )
   }

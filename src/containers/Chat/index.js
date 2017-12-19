@@ -83,7 +83,9 @@ class Chat extends Component {
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
         <Live messages={messages} preferences={preferences} sendMessage={this.sendMessage} />
-
+        <div className="Live--slogan" style={{ backgroundColor: preferences.backgroundColor }}>
+          {'We run with Recast.AI'}
+        </div>
         <Input onSubmit={this.sendMessage} />
       </div>
     )
