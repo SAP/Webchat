@@ -13,3 +13,12 @@
     border-top: 1px solid lightgrey;
   }
 }
+
+.RecastApp .Button-Link {
+  @extend .Button;
+  text-decoration: none;
+  display: block;
+  &:hover {
+    text-decoration: none;
+  }
+}

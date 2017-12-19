@@ -7,12 +7,28 @@ import './style.scss'
 
 const Button = ({ button, sendMessage }) => {
   const { value, title } = button
+  const formattedTitle = truncate(title, 20)
 
-  return (
-    <div className="Button" onClick={() => sendMessage({ type: 'text', content: value })}>
-      {truncate(title, 20)}
-    </div>
-  )
+  let content = null
+
+  switch (button.type) {
+    case 'web_url':
+      content = (
+        <a className="Button-Link" href={value} target="_blank">
+          {formattedTitle}
+        </a>
+      )
+      break
+    default:
+      content = (
+        <div className="Button" onClick={() => sendMessage({ type: 'text', content: value })}>
+          {formattedTitle}
+        </div>
+      )
+      break
+  }
+
+  return content
 }
 
 Button.propTypes = {
