@@ -5,6 +5,7 @@ import cx from 'classnames'
 import Text from './Text'
 import Card from './Card'
 import List from './List'
+import Buttons from './Buttons'
 import Picture from './Picture'
 import Carousel from './Carousel'
 import QuickReplies from './QuickReplies'
@@ -52,6 +53,8 @@ class Message extends Component {
         {type === 'carousel' && <Carousel {...messageProps} sendMessage={sendMessage} />}
 
         {type === 'list' && <List {...messageProps} sendMessage={sendMessage} />}
+
+        {type === 'buttons' && <Buttons {...messageProps} sendMessage={sendMessage} /> }
 
         {type === 'quickReplies' && (
           <QuickReplies {...messageProps} sendMessage={sendMessage} isLastMessage={isLastMessage} />

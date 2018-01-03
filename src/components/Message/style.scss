@@ -79,7 +79,8 @@
     padding: 0.8rem;
     border-radius: 3px;
 
-    word-break: break-all;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
   }
 
   /*
@@ -119,6 +120,30 @@
       cursor: pointer;
       font-weight: bold;
       border-radius: 25px;
+    }
+  }
+
+  /*
+   * Buttons
+   */
+  .Buttons {
+    width: 270px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+
+    &--title {
+      max-width: 270px;
+      padding: 0.8rem;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+
+      word-break: break-all;
+    }
+
+    &--container {
+      border-top: 1px solid lightgrey;
     }
   }
 
