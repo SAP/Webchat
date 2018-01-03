@@ -134,12 +134,11 @@
     &--title {
       max-width: 270px;
       padding: 0.8rem;
-      white-space: pre-wrap;
-      overflow-wrap: break-word;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
 
-      word-break: break-all;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
     }
 
     &--container {
