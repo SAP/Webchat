@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './style.scss'
 
 const Picture = ({ content, onImageLoaded }) => {
-  return <img onLoad={onImageLoaded} src={content} className={'Picture'} />
+  return <img onLoad={onImageLoaded} src={content} className={'RecastAppPicture'} />
 }
 
 Picture.propTypes = {

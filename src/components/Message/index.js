@@ -5,6 +5,7 @@ import cx from 'classnames'
 import Text from './Text'
 import Card from './Card'
 import List from './List'
+import Buttons from './Buttons'
 import Picture from './Picture'
 import Carousel from './Carousel'
 import QuickReplies from './QuickReplies'
@@ -38,9 +39,13 @@ class Message extends Component {
     }
 
     return (
-      <div className={cx('Message', { bot: isBot, user: !isBot })}>
+      <div className={cx('RecastAppMessage', { bot: isBot, user: !isBot })}>
         {image && (
-          <img className={cx('Message--logo', { visible: displayIcon })} src={image} style={{}} />
+          <img
+            className={cx('RecastAppMessage--logo', { visible: displayIcon })}
+            src={image}
+            style={{}}
+          />
         )}
 
         {type === 'text' && <Text {...messageProps} />}
@@ -52,6 +57,8 @@ class Message extends Component {
         {type === 'carousel' && <Carousel {...messageProps} sendMessage={sendMessage} />}
 
         {type === 'list' && <List {...messageProps} sendMessage={sendMessage} />}
+
+        {type === 'buttons' && <Buttons {...messageProps} sendMessage={sendMessage} />}
 
         {type === 'quickReplies' && (
           <QuickReplies {...messageProps} sendMessage={sendMessage} isLastMessage={isLastMessage} />

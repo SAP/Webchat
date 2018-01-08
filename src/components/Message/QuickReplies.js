@@ -27,7 +27,7 @@ class QuickReplies extends Component {
     const { title, buttons } = content
 
     return (
-      <div className={'QuickReplies'}>
+      <div className={'RecastAppQuickReplies'}>
         <Text content={title} style={style} />
 
         {displayQuickReplies && (
@@ -40,12 +40,12 @@ class QuickReplies extends Component {
             slidesToScroll={2}
             prevArrow={<PrevArrow />}
             nextArrow={<NextArrow />}
-            className="Slider QuickReplies--slider"
+            className="RecastAppSlider RecastAppQuickReplies--slider"
           >
             {buttons.map((b, i) => (
               <div
                 key={i}
-                className="QuickReplies--button"
+                className="RecastAppQuickReplies--button"
                 onClick={() => this.doSendMessage({ type: 'text', content: b.value })}
                 style={{
                   border: `1px solid ${style.backgroundColor}`,

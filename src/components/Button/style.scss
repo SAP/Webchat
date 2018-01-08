@@ -1,4 +1,4 @@
-.RecastApp .Button {
+.RecastApp .RecastAppButton {
   padding: 0.5rem;
 
   cursor: pointer;
@@ -9,13 +9,13 @@
 }
 
 .RecastApp {
-  .Button + .Button {
+  .RecastAppButton + .RecastAppButton {
     border-top: 1px solid lightgrey;
   }
 }
 
-.RecastApp .Button-Link {
-  @extend .Button;
+.RecastApp .RecastAppButton-Link {
+  @extend .RecastAppButton;
   text-decoration: none;
   display: block;
   &:hover {

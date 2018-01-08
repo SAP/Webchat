@@ -1,4 +1,4 @@
-.RecastApp .Message {
+.RecastApp .RecastAppMessage {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -28,7 +28,7 @@
    * Slider
    */
 
-  .Slider {
+  .RecastAppSlider {
     max-width: 300px;
 
     .Arrow {
@@ -74,19 +74,20 @@
    * Text
    */
 
-  .Text {
+  .RecastAppText {
     max-width: 270px;
     padding: 0.8rem;
     border-radius: 3px;
 
-    word-break: break-all;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
   }
 
   /*
    * Picture
    */
 
-  .Picture {
+  .RecastAppPicture {
     width: 270px;
     max-height: 270px;
 
@@ -98,7 +99,7 @@
    * QuickReplies
    */
 
-  .QuickReplies {
+  .RecastAppQuickReplies {
     display: flex;
     flex-direction: column;
 
@@ -123,10 +124,33 @@
   }
 
   /*
+   * Buttons
+   */
+  .Buttons {
+    width: 270px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+
+    &--title {
+      max-width: 270px;
+      padding: 0.8rem;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+    }
+
+    &--container {
+      border-top: 1px solid lightgrey;
+    }
+  }
+
+  /*
    * Card
    */
 
-  .Card {
+  .RecastAppCard {
     width: 270px;
 
     border: 1px solid lightgrey;
@@ -162,7 +186,7 @@
    * List
    */
 
-  .List {
+  .RecastAppList {
     border: 1px solid lightgrey;
     border-radius: 3px;
 
@@ -170,7 +194,7 @@
       border-top: 1px solid lightgrey;
     }
 
-    .ListElement {
+    .RecastAppListElement {
       display: flex;
       width: 290px;
 
@@ -212,7 +236,7 @@
       }
     }
 
-    .ListElement + .ListElement {
+    .RecastAppListElement + .RecastAppListElement {
       border-top: 1px solid lightgrey;
     }
   }

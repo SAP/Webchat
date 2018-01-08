@@ -9,15 +9,15 @@ const Card = ({ content, sendMessage, onImageLoaded }) => {
   const { title, subtitle, imageUrl, buttons } = content
 
   return (
-    <div className={'Card'}>
-      {imageUrl && <img src={imageUrl} onLoad={onImageLoaded} className="Card--img" />}
+    <div className={'RecastAppCard'}>
+      {imageUrl && <img src={imageUrl} onLoad={onImageLoaded} className="RecastAppCard--img" />}
 
-      <div className="Card--text">
-        <p className="Card--text-title">{truncate(title, 80)}</p>
+      <div className="RecastAppCard--text">
+        <p className="RecastAppCard--text-title">{truncate(title, 80)}</p>
         {subtitle && <p className="Card--text-subtitle">{truncate(subtitle, 80)}</p>}
       </div>
 
-      <div className="Card--button-container">
+      <div className="RecastAppCard--button-container">
         {buttons.slice(0, 3).map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)}
       </div>
     </div>

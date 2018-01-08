@@ -9,16 +9,16 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const button = buttons[0]
 
   return (
-    <div className="ListElement">
-      {imageUrl && <img src={imageUrl} className="ListElement--img" />}
+    <div className="RecastAppListElement">
+      {imageUrl && <img src={imageUrl} className="RecastAppListElement--img" />}
 
-      <div className="ListElement--container">
-        <p className="ListElement--title">{truncate(title, 25)}</p>
-        <p className="ListElement--subtitle">{truncate(subtitle, 50)}</p>
+      <div className="RecastAppListElement--container">
+        <p className="RecastAppListElement--title">{truncate(title, 25)}</p>
+        <p className="RecastAppListElement--subtitle">{truncate(subtitle, 50)}</p>
 
         {button && (
           <div
-            className="ListElement--button"
+            className="RecastAppListElement--button"
             onClick={() => sendMessage({ type: 'text', content: button.value })}
           >
             {truncate(button.title, 20)}
@@ -41,13 +41,13 @@ const List = ({ content, sendMessage }) => {
   const button = content.buttons && content.buttons[0]
 
   return (
-    <div className={'List'}>
+    <div className={'RecastAppList'}>
       {content.elements.map((element, i) => (
         <ListElement key={i} {...element} sendMessage={sendMessage} />
       ))}
 
       {button && (
-        <div className="List--button">
+        <div className="RecastAppList--button">
           <Button button={button} sendMessage={sendMessage} />
         </div>
       )}

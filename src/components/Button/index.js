@@ -14,14 +14,17 @@ const Button = ({ button, sendMessage }) => {
   switch (button.type) {
     case 'web_url':
       content = (
-        <a className="Button-Link" href={value} target="_blank">
+        <a className="RecastAppButton-Link" href={value} target="_blank">
           {formattedTitle}
         </a>
       )
       break
     default:
       content = (
-        <div className="Button" onClick={() => sendMessage({ type: 'text', content: value })}>
+        <div
+          className="RecastAppButton"
+          onClick={() => sendMessage({ type: 'text', content: value })}
+        >
           {formattedTitle}
         </div>
       )
