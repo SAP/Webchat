@@ -5,17 +5,17 @@ import './style.scss'
 
 const Header = ({ closeWebchat, preferences }) => (
   <div
-    className="Header"
+    className="RecastAppHeader"
     style={{
       color: preferences.complementaryColor,
       backgroundColor: preferences.accentColor,
     }}
   >
-    <img className="Header--logo" src={preferences.headerLogo} />
+    <img className="RecastAppHeader--logo" src={preferences.headerLogo} />
 
-    <div className="Header--title">{preferences.headerTitle}</div>
+    <div className="RecastAppHeader--title">{preferences.headerTitle}</div>
 
-    <div className="Header--btn" onClick={closeWebchat}>
+    <div className="RecastAppHeader--btn" onClick={closeWebchat}>
       <img src="https://cdn.recast.ai/webchat/close.svg" />
     </div>
   </div>

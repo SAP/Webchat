@@ -9,7 +9,7 @@ import './style.scss'
 
 const Carousel = ({ content, sendMessage }) => {
   return (
-    <div className={'Carousel'}>
+    <div className={'RecastAppCarousel'}>
       <Slider
         arrows
         centerMode

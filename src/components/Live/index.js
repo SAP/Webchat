@@ -9,19 +9,19 @@ import './style.scss'
 
 class Live extends Component {
   componentDidMount() {
-    const container = document.querySelector('.Live')
+    const container = document.querySelector('.RecastAppLive')
     container.scrollTop = container.scrollHeight
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.messages.length !== this.props.messages.length) {
-      const container = document.querySelector('.Live')
+      const container = document.querySelector('.RecastAppLive')
       container.scrollTop = container.scrollHeight
     }
   }
 
   onImageLoaded = () => {
-    const container = document.querySelector('.Live')
+    const container = document.querySelector('.RecastAppLive')
     container.scrollTop = container.scrollHeight
   }
 
@@ -47,8 +47,8 @@ class Live extends Component {
     const lastMessage = messages.slice(-1)[0]
 
     return (
-      <div className="Live" style={{ backgroundColor: preferences.backgroundColor }}>
-        <div className="Live--message-container">
+      <div className="RecastAppLive" style={{ backgroundColor: preferences.backgroundColor }}>
+        <div className="RecastAppLive--message-container">
           {this.fmtMessages().map((message, index) => (
             <Message
               key={message.id}

@@ -26,7 +26,7 @@ class Input extends Component {
     const { value } = this.state
 
     return (
-      <div className="Input">
+      <div className="RecastAppInput">
         <form onSubmit={this.sendMessage}>
           <input
             ref={i => (this._input = i)}

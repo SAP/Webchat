@@ -79,11 +79,14 @@ class Chat extends Component {
     const { closeWebchat, messages, preferences } = this.props
 
     return (
-      <div className="Chat">
+      <div className="RecastAppChat">
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
         <Live messages={messages} preferences={preferences} sendMessage={this.sendMessage} />
-        <div className="Live--slogan" style={{ backgroundColor: preferences.backgroundColor }}>
+        <div
+          className="RecastAppLive--slogan"
+          style={{ backgroundColor: preferences.backgroundColor }}
+        >
           {'We run with Recast.AI'}
         </div>
         <Input onSubmit={this.sendMessage} />

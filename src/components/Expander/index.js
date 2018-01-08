@@ -6,18 +6,20 @@ import './style.scss'
 const Expander = ({ onClick, preferences }) => (
   <div
     onClick={onClick}
-    className="Expander"
+    className="RecastAppExpander"
     style={{
       color: preferences.complementaryColor,
       backgroundColor: preferences.accentColor,
     }}
   >
-    {preferences.expanderLogo && <img className="Expander--logo" src={preferences.expanderLogo} />}
+    {preferences.expanderLogo && (
+      <img className="RecastAppExpander--logo" src={preferences.expanderLogo} />
+    )}
 
     {preferences.expanderTitle}
 
     {preferences.onboardingMessage && (
-      <div className="Expander--onboarding">{preferences.onboardingMessage}</div>
+      <div className="RecastAppExpander--onboarding">{preferences.onboardingMessage}</div>
     )}
   </div>
 )

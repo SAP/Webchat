@@ -5,13 +5,13 @@ import cx from 'classnames'
 import './style.scss'
 
 export const PrevArrow = ({ className, style, onClick }) => (
-  <div className={cx('Arrow prev', className)} style={{ ...style }} onClick={onClick}>
+  <div className={cx('RecastAppArrow prev', className)} style={{ ...style }} onClick={onClick}>
     {'<'}
   </div>
 )
 
 export const NextArrow = ({ className, style, onClick }) => (
-  <div className={cx('Arrow next', className)} style={{ ...style }} onClick={onClick}>
+  <div className={cx('RecastAppArrow next', className)} style={{ ...style }} onClick={onClick}>
     {'>'}
   </div>
 )
