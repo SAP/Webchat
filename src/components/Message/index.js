@@ -26,7 +26,6 @@ class Message extends Component {
     const { displayIcon } = message
     const { type, content } = message.attachment
     const isBot = message.participant.isBot
-
     const image = isBot ? botPicture : userPicture
     const messageProps = {
       isBot,
@@ -35,9 +34,9 @@ class Message extends Component {
       style: {
         color: isBot ? botMessageColor : complementaryColor,
         backgroundColor: isBot ? botMessageBackgroundColor : accentColor,
+        accentColor
       },
     }
-
     return (
       <div className={cx('RecastAppMessage', { bot: isBot, user: !isBot })}>
         {image && (
