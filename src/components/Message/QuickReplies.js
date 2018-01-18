@@ -48,8 +48,8 @@ class QuickReplies extends Component {
                 className="RecastAppQuickReplies--button"
                 onClick={() => this.doSendMessage({ type: 'text', content: b.value })}
                 style={{
-                  border: `1px solid ${style.backgroundColor}`,
-                  color: style.backgroundColor,
+                  border: `1px solid ${style.accentColor}`,
+                  color: style.accentColor,
                 }}
               >
                 {truncate(b.title, 20)}

@@ -35,9 +35,10 @@ class Message extends Component {
       style: {
         color: isBot ? botMessageColor : complementaryColor,
         backgroundColor: isBot ? botMessageBackgroundColor : accentColor,
+        accentColor
       },
     }
-
+    
     return (
       <div className={cx('RecastAppMessage', { bot: isBot, user: !isBot })}>
         {image && (
