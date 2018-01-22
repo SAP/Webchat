@@ -54,7 +54,7 @@ class Message extends Component {
 
         {type === 'card' && <Card {...messageProps} sendMessage={sendMessage} />}
 
-        {type === 'carousel' && <Carousel {...messageProps} sendMessage={sendMessage} />}
+        {['carousel', 'carouselle'].includes(type) && <Carousel {...messageProps} sendMessage={sendMessage} />}
 
         {type === 'list' && <List {...messageProps} sendMessage={sendMessage} />}
 
