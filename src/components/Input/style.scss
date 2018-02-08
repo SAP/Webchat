@@ -1,6 +1,16 @@
 .RecastApp .RecastAppInput {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
   padding: 1rem;
   color: grey;
   background: white;
   box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+}
+
+@media only screen and (min-width: 450px) {
+  .RecastApp .RecastAppInput {
+    position: relative;
+  }
 }

@@ -1,7 +1,7 @@
 .RecastApp .RecastAppHeader {
   display: flex;
   align-items: center;
-  border-radius: 3px 3px 0 0;
+  border-radius: 0;
 
   &--logo {
     height: 50px;
@@ -19,5 +19,12 @@
     margin: 1rem;
     width: 15px;
     height: 15px;
+  }
+}
+
+
+@media only screen and (min-width: 450px) {
+  .RecastApp .RecastAppHeader {
+    border-radius: 3px 3px 0 0;
   }
 }
