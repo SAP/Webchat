@@ -8,8 +8,18 @@ import IsTyping from 'components/Message/isTyping'
 import './style.scss'
 
 class Live extends Component {
+  state = {
+    showTyping: false,
+  }
+
   componentDidMount() {
     this.messagesList.scrollTop = this.messagesList.scrollHeight
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.messages.length !== this.props.messages.length) {
+      this.setState({ showTyping: true })
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -47,12 +57,13 @@ class Live extends Component {
 
   render() {
     const { messages, sendMessage, preferences } = this.props
+    const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
 
     return (
       <div
         className="RecastAppLive"
-        ref={ref => this.messagesList = ref}
+        ref={ref => (this.messagesList = ref)}
         onScroll={this.handleScroll}
       >
         <div className="RecastAppLive--message-container">
@@ -68,7 +79,14 @@ class Live extends Component {
           ))}
 
           {lastMessage &&
-            lastMessage.participant.isBot === false && <IsTyping image={preferences.botPicture} />}
+            showTyping &&
+            lastMessage.participant.isBot === false && (
+              <IsTyping
+                image={preferences.botPicture}
+                callAfterTimeout={() => this.setState({ showTyping: false })}
+                timeout={20000}
+              />
+            )}
         </div>
       </div>
     )

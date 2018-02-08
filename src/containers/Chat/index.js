@@ -90,10 +90,7 @@ class Chat extends Component {
             messages={messages}
             preferences={preferences}
             sendMessage={this.sendMessage}
-            onScrollBottom={bool => {
-              console.log(bool)
-              this.setState({ showSlogan: bool })
-            }}
+            onScrollBottom={bool => this.setState({ showSlogan: bool })}
           />
           <div className={cx('RecastAppChat--slogan', { 'RecastAppChat--slogan--hidden' : !showSlogan })}>
             {'We run with Recast.AI'}
