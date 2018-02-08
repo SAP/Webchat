@@ -17,9 +17,13 @@ const Card = ({ content, sendMessage, onImageLoaded }) => {
         {subtitle && <p className="Card--text-subtitle">{truncate(subtitle, 80)}</p>}
       </div>
 
-      <div className="RecastAppCard--button-container">
-        {buttons.slice(0, 3).map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)}
-      </div>
+      {buttons.length ? (
+        <div className="RecastAppCard--button-container">
+          {buttons
+            .slice(0, 3)
+            .map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)}
+        </div>
+      ) : null}
     </div>
   )
 }

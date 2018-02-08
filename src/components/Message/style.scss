@@ -53,6 +53,11 @@
       }
     }
 
+    .slick-list {
+      height: fit-content;
+      height: -moz-fit-content;
+    }
+
     .slick-next {
       @extend .Arrow;
     }
