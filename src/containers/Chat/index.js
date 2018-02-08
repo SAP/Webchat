@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import cx from 'classnames'
 
 import { getLastMessageId } from 'selectors/messages'
 import { postMessage, pollMessages } from 'actions/messages'
@@ -28,6 +29,7 @@ import './style.scss'
 class Chat extends Component {
   state = {
     isPolling: false,
+    showSlogan: true,
   }
 
   componentDidMount() {
@@ -77,17 +79,25 @@ class Chat extends Component {
 
   render() {
     const { closeWebchat, messages, preferences } = this.props
+    const { showSlogan } = this.state
 
     return (
-      <div className="RecastAppChat">
+      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor}}>
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
-        <Live messages={messages} preferences={preferences} sendMessage={this.sendMessage} />
-        <div
-          className="RecastAppLive--slogan"
-          style={{ backgroundColor: preferences.backgroundColor }}
-        >
-          {'We run with Recast.AI'}
+        <div className="RecastAppChat--content">
+          <Live
+            messages={messages}
+            preferences={preferences}
+            sendMessage={this.sendMessage}
+            onScrollBottom={bool => {
+              console.log(bool)
+              this.setState({ showSlogan: bool })
+            }}
+          />
+          <div className={cx('RecastAppChat--slogan', { 'RecastAppChat--slogan--hidden' : !showSlogan })}>
+            {'We run with Recast.AI'}
+          </div>
         </div>
         <Input onSubmit={this.sendMessage} />
       </div>

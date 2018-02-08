@@ -9,24 +9,29 @@ import './style.scss'
 
 class Live extends Component {
   componentDidMount() {
-    const container = document.querySelector('.RecastAppLive')
-    container.scrollTop = container.scrollHeight
+    this.messagesList.scrollTop = this.messagesList.scrollHeight
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.messages.length !== this.props.messages.length) {
-      const container = document.querySelector('.RecastAppLive')
-      container.scrollTop = container.scrollHeight
+      this.messagesList.scrollTop = this.messagesList.scrollHeight
     }
   }
 
+  handleScroll = () => {
+    const { onScrollBottom } = this.props
+    const { clientHeight, scrollTop, scrollHeight } = this.messagesList
+
+    const isScrollBottom = scrollHeight - clientHeight === scrollTop
+    onScrollBottom(isScrollBottom)
+  }
+
   onImageLoaded = () => {
-    const container = document.querySelector('.RecastAppLive')
-    container.scrollTop = container.scrollHeight
+    this.messagesList.scrollTop = this.messagesList.scrollHeight
   }
 
   fmtMessages = () => {
-    const messages = reduceRight(
+    return reduceRight(
       this.props.messages,
       (acc, cur) => {
         const nextMessage = acc[0]
@@ -38,8 +43,6 @@ class Live extends Component {
       },
       [],
     )
-
-    return messages
   }
 
   render() {
@@ -47,7 +50,11 @@ class Live extends Component {
     const lastMessage = messages.slice(-1)[0]
 
     return (
-      <div className="RecastAppLive" style={{ backgroundColor: preferences.backgroundColor }}>
+      <div
+        className="RecastAppLive"
+        ref={ref => this.messagesList = ref}
+        onScroll={this.handleScroll}
+      >
         <div className="RecastAppLive--message-container">
           {this.fmtMessages().map((message, index) => (
             <Message
@@ -72,6 +79,7 @@ Live.propTypes = {
   messages: PropTypes.array,
   sendMessage: PropTypes.func,
   preferences: PropTypes.object,
+  onScrollBottom: PropTypes.func,
 }
 
 export default Live
