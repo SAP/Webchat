@@ -9,7 +9,7 @@
   box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
 }
 
-@media only screen and (min-width: 420px) {
+@media only screen and (min-width: 420px) and (min-height: 575px) {
   .RecastApp .RecastAppInput {
     position: relative;
   }
