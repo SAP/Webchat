@@ -9,10 +9,15 @@ import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
 
 import './style.scss'
 
-@connect(null, {
-  setCredentials,
-  createConversation,
-})
+@connect(
+  state => ({
+    isReady: state.conversation.conversationId,
+  }),
+  {
+    setCredentials,
+    createConversation,
+  },
+)
 class App extends Component {
   state = {
     expanded: false,
@@ -34,6 +39,33 @@ class App extends Component {
     }
 
     this.props.setCredentials(payload)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { isReady, preferences } = nextProps
+    if (isReady !== this.props.isReady) {
+      let expanded = null
+
+      switch (preferences.typeOpen) {
+        case 'always':
+          expanded = true
+          break
+        case 'never':
+          expanded = false
+          break
+        default:
+          expanded = localStorage.getItem('isChatOpen') === 'true'
+          break
+      }
+
+      this.setState({ expanded })
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.state.expanded !== prevState.expanded) {
+      localStorage.setItem('isChatOpen', this.state.expanded)
+    }
   }
 
   toggleChat = () => {
