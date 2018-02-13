@@ -53,8 +53,10 @@ class App extends Component {
         case 'never':
           expanded = false
           break
-        default:
+        case 'memory':
           expanded = localStorage.getItem('isChatOpen') === 'true'
+          break
+        default:
           break
       }
 
