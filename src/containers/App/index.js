@@ -46,7 +46,7 @@ class App extends Component {
     if (isReady !== this.props.isReady) {
       let expanded = null
 
-      switch (preferences.typeOpen) {
+      switch (preferences.openingType) {
         case 'always':
           expanded = true
           break
