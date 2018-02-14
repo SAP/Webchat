@@ -21,6 +21,7 @@ class Message extends Component {
       preferences,
       onImageLoaded,
       retry,
+      isSending,
       onRetrySendMessage,
       onCancelSendMessage,
     } = this.props
@@ -44,7 +45,7 @@ class Message extends Component {
       style: {
         color: isBot ? botMessageColor : complementaryColor,
         backgroundColor: isBot ? botMessageBackgroundColor : accentColor,
-        opacity: retry ? 0.5 : 1,
+        opacity: retry || isSending ? 0.5 : 1,
         accentColor,
       },
     }
@@ -96,6 +97,7 @@ Message.propTypes = {
   isLastMessage: PropTypes.bool,
   onImageLoaded: PropTypes.func,
   retry: PropTypes.bool,
+  isSending: PropTypes.bool,
   onRetrySendMessage: PropTypes.func,
   onCancelSendMessage: PropTypes.func,
 }

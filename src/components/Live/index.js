@@ -64,7 +64,7 @@ class Live extends Component {
     const { messages, sendMessage, preferences, onRetrySendMessage, onCancelSendMessage } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
-    const shouldDisplayTyping = lastMessage && lastMessage.participant.isBot === false && !lastMessage.retry && showTyping
+    const shouldDisplayTyping = lastMessage && lastMessage.participant.isBot === false && !lastMessage.retry && !lastMessage.isSending && showTyping
 
     return (
       <div
@@ -82,6 +82,7 @@ class Live extends Component {
               onImageLoaded={this.onImageLoaded}
               isLastMessage={messages.length === index + 1}
               retry={message.retry}
+              isSending={message.isSending}
               onRetrySendMessage={() => onRetrySendMessage(message)}
               onCancelSendMessage={() => onCancelSendMessage(message)}
             />

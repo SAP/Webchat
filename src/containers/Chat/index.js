@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
+import _concat from 'lodash/concat'
 
 import { getLastMessageId } from 'selectors/messages'
 import { postMessage, pollMessages, removeMessage } from 'actions/messages'
@@ -49,11 +50,25 @@ class Chat extends Component {
     const { token, channelId, chatId } = this.props
     const payload = { message: { attachment }, chatId }
 
-    this.props.postMessage(channelId, token, payload).then(() => {
-      if (!this.state.isPolling) {
-        this.doMessagesPolling()
-      }
-    })
+    const message = {
+      ...payload.message,
+      isSending: true,
+      id: `local-${Math.random()}`,
+      participant: {
+        isBot: false,
+      },
+    }
+
+    this.setState(
+      prevState => ({ messages: _concat(prevState.messages, [message]) }),
+      () => {
+        this.props.postMessage(channelId, token, payload).then(() => {
+          if (!this.state.isPolling) {
+            this.doMessagesPolling()
+          }
+        })
+      },
+    )
   }
 
   cancelSendMessage = message => {
@@ -107,11 +122,11 @@ class Chat extends Component {
   }
 
   render() {
-    const { closeWebchat, messages, preferences } = this.props
-    const { showSlogan } = this.state
+    const { closeWebchat, preferences } = this.props
+    const { showSlogan, messages } = this.state
 
     return (
-      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor}}>
+      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor }}>
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
         <div className="RecastAppChat--content">
@@ -123,7 +138,11 @@ class Chat extends Component {
             onRetrySendMessage={this.retrySendMessage}
             onCancelSendMessage={this.cancelSendMessage}
           />
-          <div className={cx('RecastAppChat--slogan', { 'RecastAppChat--slogan--hidden' : !showSlogan })}>
+          <div
+            className={cx('RecastAppChat--slogan', {
+              'RecastAppChat--slogan--hidden': !showSlogan,
+            })}
+          >
             {'We run with Recast.AI'}
           </div>
         </div>
