@@ -43,8 +43,9 @@ class Live extends Component {
   }
 
   render() {
-    const { messages, sendMessage, preferences } = this.props
+    const { messages, sendMessage, preferences, onRetrySendMessage, onCancelSendMessage } = this.props
     const lastMessage = messages.slice(-1)[0]
+    const shouldDisplayTyping = lastMessage && lastMessage.participant.isBot === false && !lastMessage.retry
 
     return (
       <div className="RecastAppLive" style={{ backgroundColor: preferences.backgroundColor }}>
@@ -57,11 +58,13 @@ class Live extends Component {
               preferences={preferences}
               onImageLoaded={this.onImageLoaded}
               isLastMessage={messages.length === index + 1}
+              retry={message.retry}
+              onRetrySendMessage={() => onRetrySendMessage(message)}
+              onCancelSendMessage={() => onCancelSendMessage(message)}
             />
           ))}
 
-          {lastMessage &&
-            lastMessage.participant.isBot === false && <IsTyping image={preferences.botPicture} />}
+          {shouldDisplayTyping && <IsTyping image={preferences.botPicture} />}
         </div>
       </div>
     )
@@ -72,6 +75,8 @@ Live.propTypes = {
   messages: PropTypes.array,
   sendMessage: PropTypes.func,
   preferences: PropTypes.object,
+  onRetrySendMessage: PropTypes.func,
+  onCancelSendMessage: PropTypes.func,
 }
 
 export default Live

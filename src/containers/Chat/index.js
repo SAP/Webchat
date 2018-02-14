@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { getLastMessageId } from 'selectors/messages'
-import { postMessage, pollMessages } from 'actions/messages'
+import { postMessage, pollMessages, removeMessage } from 'actions/messages'
 
 import Header from 'components/Header'
 import Live from 'components/Live'
@@ -23,15 +23,24 @@ import './style.scss'
   {
     postMessage,
     pollMessages,
+    removeMessage,
   },
 )
 class Chat extends Component {
   state = {
     isPolling: false,
+    messages: this.props.messages,
   }
 
   componentDidMount() {
     this.doMessagesPolling()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { messages } = nextProps
+    if (messages !== this.state.messages) {
+      this.setState({ messages })
+    }
   }
 
   sendMessage = attachment => {
@@ -43,6 +52,15 @@ class Chat extends Component {
         this.doMessagesPolling()
       }
     })
+  }
+
+  cancelSendMessage = message => {
+    this.props.removeMessage(message.id)
+  }
+
+  retrySendMessage = message => {
+    this.props.removeMessage(message.id)
+    this.sendMessage(message.attachment)
   }
 
   doMessagesPolling = async () => {
@@ -93,7 +111,13 @@ class Chat extends Component {
       <div className="RecastAppChat">
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
-        <Live messages={messages} preferences={preferences} sendMessage={this.sendMessage} />
+        <Live
+          messages={messages}
+          preferences={preferences}
+          sendMessage={this.sendMessage}
+          onRetrySendMessage={this.retrySendMessage}
+          onCancelSendMessage={this.cancelSendMessage}
+        />
         <div
           className="RecastAppLive--slogan"
           style={{ backgroundColor: preferences.backgroundColor }}
