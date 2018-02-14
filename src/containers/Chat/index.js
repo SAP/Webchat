@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import cx from 'classnames'
 
 import { getLastMessageId } from 'selectors/messages'
 import { postMessage, pollMessages, removeMessage } from 'actions/messages'
@@ -30,6 +31,7 @@ class Chat extends Component {
   state = {
     isPolling: false,
     messages: this.props.messages,
+    showSlogan: true,
   }
 
   componentDidMount() {
@@ -106,23 +108,24 @@ class Chat extends Component {
 
   render() {
     const { closeWebchat, messages, preferences } = this.props
+    const { showSlogan } = this.state
 
     return (
-      <div className="RecastAppChat">
+      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor}}>
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
-        <Live
-          messages={messages}
-          preferences={preferences}
-          sendMessage={this.sendMessage}
-          onRetrySendMessage={this.retrySendMessage}
-          onCancelSendMessage={this.cancelSendMessage}
-        />
-        <div
-          className="RecastAppLive--slogan"
-          style={{ backgroundColor: preferences.backgroundColor }}
-        >
-          {'We run with Recast.AI'}
+        <div className="RecastAppChat--content">
+          <Live
+            messages={messages}
+            preferences={preferences}
+            sendMessage={this.sendMessage}
+            onScrollBottom={bool => this.setState({ showSlogan: bool })}
+            onRetrySendMessage={this.retrySendMessage}
+            onCancelSendMessage={this.cancelSendMessage}
+          />
+          <div className={cx('RecastAppChat--slogan', { 'RecastAppChat--slogan--hidden' : !showSlogan })}>
+            {'We run with Recast.AI'}
+          </div>
         </div>
         <Input onSubmit={this.sendMessage} />
       </div>
