@@ -14,6 +14,7 @@ class Live extends Component {
 
   componentDidMount() {
     this.messagesList.scrollTop = this.messagesList.scrollHeight
+    window.addEventListener('resize', this.handleScroll);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -26,6 +27,10 @@ class Live extends Component {
     if (prevProps.messages.length !== this.props.messages.length) {
       this.messagesList.scrollTop = this.messagesList.scrollHeight
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleScroll);
   }
 
   handleScroll = () => {
