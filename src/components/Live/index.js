@@ -8,25 +8,40 @@ import IsTyping from 'components/Message/isTyping'
 import './style.scss'
 
 class Live extends Component {
+  state = {
+    showTyping: false,
+  }
+
   componentDidMount() {
-    const container = document.querySelector('.RecastAppLive')
-    container.scrollTop = container.scrollHeight
+    this.messagesList.scrollTop = this.messagesList.scrollHeight
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.messages.length !== this.props.messages.length) {
+      this.setState({ showTyping: true })
+    }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.messages.length !== this.props.messages.length) {
-      const container = document.querySelector('.RecastAppLive')
-      container.scrollTop = container.scrollHeight
+      this.messagesList.scrollTop = this.messagesList.scrollHeight
     }
   }
 
+  handleScroll = () => {
+    const { onScrollBottom } = this.props
+    const { clientHeight, scrollTop, scrollHeight } = this.messagesList
+
+    const isScrollBottom = scrollHeight - clientHeight === scrollTop
+    onScrollBottom(isScrollBottom)
+  }
+
   onImageLoaded = () => {
-    const container = document.querySelector('.RecastAppLive')
-    container.scrollTop = container.scrollHeight
+    this.messagesList.scrollTop = this.messagesList.scrollHeight
   }
 
   fmtMessages = () => {
-    const messages = reduceRight(
+    return reduceRight(
       this.props.messages,
       (acc, cur) => {
         const nextMessage = acc[0]
@@ -38,16 +53,19 @@ class Live extends Component {
       },
       [],
     )
-
-    return messages
   }
 
   render() {
     const { messages, sendMessage, preferences } = this.props
+    const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
 
     return (
-      <div className="RecastAppLive" style={{ backgroundColor: preferences.backgroundColor }}>
+      <div
+        className="RecastAppLive"
+        ref={ref => (this.messagesList = ref)}
+        onScroll={this.handleScroll}
+      >
         <div className="RecastAppLive--message-container">
           {this.fmtMessages().map((message, index) => (
             <Message
@@ -61,7 +79,14 @@ class Live extends Component {
           ))}
 
           {lastMessage &&
-            lastMessage.participant.isBot === false && <IsTyping image={preferences.botPicture} />}
+            showTyping &&
+            lastMessage.participant.isBot === false && (
+              <IsTyping
+                image={preferences.botPicture}
+                callAfterTimeout={() => this.setState({ showTyping: false })}
+                timeout={20000}
+              />
+            )}
         </div>
       </div>
     )
@@ -72,6 +97,7 @@ Live.propTypes = {
   messages: PropTypes.array,
   sendMessage: PropTypes.func,
   preferences: PropTypes.object,
+  onScrollBottom: PropTypes.func,
 }
 
 export default Live
