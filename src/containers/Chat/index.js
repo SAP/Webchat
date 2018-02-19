@@ -55,7 +55,8 @@ class Chat extends Component {
 
     do {
       const { lastMessageId } = this.props
-
+      let shouldWaitXseconds = false
+      let timeToSleep = 0
       try {
         const { waitTime } = await this.props.pollMessages(
           channelId,
@@ -64,12 +65,22 @@ class Chat extends Component {
           lastMessageId,
         )
         shouldPoll = waitTime === 0
+        shouldWaitXseconds = waitTime > 0
+        timeToSleep = waitTime * 1000
       } catch (err) {
         shouldPoll = false
       }
       index++
 
-      if (!shouldPoll && index < 4) {
+      /**
+       * Note: If the server returns a waitTime != 0, it means that conversation has no new messages since 2 minutes.
+       * So, let's poll to check new messages every "waitTime" seconds (waitTime = 120 seconds per default)
+       */
+      if (shouldWaitXseconds) {
+        index = 0
+        this.setState({ isPolling: false })
+        await new Promise(resolve => setTimeout(resolve, timeToSleep))
+      } else if (!shouldPoll && index < 4) {
         await new Promise(resolve => setTimeout(resolve, 300))
       }
     } while (shouldPoll || index < 4)
