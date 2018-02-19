@@ -22,3 +22,5 @@ export const pollMessages = createAction(
     query: { last_message_id: lastMessageId }, // eslint-disable-line camelcase
   }),
 )
+
+export const removeMessage = createAction('REMOVE_MESSAGE')

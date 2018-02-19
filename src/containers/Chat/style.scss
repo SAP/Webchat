@@ -1,10 +1,54 @@
 .RecastApp .RecastAppChat {
   position: fixed;
-  z-index: 5;
-  right: 10px;
-  bottom: 10px;
-  border-radius: 3px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
-  width: 370px;
-  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+  &--content {
+    position: relative;
+    height: calc(100% - 100px);
+  }
+
+  &--slogan {
+    padding: 0.2rem;
+    padding-bottom: 0.5rem;
+    font-size: 14px;
+    font-weight: bold;
+
+    text-align: center;
+    color: lightgrey;
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: transparent;
+
+    opacity: 1;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+
+  &--slogan--hidden {
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
 }
+
+
+@media only screen and (min-width: 420px) and (min-height: 575px) {
+  .RecastApp .RecastAppChat {
+    right: 10px;
+    bottom: 10px;
+    border-radius: 3px;
+    top: unset;
+    left: unset;
+    width: 370px;
+    height: unset;
+    box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+
+    &--slogan {
+      margin-bottom: 0;
+    }
+  }
+}
+
