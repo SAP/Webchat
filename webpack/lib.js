@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
 
-  entry: ['babel-polyfill', './src/index.js'],
+  entry: ['./src/index.js'],
 
   resolve: {
     modules: ['../src', '../node_modules'].map(p => path.resolve(__dirname, p)),
