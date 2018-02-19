@@ -7,7 +7,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
-
   entry: ['./src/index.js'],
 
   resolve: {
@@ -23,32 +22,38 @@ module.exports = {
   },
 
   module: {
-    rules: [{
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node-modules/,
-      options: {
-        cacheDirectory: true,
-      },
-    }, {
-      test: /\.scss$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        {
-          loader: 'postcss-loader',
-          options: {
-            ident: 'postcss',
-            plugins: () => [require('autoprefixer')],
-          },
+    rules: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node-modules/,
+        options: {
+          cacheDirectory: true,
         },
-        'sass-loader',
-      ],
-      exclude: /node_modules/,
-    }]
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: () => [require('autoprefixer')],
+              },
+            },
+            'sass-loader',
+          ],
+        }),
+      },
+    ],
   },
 
   plugins: [
+    new ExtractTextPlugin({ filename: '[name].scss', disable: false, allChunks: true }),
+
     new webpack.NamedModulesPlugin(),
 
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -59,8 +64,7 @@ module.exports = {
     }),
 
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(env) }
+      'process.env': { NODE_ENV: JSON.stringify(env) },
     }),
   ],
-
 }
