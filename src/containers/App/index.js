@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   render() {
-    const { preferences } = this.props
+    const { preferences, containerMessagesStyle } = this.props
     const { expanded } = this.state
 
     return (
@@ -59,7 +59,11 @@ class App extends Component {
 
         {!expanded && <Expander onClick={this.toggleChat} preferences={preferences} />}
 
-        {expanded && <Chat closeWebchat={this.toggleChat} preferences={preferences} />}
+        {expanded && <Chat
+          closeWebchat={this.toggleChat}
+          preferences={preferences}
+          containerMessagesStyle={containerMessagesStyle}
+        />}
       </div>
     )
   }
@@ -69,6 +73,7 @@ App.propTypes = {
   token: PropTypes.string.isRequired,
   channelId: PropTypes.string.isRequired,
   preferences: PropTypes.object.isRequired,
+  containerMessagesStyle: PropTypes.object,
 }
 
 export default App

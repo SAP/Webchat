@@ -76,13 +76,19 @@ class Chat extends Component {
   }
 
   render() {
-    const { closeWebchat, messages, preferences } = this.props
+    const { closeWebchat, messages, preferences, containerMessagesStyle } = this.props
 
     return (
       <div className="RecastAppChat">
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
-        <Live messages={messages} preferences={preferences} sendMessage={this.sendMessage} />
+        <Live
+          messages={messages}
+          preferences={preferences}
+          sendMessage={this.sendMessage}
+          containerMessagesStyle={containerMessagesStyle}
+        />
+
         <div
           className="RecastAppLive--slogan"
           style={{ backgroundColor: preferences.backgroundColor }}
@@ -105,6 +111,7 @@ Chat.propTypes = {
   conversationId: PropTypes.string,
   messages: PropTypes.array,
   preferences: PropTypes.object,
+  containerMessagesStyle: PropTypes.object,
 }
 
 export default Chat

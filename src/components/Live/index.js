@@ -43,11 +43,11 @@ class Live extends Component {
   }
 
   render() {
-    const { messages, sendMessage, preferences } = this.props
+    const { messages, sendMessage, preferences, containerMessagesStyle } = this.props
     const lastMessage = messages.slice(-1)[0]
 
     return (
-      <div className="RecastAppLive" style={{ backgroundColor: preferences.backgroundColor }}>
+      <div className="RecastAppLive" style={{ backgroundColor: preferences.backgroundColor, ...containerMessagesStyle }}>
         <div className="RecastAppLive--message-container">
           {this.fmtMessages().map((message, index) => (
             <Message
@@ -72,6 +72,7 @@ Live.propTypes = {
   messages: PropTypes.array,
   sendMessage: PropTypes.func,
   preferences: PropTypes.object,
+  containerMessagesStyle: PropTypes.object,
 }
 
 export default Live
