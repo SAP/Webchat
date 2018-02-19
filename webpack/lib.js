@@ -18,6 +18,8 @@ module.exports = {
     path: path.join(__dirname, '../lib'),
     filename: 'index.js',
     publicPath: '/lib/',
+    library: ['webchat'],
+    libraryTarget: 'umd',
   },
 
   module: {
