@@ -14,7 +14,17 @@ import './style.scss'
 
 class Message extends Component {
   render() {
-    const { message, isLastMessage, sendMessage, preferences, onImageLoaded } = this.props
+    const {
+      message,
+      isLastMessage,
+      sendMessage,
+      preferences,
+      onImageLoaded,
+      retry,
+      isSending,
+      onRetrySendMessage,
+      onCancelSendMessage,
+    } = this.props
     const {
       botPicture,
       userPicture,
@@ -35,34 +45,45 @@ class Message extends Component {
       style: {
         color: isBot ? botMessageColor : complementaryColor,
         backgroundColor: isBot ? botMessageBackgroundColor : accentColor,
-        accentColor
+        opacity: retry || isSending ? 0.5 : 1,
+        accentColor,
       },
     }
-    
+
     return (
-      <div className={cx('RecastAppMessage', { bot: isBot, user: !isBot })}>
-        {image && (
-          <img
-            className={cx('RecastAppMessage--logo', { visible: displayIcon })}
-            src={image}
-            style={{}}
-          />
-        )}
+      <div className='RecastAppMessageContainer'>
+        <div className={cx('RecastAppMessage', { bot: isBot, user: !isBot })}>
+          {image && (
+            <img
+              className={cx('RecastAppMessage--logo', { visible: displayIcon })}
+              src={image}
+              style={{}}
+            />
+          )}
 
-        {type === 'text' && <Text {...messageProps} />}
+          {type === 'text' && <Text {...messageProps} />}
 
-        {type === 'picture' && <Picture {...messageProps} />}
+          {type === 'picture' && <Picture {...messageProps} />}
 
-        {type === 'card' && <Card {...messageProps} sendMessage={sendMessage} />}
+          {type === 'card' && <Card {...messageProps} sendMessage={sendMessage} />}
 
-        {['carousel', 'carouselle'].includes(type) && <Carousel {...messageProps} sendMessage={sendMessage} />}
+          {['carousel', 'carouselle'].includes(type) && (
+            <Carousel {...messageProps} sendMessage={sendMessage} />
+          )}
 
-        {type === 'list' && <List {...messageProps} sendMessage={sendMessage} />}
+          {type === 'list' && <List {...messageProps} sendMessage={sendMessage} />}
 
-        {type === 'buttons' && <Buttons {...messageProps} sendMessage={sendMessage} />}
+          {type === 'buttons' && <Buttons {...messageProps} sendMessage={sendMessage} />}
 
-        {type === 'quickReplies' && (
-          <QuickReplies {...messageProps} sendMessage={sendMessage} isLastMessage={isLastMessage} />
+          {type === 'quickReplies' && (
+            <QuickReplies {...messageProps} sendMessage={sendMessage} isLastMessage={isLastMessage} />
+          )}
+        </div>
+        {retry && (
+          <div className={cx('RecastAppMessage--retry', { bot: isBot })}>
+            Couldn’t send this message <span onClick={onRetrySendMessage} className='button'>Try again</span> |{' '}
+            <span onClick={onCancelSendMessage} className='button'>Cancel</span>
+          </div>
         )}
       </div>
     )
@@ -75,6 +96,10 @@ Message.propTypes = {
   preferences: PropTypes.object,
   isLastMessage: PropTypes.bool,
   onImageLoaded: PropTypes.func,
+  retry: PropTypes.bool,
+  isSending: PropTypes.bool,
+  onRetrySendMessage: PropTypes.func,
+  onCancelSendMessage: PropTypes.func,
 }
 
 export default Message

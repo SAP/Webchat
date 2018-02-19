@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
+import _concat from 'lodash/concat'
 
 import { getLastMessageId } from 'selectors/messages'
-import { postMessage, pollMessages } from 'actions/messages'
+import { postMessage, pollMessages, removeMessage } from 'actions/messages'
 
 import Header from 'components/Header'
 import Live from 'components/Live'
@@ -24,11 +25,13 @@ import './style.scss'
   {
     postMessage,
     pollMessages,
+    removeMessage,
   },
 )
 class Chat extends Component {
   state = {
     isPolling: false,
+    messages: this.props.messages,
     showSlogan: true,
   }
 
@@ -36,15 +39,45 @@ class Chat extends Component {
     this.doMessagesPolling()
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { messages } = nextProps
+    if (messages !== this.state.messages) {
+      this.setState({ messages })
+    }
+  }
+
   sendMessage = attachment => {
     const { token, channelId, chatId } = this.props
     const payload = { message: { attachment }, chatId }
 
-    this.props.postMessage(channelId, token, payload).then(() => {
-      if (!this.state.isPolling) {
-        this.doMessagesPolling()
-      }
-    })
+    const message = {
+      ...payload.message,
+      isSending: true,
+      id: `local-${Math.random()}`,
+      participant: {
+        isBot: false,
+      },
+    }
+
+    this.setState(
+      prevState => ({ messages: _concat(prevState.messages, [message]) }),
+      () => {
+        this.props.postMessage(channelId, token, payload).then(() => {
+          if (!this.state.isPolling) {
+            this.doMessagesPolling()
+          }
+        })
+      },
+    )
+  }
+
+  cancelSendMessage = message => {
+    this.props.removeMessage(message.id)
+  }
+
+  retrySendMessage = message => {
+    this.props.removeMessage(message.id)
+    this.sendMessage(message.attachment)
   }
 
   doMessagesPolling = async () => {
@@ -89,11 +122,11 @@ class Chat extends Component {
   }
 
   render() {
-    const { closeWebchat, messages, preferences } = this.props
-    const { showSlogan } = this.state
+    const { closeWebchat, preferences } = this.props
+    const { showSlogan, messages } = this.state
 
     return (
-      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor}}>
+      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor }}>
         <Header closeWebchat={closeWebchat} preferences={preferences} />
 
         <div className="RecastAppChat--content">
@@ -102,8 +135,14 @@ class Chat extends Component {
             preferences={preferences}
             sendMessage={this.sendMessage}
             onScrollBottom={bool => this.setState({ showSlogan: bool })}
+            onRetrySendMessage={this.retrySendMessage}
+            onCancelSendMessage={this.cancelSendMessage}
           />
-          <div className={cx('RecastAppChat--slogan', { 'RecastAppChat--slogan--hidden' : !showSlogan })}>
+          <div
+            className={cx('RecastAppChat--slogan', {
+              'RecastAppChat--slogan--hidden': !showSlogan,
+            })}
+          >
             {'We run with Recast.AI'}
           </div>
         </div>

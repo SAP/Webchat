@@ -1,3 +1,7 @@
+.RecastAppMessageContainer {
+  position: relative;
+}
+
 .RecastApp .RecastAppMessage {
   display: flex;
   flex-direction: row-reverse;
@@ -13,6 +17,22 @@
 
     &.visible {
       opacity: 1 !important;
+    }
+  }
+
+  &--retry {
+    font-size: 12px;
+    margin: 0 10px;
+    text-align: right;
+    color: #9e9e9e;
+
+    &.bot {
+      text-align: left;
+    }
+
+    .button {
+      cursor: pointer;
+      color: #2196f3;
     }
   }
 

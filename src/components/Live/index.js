@@ -61,9 +61,10 @@ class Live extends Component {
   }
 
   render() {
-    const { messages, sendMessage, preferences } = this.props
+    const { messages, sendMessage, preferences, onRetrySendMessage, onCancelSendMessage } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
+    const shouldDisplayTyping = lastMessage && lastMessage.participant.isBot === false && !lastMessage.retry && !lastMessage.isSending && showTyping
 
     return (
       <div
@@ -80,12 +81,14 @@ class Live extends Component {
               preferences={preferences}
               onImageLoaded={this.onImageLoaded}
               isLastMessage={messages.length === index + 1}
+              retry={message.retry}
+              isSending={message.isSending}
+              onRetrySendMessage={() => onRetrySendMessage(message)}
+              onCancelSendMessage={() => onCancelSendMessage(message)}
             />
           ))}
 
-          {lastMessage &&
-            showTyping &&
-            lastMessage.participant.isBot === false && (
+          {shouldDisplayTyping && (
               <IsTyping
                 image={preferences.botPicture}
                 callAfterTimeout={() => this.setState({ showTyping: false })}
@@ -102,7 +105,8 @@ Live.propTypes = {
   messages: PropTypes.array,
   sendMessage: PropTypes.func,
   preferences: PropTypes.object,
-  onScrollBottom: PropTypes.func,
+  onRetrySendMessage: PropTypes.func,
+  onCancelSendMessage: PropTypes.func,
 }
 
 export default Live
