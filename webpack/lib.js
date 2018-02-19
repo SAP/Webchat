@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
 
-  entry: ['./src/index.js'],
+  entry: ['babel-polyfill', './src/index.js'],
 
   resolve: {
     modules: ['../src', '../node_modules'].map(p => path.resolve(__dirname, p)),
@@ -33,7 +33,7 @@ module.exports = {
     }, {
       test: /\.scss$/,
       use: [
-        // 'style-loader',
+        'style-loader',
         'css-loader',
         {
           loader: 'postcss-loader',
@@ -49,14 +49,14 @@ module.exports = {
   },
 
   plugins: [
-    // new webpack.NamedModulesPlugin(),
+    new webpack.NamedModulesPlugin(),
 
-    // new webpack.optimize.OccurrenceOrderPlugin(),
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compressor: { warnings: false },
-    //   minimize: true,
-    // }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: { warnings: false },
+      minimize: true,
+    }),
 
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(env) }
