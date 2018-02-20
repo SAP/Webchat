@@ -122,7 +122,7 @@ class Chat extends Component {
   }
 
   render() {
-    const { closeWebchat, preferences } = this.props
+    const { closeWebchat, preferences, showInfo } = this.props
     const { showSlogan, messages } = this.state
 
     return (
@@ -137,6 +137,7 @@ class Chat extends Component {
             onScrollBottom={bool => this.setState({ showSlogan: bool })}
             onRetrySendMessage={this.retrySendMessage}
             onCancelSendMessage={this.cancelSendMessage}
+            showInfo={showInfo}
           />
           <div
             className={cx('RecastAppChat--slogan', {
@@ -162,6 +163,7 @@ Chat.propTypes = {
   conversationId: PropTypes.string,
   messages: PropTypes.array,
   preferences: PropTypes.object,
+  showInfo: PropTypes.bool,
 }
 
 export default Chat

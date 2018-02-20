@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   render() {
-    const { preferences, containerMessagesStyle } = this.props
+    const { preferences, containerMessagesStyle, showInfo } = this.props
     const { expanded } = this.state
 
     return (
@@ -63,6 +63,7 @@ class App extends Component {
           closeWebchat={this.toggleChat}
           preferences={preferences}
           containerMessagesStyle={containerMessagesStyle}
+          showInfo={showInfo}
         />}
       </div>
     )
@@ -74,6 +75,7 @@ App.propTypes = {
   channelId: PropTypes.string.isRequired,
   preferences: PropTypes.object.isRequired,
   containerMessagesStyle: PropTypes.object,
+  showInfo: PropTypes.bool,
 }
 
 export default App

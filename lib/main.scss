@@ -25,7 +25,17 @@
   .RecastApp .RecastAppHeader {
     border-radius: 3px 3px 0 0; } }
 .RecastAppMessageContainer {
-  position: relative; }
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end; }
+  .RecastAppMessageContainer.bot {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
 
 .RecastApp .RecastAppMessage {
   display: -webkit-box;
@@ -39,6 +49,10 @@
       -ms-flex-align: center;
           align-items: center;
   margin: 1rem 0.5rem;
+  width: -webkit-fit-content;
+  width: fit-content;
+  width: -moz-fit-content;
+  position: relative;
   /*
    * Slider
    */
@@ -69,6 +83,18 @@
     opacity: 0; }
     .RecastApp .RecastAppMessage--logo.visible {
       opacity: 1 !important; }
+  .RecastApp .RecastAppMessage--JsonButton {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    padding-left: 0.5rem;
+    margin-left: -1rem;
+    margin-top: -0.6rem;
+    z-index: 1;
+    cursor: pointer;
+    position: absolute;
+    top: 2;
+    right: -7px; }
   .RecastApp .RecastAppMessage--retry {
     font-size: 12px;
     margin: 0 10px;

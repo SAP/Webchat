@@ -24,6 +24,7 @@ class Message extends Component {
       isSending,
       onRetrySendMessage,
       onCancelSendMessage,
+      showInfo,
     } = this.props
     const {
       botPicture,
@@ -51,7 +52,7 @@ class Message extends Component {
     }
 
     return (
-      <div className='RecastAppMessageContainer'>
+      <div className={cx('RecastAppMessageContainer', { bot: isBot, user: !isBot })}>
         <div className={cx('RecastAppMessage', { bot: isBot, user: !isBot })}>
           {image && (
             <img
@@ -78,6 +79,13 @@ class Message extends Component {
           {type === 'quickReplies' && (
             <QuickReplies {...messageProps} sendMessage={sendMessage} isLastMessage={isLastMessage} />
           )}
+
+          {isBot && showInfo && (
+            <div class='RecastAppMessage--JsonButton'>
+              <img src='https://cdn.recast.ai/website/bot-builder/info.png'/>
+            </div>
+          )}
+
         </div>
         {retry && (
           <div className={cx('RecastAppMessage--retry', { bot: isBot })}>
@@ -100,6 +108,7 @@ Message.propTypes = {
   isSending: PropTypes.bool,
   onRetrySendMessage: PropTypes.func,
   onCancelSendMessage: PropTypes.func,
+  showInfo: PropTypes.bool,
 }
 
 export default Message

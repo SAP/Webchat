@@ -61,7 +61,7 @@ class Live extends Component {
   }
 
   render() {
-    const { messages, sendMessage, preferences, onRetrySendMessage, onCancelSendMessage, containerMessagesStyle } = this.props
+    const { messages, sendMessage, preferences, onRetrySendMessage, onCancelSendMessage, containerMessagesStyle, showInfo } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
     const shouldDisplayTyping = lastMessage && lastMessage.participant.isBot === false && !lastMessage.retry && !lastMessage.isSending && showTyping
@@ -86,6 +86,7 @@ class Live extends Component {
               isSending={message.isSending}
               onRetrySendMessage={() => onRetrySendMessage(message)}
               onCancelSendMessage={() => onCancelSendMessage(message)}
+              showInfo={showInfo}
             />
           ))}
 
@@ -108,6 +109,7 @@ Live.propTypes = {
   preferences: PropTypes.object,
   onRetrySendMessage: PropTypes.func,
   onCancelSendMessage: PropTypes.func,
+  showInfo: PropTypes.bool,
 }
 
 export default Live
