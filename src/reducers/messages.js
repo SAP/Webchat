@@ -30,7 +30,35 @@ export default handleActions(
       const indexMessage = state.findIndex(message => message.id === messageId)
       newState.splice(indexMessage, 1)
       return newState
-    }
+    },
+
+    ADD_BOT_MESSAGE: (state, { payload: messages }) => {
+      const getMessageTemplate = content => ({
+        attachment: content,
+        id: `local-${Math.random()}`,
+        participant: {
+          isBot: true,
+        },
+      })
+
+      const formattedMessages = messages.map(message => getMessageTemplate(message))
+      return [...state, ...formattedMessages]
+    },
+
+    ADD_USER_MESSAGE: (state, { payload }) => {
+      const message = {
+        ...payload,
+        id: `local-${Math.random()}`,
+        isSending: false,
+        participant: {
+          isBot: false,
+        },
+      }
+
+      console.log("REDUCER payload", payload)
+      console.log("REDUCER message", message)
+      return [...state, ...[message]]
+    },
   },
   initialState,
 )

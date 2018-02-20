@@ -5,7 +5,13 @@ import cx from 'classnames'
 import _concat from 'lodash/concat'
 
 import { getLastMessageId } from 'selectors/messages'
-import { postMessage, pollMessages, removeMessage } from 'actions/messages'
+import {
+  postMessage,
+  pollMessages,
+  removeMessage,
+  addBotMessage,
+  addUserMessage,
+} from 'actions/messages'
 
 import Header from 'components/Header'
 import Live from 'components/Live'
@@ -26,6 +32,8 @@ import './style.scss'
     postMessage,
     pollMessages,
     removeMessage,
+    addUserMessage,
+    addBotMessage,
   },
 )
 class Chat extends Component {
@@ -36,7 +44,11 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this.doMessagesPolling()
+    const { sendMessagePromise } = this.props
+
+    if (!sendMessagePromise) {
+      this.doMessagesPolling()
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,7 +59,15 @@ class Chat extends Component {
   }
 
   sendMessage = attachment => {
-    const { token, channelId, chatId } = this.props
+    const {
+      token,
+      channelId,
+      chatId,
+      postMessage,
+      sendMessagePromise,
+      addUserMessage,
+      addBotMessage,
+    } = this.props
     const payload = { message: { attachment }, chatId }
 
     const message = {
@@ -62,11 +82,20 @@ class Chat extends Component {
     this.setState(
       prevState => ({ messages: _concat(prevState.messages, [message]) }),
       () => {
-        this.props.postMessage(channelId, token, payload).then(() => {
-          if (!this.state.isPolling) {
-            this.doMessagesPolling()
-          }
-        })
+        if (sendMessagePromise) {
+          addUserMessage(message)
+
+          sendMessagePromise(message).then(res => {
+            const data = res.data
+            addBotMessage(data.messages)
+          })
+        } else {
+          postMessage(channelId, token, payload).then(() => {
+            if (!this.state.isPolling) {
+              this.doMessagesPolling()
+            }
+          })
+        }
       },
     )
   }
@@ -164,6 +193,7 @@ Chat.propTypes = {
   messages: PropTypes.array,
   preferences: PropTypes.object,
   showInfo: PropTypes.bool,
+  sendMessagePromise: PropTypes.object,
 }
 
 export default Chat

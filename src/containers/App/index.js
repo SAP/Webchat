@@ -19,18 +19,25 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { channelId, token, preferences } = this.props
+    const { channelId, token, preferences, getConversationId } = this.props
     const credentials = getCredentialsFromCookie()
     const payload = { channelId, token }
 
     if (credentials) {
       Object.assign(payload, credentials)
+
+      if (getConversationId) {
+        getConversationId(credentials.conversationId)
+      }
+
     } else {
-      this.props
-        .createConversation(channelId, token)
-        .then(({ id, chatId }) =>
-          storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive),
-        )
+      this.props.createConversation(channelId, token).then(({ id, chatId }) => {
+        if (getConversationId) {
+          getConversationId(id)
+        }
+
+        storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive)
+      })
     }
 
     this.props.setCredentials(payload)
@@ -41,7 +48,7 @@ class App extends Component {
   }
 
   render() {
-    const { preferences, containerMessagesStyle, showInfo } = this.props
+    const { preferences, containerMessagesStyle, showInfo, sendMessagePromise } = this.props
     const { expanded } = this.state
 
     return (
@@ -59,12 +66,15 @@ class App extends Component {
 
         {!expanded && <Expander onClick={this.toggleChat} preferences={preferences} />}
 
-        {expanded && <Chat
-          closeWebchat={this.toggleChat}
-          preferences={preferences}
-          containerMessagesStyle={containerMessagesStyle}
-          showInfo={showInfo}
-        />}
+        {expanded && (
+          <Chat
+            closeWebchat={this.toggleChat}
+            preferences={preferences}
+            containerMessagesStyle={containerMessagesStyle}
+            showInfo={showInfo}
+            sendMessagePromise={sendMessagePromise}
+          />
+        )}
       </div>
     )
   }
@@ -76,6 +86,8 @@ App.propTypes = {
   preferences: PropTypes.object.isRequired,
   containerMessagesStyle: PropTypes.object,
   showInfo: PropTypes.bool,
+  sendMessagePromise: PropTypes.object,
+  getConversationId: PropTypes.func,
 }
 
 export default App
