@@ -49,6 +49,9 @@ class App extends Component {
       showInfo,
       sendMessagePromise,
       onClickShowInfo,
+      secondaryView,
+      secondaryHeader,
+      secondaryContent,
     } = this.props
     const { expanded } = this.state
 
@@ -75,6 +78,9 @@ class App extends Component {
             showInfo={showInfo}
             onClickShowInfo={onClickShowInfo}
             sendMessagePromise={sendMessagePromise}
+            secondaryView={secondaryView}
+            secondaryHeader={secondaryHeader}
+            secondaryContent={secondaryContent}
           />
         )}
       </div>
@@ -90,6 +96,9 @@ App.propTypes = {
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.object,
   noCredentials: PropTypes.bool,
+  secondaryView: PropTypes.bool,
+  secondaryHeader: PropTypes.any,
+  secondaryContent: PropTypes.any,
 }
 
 export default App

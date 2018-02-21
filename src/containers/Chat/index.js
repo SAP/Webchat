@@ -91,7 +91,8 @@ class Chat extends Component {
                 throw new Error('Fail send message')
               }
               const data = res.data
-              const messages = data.messages.length === 0 ? [{ type: 'text', content: 'No reply'}] : data.messages
+              const messages =
+                data.messages.length === 0 ? [{ type: 'text', content: 'No reply' }] : data.messages
               addBotMessage(messages, data)
             })
             .catch(() => {
@@ -159,33 +160,45 @@ class Chat extends Component {
   }
 
   render() {
-    const { closeWebchat, preferences, showInfo, onClickShowInfo, containerMessagesStyle } = this.props
+    const {
+      closeWebchat,
+      preferences,
+      showInfo,
+      onClickShowInfo,
+      containerMessagesStyle,
+      secondaryView,
+      secondaryHeader,
+      secondaryContent,
+    } = this.props
     const { showSlogan, messages } = this.state
 
     return (
       <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor }}>
-        <Header closeWebchat={closeWebchat} preferences={preferences} />
-
-        <div className="RecastAppChat--content">
-          <Live
-            messages={messages}
-            preferences={preferences}
-            sendMessage={this.sendMessage}
-            onScrollBottom={bool => this.setState({ showSlogan: bool })}
-            onRetrySendMessage={this.retrySendMessage}
-            onCancelSendMessage={this.cancelSendMessage}
-            showInfo={showInfo}
-            onClickShowInfo={onClickShowInfo}
-            containerMessagesStyle={containerMessagesStyle}
-          />
-          <div
-            className={cx('RecastAppChat--slogan', {
-              'RecastAppChat--slogan--hidden': !showSlogan,
-            })}
-          >
-            {'We run with Recast.AI'}
-          </div>
-        </div>
+        {secondaryView
+          ? [secondaryHeader, secondaryContent]
+          : [
+              <Header closeWebchat={closeWebchat} preferences={preferences} key="header" />,
+              <div className="RecastAppChat--content" key="content">
+                <Live
+                  messages={messages}
+                  preferences={preferences}
+                  sendMessage={this.sendMessage}
+                  onScrollBottom={bool => this.setState({ showSlogan: bool })}
+                  onRetrySendMessage={this.retrySendMessage}
+                  onCancelSendMessage={this.cancelSendMessage}
+                  showInfo={showInfo}
+                  onClickShowInfo={onClickShowInfo}
+                  containerMessagesStyle={containerMessagesStyle}
+                />
+                <div
+                  className={cx('RecastAppChat--slogan', {
+                    'RecastAppChat--slogan--hidden': !showSlogan,
+                  })}
+                >
+                  {'We run with Recast.AI'}
+                </div>
+              </div>,
+            ]}
         <Input onSubmit={this.sendMessage} />
       </div>
     )
@@ -204,6 +217,9 @@ Chat.propTypes = {
   preferences: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.object,
+  secondaryView: PropTypes.bool,
+  secondaryHeader: PropTypes.any,
+  secondaryContent: PropTypes.any,
 }
 
 export default Chat
