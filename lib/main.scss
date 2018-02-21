@@ -396,7 +396,7 @@
 .RecastApp {
   z-index: 2147483647; }
 
-.RecastApp *,
+.RecastApp *:not(pre):not(code *),
 .RecastApp *:after,
 .RecastApp *:before {
   -webkit-box-sizing: border-box;

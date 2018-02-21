@@ -2,7 +2,7 @@
   z-index: 2147483647;
 }
 
-.RecastApp *,
+.RecastApp *:not(pre):not(code *),
 .RecastApp *:after,
 .RecastApp *:before {
   box-sizing: border-box;
