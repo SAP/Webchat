@@ -85,10 +85,18 @@ class Chat extends Component {
         if (sendMessagePromise) {
           addUserMessage(message)
 
-          sendMessagePromise(message).then(res => {
-            const data = res.data
-            addBotMessage(data.messages)
-          })
+          sendMessagePromise(message)
+            .then(res => {
+              if (!res) {
+                throw new Error('Fail send message')
+              }
+              const data = res.data
+              const messages = data.messages.length === 0 ? [{ type: 'text', content: 'No reply'}] : data.messages
+              addBotMessage(messages)
+            })
+            .catch(() => {
+              addBotMessage([{ type: 'text', content: 'Error: No reply' }])
+            })
         } else {
           postMessage(channelId, token, payload).then(() => {
             if (!this.state.isPolling) {
