@@ -19,23 +19,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { channelId, token, preferences, getConversationId } = this.props
+    const { channelId, token, preferences, noCredentials } = this.props
     const credentials = getCredentialsFromCookie()
     const payload = { channelId, token }
 
+    if (noCredentials) {
+      return false
+    }
+
     if (credentials) {
       Object.assign(payload, credentials)
-
-      if (getConversationId) {
-        getConversationId(credentials.conversationId)
-      }
-
     } else {
       this.props.createConversation(channelId, token).then(({ id, chatId }) => {
-        if (getConversationId) {
-          getConversationId(id)
-        }
-
         storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive)
       })
     }
@@ -87,7 +82,7 @@ App.propTypes = {
   containerMessagesStyle: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.object,
-  getConversationId: PropTypes.func,
+  noCredentials: PropTypes.bool,
 }
 
 export default App
