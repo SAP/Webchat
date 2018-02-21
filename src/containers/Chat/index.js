@@ -159,7 +159,7 @@ class Chat extends Component {
   }
 
   render() {
-    const { closeWebchat, preferences, showInfo, onClickShowInfo } = this.props
+    const { closeWebchat, preferences, showInfo, onClickShowInfo, containerMessagesStyle } = this.props
     const { showSlogan, messages } = this.state
 
     return (
@@ -176,6 +176,7 @@ class Chat extends Component {
             onCancelSendMessage={this.cancelSendMessage}
             showInfo={showInfo}
             onClickShowInfo={onClickShowInfo}
+            containerMessagesStyle={containerMessagesStyle}
           />
           <div
             className={cx('RecastAppChat--slogan', {
