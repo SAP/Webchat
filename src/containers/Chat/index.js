@@ -92,7 +92,7 @@ class Chat extends Component {
               }
               const data = res.data
               const messages = data.messages.length === 0 ? [{ type: 'text', content: 'No reply'}] : data.messages
-              addBotMessage(messages)
+              addBotMessage(messages, data)
             })
             .catch(() => {
               addBotMessage([{ type: 'text', content: 'Error: No reply' }])
@@ -159,7 +159,7 @@ class Chat extends Component {
   }
 
   render() {
-    const { closeWebchat, preferences, showInfo } = this.props
+    const { closeWebchat, preferences, showInfo, onClickShowInfo } = this.props
     const { showSlogan, messages } = this.state
 
     return (
@@ -175,6 +175,7 @@ class Chat extends Component {
             onRetrySendMessage={this.retrySendMessage}
             onCancelSendMessage={this.cancelSendMessage}
             showInfo={showInfo}
+            onClickShowInfo={onClickShowInfo}
           />
           <div
             className={cx('RecastAppChat--slogan', {

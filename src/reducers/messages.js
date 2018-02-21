@@ -32,16 +32,18 @@ export default handleActions(
       return newState
     },
 
-    ADD_BOT_MESSAGE: (state, { payload: messages }) => {
+    ADD_BOT_MESSAGE: (state, { payload }) => {
+
       const getMessageTemplate = content => ({
         attachment: content,
+        data: payload.data,
         id: `local-${Math.random()}`,
         participant: {
           isBot: true,
         },
       })
 
-      const formattedMessages = messages.map(message => getMessageTemplate(message))
+      const formattedMessages = payload.messages.map(message => getMessageTemplate(message))
       return [...state, ...formattedMessages]
     },
 

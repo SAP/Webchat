@@ -25,6 +25,7 @@ class Message extends Component {
       onRetrySendMessage,
       onCancelSendMessage,
       showInfo,
+      onClickShowInfo,
     } = this.props
     const {
       botPicture,
@@ -81,7 +82,11 @@ class Message extends Component {
           )}
 
           {isBot && showInfo && (
-            <div class='RecastAppMessage--JsonButton'>
+            <div className='RecastAppMessage--JsonButton' onClick={() => {
+              if (onClickShowInfo) {
+                onClickShowInfo(message)
+              }
+            }}>
               <img src='https://cdn.recast.ai/website/bot-builder/info.png'/>
             </div>
           )}
@@ -109,6 +114,7 @@ Message.propTypes = {
   onRetrySendMessage: PropTypes.func,
   onCancelSendMessage: PropTypes.func,
   showInfo: PropTypes.bool,
+  onClickShowInfo: PropTypes.func,
 }
 
 export default Message

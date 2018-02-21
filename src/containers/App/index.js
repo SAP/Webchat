@@ -43,7 +43,13 @@ class App extends Component {
   }
 
   render() {
-    const { preferences, containerMessagesStyle, showInfo, sendMessagePromise } = this.props
+    const {
+      preferences,
+      containerMessagesStyle,
+      showInfo,
+      sendMessagePromise,
+      onClickShowInfo,
+    } = this.props
     const { expanded } = this.state
 
     return (
@@ -67,6 +73,7 @@ class App extends Component {
             preferences={preferences}
             containerMessagesStyle={containerMessagesStyle}
             showInfo={showInfo}
+            onClickShowInfo={onClickShowInfo}
             sendMessagePromise={sendMessagePromise}
           />
         )}

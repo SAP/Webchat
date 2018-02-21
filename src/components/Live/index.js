@@ -14,7 +14,7 @@ class Live extends Component {
 
   componentDidMount() {
     this.messagesList.scrollTop = this.messagesList.scrollHeight
-    window.addEventListener('resize', this.handleScroll);
+    window.addEventListener('resize', this.handleScroll)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,7 +30,7 @@ class Live extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleScroll);
+    window.removeEventListener('resize', this.handleScroll)
   }
 
   handleScroll = () => {
@@ -61,10 +61,24 @@ class Live extends Component {
   }
 
   render() {
-    const { messages, sendMessage, preferences, onRetrySendMessage, onCancelSendMessage, containerMessagesStyle, showInfo } = this.props
+    const {
+      messages,
+      sendMessage,
+      preferences,
+      onRetrySendMessage,
+      onCancelSendMessage,
+      containerMessagesStyle,
+      showInfo,
+      onClickShowInfo,
+    } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
-    const shouldDisplayTyping = lastMessage && lastMessage.participant.isBot === false && !lastMessage.retry && !lastMessage.isSending && showTyping
+    const shouldDisplayTyping =
+      lastMessage &&
+      lastMessage.participant.isBot === false &&
+      !lastMessage.retry &&
+      !lastMessage.isSending &&
+      showTyping
 
     return (
       <div
@@ -87,16 +101,17 @@ class Live extends Component {
               onRetrySendMessage={() => onRetrySendMessage(message)}
               onCancelSendMessage={() => onCancelSendMessage(message)}
               showInfo={showInfo}
+              onClickShowInfo={onClickShowInfo}
             />
           ))}
 
           {shouldDisplayTyping && (
-              <IsTyping
-                image={preferences.botPicture}
-                callAfterTimeout={() => this.setState({ showTyping: false })}
-                timeout={20000}
-              />
-            )}
+            <IsTyping
+              image={preferences.botPicture}
+              callAfterTimeout={() => this.setState({ showTyping: false })}
+              timeout={20000}
+            />
+          )}
         </div>
       </div>
     )
