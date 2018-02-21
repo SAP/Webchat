@@ -55,8 +55,6 @@ export default handleActions(
         },
       }
 
-      console.log("REDUCER payload", payload)
-      console.log("REDUCER message", message)
       return [...state, ...[message]]
     },
   },
