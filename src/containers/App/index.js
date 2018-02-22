@@ -47,6 +47,7 @@ class App extends Component {
       preferences,
       containerMessagesStyle,
       expanderStyle,
+      logoStyle,
       showInfo,
       sendMessagePromise,
       onClickShowInfo,
@@ -77,6 +78,7 @@ class App extends Component {
             closeWebchat={this.toggleChat}
             preferences={preferences}
             containerMessagesStyle={containerMessagesStyle}
+            logoStyle={logoStyle}
             showInfo={showInfo}
             onClickShowInfo={onClickShowInfo}
             sendMessagePromise={sendMessagePromise}

@@ -174,6 +174,7 @@ class Chat extends Component {
       secondaryView,
       secondaryHeader,
       secondaryContent,
+      logoStyle,
     } = this.props
     const { showSlogan, messages } = this.state
 
@@ -182,7 +183,7 @@ class Chat extends Component {
         {secondaryView ? (
           secondaryHeader
         ) : (
-          <Header closeWebchat={closeWebchat} preferences={preferences} key="header" />
+          <Header closeWebchat={closeWebchat} preferences={preferences} key="header" logoStyle={logoStyle} />
         )}
         <div className="RecastAppChat--content" key="content">
           {secondaryView
