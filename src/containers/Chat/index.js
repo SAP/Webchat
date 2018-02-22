@@ -179,12 +179,17 @@ class Chat extends Component {
 
     return (
       <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor }}>
-        {secondaryView
-          ? [secondaryHeader, secondaryContent]
-          : [
-              <Header closeWebchat={closeWebchat} preferences={preferences} key="header" />,
-              <div className="RecastAppChat--content" key="content">
+        {secondaryView ? (
+          secondaryHeader
+        ) : (
+          <Header closeWebchat={closeWebchat} preferences={preferences} key="header" />
+        )}
+        <div className="RecastAppChat--content" key="content">
+          {secondaryView
+            ? secondaryContent
+            : [
                 <Live
+                  key="live"
                   messages={messages}
                   preferences={preferences}
                   sendMessage={this.sendMessage}
@@ -194,16 +199,17 @@ class Chat extends Component {
                   showInfo={showInfo}
                   onClickShowInfo={onClickShowInfo}
                   containerMessagesStyle={containerMessagesStyle}
-                />
+                />,
                 <div
+                  key="slogan"
                   className={cx('RecastAppChat--slogan', {
                     'RecastAppChat--slogan--hidden': !showSlogan,
                   })}
                 >
                   {'We run with Recast.AI'}
-                </div>
-              </div>,
-            ]}
+                </div>,
+              ]}
+        </div>
         <Input onSubmit={this.sendMessage} />
       </div>
     )
