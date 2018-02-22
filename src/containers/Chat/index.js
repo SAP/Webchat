@@ -55,7 +55,10 @@ class Chat extends Component {
     const { messages } = nextProps
     if (messages !== this.state.messages) {
       this.setState({ messages }, () => {
-        this.props.getLastMessage(messages[messages.length - 1])
+        const { getLastMessage } = this.props
+        if (getLastMessage) {
+          getLastMessage(messages[messages.length - 1])
+        }
       })
     }
   }
