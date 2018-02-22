@@ -54,7 +54,9 @@ class Chat extends Component {
   componentWillReceiveProps(nextProps) {
     const { messages } = nextProps
     if (messages !== this.state.messages) {
-      this.setState({ messages })
+      this.setState({ messages }, () => {
+        this.props.getLastMessage(messages[messages.length - 1])
+      })
     }
   }
 
@@ -220,6 +222,7 @@ Chat.propTypes = {
   secondaryView: PropTypes.bool,
   secondaryHeader: PropTypes.any,
   secondaryContent: PropTypes.any,
+  getLastMessage: PropTypes.func,
 }
 
 export default Chat

@@ -52,6 +52,7 @@ class App extends Component {
       secondaryView,
       secondaryHeader,
       secondaryContent,
+      getLastMessage,
     } = this.props
     const { expanded } = this.state
 
@@ -81,6 +82,7 @@ class App extends Component {
             secondaryView={secondaryView}
             secondaryHeader={secondaryHeader}
             secondaryContent={secondaryContent}
+            getLastMessage={getLastMessage}
           />
         )}
       </div>
@@ -99,6 +101,7 @@ App.propTypes = {
   secondaryView: PropTypes.bool,
   secondaryHeader: PropTypes.any,
   secondaryContent: PropTypes.any,
+  getLastMessage: PropTypes.func,
 }
 
 export default App
