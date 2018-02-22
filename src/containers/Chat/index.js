@@ -171,6 +171,7 @@ class Chat extends Component {
       showInfo,
       onClickShowInfo,
       containerMessagesStyle,
+      containerStyle,
       secondaryView,
       secondaryHeader,
       secondaryContent,
@@ -179,7 +180,7 @@ class Chat extends Component {
     const { showSlogan, messages } = this.state
 
     return (
-      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor }}>
+      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}>
         {secondaryView ? (
           secondaryHeader
         ) : (
@@ -233,6 +234,8 @@ Chat.propTypes = {
   secondaryHeader: PropTypes.any,
   secondaryContent: PropTypes.any,
   getLastMessage: PropTypes.func,
+  containerMessagesStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
 }
 
 export default Chat

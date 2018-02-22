@@ -46,6 +46,7 @@ class App extends Component {
     const {
       preferences,
       containerMessagesStyle,
+      containerStyle,
       expanderStyle,
       logoStyle,
       showInfo,
@@ -78,6 +79,7 @@ class App extends Component {
             closeWebchat={this.toggleChat}
             preferences={preferences}
             containerMessagesStyle={containerMessagesStyle}
+            containerStyle={containerStyle}
             logoStyle={logoStyle}
             showInfo={showInfo}
             onClickShowInfo={onClickShowInfo}
@@ -99,6 +101,7 @@ App.propTypes = {
   preferences: PropTypes.object.isRequired,
   containerMessagesStyle: PropTypes.object,
   expanderStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.object,
   noCredentials: PropTypes.bool,
