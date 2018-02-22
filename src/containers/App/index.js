@@ -52,6 +52,7 @@ class App extends Component {
       showInfo,
       sendMessagePromise,
       onClickShowInfo,
+      primaryHeader,
       secondaryView,
       secondaryHeader,
       secondaryContent,
@@ -84,6 +85,7 @@ class App extends Component {
             showInfo={showInfo}
             onClickShowInfo={onClickShowInfo}
             sendMessagePromise={sendMessagePromise}
+            primaryHeader={primaryHeader}
             secondaryView={secondaryView}
             secondaryHeader={secondaryHeader}
             secondaryContent={secondaryContent}
@@ -105,6 +107,7 @@ App.propTypes = {
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.object,
   noCredentials: PropTypes.bool,
+  primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,
   secondaryHeader: PropTypes.any,
   secondaryContent: PropTypes.any,

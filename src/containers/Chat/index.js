@@ -173,6 +173,7 @@ class Chat extends Component {
       containerMessagesStyle,
       containerStyle,
       secondaryView,
+      primaryHeader,
       secondaryHeader,
       secondaryContent,
       logoStyle,
@@ -180,11 +181,21 @@ class Chat extends Component {
     const { showSlogan, messages } = this.state
 
     return (
-      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}>
+      <div
+        className="RecastAppChat"
+        style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}
+      >
         {secondaryView ? (
           secondaryHeader
+        ) : primaryHeader ? (
+          primaryHeader(closeWebchat)
         ) : (
-          <Header closeWebchat={closeWebchat} preferences={preferences} key="header" logoStyle={logoStyle} />
+          <Header
+            closeWebchat={closeWebchat}
+            preferences={preferences}
+            key="header"
+            logoStyle={logoStyle}
+          />
         )}
         <div className="RecastAppChat--content" key="content">
           {secondaryView
@@ -230,6 +241,7 @@ Chat.propTypes = {
   preferences: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.object,
+  primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,
   secondaryHeader: PropTypes.any,
   secondaryContent: PropTypes.any,
