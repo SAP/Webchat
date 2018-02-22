@@ -40,8 +40,13 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { expanded } = nextProps
+    const { onToggle } = this.props
     if (expanded !== this.state.expanded) {
-      this.setState({ expanded })
+      this.setState({ expanded }, () => {
+        if (onToggle) {
+          onToggle(this.state.expanded)
+        }
+      })
     }
   }
 
@@ -122,6 +127,7 @@ App.propTypes = {
   secondaryContent: PropTypes.any,
   getLastMessage: PropTypes.func,
   expanded: PropTypes.bool,
+  onToggle: PropTypes.func,
 }
 
 export default App
