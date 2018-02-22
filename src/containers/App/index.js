@@ -40,13 +40,17 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { expanded } = nextProps
-    const { onToggle } = this.props
     if (expanded !== this.state.expanded) {
-      this.setState({ expanded }, () => {
-        if (onToggle) {
-          onToggle(this.state.expanded)
-        }
-      })
+      this.setState({ expanded })
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    const { onToggle } = this.props
+    if(prevState.expanded !== this.state.expanded) {
+      if (onToggle) {
+        onToggle(this.state.expanded)
+      }
     }
   }
 
