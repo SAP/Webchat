@@ -15,7 +15,7 @@ import './style.scss'
 })
 class App extends Component {
   state = {
-    expanded: false,
+    expanded: this.props.expanded || false,
   }
 
   componentDidMount() {
@@ -36,6 +36,13 @@ class App extends Component {
     }
 
     this.props.setCredentials(payload)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { expanded } = nextProps
+    if (expanded !== this.state.expanded) {
+      this.setState({ expanded })
+    }
   }
 
   toggleChat = () => {
@@ -73,7 +80,9 @@ class App extends Component {
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
 
-        {!expanded && <Expander onClick={this.toggleChat} preferences={preferences} style={expanderStyle} />}
+        {!expanded && (
+          <Expander onClick={this.toggleChat} preferences={preferences} style={expanderStyle} />
+        )}
 
         {expanded && (
           <Chat
@@ -112,6 +121,7 @@ App.propTypes = {
   secondaryHeader: PropTypes.any,
   secondaryContent: PropTypes.any,
   getLastMessage: PropTypes.func,
+  expanded: PropTypes.bool,
 }
 
 export default App
