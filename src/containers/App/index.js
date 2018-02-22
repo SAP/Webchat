@@ -46,6 +46,7 @@ class App extends Component {
     const {
       preferences,
       containerMessagesStyle,
+      expanderStyle,
       showInfo,
       sendMessagePromise,
       onClickShowInfo,
@@ -69,7 +70,7 @@ class App extends Component {
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
 
-        {!expanded && <Expander onClick={this.toggleChat} preferences={preferences} />}
+        {!expanded && <Expander onClick={this.toggleChat} preferences={preferences} style={expanderStyle} />}
 
         {expanded && (
           <Chat
@@ -95,6 +96,7 @@ App.propTypes = {
   channelId: PropTypes.string.isRequired,
   preferences: PropTypes.object.isRequired,
   containerMessagesStyle: PropTypes.object,
+  expanderStyle: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.object,
   noCredentials: PropTypes.bool,

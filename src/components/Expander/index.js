@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 
 import './style.scss'
 
-const Expander = ({ onClick, preferences }) => (
+const Expander = ({ onClick, preferences, style }) => (
   <div
     onClick={onClick}
     className="RecastAppExpander"
     style={{
       color: preferences.complementaryColor,
       backgroundColor: preferences.accentColor,
+      ...style,
     }}
   >
     {preferences.expanderLogo && (
@@ -27,6 +28,7 @@ const Expander = ({ onClick, preferences }) => (
 Expander.propTypes = {
   preferences: PropTypes.object,
   onClick: PropTypes.func.isRequired,
+  style: PropTypes.object,
 }
 
 export default Expander
