@@ -46,7 +46,8 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { expanded } = nextProps
-    if (expanded !== this.state.expanded) {
+
+    if (expanded !== undefined && expanded !== this.state.expanded) {
       this.setState({ expanded })
     }
   }
