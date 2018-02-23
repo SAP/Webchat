@@ -32,6 +32,10 @@ export default handleActions(
       return newState
     },
 
+    REMOVE_ALL_MESSAGES: () => {
+      return []
+    },
+
     ADD_BOT_MESSAGE: (state, { payload }) => {
 
       const getMessageTemplate = content => ({

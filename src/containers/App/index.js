@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Chat from 'containers/Chat'
 import Expander from 'components/Expander'
 import { setCredentials, createConversation } from 'actions/conversation'
+import { removeAllMessages } from 'actions/messages'
 import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
 
 import './style.scss'
@@ -12,6 +13,7 @@ import './style.scss'
 @connect(null, {
   setCredentials,
   createConversation,
+  removeAllMessages,
 })
 class App extends Component {
   state = {
@@ -19,9 +21,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { channelId, token, preferences, noCredentials } = this.props
+    const { channelId, token, preferences, noCredentials, onRef } = this.props
     const credentials = getCredentialsFromCookie()
     const payload = { channelId, token }
+
+    if (onRef) {
+      onRef(this)
+    }
 
     if (noCredentials) {
       return false
@@ -47,7 +53,7 @@ class App extends Component {
 
   componentDidUpdate(prevState) {
     const { onToggle } = this.props
-    if(prevState.expanded !== this.state.expanded) {
+    if (prevState.expanded !== this.state.expanded) {
       if (onToggle) {
         onToggle(this.state.expanded)
       }
@@ -56,6 +62,10 @@ class App extends Component {
 
   toggleChat = () => {
     this.setState({ expanded: !this.state.expanded })
+  }
+
+  clearMessages = () => {
+    this.props.removeAllMessages()
   }
 
   render() {
@@ -132,6 +142,8 @@ App.propTypes = {
   getLastMessage: PropTypes.func,
   expanded: PropTypes.bool,
   onToggle: PropTypes.func,
+  removeAllMessages: PropTypes.func,
+  onRef: PropTypes.object,
 }
 
 export default App
