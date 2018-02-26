@@ -19,7 +19,10 @@ class Live extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.messages.length !== this.props.messages.length) {
-      this.setState({ showTyping: true })
+      this.setState({ showTyping: true }, () => {
+        // FIXME Scroll to the bottom when typing. setTimeout is a bit dirty and can be improved
+        setTimeout(() => this.messagesList.scrollTop = this.messagesList.scrollHeight, 100)
+      })
     }
   }
 
