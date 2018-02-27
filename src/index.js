@@ -1,25 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { store } from 'store'
 
-import { getChannelPreferences } from 'actions/channel'
-import App from 'containers/App'
+import Webchat from './containers/App'
 
-document.body.innerHTML += '<div id="recast-webchat-div"></div>'
-const root = document.getElementById('recast-webchat-div')
-const script = document.currentScript || document.getElementById('recast-webchat')
+// https://github.com/babel/babel-loader/issues/401
+if (!global._babelPolyfill) {
+  require('babel-polyfill');
+}
 
-const channelId = script.getAttribute('channelId')
-const token = script.getAttribute('token')
-
-if (root && channelId && token) {
-  getChannelPreferences(channelId, token).then(preferences => {
-    ReactDOM.render(
+export default class RecastWebchat extends Component {
+  render () {
+    return (
       <Provider store={store}>
-        <App token={token} channelId={channelId} preferences={preferences} />
-      </Provider>,
-      root,
+        <Webchat {...this.props} />
+      </Provider>
     )
-  })
+  }
 }

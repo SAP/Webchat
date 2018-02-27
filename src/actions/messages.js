@@ -24,3 +24,9 @@ export const pollMessages = createAction(
 )
 
 export const removeMessage = createAction('REMOVE_MESSAGE')
+
+export const removeAllMessages = createAction('REMOVE_ALL_MESSAGES')
+
+export const addBotMessage = createAction('ADD_BOT_MESSAGE', (messages, data) => ({ messages, data }))
+
+export const addUserMessage = createAction('ADD_USER_MESSAGE')

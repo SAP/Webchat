@@ -1,5 +1,11 @@
 .RecastAppMessageContainer {
   position: relative;
+  display: flex;
+  justify-content: flex-end;
+
+  &.bot {
+    justify-content: flex-start;
+  }
 }
 
 .RecastApp .RecastAppMessage {
@@ -7,6 +13,10 @@
   flex-direction: row-reverse;
   align-items: center;
   margin: 1rem 0.5rem;
+  width: -webkit-fit-content;
+  width: fit-content;
+  width: -moz-fit-content;
+  position: relative;
 
   &--logo {
     width: 35px;
@@ -18,6 +28,20 @@
     &.visible {
       opacity: 1 !important;
     }
+  }
+
+  &--JsonButton {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    padding-left: 0.5rem;
+    margin-left: -1rem;
+    margin-top: -0.6rem;
+    z-index: 1;
+    cursor: pointer;
+    position: absolute;
+    top: 2px;
+    right: -7px;
   }
 
   &--retry {
@@ -258,6 +282,7 @@
         font-size: 14px;
         font-weight: bold;
         color: cornflowerblue;
+        text-decoration: none;
       }
     }
 

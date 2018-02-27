@@ -14,12 +14,15 @@ class Live extends Component {
 
   componentDidMount() {
     this.messagesList.scrollTop = this.messagesList.scrollHeight
-    window.addEventListener('resize', this.handleScroll);
+    window.addEventListener('resize', this.handleScroll)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.messages.length !== this.props.messages.length) {
-      this.setState({ showTyping: true })
+      this.setState({ showTyping: true }, () => {
+        // FIXME Scroll to the bottom when typing. setTimeout is a bit dirty and can be improved
+        setTimeout(() => this.messagesList.scrollTop = this.messagesList.scrollHeight, 100)
+      })
     }
   }
 
@@ -30,7 +33,7 @@ class Live extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleScroll);
+    window.removeEventListener('resize', this.handleScroll)
   }
 
   handleScroll = () => {
@@ -61,16 +64,31 @@ class Live extends Component {
   }
 
   render() {
-    const { messages, sendMessage, preferences, onRetrySendMessage, onCancelSendMessage } = this.props
+    const {
+      messages,
+      sendMessage,
+      preferences,
+      onRetrySendMessage,
+      onCancelSendMessage,
+      containerMessagesStyle,
+      showInfo,
+      onClickShowInfo,
+    } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
-    const shouldDisplayTyping = lastMessage && lastMessage.participant.isBot === false && !lastMessage.retry && !lastMessage.isSending && showTyping
+    const shouldDisplayTyping =
+      lastMessage &&
+      lastMessage.participant.isBot === false &&
+      !lastMessage.retry &&
+      !lastMessage.isSending &&
+      showTyping
 
     return (
       <div
         className="RecastAppLive"
         ref={ref => (this.messagesList = ref)}
         onScroll={this.handleScroll}
+        style={containerMessagesStyle}
       >
         <div className="RecastAppLive--message-container">
           {this.fmtMessages().map((message, index) => (
@@ -85,16 +103,18 @@ class Live extends Component {
               isSending={message.isSending}
               onRetrySendMessage={() => onRetrySendMessage(message)}
               onCancelSendMessage={() => onCancelSendMessage(message)}
+              showInfo={showInfo}
+              onClickShowInfo={onClickShowInfo}
             />
           ))}
 
           {shouldDisplayTyping && (
-              <IsTyping
-                image={preferences.botPicture}
-                callAfterTimeout={() => this.setState({ showTyping: false })}
-                timeout={20000}
-              />
-            )}
+            <IsTyping
+              image={preferences.botPicture}
+              callAfterTimeout={() => this.setState({ showTyping: false })}
+              timeout={20000}
+            />
+          )}
         </div>
       </div>
     )
@@ -107,6 +127,7 @@ Live.propTypes = {
   preferences: PropTypes.object,
   onRetrySendMessage: PropTypes.func,
   onCancelSendMessage: PropTypes.func,
+  showInfo: PropTypes.bool,
 }
 
 export default Live

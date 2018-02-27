@@ -2,12 +2,14 @@
   "name": "webchat",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist lib",
     "build": "npm run clean && NODE_ENV=production npm run build:webpack",
     "build:webpack": "node bin/build.js",
+    "build:js": "babel src -d lib",
     "start": "npm run clean && node bin/build-dev",
+    "lib": "npm run clean && node bin/build-lib",
     "prettier": "prettier --write \"src/**/*.?(js|?(s)css|json)\" && eslint --fix src",
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,7 +29,7 @@
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
     "react-render": "^1.2.1",
-    "react-slick": "^0.15.4",
+    "react-slick": "^0.18.1",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",

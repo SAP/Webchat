@@ -16,14 +16,24 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
         <p className="RecastAppListElement--title">{truncate(title, 25)}</p>
         <p className="RecastAppListElement--subtitle">{truncate(subtitle, 50)}</p>
 
-        {button && (
+        {button &&
+        (button.type === 'web_url' ? (
+          <a
+            href={button.value}
+            className="RecastAppListElement--button"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {truncate(button.title, 20)}
+          </a>
+        ) : (
           <div
             className="RecastAppListElement--button"
             onClick={() => sendMessage({ type: 'text', content: button.value })}
           >
             {truncate(button.title, 20)}
           </div>
-        )}
+        ))}
       </div>
     </div>
   )

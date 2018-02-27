@@ -6,7 +6,7 @@ const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
 
-  entry: ['babel-polyfill', './src/index.js'],
+  entry: ['babel-polyfill', './src/script.js'],
 
   devtool: 'cheap-module-source-map',
 
