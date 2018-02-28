@@ -28,7 +28,7 @@ export default store => next => action => {
       return data.results
     })
     .catch(err => {
-      dispatch({ type: `${prefix}_ERROR` })
+      dispatch({ type: `${prefix}_ERROR`, payload: data})
       throw new Error(err)
     })
 }
