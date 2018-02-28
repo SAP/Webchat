@@ -51,7 +51,7 @@ class Message extends Component {
     }
 
     return (
-      <div className='RecastAppMessageContainer'>
+      <div className="RecastAppMessageContainer">
         <div className={cx('RecastAppMessage', { bot: isBot, user: !isBot })}>
           {image && (
             <img
@@ -76,13 +76,23 @@ class Message extends Component {
           {type === 'buttons' && <Buttons {...messageProps} sendMessage={sendMessage} />}
 
           {type === 'quickReplies' && (
-            <QuickReplies {...messageProps} sendMessage={sendMessage} isLastMessage={isLastMessage} />
+            <QuickReplies
+              {...messageProps}
+              sendMessage={sendMessage}
+              isLastMessage={isLastMessage}
+            />
           )}
         </div>
         {retry && (
           <div className={cx('RecastAppMessage--retry', { bot: isBot })}>
-            Couldn’t send this message <span onClick={onRetrySendMessage} className='button'>Try again</span> |{' '}
-            <span onClick={onCancelSendMessage} className='button'>Cancel</span>
+            Couldn’t send this message{' '}
+            <span onClick={onRetrySendMessage} className="button">
+              Try again
+            </span>{' '}
+            |{' '}
+            <span onClick={onCancelSendMessage} className="button">
+              Cancel
+            </span>
           </div>
         )}
       </div>

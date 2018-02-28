@@ -4,6 +4,19 @@ const initialState = []
 
 export default handleActions(
   {
+    SET_FIRST_MESSAGE: (state, { payload: message }) => {
+      return [
+        {
+          attachment: { type: 'text', content: message },
+          id: `local-${Math.random()}`,
+          participant: {
+            isBot: true,
+          },
+        },
+        ...state,
+      ]
+    },
+
     POLL_MESSAGES_SUCCESS: (state, { payload }) => {
       return [...state, ...payload.messages]
     },
@@ -30,7 +43,7 @@ export default handleActions(
       const indexMessage = state.findIndex(message => message.id === messageId)
       newState.splice(indexMessage, 1)
       return newState
-    }
+    },
   },
   initialState,
 )

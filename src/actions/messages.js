@@ -24,3 +24,4 @@ export const pollMessages = createAction(
 )
 
 export const removeMessage = createAction('REMOVE_MESSAGE')
+export const setFirstMessage = createAction('SET_FIRST_MESSAGE')

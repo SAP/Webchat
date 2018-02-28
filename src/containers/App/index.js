@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import Chat from 'containers/Chat'
 import Expander from 'components/Expander'
+import { setFirstMessage } from 'actions/messages'
 import { setCredentials, createConversation } from 'actions/conversation'
 import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
 
@@ -15,6 +16,7 @@ import './style.scss'
   }),
   {
     setCredentials,
+    setFirstMessage,
     createConversation,
   },
 )
@@ -36,6 +38,10 @@ class App extends Component {
         .then(({ id, chatId }) =>
           storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive),
         )
+    }
+
+    if (preferences.welcomeMessage) {
+      this.props.setFirstMessage(preferences.welcomeMessage)
     }
 
     this.props.setCredentials(payload)
