@@ -44,15 +44,15 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    const { sendMessagePromise } = this.props
+    const { sendMessagePromise, show } = this.props
 
-    if (!sendMessagePromise) {
+    if (!sendMessagePromise && show) {
       this.doMessagesPolling()
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { messages } = nextProps
+    const { messages, show } = nextProps
     if (messages !== this.state.messages) {
       this.setState({ messages }, () => {
         const { getLastMessage } = this.props
@@ -60,6 +60,12 @@ class Chat extends Component {
           getLastMessage(messages[messages.length - 1])
         }
       })
+    }
+
+    if (show && show !== this.props.show) {
+      if (!this.state.isPolling) {
+        this.doMessagesPolling()
+      }
     }
   }
 
@@ -177,13 +183,14 @@ class Chat extends Component {
       secondaryHeader,
       secondaryContent,
       logoStyle,
+      show,
     } = this.props
     const { showSlogan, messages } = this.state
 
     return (
       <div
         className="RecastAppChat"
-        style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}
+        style={{ backgroundColor: preferences.backgroundColor, ...containerStyle, display: show ? 'block' : 'none' }}
       >
         {secondaryView ? (
           secondaryHeader
@@ -248,6 +255,7 @@ Chat.propTypes = {
   getLastMessage: PropTypes.func,
   containerMessagesStyle: PropTypes.object,
   containerStyle: PropTypes.object,
+  show: PropTypes.bool,
 }
 
 export default Chat

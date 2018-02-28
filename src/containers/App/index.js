@@ -135,23 +135,22 @@ class App extends Component {
           <Expander onClick={this.toggleChat} preferences={preferences} style={expanderStyle} />
         )}
 
-        {expanded && (
-          <Chat
-            closeWebchat={this.toggleChat}
-            preferences={preferences}
-            containerMessagesStyle={containerMessagesStyle}
-            containerStyle={containerStyle}
-            logoStyle={logoStyle}
-            showInfo={showInfo}
-            onClickShowInfo={onClickShowInfo}
-            sendMessagePromise={sendMessagePromise}
-            primaryHeader={primaryHeader}
-            secondaryView={secondaryView}
-            secondaryHeader={secondaryHeader}
-            secondaryContent={secondaryContent}
-            getLastMessage={getLastMessage}
-          />
-        )}
+        <Chat
+          show={expanded}
+          closeWebchat={this.toggleChat}
+          preferences={preferences}
+          containerMessagesStyle={containerMessagesStyle}
+          containerStyle={containerStyle}
+          logoStyle={logoStyle}
+          showInfo={showInfo}
+          onClickShowInfo={onClickShowInfo}
+          sendMessagePromise={sendMessagePromise}
+          primaryHeader={primaryHeader}
+          secondaryView={secondaryView}
+          secondaryHeader={secondaryHeader}
+          secondaryContent={secondaryContent}
+          getLastMessage={getLastMessage}
+        />
       </div>
     )
   }
