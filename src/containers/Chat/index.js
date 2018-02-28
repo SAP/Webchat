@@ -62,7 +62,7 @@ class Chat extends Component {
       })
     }
 
-    if (show && show !== this.props.show) {
+    if (show && show !== this.props.show && !this.props.sendMessagePromise) {
       if (!this.state.isPolling) {
         this.doMessagesPolling()
       }
