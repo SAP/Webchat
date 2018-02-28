@@ -5,7 +5,13 @@ import cx from 'classnames'
 import _concat from 'lodash/concat'
 
 import { getLastMessageId } from 'selectors/messages'
-import { postMessage, pollMessages, removeMessage } from 'actions/messages'
+import {
+  postMessage,
+  pollMessages,
+  removeMessage,
+  addBotMessage,
+  addUserMessage,
+} from 'actions/messages'
 
 import Header from 'components/Header'
 import Live from 'components/Live'
@@ -26,6 +32,8 @@ import './style.scss'
     postMessage,
     pollMessages,
     removeMessage,
+    addUserMessage,
+    addBotMessage,
   },
 )
 class Chat extends Component {
@@ -36,18 +44,35 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this.doMessagesPolling()
+    const { sendMessagePromise } = this.props
+
+    if (!sendMessagePromise) {
+      this.doMessagesPolling()
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     const { messages } = nextProps
     if (messages !== this.state.messages) {
-      this.setState({ messages })
+      this.setState({ messages }, () => {
+        const { getLastMessage } = this.props
+        if (getLastMessage) {
+          getLastMessage(messages[messages.length - 1])
+        }
+      })
     }
   }
 
   sendMessage = attachment => {
-    const { token, channelId, chatId } = this.props
+    const {
+      token,
+      channelId,
+      chatId,
+      postMessage,
+      sendMessagePromise,
+      addUserMessage,
+      addBotMessage,
+    } = this.props
     const payload = { message: { attachment }, chatId }
 
     const message = {
@@ -62,11 +87,29 @@ class Chat extends Component {
     this.setState(
       prevState => ({ messages: _concat(prevState.messages, [message]) }),
       () => {
-        this.props.postMessage(channelId, token, payload).then(() => {
-          if (!this.state.isPolling) {
-            this.doMessagesPolling()
-          }
-        })
+        if (sendMessagePromise) {
+          addUserMessage(message)
+
+          sendMessagePromise(message)
+            .then(res => {
+              if (!res) {
+                throw new Error('Fail send message')
+              }
+              const data = res.data
+              const messages =
+                data.messages.length === 0 ? [{ type: 'text', content: 'No reply' }] : data.messages
+              addBotMessage(messages, data)
+            })
+            .catch(() => {
+              addBotMessage([{ type: 'text', content: 'Error: No reply' }])
+            })
+        } else {
+          postMessage(channelId, token, payload).then(() => {
+            if (!this.state.isPolling) {
+              this.doMessagesPolling()
+            }
+          })
+        }
       },
     )
   }
@@ -122,29 +165,63 @@ class Chat extends Component {
   }
 
   render() {
-    const { closeWebchat, preferences } = this.props
+    const {
+      closeWebchat,
+      preferences,
+      showInfo,
+      onClickShowInfo,
+      containerMessagesStyle,
+      containerStyle,
+      secondaryView,
+      primaryHeader,
+      secondaryHeader,
+      secondaryContent,
+      logoStyle,
+    } = this.props
     const { showSlogan, messages } = this.state
 
     return (
-      <div className="RecastAppChat" style={{ backgroundColor: preferences.backgroundColor }}>
-        <Header closeWebchat={closeWebchat} preferences={preferences} />
-
-        <div className="RecastAppChat--content">
-          <Live
-            messages={messages}
+      <div
+        className="RecastAppChat"
+        style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}
+      >
+        {secondaryView ? (
+          secondaryHeader
+        ) : primaryHeader ? (
+          primaryHeader(closeWebchat)
+        ) : (
+          <Header
+            closeWebchat={closeWebchat}
             preferences={preferences}
-            sendMessage={this.sendMessage}
-            onScrollBottom={bool => this.setState({ showSlogan: bool })}
-            onRetrySendMessage={this.retrySendMessage}
-            onCancelSendMessage={this.cancelSendMessage}
+            key="header"
+            logoStyle={logoStyle}
           />
-          <div
-            className={cx('RecastAppChat--slogan', {
-              'RecastAppChat--slogan--hidden': !showSlogan,
-            })}
-          >
-            {'We run with Recast.AI'}
-          </div>
+        )}
+        <div className="RecastAppChat--content" key="content">
+          {secondaryView
+            ? secondaryContent
+            : [
+                <Live
+                  key="live"
+                  messages={messages}
+                  preferences={preferences}
+                  sendMessage={this.sendMessage}
+                  onScrollBottom={bool => this.setState({ showSlogan: bool })}
+                  onRetrySendMessage={this.retrySendMessage}
+                  onCancelSendMessage={this.cancelSendMessage}
+                  showInfo={showInfo}
+                  onClickShowInfo={onClickShowInfo}
+                  containerMessagesStyle={containerMessagesStyle}
+                />,
+                <div
+                  key="slogan"
+                  className={cx('RecastAppChat--slogan', {
+                    'RecastAppChat--slogan--hidden': !showSlogan,
+                  })}
+                >
+                  {'We run with Recast.AI'}
+                </div>,
+              ]}
         </div>
         <Input onSubmit={this.sendMessage} />
       </div>
@@ -162,6 +239,15 @@ Chat.propTypes = {
   conversationId: PropTypes.string,
   messages: PropTypes.array,
   preferences: PropTypes.object,
+  showInfo: PropTypes.bool,
+  sendMessagePromise: PropTypes.object,
+  primaryHeader: PropTypes.func,
+  secondaryView: PropTypes.bool,
+  secondaryHeader: PropTypes.any,
+  secondaryContent: PropTypes.any,
+  getLastMessage: PropTypes.func,
+  containerMessagesStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
 }
 
 export default Chat

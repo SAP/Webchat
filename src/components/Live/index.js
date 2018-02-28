@@ -19,7 +19,10 @@ class Live extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.messages.length !== this.props.messages.length) {
-      this.setState({ showTyping: true })
+      this.setState({ showTyping: true }, () => {
+        // FIXME Scroll to the bottom when typing. setTimeout is a bit dirty and can be improved
+        setTimeout(() => this.messagesList.scrollTop = this.messagesList.scrollHeight, 100)
+      })
     }
   }
 
@@ -67,6 +70,9 @@ class Live extends Component {
       preferences,
       onRetrySendMessage,
       onCancelSendMessage,
+      containerMessagesStyle,
+      showInfo,
+      onClickShowInfo,
     } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
@@ -82,6 +88,7 @@ class Live extends Component {
         className="RecastAppLive"
         ref={ref => (this.messagesList = ref)}
         onScroll={this.handleScroll}
+        style={containerMessagesStyle}
       >
         <div className="RecastAppLive--message-container">
           {this.fmtMessages().map((message, index) => (
@@ -96,6 +103,8 @@ class Live extends Component {
               isSending={message.isSending}
               onRetrySendMessage={() => onRetrySendMessage(message)}
               onCancelSendMessage={() => onCancelSendMessage(message)}
+              showInfo={showInfo}
+              onClickShowInfo={onClickShowInfo}
             />
           ))}
 
@@ -118,6 +127,7 @@ Live.propTypes = {
   preferences: PropTypes.object,
   onRetrySendMessage: PropTypes.func,
   onCancelSendMessage: PropTypes.func,
+  showInfo: PropTypes.bool,
 }
 
 export default Live

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import Chat from 'containers/Chat'
 import Expander from 'components/Expander'
-import { setFirstMessage } from 'actions/messages'
+import { setFirstMessage, removeAllMessages } from 'actions/messages'
 import { setCredentials, createConversation } from 'actions/conversation'
 import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
 
@@ -18,26 +18,33 @@ import './style.scss'
     setCredentials,
     setFirstMessage,
     createConversation,
+    removeAllMessages,
   },
 )
 class App extends Component {
   state = {
-    expanded: false,
+    expanded: this.props.expanded || false,
   }
 
   componentDidMount() {
-    const { channelId, token, preferences } = this.props
+    const { channelId, token, preferences, noCredentials, onRef } = this.props
     const credentials = getCredentialsFromCookie()
     const payload = { channelId, token }
+
+    if (onRef) {
+      onRef(this)
+    }
+
+    if (noCredentials) {
+      return false
+    }
 
     if (credentials) {
       Object.assign(payload, credentials)
     } else {
-      this.props
-        .createConversation(channelId, token)
-        .then(({ id, chatId }) =>
-          storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive),
-        )
+      this.props.createConversation(channelId, token).then(({ id, chatId }) => {
+        storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive)
+      })
     }
 
     if (preferences.welcomeMessage) {
@@ -48,7 +55,8 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isReady, preferences } = nextProps
+    const { isReady, preferences, expanded } = nextProps
+
     if (isReady !== this.props.isReady) {
       let expanded = null
 
@@ -65,14 +73,22 @@ class App extends Component {
         default:
           break
       }
+      this.setState({ expanded })
+    }
 
+    if (expanded !== undefined && expanded !== this.state.expanded) {
       this.setState({ expanded })
     }
   }
 
   componentDidUpdate(prevState) {
-    if (this.state.expanded !== prevState.expanded) {
+    const { onToggle } = this.props
+
+    if (prevState.expanded !== this.state.expanded) {
       localStorage.setItem('isChatOpen', this.state.expanded)
+      if (onToggle) {
+        onToggle(this.state.expanded)
+      }
     }
   }
 
@@ -80,8 +96,26 @@ class App extends Component {
     this.setState({ expanded: !this.state.expanded })
   }
 
+  clearMessages = () => {
+    this.props.removeAllMessages()
+  }
+
   render() {
-    const { preferences } = this.props
+    const {
+      preferences,
+      containerMessagesStyle,
+      containerStyle,
+      expanderStyle,
+      logoStyle,
+      showInfo,
+      sendMessagePromise,
+      onClickShowInfo,
+      primaryHeader,
+      secondaryView,
+      secondaryHeader,
+      secondaryContent,
+      getLastMessage,
+    } = this.props
     const { expanded } = this.state
 
     return (
@@ -97,9 +131,27 @@ class App extends Component {
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
 
-        {!expanded && <Expander onClick={this.toggleChat} preferences={preferences} />}
+        {!expanded && (
+          <Expander onClick={this.toggleChat} preferences={preferences} style={expanderStyle} />
+        )}
 
-        {expanded && <Chat closeWebchat={this.toggleChat} preferences={preferences} />}
+        {expanded && (
+          <Chat
+            closeWebchat={this.toggleChat}
+            preferences={preferences}
+            containerMessagesStyle={containerMessagesStyle}
+            containerStyle={containerStyle}
+            logoStyle={logoStyle}
+            showInfo={showInfo}
+            onClickShowInfo={onClickShowInfo}
+            sendMessagePromise={sendMessagePromise}
+            primaryHeader={primaryHeader}
+            secondaryView={secondaryView}
+            secondaryHeader={secondaryHeader}
+            secondaryContent={secondaryContent}
+            getLastMessage={getLastMessage}
+          />
+        )}
       </div>
     )
   }
@@ -109,6 +161,21 @@ App.propTypes = {
   token: PropTypes.string.isRequired,
   channelId: PropTypes.string.isRequired,
   preferences: PropTypes.object.isRequired,
+  containerMessagesStyle: PropTypes.object,
+  expanderStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
+  showInfo: PropTypes.bool,
+  sendMessagePromise: PropTypes.object,
+  noCredentials: PropTypes.bool,
+  primaryHeader: PropTypes.func,
+  secondaryView: PropTypes.bool,
+  secondaryHeader: PropTypes.any,
+  secondaryContent: PropTypes.any,
+  getLastMessage: PropTypes.func,
+  expanded: PropTypes.bool,
+  onToggle: PropTypes.func,
+  removeAllMessages: PropTypes.func,
+  onRef: PropTypes.object,
 }
 
 export default App
