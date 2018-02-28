@@ -9,6 +9,7 @@ export default handleActions(
         {
           attachment: { type: 'text', content: message },
           id: `local-${Math.random()}`,
+          isWelcomeMessage: true,
           participant: {
             isBot: true,
           },
