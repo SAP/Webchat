@@ -93,7 +93,12 @@ class App extends Component {
   }
 
   toggleChat = () => {
-    this.setState({ expanded: !this.state.expanded })
+    const { clearMessagesOnclose } = this.props
+    this.setState({ expanded: !this.state.expanded }, () => {
+      if (!this.state.expanded && clearMessagesOnclose) {
+        this.clearMessages()
+      }
+    })
   }
 
   clearMessages = () => {
@@ -175,6 +180,7 @@ App.propTypes = {
   onToggle: PropTypes.func,
   removeAllMessages: PropTypes.func,
   onRef: PropTypes.object,
+  clearMessagesOnclose: PropTypes.bool,
 }
 
 export default App
