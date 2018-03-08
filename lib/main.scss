@@ -361,7 +361,23 @@
     width: 370px;
     height: unset;
     -webkit-box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
-            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16); }
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+    -webkit-transition: opacity 0.6s, -webkit-transform 0.3s;
+    transition: opacity 0.6s, -webkit-transform 0.3s;
+    transition: transform 0.3s, opacity 0.6s;
+    transition: transform 0.3s, opacity 0.6s, -webkit-transform 0.3s;
+    -webkit-transform-origin: bottom;
+            transform-origin: bottom; }
+    .RecastApp .RecastAppChat.open {
+      -webkit-transform: scaleY(1);
+              transform: scaleY(1);
+      opacity: 1;
+      overflow: hidden; }
+    .RecastApp .RecastAppChat.close {
+      -webkit-transform: scaleY(0);
+              transform: scaleY(0);
+      opacity: 0;
+      overflow: hidden; }
     .RecastApp .RecastAppChat--slogan {
       margin-bottom: 0; } }
 .RecastApp .RecastAppExpander {
@@ -378,7 +394,13 @@
   cursor: pointer;
   border-radius: 3px;
   -webkit-box-shadow: 0 1px 6px lightgrey, 0 2px 32px lightgrey;
-          box-shadow: 0 1px 6px lightgrey, 0 2px 32px lightgrey; }
+          box-shadow: 0 1px 6px lightgrey, 0 2px 32px lightgrey;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s; }
+  .RecastApp .RecastAppExpander.open {
+    opacity: 1; }
+  .RecastApp .RecastAppExpander.close {
+    opacity: 0; }
   .RecastApp .RecastAppExpander--logo {
     margin-right: 0.5rem;
     width: 30px;
