@@ -162,14 +162,14 @@ class App extends Component {
 }
 
 App.propTypes = {
-  token: PropTypes.string.isRequired,
-  channelId: PropTypes.string.isRequired,
+  token: PropTypes.string,
+  channelId: PropTypes.string,
   preferences: PropTypes.object.isRequired,
   containerMessagesStyle: PropTypes.object,
   expanderStyle: PropTypes.object,
   containerStyle: PropTypes.object,
   showInfo: PropTypes.bool,
-  sendMessagePromise: PropTypes.object,
+  sendMessagePromise: PropTypes.func,
   noCredentials: PropTypes.bool,
   primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,
@@ -179,7 +179,7 @@ App.propTypes = {
   expanded: PropTypes.bool,
   onToggle: PropTypes.func,
   removeAllMessages: PropTypes.func,
-  onRef: PropTypes.object,
+  onRef: PropTypes.func,
   clearMessagesOnclose: PropTypes.bool,
 }
 
