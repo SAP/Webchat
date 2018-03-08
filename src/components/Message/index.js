@@ -36,7 +36,7 @@ class Message extends Component {
       botMessageBackgroundColor,
     } = preferences
     const { displayIcon } = message
-    const { type, content } = message.attachment
+    const { type, content, error } = message.attachment
     const isBot = message.participant.isBot
 
     const image = isBot ? botPicture : userPicture
@@ -45,8 +45,8 @@ class Message extends Component {
       content,
       onImageLoaded,
       style: {
-        color: isBot ? botMessageColor : complementaryColor,
-        backgroundColor: isBot ? botMessageBackgroundColor : accentColor,
+        color: isBot ? (error ? '#fff' : botMessageColor) : complementaryColor,
+        backgroundColor: isBot ? (error ? '#f44336' : botMessageBackgroundColor) : accentColor,
         opacity: retry || isSending ? 0.5 : 1,
         accentColor,
       },
@@ -85,16 +85,19 @@ class Message extends Component {
             />
           )}
 
-          {isBot && showInfo && (
-            <div className='RecastAppMessage--JsonButton' onClick={() => {
-              if (onClickShowInfo) {
-                onClickShowInfo(message)
-              }
-            }}>
-              <img src='https://cdn.recast.ai/website/bot-builder/info.png'/>
-            </div>
-          )}
-
+          {isBot &&
+            showInfo && (
+              <div
+                className="RecastAppMessage--JsonButton"
+                onClick={() => {
+                  if (onClickShowInfo) {
+                    onClickShowInfo(message)
+                  }
+                }}
+              >
+                <img src="https://cdn.recast.ai/website/bot-builder/info.png" />
+              </div>
+            )}
         </div>
         {retry && (
           <div className={cx('RecastAppMessage--retry', { bot: isBot })}>
@@ -125,6 +128,7 @@ Message.propTypes = {
   onCancelSendMessage: PropTypes.func,
   showInfo: PropTypes.bool,
   onClickShowInfo: PropTypes.func,
+  error: PropTypes.bool,
 }
 
 export default Message

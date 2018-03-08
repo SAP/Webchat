@@ -105,6 +105,7 @@ class Live extends Component {
               onCancelSendMessage={() => onCancelSendMessage(message)}
               showInfo={showInfo}
               onClickShowInfo={onClickShowInfo}
+              error={message.error}
             />
           ))}
 
