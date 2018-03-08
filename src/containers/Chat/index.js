@@ -247,7 +247,7 @@ Chat.propTypes = {
   messages: PropTypes.array,
   preferences: PropTypes.object,
   showInfo: PropTypes.bool,
-  sendMessagePromise: PropTypes.object,
+  sendMessagePromise: PropTypes.func,
   primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,
   secondaryHeader: PropTypes.any,
