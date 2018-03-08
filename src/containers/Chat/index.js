@@ -103,11 +103,11 @@ class Chat extends Component {
               }
               const data = res.data
               const messages =
-                data.messages.length === 0 ? [{ type: 'text', content: 'No reply' }] : data.messages
+                data.messages.length === 0 ? [{ type: 'text', content: 'No reply', error: true }] : data.messages
               addBotMessage(messages, data)
             })
             .catch(() => {
-              addBotMessage([{ type: 'text', content: 'Error: No reply' }])
+              addBotMessage([{ type: 'text', content: 'No reply', error: true }])
             })
         } else {
           postMessage(channelId, token, payload).then(() => {
