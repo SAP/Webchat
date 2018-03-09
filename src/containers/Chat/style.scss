@@ -6,6 +6,21 @@
   height: 100%;
   z-index: 2147483647;
 
+  transition: transform 0.3s, opacity 0.6s;
+  transform-origin: bottom;
+
+  &.open {
+    transform: scaleY(1);
+    opacity: 1;
+    overflow: hidden;
+  }
+
+  &.close {
+    transform: scaleY(0);
+    opacity: 0;
+    overflow: hidden;
+  }
+
   &--content {
     position: relative;
     height: calc(100% - 100px);

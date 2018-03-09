@@ -103,7 +103,9 @@ class Chat extends Component {
               }
               const data = res.data
               const messages =
-                data.messages.length === 0 ? [{ type: 'text', content: 'No reply', error: true }] : data.messages
+                data.messages.length === 0
+                  ? [{ type: 'text', content: 'No reply', error: true }]
+                  : data.messages
               addBotMessage(messages, data)
             })
             .catch(() => {
@@ -189,8 +191,8 @@ class Chat extends Component {
 
     return (
       <div
-        className="RecastAppChat"
-        style={{ backgroundColor: preferences.backgroundColor, ...containerStyle, display: show ? 'block' : 'none' }}
+        className={cx('RecastAppChat', { open: show, close: !show })}
+        style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}
       >
         {secondaryView ? (
           secondaryHeader

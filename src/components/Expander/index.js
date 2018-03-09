@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import cx from 'classnames'
 import './style.scss'
 
-const Expander = ({ onClick, preferences, style }) => (
+const Expander = ({ onClick, preferences, style, show }) => (
   <div
     onClick={onClick}
-    className="RecastAppExpander"
+    className={cx('RecastAppExpander', { open: show, close: !show })}
     style={{
       color: preferences.complementaryColor,
       backgroundColor: preferences.accentColor,
@@ -29,6 +29,7 @@ Expander.propTypes = {
   preferences: PropTypes.object,
   onClick: PropTypes.func.isRequired,
   style: PropTypes.object,
+  show: PropTypes.bool,
 }
 
 export default Expander
