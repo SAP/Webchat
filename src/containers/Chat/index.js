@@ -38,9 +38,9 @@ import './style.scss'
 )
 class Chat extends Component {
   state = {
-    isPolling: false,
     messages: this.props.messages,
     showSlogan: true,
+    isPolling: false,
   }
 
   componentDidMount() {
@@ -62,10 +62,13 @@ class Chat extends Component {
       })
     }
 
-    if (show && show !== this.props.show && !this.props.sendMessagePromise) {
-      if (!this.state.isPolling) {
-        this.doMessagesPolling()
-      }
+    if (
+      show &&
+      show !== this.props.show &&
+      !this.props.sendMessagePromise &&
+      !this.state.isPolling
+    ) {
+      this.doMessagesPolling()
     }
   }
 
@@ -113,8 +116,10 @@ class Chat extends Component {
             })
         } else {
           postMessage(channelId, token, payload).then(() => {
-            if (!this.state.isPolling) {
-              this.doMessagesPolling()
+            if (this.timeout) {
+              clearTimeout(this.timeout)
+              this.timeoutResolve()
+              this.timeout = null
             }
           })
         }
@@ -162,14 +167,15 @@ class Chat extends Component {
        */
       if (shouldWaitXseconds) {
         index = 0
-        this.setState({ isPolling: false })
-        await new Promise(resolve => setTimeout(resolve, timeToSleep))
+        await new Promise(resolve => {
+          this.timeoutResolve = resolve
+          this.timeout = setTimeout(resolve, timeToSleep)
+        })
+        this.timeout = null
       } else if (!shouldPoll && index < 4) {
         await new Promise(resolve => setTimeout(resolve, 300))
       }
     } while (shouldPoll || index < 4)
-
-    this.setState({ isPolling: false })
   }
 
   render() {
