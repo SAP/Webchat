@@ -13,7 +13,7 @@ const Carousel = ({ content, sendMessage }) => {
       <Slider
         arrows
         centerMode
-        centerPadding='10px'
+        centerPadding="10px"
         speed={200}
         infinite={false}
         draggable={false}

@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import cx from 'classnames'
 import _concat from 'lodash/concat'
 
-import { getLastMessageId } from 'selectors/messages'
 import {
   postMessage,
   pollMessages,
@@ -25,7 +24,7 @@ import './style.scss'
     chatId: state.conversation.chatId,
     channelId: state.conversation.channelId,
     conversationId: state.conversation.conversationId,
-    lastMessageId: getLastMessageId(state),
+    lastMessageId: state.conversation.lastMessageId,
     messages: state.messages,
   }),
   {
@@ -53,6 +52,7 @@ class Chat extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { messages, show } = nextProps
+
     if (messages !== this.state.messages) {
       this.setState({ messages }, () => {
         const { getLastMessage } = this.props
