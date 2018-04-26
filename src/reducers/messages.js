@@ -51,7 +51,6 @@ export default handleActions(
     },
 
     ADD_BOT_MESSAGE: (state, { payload }) => {
-
       const getMessageTemplate = content => ({
         attachment: content,
         data: payload.data,

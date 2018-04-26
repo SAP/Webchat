@@ -29,6 +29,9 @@ export const setFirstMessage = createAction('SET_FIRST_MESSAGE')
 
 export const removeAllMessages = createAction('REMOVE_ALL_MESSAGES')
 
-export const addBotMessage = createAction('ADD_BOT_MESSAGE', (messages, data) => ({ messages, data }))
+export const addBotMessage = createAction('ADD_BOT_MESSAGE', (messages, data) => ({
+  messages,
+  data,
+}))
 
 export const addUserMessage = createAction('ADD_USER_MESSAGE')
