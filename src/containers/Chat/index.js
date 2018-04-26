@@ -39,12 +39,12 @@ class Chat extends Component {
   state = {
     messages: this.props.messages,
     showSlogan: true,
-    isPolling: false,
   }
 
   componentDidMount() {
     const { sendMessagePromise, show } = this.props
 
+    this._isPolling = false
     if (!sendMessagePromise && show) {
       this.doMessagesPolling()
     }
@@ -66,7 +66,7 @@ class Chat extends Component {
       show &&
       show !== this.props.show &&
       !this.props.sendMessagePromise &&
-      !this.state.isPolling
+      !this._isPolling
     ) {
       this.doMessagesPolling()
     }
@@ -137,7 +137,9 @@ class Chat extends Component {
   }
 
   doMessagesPolling = async () => {
-    this.setState({ isPolling: true })
+    if (this._isPolling) { return }
+    this._isPolling = true
+
     const { token, channelId, conversationId } = this.props
     let shouldPoll = true
     let index = 0
@@ -176,6 +178,7 @@ class Chat extends Component {
         await new Promise(resolve => setTimeout(resolve, 300))
       }
     } while (shouldPoll || index < 4)
+    this._isPolling = false
   }
 
   render() {
