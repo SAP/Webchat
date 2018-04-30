@@ -116,9 +116,7 @@
   .RecastApp .RecastAppMessage .Slider {
     max-width: 300px; }
     .RecastApp .RecastAppMessage .RecastAppSlider .Arrow, .RecastApp .RecastAppMessage .RecastAppSlider .slick-next, .RecastApp .RecastAppMessage .RecastAppSlider .slick-prev,
-    .RecastApp .RecastAppMessage .Slider .Arrow,
-    .RecastApp .RecastAppMessage .Slider .slick-next,
-    .RecastApp .RecastAppMessage .Slider .slick-prev {
+    .RecastApp .RecastAppMessage .Slider .Arrow, .RecastApp .RecastAppMessage .Slider .slick-next, .RecastApp .RecastAppMessage .Slider .slick-prev {
       width: 25px;
       height: 25px;
       display: -webkit-box !important;
@@ -138,9 +136,7 @@
       border-radius: 3px;
       text-align: center; }
       .RecastApp .RecastAppMessage .RecastAppSlider .Arrow.slick-disabled, .RecastApp .RecastAppMessage .RecastAppSlider .slick-disabled.slick-next, .RecastApp .RecastAppMessage .RecastAppSlider .slick-disabled.slick-prev,
-      .RecastApp .RecastAppMessage .Slider .Arrow.slick-disabled,
-      .RecastApp .RecastAppMessage .Slider .slick-disabled.slick-next,
-      .RecastApp .RecastAppMessage .Slider .slick-disabled.slick-prev {
+      .RecastApp .RecastAppMessage .Slider .Arrow.slick-disabled, .RecastApp .RecastAppMessage .Slider .slick-disabled.slick-next, .RecastApp .RecastAppMessage .Slider .slick-disabled.slick-prev {
         display: none !important; }
     .RecastApp .RecastAppMessage .RecastAppSlider .slick-list,
     .RecastApp .RecastAppMessage .Slider .slick-list {
@@ -154,7 +150,7 @@
     .RecastApp .RecastAppMessage .Slider .slick-next:before {
       display: none !important; }
   .RecastApp .RecastAppMessage .RecastAppText {
-    max-width: 270px;
+    max-width: 290px;
     padding: 0.8rem;
     border-radius: 3px;
     white-space: pre-wrap;

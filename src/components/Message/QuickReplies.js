@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Slider from 'react-slick'
+import _map from 'lodash/map'
+import _sum from 'lodash/sum'
 
 import { truncate } from 'helpers'
 
@@ -10,11 +12,27 @@ import { PrevArrow, NextArrow } from 'components/arrows'
 class QuickReplies extends Component {
   state = {
     displayQuickReplies: this.props.isLastMessage,
+    showArrow: true,
+  }
+
+  componentDidMount() {
+    const widthQuickReplies = _sum(
+      _map(this.buttons, button => {
+        const dimensions = button.getBoundingClientRect()
+        return dimensions.width
+      }),
+    )
+
+    if (widthQuickReplies <= 270) {
+      this.setState({ showArrow: false })
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ displayQuickReplies: nextProps.isLastMessage })
   }
+
+  buttons = {}
 
   doSendMessage = message => {
     this.props.sendMessage(message)
@@ -23,27 +41,34 @@ class QuickReplies extends Component {
 
   render() {
     const { content, style } = this.props
-    const { displayQuickReplies } = this.state
+    const { displayQuickReplies, showArrow } = this.state
     const { title, buttons } = content
 
     return (
-      <div className={'RecastAppQuickReplies'}>
+      <div
+        className="RecastAppQuickReplies"
+        ref={ref => {
+          this.container = ref
+        }}
+      >
         <Text content={title} style={style} />
 
         {displayQuickReplies && (
           <Slider
-            arrows
+            arrows={showArrow}
             variableWidth
             speed={200}
             infinite={false}
             draggable={false}
-            slidesToScroll={2}
             prevArrow={<PrevArrow />}
             nextArrow={<NextArrow />}
             className="RecastAppSlider RecastAppQuickReplies--slider"
           >
             {buttons.map((b, i) => (
               <div
+                ref={ref => {
+                  this.buttons[i] = ref
+                }}
                 key={i}
                 className="RecastAppQuickReplies--button"
                 onClick={() => this.doSendMessage({ type: 'text', content: b.value })}
