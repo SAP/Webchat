@@ -1,5 +1,6 @@
 import config from 'config'
 import qs from 'query-string'
+import axios from 'axios'
 
 export default store => next => action => {
   if (!action.type.startsWith('API:')) {
@@ -10,22 +11,21 @@ export default store => next => action => {
   const prefix = action.type.split(':')[1]
   const { method = 'get', url, data, headers, query } = action.payload
 
-  const payload = {
+  const options = {
     method,
-    body: JSON.stringify(data),
+    data,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       ...headers,
     },
+    url: `${config.apiUrl}${url}${query ? '?' : ''}${qs.stringify(query || {})}`,
   }
 
-  const fullUrl = `${config.apiUrl}${url}${query ? '?' : ''}${qs.stringify(query || {})}`
-  return fetch(fullUrl, payload)
-    .then(res => res.json())
-    .then(data => {
-      dispatch({ type: `${prefix}_SUCCESS`, payload: { ...data.results } })
-      return data.results
+  return axios(options)
+    .then(res => {
+      dispatch({ type: `${prefix}_SUCCESS`, payload: { ...res.data.results } })
+      return res.data.results
     })
     .catch(err => {
       dispatch({ type: `${prefix}_ERROR`, payload: data })

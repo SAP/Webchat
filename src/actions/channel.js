@@ -1,12 +1,14 @@
 import config from '../config'
+import axios from 'axios'
 
-export const getChannelPreferences = (channelId, token) =>
-  fetch(`${config.apiUrl}/webhook/${channelId}/preferences`, {
-    method: 'get',
+export const getChannelPreferences = (channelId, token) => {
+  const client = axios.create({
+    baseURL: config.apiUrl,
     headers: {
       Authorization: token,
       Accept: 'application/json',
     },
   })
-    .then(res => res.json())
-    .then(data => data.results)
+
+  return client.get(`/webhook/${channelId}/preferences`).then(res => res.data.results)
+}
