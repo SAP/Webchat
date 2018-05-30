@@ -227,7 +227,7 @@ class Chat extends Component {
                   onScrollBottom={bool => this.setState({ showSlogan: bool })}
                   onRetrySendMessage={this.retrySendMessage}
                   onCancelSendMessage={this.cancelSendMessage}
-                  showInfo={showInfo}
+                  showInfo={true}
                   onClickShowInfo={onClickShowInfo}
                   containerMessagesStyle={containerMessagesStyle}
                 />,
