@@ -310,7 +310,6 @@
   .RecastApp .RecastAppLive {
     height: 460px; } }
 .RecastApp .RecastAppInput {
-  position: absolute;
   bottom: 0;
   width: 100%;
   padding: 1rem;
@@ -346,8 +345,7 @@
     opacity: 0;
     overflow: hidden; }
   .RecastApp .RecastAppChat--content {
-    position: relative;
-    height: calc(100% - 100px); }
+    position: relative; }
   .RecastApp .RecastAppChat--slogan {
     padding: 0.2rem;
     padding-bottom: 0.5rem;
