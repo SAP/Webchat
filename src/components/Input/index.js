@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { isBrowserIE } from 'helpers';
 
 import './style.scss'
 
@@ -10,7 +11,7 @@ class Input extends Component {
 
   componentDidMount() {
     this._input.focus()
-    this._input.value = null
+    this._input.value = isBrowserIE() ? '' : null
 
     this.onInputHeight()
   }
@@ -24,7 +25,7 @@ class Input extends Component {
       // Dirty fix textarea placeholder to reset style correctly
       setTimeout(() => {
         this._input.style.height = '18px'
-        this._input.value = null
+        this._input.value = isBrowserIE() ? '' : null
         this.onInputHeight()
       }, 100)
     }
