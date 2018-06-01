@@ -10,6 +10,9 @@ import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
 
 import './style.scss'
 
+const NO_LOCALSTORAGE_MESSAGE =
+  'Sorry, your browser does not support web storage. Are you in localhost ?'
+
 @connect(
   state => ({
     isReady: state.conversation.conversationId,
@@ -68,7 +71,11 @@ class App extends Component {
           expanded = false
           break
         case 'memory':
-          expanded = localStorage.getItem('isChatOpen') === 'true'
+          if (typeof window.localStorage !== 'undefined') {
+            expanded = localStorage.getItem('isChatOpen') === 'true'
+          } else {
+            console.log(NO_LOCALSTORAGE_MESSAGE)
+          }
           break
         default:
           break
@@ -85,9 +92,13 @@ class App extends Component {
     const { onToggle } = this.props
 
     if (prevState.expanded !== this.state.expanded) {
-      localStorage.setItem('isChatOpen', this.state.expanded)
-      if (onToggle) {
-        onToggle(this.state.expanded)
+      if (typeof window.localStorage !== 'undefined') {
+        localStorage.setItem('isChatOpen', this.state.expanded)
+        if (onToggle) {
+          onToggle(this.state.expanded)
+        }
+      } else {
+        console.log(NO_LOCALSTORAGE_MESSAGE)
       }
     }
   }
