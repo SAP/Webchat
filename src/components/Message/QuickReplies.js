@@ -53,7 +53,7 @@ class QuickReplies extends Component {
       >
         <Text content={title} style={style} />
 
-        {displayQuickReplies && (
+        {displayQuickReplies && buttons && !!buttons.length && (
           <Slider
             arrows={showArrow}
             variableWidth
