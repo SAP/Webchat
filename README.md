@@ -52,6 +52,48 @@ Once you're satisfied with the settings, click on the **SAVE** button. A script 
 
 If you want to customize your webchat even more, you can opt for a self-hosted installatiton. Just fork this project to get started!
 
+#### Installation
+
+Clone the repository you forked, and install the dependencies.
+
+```
+$> git clone YOUR_REPO_URL
+$> cd webchat
+$> npm install
+```
+
+#### Run in development mode
+
+```
+$> npm run start
+```
+
+#### Eslint + prettier
+
+```
+$> npm run prettier
+```
+
+#### Build for production
+
+```
+$> npm run build
+```
+
+#### Use your webchat
+
+Once you're done, build it and host it.
+To use it instead of the default one provided by Recast.AI, you need to set up the Webchat channel in the **CONNECT** tab of your bot.
+You'll be using the same script as the default installation, but you have **to replace the src field by your own URL**.
+
+
+```
+<script
+  src="YOUR_WEBCHAT_URL"
+  ...
+></script>
+```
+
 ### React component
 You can import the webchat as a React component like the following example:
 ```
@@ -115,47 +157,6 @@ this.webchat.clearMessages();
 |---|---|
 |clearMessages()|Clear all messages in the webchat|
 
-#### Installation
-
-Clone the repository you forked, and install the dependencies.
-
-```
-$> git clone YOUR_REPO_URL
-$> cd webchat
-$> npm install
-```
-
-#### Run in development mode
-
-```
-$> npm run start
-```
-
-#### Eslint + prettier
-
-```
-$> npm run prettier
-```
-
-#### Build for production
-
-```
-$> npm run build
-```
-
-#### Use your webchat
-
-Once you're done, build it and host it.
-To use it instead of the default one provided by Recast.AI, you need to set up the Webchat channel in the **CONNECT** tab of your bot.
-You'll be using the same script as the default installation, but you have **to replace the src field by your own URL**.
-
-
-```
-<script
-  src="YOUR_WEBCHAT_URL"
-  ...
-></script>
-```
 
 
 ## Getting started with Recast.AI
