@@ -71,7 +71,7 @@ class QuickReplies extends Component {
                 }}
                 key={i}
                 className="RecastAppQuickReplies--button"
-                onClick={() => this.doSendMessage({ type: 'text', content: b.value })}
+                onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
                 style={{
                   border: `1px solid ${style.accentColor}`,
                   color: style.accentColor,
