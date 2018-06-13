@@ -96,7 +96,7 @@ You'll be using the same script as the default installation, but you have **to r
 
 ### React component
 You can import the webchat as a React component like the following example:
-```
+``` js
 import RecastWebchat from 'webchat';
 
 export default class ReactWebchat extends Component {
