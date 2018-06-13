@@ -154,7 +154,7 @@
     .RecastApp .RecastAppMessage .Slider .slick-next:before {
       display: none !important; }
   .RecastApp .RecastAppMessage .RecastAppText {
-    max-width: 270px;
+    max-width: 290px;
     padding: 0.8rem;
     border-radius: 3px;
     white-space: pre-wrap;
@@ -314,7 +314,6 @@
   .RecastApp .RecastAppLive {
     height: 460px; } }
 .RecastApp .RecastAppInput {
-  position: absolute;
   bottom: 0;
   width: 100%;
   padding: 1rem;
@@ -350,8 +349,7 @@
     opacity: 0;
     overflow: hidden; }
   .RecastApp .RecastAppChat--content {
-    position: relative;
-    height: calc(100% - 100px); }
+    position: relative; }
   .RecastApp .RecastAppChat--slogan {
     padding: 0.2rem;
     padding-bottom: 0.5rem;
@@ -376,10 +374,10 @@
     right: 10px;
     bottom: 10px;
     border-radius: 3px;
-    top: unset;
-    left: unset;
+    top: auto;
+    left: auto;
     width: 370px;
-    height: unset;
+    height: auto;
     -webkit-box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
             box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16); }
     .RecastApp .RecastAppChat--slogan {

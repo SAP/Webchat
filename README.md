@@ -26,18 +26,19 @@ Internet Explorer support starts at version 9.0.
 
 ## Usage
 
-Two different installations on the webchat module are possible.
+Three different installations on the webchat module are possible.
 - The default is the simplest and fatest route, and offers some customization options.
 - The self-hosted webchat offers even more customization option, but you'll have to deal with the hosting and maintenance of the module.
+- Use it as a React component
 
 ### Default webchat
 
 To use the webchat, you need an account on [Recast.AI](https://recast.ai) and a bot.
-Then, go to the **CONNECT** tab and click on **Webchat**. It will open a window that lets you adjust your webchat settings, including: 
-* color scheme, 
-* header customization, 
-* bot and user pictures, 
-* webchat logo and call to action,  
+Then, go to the **CONNECT** tab and click on **Webchat**. It will open a window that lets you adjust your webchat settings, including:
+* color scheme,
+* header customization,
+* bot and user pictures,
+* webchat logo and call to action,
 * conversation duration
 
 Once you're satisfied with the settings, click on the **SAVE** button. A script tag appears, and you just have to copy paste it in your web page to embed the webchat. The script must be placed in the `<body>` tag.
@@ -50,6 +51,69 @@ Once you're satisfied with the settings, click on the **SAVE** button. A script 
 ### Self-hosted webchat
 
 If you want to customize your webchat even more, you can opt for a self-hosted installatiton. Just fork this project to get started!
+
+### React component
+You can import the webchat as a React component like the following example:
+```
+import RecastWebchat from 'webchat';
+
+export default class ReactWebchat extends Component {
+  render() {
+    return (
+      <RecastWebchat
+        onRef={ref => {
+          this.webchat = ref;
+        }}
+        channelId={YOUR_CHANNEL_ID}
+        token={YOUR_TOKEN}
+        preferences={{
+          accentColor: '#E05A47',
+          complementaryColor: '#FFFFFF',
+          botMessageColor: '#707070',
+          botMessageBackgroundColor: '#F6F6F6',
+          backgroundColor: '#FFFFFF',
+          headerLogo: 'https://cdn.recast.ai/webchat/webchat-logo.svg',
+          headerTitle: 'My awesome chatbot',
+          botPicture: 'https://cdn.recast.ai/webchat/bot.png',
+          userPicture: 'https://cdn.recast.ai/webchat/user.png',
+          onboardingMessage: 'Come speak to me!',
+          expanderLogo: 'https://cdn.recast.ai/webchat/webchat-logo.svg',
+          expanderTitle: 'Click on me!',
+          conversationTimeToLive: 24,
+          openingType: 'never',
+          welcomeMessage: 'Hello world !',
+        }}
+        getLastMessage={message => {
+          console.log(message)
+        }}
+      />
+    );
+  }
+}
+```
+
+#### Props
+|Name|Type|Required|Description|
+|---|---|---|--|
+|onRef|function|false| Function which returns ref of the webchat|
+|channelId|string|true|Channel id (you can get in Recast.ai)|
+|token|string|true|Token (you can get in React.ai)|
+|preferences|object|true| Object containing some settings|
+|getLastMessage|function|false|Function which returns the last message sent by the webchat
+
+#### Methods
+You can access these methods by using the reference of the component (use `OnRef`)
+```
+<RecastWebchat
+  onRef={ref => this.webchat = ref }
+>
+...
+
+this.webchat.clearMessages();
+```
+|Name|Description|
+|---|---|
+|clearMessages()|Clear all messages in the webchat|
 
 #### Installation
 

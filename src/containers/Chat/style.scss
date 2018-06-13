@@ -23,7 +23,6 @@
 
   &--content {
     position: relative;
-    height: calc(100% - 100px);
   }
 
   &--slogan {
@@ -55,10 +54,10 @@
     right: 10px;
     bottom: 10px;
     border-radius: 3px;
-    top: unset;
-    left: unset;
+    top: auto;
+    left: auto;
     width: 370px;
-    height: unset;
+    height: auto;
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
 
     &--slogan {
