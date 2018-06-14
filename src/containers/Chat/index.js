@@ -138,12 +138,11 @@ class Chat extends Component {
     }
     this._isPolling = true
 
-    const { token, channelId, conversationId } = this.props
     let shouldPoll = true
     let index = 0
 
     do {
-      const { lastMessageId } = this.props
+      const { lastMessageId, conversationId, channelId, token } = this.props
       let shouldWaitXseconds = false
       let timeToSleep = 0
       try {
