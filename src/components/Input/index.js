@@ -63,9 +63,9 @@ class Input extends Component {
     this._input.style.height = this._input.scrollHeight + 'px'
   }
 
-  manageHistory = e => {
+  manageHistory = keyName => {
     const { indexHistory, value, previousValues } = this.state
-    if (e.key === 'ArrowUp') {
+    if (keyName === 'ArrowUp') {
       if (indexHistory > -1) {
         this.setState(
           prevState => {
@@ -89,7 +89,7 @@ class Input extends Component {
           },
         )
       }
-    } else if (e.key === 'ArrowDown') {
+    } else if (keyName === 'ArrowDown') {
       if (indexHistory < previousValues.length - 1) {
         this.setState(prevState => {
           const indexHistory = Math.min(
@@ -108,6 +108,7 @@ class Input extends Component {
   }
 
   render() {
+    const { enableHistoryInput } = this.props
     const { value } = this.state
 
     return (
@@ -129,7 +130,11 @@ class Input extends Component {
               e.preventDefault()
             }
           }}
-          onKeyDown={this.manageHistory}
+          onKeyDown={event => {
+            if (enableHistoryInput) {
+              this.manageHistory(event.key)
+            }
+          }}
           rows={1}
         />
       </div>

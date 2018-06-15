@@ -131,6 +131,7 @@ class App extends Component {
       secondaryHeader,
       secondaryContent,
       getLastMessage,
+      enableHistoryInput,
     } = this.props
     const { expanded } = this.state
 
@@ -169,6 +170,7 @@ class App extends Component {
           secondaryHeader={secondaryHeader}
           secondaryContent={secondaryContent}
           getLastMessage={getLastMessage}
+          enableHistoryInput={enableHistoryInput}
         />
       </div>
     )
@@ -195,6 +197,7 @@ App.propTypes = {
   removeAllMessages: PropTypes.func,
   onRef: PropTypes.func,
   clearMessagesOnclose: PropTypes.bool,
+  enableHistoryInput: PropTypes.bool,
 }
 
 export default App

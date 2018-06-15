@@ -192,6 +192,7 @@ class Chat extends Component {
       secondaryContent,
       logoStyle,
       show,
+      enableHistoryInput,
     } = this.props
     const { showSlogan, messages, inputHeight } = this.state
 
@@ -247,6 +248,7 @@ class Chat extends Component {
         <Input
           onSubmit={this.sendMessage}
           onInputHeight={height => this.setState({ inputHeight: height })}
+          enableHistoryInput={enableHistoryInput}
         />
       </div>
     )
@@ -273,6 +275,7 @@ Chat.propTypes = {
   containerMessagesStyle: PropTypes.object,
   containerStyle: PropTypes.object,
   show: PropTypes.bool,
+  enableHistoryInput: PropTypes.bool,
 }
 
 export default Chat
