@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isBrowserIE } from 'helpers';
+import { isBrowserIE } from 'helpers'
+import * as R from 'ramda'
 
 import './style.scss'
 
 class Input extends Component {
   state = {
     value: '',
+    previousValues: [],
+    indexHistory: -1,
   }
 
   componentDidMount() {
@@ -44,13 +47,64 @@ class Input extends Component {
     const content = this.state.value.trim()
     if (content) {
       this.props.onSubmit({ type: 'text', content })
-      this.setState({ value: '' })
+      this.setState(prevState => {
+        const previousValues = R.append(content, prevState.previousValues)
+        return {
+          value: '',
+          previousValues,
+          indexHistory: previousValues.length - 1,
+        }
+      })
     }
   }
 
   autoGrow = () => {
     this._input.style.height = '18px'
     this._input.style.height = this._input.scrollHeight + 'px'
+  }
+
+  manageHistory = e => {
+    const { indexHistory, value, previousValues } = this.state
+    if (e.key === 'ArrowUp') {
+      if (indexHistory > -1) {
+        this.setState(
+          prevState => {
+            const shouldGetLastMessage = !value
+
+            const indexHistory = Math.max(
+              shouldGetLastMessage ? prevState.indexHistory : prevState.indexHistory - 1,
+              0,
+            )
+            return {
+              indexHistory,
+              value: previousValues[indexHistory],
+            }
+          },
+          () => {
+            // Trick to go to the end of the line when pressing ArrowUp key
+            setTimeout(() => {
+              this._input.selectionStart = this._input.value.length
+              this._input.selectionEnd = this._input.value.length
+            }, 10)
+          },
+        )
+      }
+    } else if (e.key === 'ArrowDown') {
+      if (indexHistory < previousValues.length - 1) {
+        this.setState(prevState => {
+          const indexHistory = Math.min(
+            prevState.indexHistory + 1,
+            Math.max(previousValues.length - 1, 0),
+          )
+          return {
+            indexHistory,
+            value: previousValues[indexHistory],
+          }
+        })
+      } else {
+        this.setState({ value: '' })
+      }
+    }
   }
 
   render() {
@@ -75,6 +129,7 @@ class Input extends Component {
               e.preventDefault()
             }
           }}
+          onKeyDown={this.manageHistory}
           rows={1}
         />
       </div>
