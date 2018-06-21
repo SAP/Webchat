@@ -3,4 +3,5 @@
 ## Description
 
 The first versioned release of the webchat.
-Every breaking change, buug fix or improvement will be referenced here.
+
+Every breaking change, bug fix or improvement will be referenced here.
