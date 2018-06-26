@@ -9,7 +9,8 @@ class Input extends Component {
   state = {
     value: '',
     previousValues: [],
-    indexHistory: -1,
+    historyValues: [],
+    indexHistory: 0,
   }
 
   componentDidMount() {
@@ -34,6 +35,9 @@ class Input extends Component {
     }
 
     this.onInputHeight()
+
+    console.log('this.state.previousValues', this.state.previousValues)
+    console.log('---> historyValues', this.state.historyValues)
   }
 
   onInputHeight = () => {
@@ -48,10 +52,13 @@ class Input extends Component {
     if (content) {
       this.props.onSubmit({ type: 'text', content })
       this.setState(prevState => {
-        const previousValues = R.append(content, prevState.previousValues)
+        const historyValues = R.append(content, prevState.historyValues)
+        const previousValues = R.append('', historyValues)
+
         return {
           value: '',
           previousValues,
+          historyValues,
           indexHistory: previousValues.length - 1,
         }
       })
@@ -63,21 +70,16 @@ class Input extends Component {
     this._input.style.height = this._input.scrollHeight + 'px'
   }
 
-  manageHistory = keyName => {
-    const { indexHistory, value, previousValues } = this.state
+  handleKeyboard = keyName => {
+    const { indexHistory, previousValues } = this.state
     if (keyName === 'ArrowUp') {
       if (indexHistory > -1) {
         this.setState(
           prevState => {
-            const shouldGetLastMessage = !value
-
-            const indexHistory = Math.max(
-              shouldGetLastMessage ? prevState.indexHistory : prevState.indexHistory - 1,
-              0,
-            )
+            const indexHistory = Math.max(prevState.indexHistory - 1, 0)
             return {
               indexHistory,
-              value: previousValues[indexHistory],
+              value: prevState.previousValues[indexHistory],
             }
           },
           () => {
@@ -94,15 +96,17 @@ class Input extends Component {
         this.setState(prevState => {
           const indexHistory = Math.min(
             prevState.indexHistory + 1,
-            Math.max(previousValues.length - 1, 0),
+            Math.max(prevState.previousValues.length - 1, 0),
           )
           return {
             indexHistory,
-            value: previousValues[indexHistory],
+            value: prevState.previousValues[indexHistory],
           }
         })
       } else {
-        this.setState({ value: '' })
+        this.setState({
+          value: '',
+        })
       }
     }
   }
@@ -123,7 +127,17 @@ class Input extends Component {
           value={value}
           style={{ width: '100%', maxHeight: 70, resize: 'none' }}
           placeholder={'Write a reply...'}
-          onChange={e => this.setState({ value: e.target.value }, this.autoGrow)}
+          onChange={e => {
+            e.persist()
+            this.setState(prevState => {
+              const newPreviousValues = [...prevState.previousValues]
+              newPreviousValues[prevState.indexHistory] = e.target.value
+              return {
+                value: e.target.value,
+                previousValues: newPreviousValues,
+              }
+            }, this.autoGrow)
+          }}
           onKeyPress={e => {
             if (e.key === 'Enter') {
               this.sendMessage()
@@ -132,7 +146,7 @@ class Input extends Component {
           }}
           onKeyDown={event => {
             if (enableHistoryInput) {
-              this.manageHistory(event.key)
+              this.handleKeyboard(event.key)
             }
           }}
           rows={1}
