@@ -35,9 +35,6 @@ class Input extends Component {
     }
 
     this.onInputHeight()
-
-    console.log('this.state.previousValues', this.state.previousValues)
-    console.log('---> historyValues', this.state.historyValues)
   }
 
   onInputHeight = () => {
