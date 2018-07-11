@@ -156,6 +156,7 @@ class Input extends Component {
 Input.propTypes = {
   onSubmit: PropTypes.func,
   onInputHeight: PropTypes.func,
+  enableHistoryInput: PropTypes.bool,
 }
 
 export default Input
