@@ -6,8 +6,14 @@ import { store } from 'store'
 import { getChannelPreferences } from 'actions/channel'
 import App from 'containers/App'
 
-document.body.innerHTML += '<div id="recast-webchat-div"></div>'
-const root = document.getElementById('recast-webchat-div')
+const idChatDiv = 'recast-webchat-div'
+
+if (!document.getElementById(idChatDiv)) {
+  document.body.innerHTML += `<div id="${idChatDiv}"></div>`
+}
+
+const root = document.getElementById(idChatDiv)
+
 const script = document.currentScript || document.getElementById('recast-webchat')
 
 const channelId = script.getAttribute('channelId')

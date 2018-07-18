@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions'
+import { uniqWith } from 'ramda'
 
 const initialState = []
 
@@ -19,7 +20,7 @@ export default handleActions(
     },
 
     POLL_MESSAGES_SUCCESS: (state, { payload }) => {
-      return [...state, ...payload.messages]
+      return uniqWith((m1, m2) => m1.id === m2.id, [...state, ...payload.messages])
     },
 
     GET_MESSAGES_SUCCESS: (state, { payload: messages }) => {
