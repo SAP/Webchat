@@ -5,6 +5,9 @@ import * as R from 'ramda'
 
 import './style.scss'
 
+// Number of minimum char to display the char limit.
+const NUMBER_BEFORE_LIMIT = 5
+
 class Input extends Component {
   state = {
     value: '',
@@ -35,6 +38,26 @@ class Input extends Component {
     }
 
     this.onInputHeight()
+  }
+
+  onInputChange = e => {
+    e.persist()
+
+    const { characterLimit } = this.props
+    const { value } = e.target
+
+    if (characterLimit && value.length > characterLimit) {
+      return
+    }
+
+    this.setState(prevState => {
+      const newPreviousValues = [...prevState.previousValues]
+      newPreviousValues[prevState.indexHistory] = value
+      return {
+        value: e.target.value,
+        previousValues: newPreviousValues,
+      }
+    }, this.autoGrow)
   }
 
   onInputHeight = () => {
@@ -109,8 +132,11 @@ class Input extends Component {
   }
 
   render() {
-    const { enableHistoryInput } = this.props
+    const { enableHistoryInput, characterLimit } = this.props
     const { value } = this.state
+
+    const showLimitCharacter =
+      characterLimit && characterLimit - value.length <= NUMBER_BEFORE_LIMIT
 
     return (
       <div
@@ -124,17 +150,7 @@ class Input extends Component {
           value={value}
           style={{ width: '100%', maxHeight: 70, resize: 'none' }}
           placeholder={'Write a reply...'}
-          onChange={e => {
-            e.persist()
-            this.setState(prevState => {
-              const newPreviousValues = [...prevState.previousValues]
-              newPreviousValues[prevState.indexHistory] = e.target.value
-              return {
-                value: e.target.value,
-                previousValues: newPreviousValues,
-              }
-            }, this.autoGrow)
-          }}
+          onChange={this.onInputChange}
           onKeyPress={e => {
             if (e.key === 'Enter') {
               this.sendMessage()
@@ -148,6 +164,10 @@ class Input extends Component {
           }}
           rows={1}
         />
+
+        {showLimitCharacter && (
+          <div className="characterLimit">{characterLimit - value.length}</div>
+        )}
       </div>
     )
   }
@@ -157,6 +177,7 @@ Input.propTypes = {
   onSubmit: PropTypes.func,
   onInputHeight: PropTypes.func,
   enableHistoryInput: PropTypes.bool,
+  characterLimit: PropTypes.number,
 }
 
 export default Input

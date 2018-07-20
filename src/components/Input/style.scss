@@ -1,5 +1,5 @@
 .RecastApp .RecastAppInput {
-  // position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
 
@@ -7,10 +7,13 @@
   color: grey;
   background: white;
   box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
-}
 
-@media only screen and (min-width: 420px) and (min-height: 575px) {
-  .RecastApp .RecastAppInput {
-    position: relative;
+  .characterLimit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 5px 0 0;
+    font-size: 12px;
+    color: #f44336;
   }
 }

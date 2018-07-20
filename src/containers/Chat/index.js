@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 import _concat from 'lodash/concat'
+import { propOr } from 'ramda'
 
 import {
   postMessage,
@@ -216,7 +217,7 @@ class Chat extends Component {
         <div
           className="RecastAppChat--content"
           style={{
-            height: `calc(100% - ${50+inputHeight}px`
+            height: `calc(100% - ${50 + inputHeight}px`,
           }}
           key="content"
         >
@@ -249,6 +250,7 @@ class Chat extends Component {
           onSubmit={this.sendMessage}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}
+          characterLimit={propOr(0, 'characterLimit', preferences)}
         />
       </div>
     )
