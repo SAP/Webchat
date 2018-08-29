@@ -9,7 +9,9 @@ import App from 'containers/App'
 const idChatDiv = 'recast-webchat-div'
 
 if (!document.getElementById(idChatDiv)) {
-  document.body.innerHTML += `<div id="${idChatDiv}"></div>`
+  const element = document.createElement("div")
+  element.id = idChatDiv
+  document.body.appendChild(element)
 }
 
 const root = document.getElementById(idChatDiv)
