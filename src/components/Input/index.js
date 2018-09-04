@@ -135,8 +135,9 @@ class Input extends Component {
     const { enableHistoryInput, characterLimit } = this.props
     const { value } = this.state
 
-    const showLimitCharacter =
-      characterLimit && characterLimit - value.length <= NUMBER_BEFORE_LIMIT
+    const showLimitCharacter = characterLimit
+      ? characterLimit - value.length <= NUMBER_BEFORE_LIMIT
+      : null;
 
     return (
       <div
