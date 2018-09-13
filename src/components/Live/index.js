@@ -13,7 +13,9 @@ class Live extends Component {
   }
 
   componentDidMount() {
-    this.messagesList.scrollTop = this.messagesList.scrollHeight
+    if (this.messagesList) {
+      this.messagesList.scrollTop = this.messagesList.scrollHeight
+    }
     window.addEventListener('resize', this.handleScroll)
   }
 
@@ -21,14 +23,19 @@ class Live extends Component {
     if (nextProps.messages.length !== this.props.messages.length) {
       this.setState({ showTyping: true }, () => {
         // FIXME Scroll to the bottom when typing. setTimeout is a bit dirty and can be improved
-        setTimeout(() => (this.messagesList.scrollTop = this.messagesList.scrollHeight), 100)
+        setTimeout(() => {
+          if (this.messagesList) {
+            this.messagesList.scrollTop = this.messagesList.scrollHeight
+          }}, 100)
       })
     }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.messages.length !== this.props.messages.length) {
-      this.messagesList.scrollTop = this.messagesList.scrollHeight
+      if (this.messagesList) {
+        this.messagesList.scrollTop = this.messagesList.scrollHeight
+      }
     }
   }
 
@@ -37,6 +44,10 @@ class Live extends Component {
   }
 
   handleScroll = () => {
+    if (!this.messagesList) {
+      return;
+    }
+
     const { onScrollBottom } = this.props
     const { clientHeight, scrollTop, scrollHeight } = this.messagesList
 
@@ -45,7 +56,9 @@ class Live extends Component {
   }
 
   onImageLoaded = () => {
-    this.messagesList.scrollTop = this.messagesList.scrollHeight
+    if (this.messagesList) {
+      this.messagesList.scrollTop = this.messagesList.scrollHeight
+    }
   }
 
   fmtMessages = () => {
