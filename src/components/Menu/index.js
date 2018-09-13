@@ -4,28 +4,36 @@ import PropTypes from 'prop-types'
 import './style.scss'
 
 class Menu extends Component {
+  constructor(props) {
+    super(props)
+    document.addEventListener('mousedown', this.handleMouseClick)
+  }
 
-  render () {
-    const {
-      currentMenu,
-      addMenuIndex,
-      removeMenuIndex,
-      postbackClick,
-      closeMenu,
-    } = this.props
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleMouseClick)
+  }
+
+  handleMouseClick = e => {
+    if (!this.node.contains(e.target) && e.target.id !== 'menu-svg') {
+      this.props.closeMenu()
+    }
+  }
+
+  render() {
+    const { currentMenu, addMenuIndex, removeMenuIndex, postbackClick, closeMenu } = this.props
     const { title, call_to_actions } = currentMenu
 
     return (
-      <div className='Menu'>
-        {!!title && 
-          <div onClick={removeMenuIndex} className='MenuHeader'>
+      <div className="Menu" ref={node => (this.node = node)}>
+        {!!title && (
+          <div onClick={removeMenuIndex} className="MenuHeader">
             {title}
           </div>
-        }
+        )}
 
         {call_to_actions.map((action, index) => {
           return (
-            <div key={index} className='MenuElement'>
+            <div key={index} className="MenuElement">
               {action.type === 'postback' && (
                 <div
                   onClick={() => {
@@ -38,16 +46,14 @@ class Menu extends Component {
               )}
 
               {action.type === 'nested' && (
-                <div onClick={() => addMenuIndex(index)} >
-                  {action.title}
-                </div>
+                <div onClick={() => addMenuIndex(index)}>{action.title}</div>
               )}
 
               {action.type === 'web_url' && (
                 <a
                   href={action.payload}
-                  rel='noopener noreferrer'
-                  target='_blank'
+                  rel="noopener noreferrer"
+                  target="_blank"
                   onClick={closeMenu}
                 >
                   {action.title}

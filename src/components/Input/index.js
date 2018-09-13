@@ -4,7 +4,7 @@ import { isBrowserIE } from 'helpers'
 import * as R from 'ramda'
 
 import Menu from 'components/Menu'
-import MenuSVG from 'components/svgs/menu' 
+import MenuSVG from 'components/svgs/menu'
 import './style.scss'
 
 // Number of minimum char to display the char limit.
@@ -28,9 +28,11 @@ class Input extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState.value !== this.state.value
-      || nextState.menuOpened !== this.state.menuOpened
-      || nextState.menuIndexes.length !== this.state.menuIndexes.length
+    return (
+      nextState.value !== this.state.value ||
+      nextState.menuOpened !== this.state.menuOpened ||
+      nextState.menuIndexes.length !== this.state.menuIndexes.length
+    )
   }
 
   componentDidUpdate() {
@@ -142,7 +144,7 @@ class Input extends Component {
     this.setState({ menuIndexes: menuIndexes.slice(0, -1) })
   }
 
-  addMenuIndex = (i) => {
+  addMenuIndex = i => {
     const { menuIndexes } = this.state
     this.setState({ menuIndexes: [...menuIndexes, i] })
   }
@@ -150,10 +152,7 @@ class Input extends Component {
   getCurrentMenu = () => {
     const { menuIndexes } = this.state
 
-    return menuIndexes.reduce(
-      (currentMenu, i) => currentMenu.call_to_actions[i],
-      this.props.menu
-    )
+    return menuIndexes.reduce((currentMenu, i) => currentMenu.call_to_actions[i], this.props.menu)
   }
 
   triggerMenu = () => {
@@ -170,7 +169,7 @@ class Input extends Component {
 
     const showLimitCharacter = characterLimit
       ? characterLimit - value.length <= NUMBER_BEFORE_LIMIT
-      : null;
+      : null
 
     return (
       <div
@@ -181,15 +180,15 @@ class Input extends Component {
       >
         {menu && <MenuSVG onClick={this.triggerMenu} />}
 
-         {menuOpened && 
-           <Menu
-             closeMenu={this.triggerMenu}
-             currentMenu={this.getCurrentMenu()}
-             addMenuIndex={this.addMenuIndex}
-             removeMenuIndex={this.removeMenuIndex}
-             postbackClick={(value) => this.setState({ value }, this.sendMessage)}
-           />
-         }
+        {menuOpened && (
+          <Menu
+            closeMenu={this.triggerMenu}
+            currentMenu={this.getCurrentMenu()}
+            addMenuIndex={this.addMenuIndex}
+            removeMenuIndex={this.removeMenuIndex}
+            postbackClick={value => this.setState({ value }, this.sendMessage)}
+          />
+        )}
 
         <textarea
           ref={i => (this._input = i)}
@@ -211,10 +210,10 @@ class Input extends Component {
           rows={1}
         />
 
-      {showLimitCharacter && (
-        <div className="characterLimit">{characterLimit - value.length}</div>
-      )}
-    </div>
+        {showLimitCharacter && (
+          <div className="characterLimit">{characterLimit - value.length}</div>
+        )}
+      </div>
     )
   }
 }

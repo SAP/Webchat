@@ -19,9 +19,9 @@ const Card = ({ content, sendMessage, onImageLoaded }) => {
 
       {buttons.length ? (
         <div className="RecastAppCard--button-container">
-          {buttons
-            .slice(0, 3)
-            .map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)}
+          {buttons.slice(0, 3).map((b, i) => (
+            <Button key={i} button={b} sendMessage={sendMessage} />
+          ))}
         </div>
       ) : null}
     </div>

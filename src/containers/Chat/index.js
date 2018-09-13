@@ -198,20 +198,20 @@ class Chat extends Component {
     const { showSlogan, messages, inputHeight } = this.state
 
     preferences.menu = {
-      call_to_actions: [ 
-        { 
-          title: 'Postback title', 
-          type: 'postback', 
-          payload: 'POSTBACK PAYLOAD', 
-        }, 
-        { 
-          title: 'Nested menu title', 
-          type: 'nested', 
-          call_to_actions: [ 
-            { 
-              title: 'Url title', 
-              type: 'web_url', 
-              payload: 'http://www.google.com', 
+      call_to_actions: [
+        {
+          title: 'Postback title',
+          type: 'postback',
+          payload: 'POSTBACK PAYLOAD',
+        },
+        {
+          title: 'Nested menu title',
+          type: 'nested',
+          call_to_actions: [
+            {
+              title: 'Url title',
+              type: 'web_url',
+              payload: 'http://www.google.com',
             },
             {
               title: 'Nested even more menu',
@@ -235,8 +235,8 @@ class Chat extends Component {
                 },
               ],
             },
-          ], 
-        }, 
+          ],
+        },
       ],
     }
 
