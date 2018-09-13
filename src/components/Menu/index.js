@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import ArrowLeft from 'components/svgs/arrowLeft'
+import ArrowRight from 'components/svgs/arrowRight'
+
 import './style.scss'
 
 class Menu extends Component {
@@ -14,7 +17,11 @@ class Menu extends Component {
   }
 
   handleMouseClick = e => {
-    if (!this.node.contains(e.target) && e.target.id !== 'menu-svg') {
+    if (
+      !this.node.contains(e.target)
+      && e.target.id !== 'menu-svg'
+      && e.target.id !== 'menu-svg-path'
+    ) {
       this.props.closeMenu()
     }
   }
@@ -26,16 +33,25 @@ class Menu extends Component {
     return (
       <div className="Menu" ref={node => (this.node = node)}>
         {!!title && (
-          <div onClick={removeMenuIndex} className="MenuHeader">
-            {title}
+          <div
+            onClick={removeMenuIndex}
+            className="MenuHeader"
+          >
+            <ArrowLeft className='MenuHeader--SVG' />
+            <p className='MenuHeader--Title'>
+              {title}
+            </p>
           </div>
         )}
 
         {call_to_actions.map((action, index) => {
-          return (
-            <div key={index} className="MenuElement">
-              {action.type === 'postback' && (
+          let component = false
+          switch (action.type) {
+            case 'postback':
+              component = (
                 <div
+                  key={index}
+                  className="MenuElement"
                   onClick={() => {
                     postbackClick(action.payload)
                     closeMenu()
@@ -43,24 +59,40 @@ class Menu extends Component {
                 >
                   {action.title}
                 </div>
-              )}
-
-              {action.type === 'nested' && (
-                <div onClick={() => addMenuIndex(index)}>{action.title}</div>
-              )}
-
-              {action.type === 'web_url' && (
+              )
+              break
+            case 'nested':
+              component = (
+                <div
+                  key={index}
+                  className="MenuElement"
+                  onClick={() => addMenuIndex(index)}
+                >
+                  <p style={{ flex: 1 }}>
+                    {action.title}
+                  </p>
+                  <ArrowRight />
+                </div>
+              )
+              break
+            case 'web_url':
+              component = (
                 <a
+                  key={index}
+                  className='MenuElement'
                   href={action.payload}
                   rel="noopener noreferrer"
                   target="_blank"
-                  onClick={closeMenu}
                 >
                   {action.title}
                 </a>
-              )}
-            </div>
-          )
+              )
+              break
+            default:
+              component = false
+          }
+
+          return component
         })}
       </div>
     )

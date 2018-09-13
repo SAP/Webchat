@@ -225,7 +225,7 @@ class Chat extends Component {
               ],
             },
             {
-              title: 'Nested even more menu',
+              title: 'hhhhhUUUUU]]]]]llllldddddaaaaa',
               type: 'nested',
               call_to_actions: [
                 {

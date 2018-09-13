@@ -1,11 +1,12 @@
 .RecastApp .Menu {
   bottom: calc(100% + 15px);
   left: 10px;
-  width: 220px;
+  width: 240px;
   position: absolute;
   background-color: white;
   box-shadow: 0 0 7px 1px lightgrey;
   border-radius: 3px;
+  font-size: 14px;
 
   &::before {
     content: '';
@@ -22,18 +23,34 @@
   }
 
   .MenuHeader {
-    height: 35px;
+    height: 40px;
     padding: 0.5rem;
     cursor: pointer;
     text-align: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &--Title {
+      flex: 1;
+      margin-left: 10px;
+    }
+
+    &--SVG {
+      left: 3px;
+      position: absolute;
+    }
   }
 
   .MenuElement {
     text-decoration: none;
-    height: 35px;
+    height: 40px;
     cursor: pointer;
     color: cornflowerblue;
-    padding: 0.5rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
 
     a {
       text-decoration: none;
