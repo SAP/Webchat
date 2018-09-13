@@ -197,6 +197,49 @@ class Chat extends Component {
     } = this.props
     const { showSlogan, messages, inputHeight } = this.state
 
+    preferences.menu = {
+      call_to_actions: [ 
+        { 
+          title: 'Postback title', 
+          type: 'postback', 
+          payload: 'POSTBACK PAYLOAD', 
+        }, 
+        { 
+          title: 'Nested menu title', 
+          type: 'nested', 
+          call_to_actions: [ 
+            { 
+              title: 'Url title', 
+              type: 'web_url', 
+              payload: 'http://www.google.com', 
+            },
+            {
+              title: 'Nested even more menu',
+              type: 'nested',
+              call_to_actions: [
+                {
+                  title: 'lol',
+                  type: 'web_url',
+                  payload: 'https://api.recast.ai/',
+                },
+              ],
+            },
+            {
+              title: 'Nested even more menu',
+              type: 'nested',
+              call_to_actions: [
+                {
+                  title: 'WEB URL',
+                  type: 'web_url',
+                  payload: 'https://api.recast.ai/',
+                },
+              ],
+            },
+          ], 
+        }, 
+      ],
+    }
+
     return (
       <div
         className={cx('RecastAppChat', { open: show, close: !show })}
@@ -247,6 +290,7 @@ class Chat extends Component {
               ]}
         </div>
         <Input
+          menu={preferences.menu}
           onSubmit={this.sendMessage}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}

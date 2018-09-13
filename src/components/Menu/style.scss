@@ -1,0 +1,51 @@
+.RecastApp .Menu {
+  bottom: calc(100% + 15px);
+  left: 10px;
+  width: 220px;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 0 7px 1px lightgrey;
+  border-radius: 3px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 7px;
+
+    width: 0;
+    height: 0;
+
+    border-style: solid;
+    border-width: 8px 7px 0 7px;
+    border-color: #ffffff transparent transparent transparent;
+  }
+
+  .MenuHeader {
+    height: 35px;
+    padding: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .MenuElement {
+    text-decoration: none;
+    height: 35px;
+    cursor: pointer;
+    color: cornflowerblue;
+    padding: 0.5rem;
+
+    a {
+      text-decoration: none;
+      color: cornflowerblue;
+    }
+  }
+
+  .MenuElement + .MenuElement {
+    border-top: 1px solid lightgrey;
+  }
+
+  .MenuHeader + .MenuElement {
+    border-top: 1px solid lightgrey;
+  }
+}
