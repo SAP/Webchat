@@ -18,9 +18,9 @@ class Menu extends Component {
 
   handleMouseClick = e => {
     if (
-      !this.node.contains(e.target)
-      && e.target.id !== 'menu-svg'
-      && e.target.id !== 'menu-svg-path'
+      !this.node.contains(e.target) &&
+      e.target.id !== 'menu-svg' &&
+      e.target.id !== 'menu-svg-path'
     ) {
       this.props.closeMenu()
     }
@@ -33,14 +33,9 @@ class Menu extends Component {
     return (
       <div className="Menu" ref={node => (this.node = node)}>
         {!!title && (
-          <div
-            onClick={removeMenuIndex}
-            className="MenuHeader"
-          >
-            <ArrowLeft className='MenuHeader--SVG' />
-            <p className='MenuHeader--Title'>
-              {title}
-            </p>
+          <div onClick={removeMenuIndex} className="MenuHeader">
+            <ArrowLeft className="MenuHeader--SVG" />
+            <p className="MenuHeader--Title">{title}</p>
           </div>
         )}
 
@@ -63,14 +58,8 @@ class Menu extends Component {
               break
             case 'nested':
               component = (
-                <div
-                  key={index}
-                  className="MenuElement"
-                  onClick={() => addMenuIndex(index)}
-                >
-                  <p style={{ flex: 1 }}>
-                    {action.title}
-                  </p>
+                <div key={index} className="MenuElement" onClick={() => addMenuIndex(index)}>
+                  <p style={{ flex: 1 }}>{action.title}</p>
                   <ArrowRight />
                 </div>
               )
@@ -79,7 +68,7 @@ class Menu extends Component {
               component = (
                 <a
                   key={index}
-                  className='MenuElement'
+                  className="MenuElement"
                   href={action.payload}
                   rel="noopener noreferrer"
                   target="_blank"

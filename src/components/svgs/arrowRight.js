@@ -9,7 +9,7 @@ const arrowRight = ({ className }) => {
       className={className}
       style={{ marginRight: 3 }}
     >
-      <path d="M192 128l128 128-128 128z" fill="cornflowerblue"/>
+      <path d="M192 128l128 128-128 128z" fill="cornflowerblue" />
     </svg>
   )
 }
