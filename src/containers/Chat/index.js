@@ -250,6 +250,7 @@ class Chat extends Component {
           onSubmit={this.sendMessage}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}
+          inputPlaceholder={propOr('', 'userInputPlaceholder', preferences)}
           characterLimit={propOr(0, 'characterLimit', preferences)}
         />
       </div>
