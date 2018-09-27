@@ -9,7 +9,12 @@ import Button from 'components/Button'
 const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const button = buttons[0]
 
-  if (!validURL.isUri(imageUrl) || (button.type === 'web_url' && (!validURL.isUri(button.value) || !validURL.isWebUri(button.value)))) {
+  if (
+    !validURL.isUri(imageUrl) ||
+    imageUrl.includes('javascript:') ||
+    (button.type === 'web_url' &&
+      (!validURL.isUri(button.value) || !validURL.isWebUri(button.value)))
+  ) {
     return null
   }
 

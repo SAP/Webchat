@@ -9,7 +9,7 @@ import Button from 'components/Button'
 const Card = ({ content, sendMessage, onImageLoaded }) => {
   const { title, subtitle, imageUrl, buttons } = content
 
-  if (!validURL.isUri(imageUrl)) {
+  if (!validURL.isUri(imageUrl) || imageUrl.includes('javascript:')) {
     return null
   }
 

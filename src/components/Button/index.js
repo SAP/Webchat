@@ -11,7 +11,6 @@ const Button = ({ button, sendMessage }) => {
   const formattedTitle = truncate(title, 20)
 
   if (button.type === 'web_url' && (!validURL.isUri(value) || !validURL.isWebUri(value))) {
-    console.log(value)
     return null
   }
 
