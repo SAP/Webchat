@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import validURL from 'valid-url'
 
 import './style.scss'
 
@@ -11,6 +12,11 @@ class IsTyping extends Component {
 
   render() {
     const { image } = this.props
+
+    if (!validURL.isUri(value) || !validURL.isWebUri(value)) {
+      return null
+    }
+
     return (
       <div className="RecastAppMessage bot">
         {image && <img className="RecastAppMessage--logo visible" src={image} />}

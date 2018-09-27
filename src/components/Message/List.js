@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import validURL from 'valid-url'
 
 import { truncate } from 'helpers'
 
@@ -7,6 +8,10 @@ import Button from 'components/Button'
 
 const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const button = buttons[0]
+
+  if (!validURL.isUri(imageUrl) || (button.type === 'web_url' && (!validURL.isUri(button.value) || !validURL.isWebUri(button.value)))) {
+    return null
+  }
 
   return (
     <div className="RecastAppListElement">

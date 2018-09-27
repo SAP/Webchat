@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import validURL from 'valid-url'
 
 import { truncate } from 'helpers'
 
@@ -8,6 +9,11 @@ import './style.scss'
 const Button = ({ button, sendMessage }) => {
   const { value, title } = button
   const formattedTitle = truncate(title, 20)
+
+  if (button.type === 'web_url' && (!validURL.isUri(value) || !validURL.isWebUri(value))) {
+    console.log(value)
+    return null
+  }
 
   let content = null
 
