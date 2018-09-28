@@ -14,8 +14,6 @@ const Button = ({ button, sendMessage }) => {
     return null
   }
 
-  console.log(value, sanitizeUrl(value))
-
   let content = null
 
   switch (button.type) {
