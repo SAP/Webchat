@@ -18,6 +18,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@braintree/sanitize-url": "^2.1.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.5",
     "cookies-js": "^1.2.3",
