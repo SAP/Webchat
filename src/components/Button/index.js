@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import validURL from 'valid-url'
+import { sanitizeUrl } from '@braintree/sanitize-url'
 
 import { truncate } from 'helpers'
 
@@ -10,9 +10,11 @@ const Button = ({ button, sendMessage }) => {
   const { value, title } = button
   const formattedTitle = truncate(title, 20)
 
-  if (button.type === 'web_url' && (!validURL.isUri(value) || !validURL.isWebUri(value))) {
+  if (button.type === 'web_url' && sanitizeUrl(value) === 'about:blank') {
     return null
   }
+
+  console.log(value, sanitizeUrl(value))
 
   let content = null
 

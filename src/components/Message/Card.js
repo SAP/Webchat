@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import validURL from 'valid-url'
+import {sanitizeUrl} from '@braintree/sanitize-url'
 
 import { truncate } from 'helpers'
 
@@ -9,7 +9,7 @@ import Button from 'components/Button'
 const Card = ({ content, sendMessage, onImageLoaded }) => {
   const { title, subtitle, imageUrl, buttons } = content
 
-  if (!validURL.isUri(imageUrl) || imageUrl.includes('javascript:')) {
+  if (sanitizeUrl(imageUrl) === 'about:blank') {
     return null
   }
 
