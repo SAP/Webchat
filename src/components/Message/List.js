@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {sanitizeUrl} from '@braintree/sanitize-url'
+import { sanitizeUrl } from '@braintree/sanitize-url'
 
 import { truncate } from 'helpers'
 
@@ -11,8 +11,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
 
   if (
     sanitizeUrl(imageUrl) === 'about:blank' ||
-    (button.type === 'web_url' &&
-      sanitizeUrl(button.value) === 'about:blank')
+    (button.type === 'web_url' && sanitizeUrl(button.value) === 'about:blank')
   ) {
     return null
   }
