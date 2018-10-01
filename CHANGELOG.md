@@ -26,3 +26,9 @@ Now, when clicking on a button, both the value and the title are sent. This way,
 ## Description
 
 Patch preventing the apparition of "null" in the webchat's input on Edge
+
+## Version 1.2.0 (Sept 26, 2018)
+
+Before version 1.2.0, the placeholder text displayed in the user's input was 'Write a reply'.  
+In versions 1.2.0 and above, it's now configurable.  
+Available as `userInputPlaceholder` (string) in the `preferences` object fetched via `getChannelPreferences()`.
