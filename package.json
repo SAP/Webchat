@@ -4,12 +4,13 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "clean": "rm -rf dist lib",
-    "build": "npm run clean && NODE_ENV=production npm run build:webpack",
+    "clean:lib": "rm -rf lib",
+    "clean:dist": "rm -rf dist",
+    "build": "npm run clean:dist && NODE_ENV=production npm run build:webpack",
     "build:webpack": "node bin/build.js",
     "build:js": "babel src -d lib",
-    "start": "npm run clean && node bin/build-dev",
-    "lib": "npm run clean && node bin/build-lib",
+    "start": "npm run clean:dist && node bin/build-dev",
+    "lib": "npm run clean:lib && node bin/build-lib",
     "prettier": "prettier --write \"src/**/*.?(js|?(s)css|json)\" && eslint --fix src",
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
