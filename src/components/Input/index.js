@@ -131,7 +131,7 @@ class Input extends Component {
   }
 
   render() {
-    const { enableHistoryInput, characterLimit } = this.props
+    const { enableHistoryInput, characterLimit, inputPlaceholder } = this.props
     const { value } = this.state
 
     const showLimitCharacter = characterLimit
@@ -149,7 +149,7 @@ class Input extends Component {
           ref={i => (this._input = i)}
           value={value}
           style={{ width: '100%', maxHeight: 70, resize: 'none' }}
-          placeholder={'Write a reply...'}
+          placeholder={inputPlaceholder}
           onChange={this.onInputChange}
           onKeyPress={e => {
             if (e.key === 'Enter') {
@@ -178,6 +178,7 @@ Input.propTypes = {
   onInputHeight: PropTypes.func,
   enableHistoryInput: PropTypes.bool,
   characterLimit: PropTypes.number,
+  inputPlaceholder: PropTypes.string,
 }
 
 export default Input
