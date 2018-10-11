@@ -82,21 +82,21 @@ class Chat extends Component {
   getMemoryOptions = chatId => {
     const checkResponseFormat = memoryOptions => {
       if (typeof memoryOptions !== 'object') {
-        console.log(WRONG_MEMORY_FORMAT)
-        console.log('Got : ')
-        console.log(memoryOptions)
+        console.error(WRONG_MEMORY_FORMAT)
+        console.error('Got : ')
+        console.error(memoryOptions)
         return undefined
       }
       if (!('merge' in memoryOptions) || typeof memoryOptions.merge !== 'boolean') {
-        console.log(WRONG_MEMORY_FORMAT)
-        console.log('Got : ')
-        console.log(memoryOptions)
+        console.error(WRONG_MEMORY_FORMAT)
+        console.error('Got : ')
+        console.error(memoryOptions)
         return undefined
       }
       if (!('memory' in memoryOptions) || typeof memoryOptions.memory !== 'object') {
-        console.log(WRONG_MEMORY_FORMAT)
-        console.log('Got : ')
-        console.log(memoryOptions)
+        console.error(WRONG_MEMORY_FORMAT)
+        console.error('Got : ')
+        console.error(memoryOptions)
         return undefined
       }
       return memoryOptions
@@ -118,16 +118,16 @@ class Chat extends Component {
           memoryOptionsResponse
             .then(memoryOptions => resolve(checkResponseFormat(memoryOptions)))
             .catch(err => {
-              console.log(FAILED_TO_GET_MEMORY)
-              console.log(err)
+              console.error(FAILED_TO_GET_MEMORY)
+              console.error(err)
               resolve()
             })
         } else {
           resolve(checkResponseFormat(memoryOptionsResponse))
         }
       } catch (err) {
-        console.log(FAILED_TO_GET_MEMORY)
-        console.log(err)
+        console.error(FAILED_TO_GET_MEMORY)
+        console.error(err)
         resolve()
       }
     })
