@@ -19,6 +19,7 @@ import Input from 'components/Input'
 
 import './style.scss'
 
+const MAX_GET_MEMORY_TIME = 10 * 1000 // in ms
 const FAILED_TO_GET_MEMORY = 'Could not get memory from webchatMethods.getMemory :'
 const WRONG_MEMORY_FORMAT = 'Wrong memory format, expecting : { "memory": <json>, "merge": <boolean> }'
 
@@ -105,8 +106,8 @@ class Chat extends Component {
       if (!window.webchatMethods || !window.webchatMethods.getMemory) {
         return resolve()
       }
-      // 10 seconds max
-      setTimeout(resolve, 10 * 1000)
+      // so that we send the message in all cases
+      setTimeout(resolve, MAX_GET_MEMORY_TIME)
       try {
         const memoryOptionsResponse = window.webchatMethods.getMemory(chatId)
         if (!memoryOptionsResponse) {
