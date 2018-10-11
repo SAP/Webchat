@@ -64,7 +64,7 @@ class Menu extends Component {
                 </div>
               )
               break
-            case 'web_url':
+            case 'Link': // TODO Should be "web_url" from backend
               component = (
                 <a
                   key={index}
