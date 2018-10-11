@@ -207,13 +207,13 @@ class Chat extends Component {
         ) : primaryHeader ? (
           primaryHeader(closeWebchat)
         ) : (
-          <Header
-            closeWebchat={closeWebchat}
-            preferences={preferences}
-            key="header"
-            logoStyle={logoStyle}
-          />
-        )}
+              <Header
+                closeWebchat={closeWebchat}
+                preferences={preferences}
+                key="header"
+                logoStyle={logoStyle}
+              />
+            )}
         <div
           className="RecastAppChat--content"
           style={{
@@ -224,30 +224,31 @@ class Chat extends Component {
           {secondaryView
             ? secondaryContent
             : [
-                <Live
-                  key="live"
-                  messages={messages}
-                  preferences={preferences}
-                  sendMessage={this.sendMessage}
-                  onScrollBottom={bool => this.setState({ showSlogan: bool })}
-                  onRetrySendMessage={this.retrySendMessage}
-                  onCancelSendMessage={this.cancelSendMessage}
-                  showInfo={showInfo}
-                  onClickShowInfo={onClickShowInfo}
-                  containerMessagesStyle={containerMessagesStyle}
-                />,
-                <div
-                  key="slogan"
-                  className={cx('RecastAppChat--slogan', {
-                    'RecastAppChat--slogan--hidden': !showSlogan,
-                  })}
-                >
-                  {'We run with Recast.AI'}
-                </div>,
-              ]}
+              <Live
+                key="live"
+                messages={messages}
+                preferences={preferences}
+                sendMessage={this.sendMessage}
+                onScrollBottom={bool => this.setState({ showSlogan: bool })}
+                onRetrySendMessage={this.retrySendMessage}
+                onCancelSendMessage={this.cancelSendMessage}
+                showInfo={showInfo}
+                onClickShowInfo={onClickShowInfo}
+                containerMessagesStyle={containerMessagesStyle}
+              />,
+              <div
+                key="slogan"
+                className={cx('RecastAppChat--slogan', {
+                  'RecastAppChat--slogan--hidden': !showSlogan,
+                })}
+              >
+                {'We run with Recast.AI'}
+              </div>,
+            ]}
         </div>
         <Input
           onSubmit={this.sendMessage}
+          preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}
           inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}
