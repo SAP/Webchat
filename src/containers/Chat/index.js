@@ -176,18 +176,20 @@ class Chat extends Component {
             })
         } else {
           // get potential memoryOptions from website developer
-          this.getMemoryOptions(chatId).then((memoryOptions) => {
-            if (memoryOptions) {
-              payload.memoryOptions = memoryOptions
-            }
-            postMessage(channelId, token, payload).then(() => {
+          this.getMemoryOptions(chatId)
+            .then((memoryOptions) => {
+              if (memoryOptions) {
+                payload.memoryOptions = memoryOptions
+              }
+              return postMessage(channelId, token, payload)
+            })
+            .then(() => {
               if (this.timeout) {
                 clearTimeout(this.timeout)
                 this.timeoutResolve()
                 this.timeout = null
               }
             })
-          })
         }
       },
     )
