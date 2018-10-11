@@ -19,6 +19,9 @@ import Input from 'components/Input'
 
 import './style.scss'
 
+const FAILED_TO_GET_MEMORY = 'Could not get memory from webchatMethods.getMemory :'
+const WRONG_MEMORY_FORMAT = 'Wrong memory format, expecting : { "memory": <json>, "merge": <boolean> }'
+
 @connect(
   state => ({
     token: state.conversation.token,
@@ -69,6 +72,66 @@ class Chat extends Component {
     }
   }
 
+  /*
+    The window.webchatMethods.getMemory function can return
+    a JSON object or a Promise resolving to a JSON object
+    Accepted format for the returned object is :
+    { memory: arbitrary JSON, merge: boolean }
+  */
+  getMemoryOptions = chatId => {
+    const checkResponseFormat = memoryOptions => {
+      if (typeof memoryOptions !== 'object') {
+        console.log(WRONG_MEMORY_FORMAT)
+        console.log('Got : ')
+        console.log(memoryOptions)
+        return undefined
+      }
+      if (!('merge' in memoryOptions) || typeof memoryOptions.merge !== 'boolean') {
+        console.log(WRONG_MEMORY_FORMAT)
+        console.log('Got : ')
+        console.log(memoryOptions)
+        return undefined
+      }
+      if (!('memory' in memoryOptions) || typeof memoryOptions.memory !== 'object') {
+        console.log(WRONG_MEMORY_FORMAT)
+        console.log('Got : ')
+        console.log(memoryOptions)
+        return undefined
+      }
+      return memoryOptions
+    }
+
+    return new Promise(resolve => {
+      if (!window.webchatMethods || !window.webchatMethods.getMemory) {
+        return resolve()
+      }
+      // 10 seconds max
+      setTimeout(resolve, 10 * 1000)
+      try {
+        const memoryOptionsResponse = window.webchatMethods.getMemory(chatId)
+        if (!memoryOptionsResponse) {
+          return resolve()
+        }
+        if (memoryOptionsResponse.then && typeof memoryOptionsResponse.then === 'function') {
+          // the function returned a Promise
+          memoryOptionsResponse
+            .then(memoryOptions => resolve(checkResponseFormat(memoryOptions)))
+            .catch(err => {
+              console.log(FAILED_TO_GET_MEMORY)
+              console.log(err)
+              resolve()
+            })
+        } else {
+          resolve(checkResponseFormat(memoryOptionsResponse))
+        }
+      } catch (err) {
+        console.log(FAILED_TO_GET_MEMORY)
+        console.log(err)
+        resolve()
+      }
+    })
+  }
+
   sendMessage = attachment => {
     const {
       token,
@@ -112,12 +175,18 @@ class Chat extends Component {
               addBotMessage([{ type: 'text', content: 'No reply', error: true }])
             })
         } else {
-          postMessage(channelId, token, payload).then(() => {
-            if (this.timeout) {
-              clearTimeout(this.timeout)
-              this.timeoutResolve()
-              this.timeout = null
+          // get potential memoryOptions from website developer
+          this.getMemoryOptions(chatId).then((memoryOptions) => {
+            if (memoryOptions) {
+              payload.memoryOptions = memoryOptions
             }
+            postMessage(channelId, token, payload).then(() => {
+              if (this.timeout) {
+                clearTimeout(this.timeout)
+                this.timeoutResolve()
+                this.timeout = null
+              }
+            })
           })
         }
       },
