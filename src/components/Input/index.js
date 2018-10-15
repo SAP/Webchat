@@ -149,10 +149,6 @@ class Input extends Component {
         ref={ref => {
           this.inputContainer = ref
         }}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
       >
         <textarea
           ref={i => (this._input = i)}
