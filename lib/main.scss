@@ -398,6 +398,10 @@
             box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16); }
     .RecastApp .RecastAppChat--slogan {
       margin-bottom: 0; } }
+
+@media only screen and (max-width: 420px) {
+  .RecastApp .RecastAppChat--slogan {
+    display: none; } }
 .RecastApp .RecastAppExpander {
   position: fixed;
   right: 10px;
