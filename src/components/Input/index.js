@@ -200,7 +200,7 @@ class Input extends Component {
         </div>
 
         {showLimitCharacter && (
-          <div className="characterLimit"> {characterLimit - value.length} </div>
+          <div className="characterLimit">{characterLimit - value.length}</div>
         )}
       </div>
     )
