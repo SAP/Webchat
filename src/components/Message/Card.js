@@ -9,7 +9,7 @@ import Button from 'components/Button'
 const Card = ({ content, sendMessage, onImageLoaded }) => {
   const { title, subtitle, imageUrl, buttons } = content
 
-  if (sanitizeUrl(imageUrl) === 'about:blank') {
+  if (imageUrl && sanitizeUrl(imageUrl) === 'about:blank') {
     return null
   }
 

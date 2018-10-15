@@ -5,7 +5,7 @@ import { sanitizeUrl } from '@braintree/sanitize-url'
 import './style.scss'
 
 const Picture = ({ content, onImageLoaded }) => {
-  if (sanitizeUrl(content) === 'about:blank') {
+  if (image && sanitizeUrl(content) === 'about:blank') {
     return null
   }
   return <img onLoad={onImageLoaded} src={content} className={'RecastAppPicture'} />
