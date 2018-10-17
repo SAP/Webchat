@@ -1,15 +1,16 @@
 {
   "name": "webchat",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "clean": "rm -rf dist lib",
-    "build": "npm run clean && NODE_ENV=production npm run build:webpack",
+    "clean:lib": "rm -rf lib",
+    "clean:dist": "rm -rf dist",
+    "build": "npm run clean:dist && NODE_ENV=production npm run build:webpack",
     "build:webpack": "node bin/build.js",
     "build:js": "babel src -d lib",
-    "start": "npm run clean && node bin/build-dev",
-    "lib": "npm run clean && node bin/build-lib",
+    "start": "npm run clean:dist && node bin/build-dev",
+    "lib": "npm run clean:lib && node bin/build-lib",
     "prettier": "prettier --write \"src/**/*.?(js|?(s)css|json)\" && eslint --fix src",
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,6 +19,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@braintree/sanitize-url": "^2.1.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.5",
     "cookies-js": "^1.2.3",
@@ -35,7 +37,8 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
-    "sanitize-html-react": "^1.13.0"
+    "sanitize-html-react": "^1.13.0",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",

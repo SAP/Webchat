@@ -25,8 +25,3 @@ export const getCredentialsFromCookie = () => {
 
   return null
 }
-
-export const isBrowserIE = () => {
-  const ua = window.navigator.userAgent
-  return ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1
-}

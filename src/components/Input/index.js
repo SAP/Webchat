@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isBrowserIE } from 'helpers'
 import * as R from 'ramda'
 
 import Menu from 'components/Menu'
@@ -22,7 +21,7 @@ class Input extends Component {
 
   componentDidMount() {
     this._input.focus()
-    this._input.value = isBrowserIE() ? '' : null
+    this._input.value = ''
 
     this.onInputHeight()
   }
@@ -40,7 +39,7 @@ class Input extends Component {
       // Dirty fix textarea placeholder to reset style correctly
       setTimeout(() => {
         this._input.style.height = '18px'
-        this._input.value = isBrowserIE() ? '' : null
+        this._input.value = ''
         this.onInputHeight()
       }, 100)
     }
@@ -164,7 +163,7 @@ class Input extends Component {
   }
 
   render() {
-    const { enableHistoryInput, characterLimit, menu } = this.props
+    const { enableHistoryInput, characterLimit, menu, inputPlaceholder } = this.props
     const { value, menuOpened } = this.state
 
     const showLimitCharacter = characterLimit
@@ -194,7 +193,7 @@ class Input extends Component {
           ref={i => (this._input = i)}
           value={value}
           style={{ width: '100%', maxHeight: 70, resize: 'none' }}
-          placeholder={'Write a reply...'}
+          placeholder={inputPlaceholder}
           onChange={this.onInputChange}
           onKeyPress={e => {
             if (e.key === 'Enter') {
@@ -224,6 +223,7 @@ Input.propTypes = {
   onInputHeight: PropTypes.func,
   enableHistoryInput: PropTypes.bool,
   characterLimit: PropTypes.number,
+  inputPlaceholder: PropTypes.string,
 }
 
 export default Input
