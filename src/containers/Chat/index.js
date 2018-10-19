@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 import _concat from 'lodash/concat'
+import { propOr } from 'ramda'
 
 import {
   postMessage,
@@ -138,12 +139,11 @@ class Chat extends Component {
     }
     this._isPolling = true
 
-    const { token, channelId, conversationId } = this.props
     let shouldPoll = true
     let index = 0
 
     do {
-      const { lastMessageId } = this.props
+      const { lastMessageId, conversationId, channelId, token } = this.props
       let shouldWaitXseconds = false
       let timeToSleep = 0
       try {
@@ -193,6 +193,7 @@ class Chat extends Component {
       secondaryContent,
       logoStyle,
       show,
+      enableHistoryInput,
     } = this.props
     const { showSlogan, messages, inputHeight } = this.state
 
@@ -216,7 +217,7 @@ class Chat extends Component {
         <div
           className="RecastAppChat--content"
           style={{
-            height: `calc(100% - ${50+inputHeight}px`
+            height: `calc(100% - ${50 + inputHeight}px`,
           }}
           key="content"
         >
@@ -248,6 +249,9 @@ class Chat extends Component {
         <Input
           onSubmit={this.sendMessage}
           onInputHeight={height => this.setState({ inputHeight: height })}
+          enableHistoryInput={enableHistoryInput}
+          inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}
+          characterLimit={propOr(0, 'characterLimit', preferences)}
         />
       </div>
     )
@@ -274,6 +278,7 @@ Chat.propTypes = {
   containerMessagesStyle: PropTypes.object,
   containerStyle: PropTypes.object,
   show: PropTypes.bool,
+  enableHistoryInput: PropTypes.bool,
 }
 
 export default Chat

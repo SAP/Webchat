@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { sanitizeUrl } from '@braintree/sanitize-url'
 
 import { truncate } from 'helpers'
 
@@ -7,6 +8,10 @@ import Button from 'components/Button'
 
 const Card = ({ content, sendMessage, onImageLoaded }) => {
   const { title, subtitle, imageUrl, buttons } = content
+
+  if (imageUrl && sanitizeUrl(imageUrl) === 'about:blank') {
+    return null
+  }
 
   return (
     <div className={'RecastAppCard'}>
@@ -19,9 +24,9 @@ const Card = ({ content, sendMessage, onImageLoaded }) => {
 
       {buttons.length ? (
         <div className="RecastAppCard--button-container">
-          {buttons
-            .slice(0, 3)
-            .map((b, i) => <Button key={i} button={b} sendMessage={sendMessage} />)}
+          {buttons.slice(0, 3).map((b, i) => (
+            <Button key={i} button={b} sendMessage={sendMessage} />
+          ))}
         </div>
       ) : null}
     </div>

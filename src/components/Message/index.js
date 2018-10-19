@@ -36,13 +36,14 @@ class Message extends Component {
       botMessageBackgroundColor,
     } = preferences
     const { displayIcon } = message
-    const { type, content, error } = message.attachment
+    const { type, content, error, title } = message.attachment
     const isBot = message.participant.isBot
 
     const image = isBot ? botPicture : userPicture
     const messageProps = {
       isBot,
-      content,
+      // Make sure we display the title of a button/quickReply click, and not its value
+      content: title || content,
       onImageLoaded,
       style: {
         color: isBot ? (error ? '#fff' : botMessageColor) : complementaryColor,
