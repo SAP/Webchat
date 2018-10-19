@@ -11,7 +11,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
 
   if (
     (imageUrl && sanitizeUrl(imageUrl) === 'about:blank') ||
-    (button.type === 'web_url' && sanitizeUrl(button.value) === 'about:blank')
+    (button && button.type === 'web_url' && sanitizeUrl(button.value) === 'about:blank')
   ) {
     return null
   }
