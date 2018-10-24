@@ -7,45 +7,43 @@ import { truncate } from 'helpers'
 import Button from 'components/Button'
 
 const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
-  const button = buttons[0]
-
-  if (
-    (imageUrl && sanitizeUrl(imageUrl) === 'about:blank') ||
-    (button.type === 'web_url' && sanitizeUrl(button.value) === 'about:blank')
-  ) {
-    return null
-  }
+  const button = buttons[0];
+  const titleMaxLength = 25;
+  const subTitleMaxLength = 50;
+  const buttonTitleMaxLength = 20;
 
   return (
     <div className="RecastAppListElement">
-      {imageUrl && <img src={imageUrl} className="RecastAppListElement--img" />}
+      {imageUrl && sanitizeUrl(imageUrl) !== 'about:blank' &&
+      <img src={imageUrl} className="RecastAppListElement--img" />}
 
       <div className="RecastAppListElement--container">
-        <p className="RecastAppListElement--title">{truncate(title, 25)}</p>
-        <p className="RecastAppListElement--subtitle">{truncate(subtitle, 50)}</p>
+        <p className="RecastAppListElement--title">{truncate(title, titleMaxLength)}</p>
+        <p className="RecastAppListElement--subtitle">{truncate(subtitle, subTitleMaxLength)}</p>
 
         {button &&
-          (button.type === 'web_url' ? (
-            <a
+          (button.type === 'web_url' ?
+              sanitizeUrl(button.value) !== 'about:blank' &&
+              (<a
               href={button.value}
               className="RecastAppListElement--button"
               target="_blank"
               rel="noopener noreferrer"
             >
-              {truncate(button.title, 20)}
+              {truncate(button.title, buttonTitleMaxLength)}
             </a>
           ) : (
             <div
               className="RecastAppListElement--button"
               onClick={() => sendMessage({ type: 'text', content: button.value })}
             >
-              {truncate(button.title, 20)}
+              {truncate(button.title, buttonTitleMaxLength)}
             </div>
           ))}
       </div>
     </div>
   )
-}
+};
 
 ListElement.propTypes = {
   title: PropTypes.string,
@@ -53,10 +51,10 @@ ListElement.propTypes = {
   imageUrl: PropTypes.string,
   buttons: PropTypes.array,
   sendMessage: PropTypes.func,
-}
+};
 
 const List = ({ content, sendMessage }) => {
-  const button = content.buttons && content.buttons[0]
+  const button = content.buttons && content.buttons[0];
 
   return (
     <div className={'RecastAppList'}>
@@ -71,11 +69,11 @@ const List = ({ content, sendMessage }) => {
       )}
     </div>
   )
-}
+};
 
 List.propTypes = {
   content: PropTypes.object,
   sendMessage: PropTypes.func,
-}
+};
 
 export default List
