@@ -154,7 +154,7 @@ class Input extends Component {
           ref={i => (this._input = i)}
           value={value}
           style={{
-            width: '80%',
+            width: '100%',
             maxHeight: 70,
             resize: 'none',
           }}

@@ -1,11 +1,12 @@
 .RecastApp .RecastAppInput {
+  cursor: pointer;
 
-    .RecastSendButtonContainer {
-        display: flex;
+  .RecastSendButtonContainer {
+    display: flex;
 
-        .RecastSendButton {
-            padding-left: 40px;
-        }
+    @media only screen and (min-width: 420px) and (min-height: 575px) {
+      display: none !important;
     }
+  }
 
 }
