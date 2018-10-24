@@ -1,0 +1,27 @@
+.Slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  .arrow {
+    position: absolute;
+    border: solid 1px #000;
+
+    &.right {
+      right: 0;
+    }
+
+    &.left {
+      left: 0;
+    }
+
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  .content {
+    display: flex;
+    transition: all 100ms;
+  }
+}
