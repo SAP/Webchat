@@ -185,8 +185,8 @@
       -webkit-box-pack: center;
           -ms-flex-pack: center;
               justify-content: center;
-      max-height: 30px;
-      padding: 1rem;
+      height: 34px;
+      padding: 0 1rem;
       margin-left: 0.5rem;
       cursor: pointer;
       font-weight: bold;
@@ -330,9 +330,6 @@
     font-size: 12px;
     color: #f44336; }
   .RecastApp .RecastAppInput ::-webkit-input-placeholder {
-    color: #bcbcbc;
-    opacity: 1; }
-  .RecastApp .RecastAppInput :-ms-input-placeholder {
     color: #bcbcbc;
     opacity: 1; }
   .RecastApp .RecastAppInput ::-ms-input-placeholder {
