@@ -133,7 +133,8 @@ class App extends Component {
       getLastMessage,
       enableHistoryInput,
     } = this.props
-    const { expanded } = this.state
+    // const { expanded } = this.state
+    const expanded = true
 
     return (
       <div className="RecastApp">
