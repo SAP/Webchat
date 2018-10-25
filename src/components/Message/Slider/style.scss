@@ -3,10 +3,14 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  margin-top: 5px;
 
   .arrow {
     position: absolute;
-    border: solid 1px #000;
+    border: solid 1px #bcbcbc;
+    border-radius: 3px;
+    padding: 3px;
+    background-color: #fff;
 
     &.right {
       right: 0;
@@ -22,6 +26,6 @@
 
   .content {
     display: flex;
-    transition: all 100ms;
+    transition: all 200ms;
   }
 }

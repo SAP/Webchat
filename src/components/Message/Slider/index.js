@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { PrevArrow, NextArrow } from '../../arrows'
+import PropTypes from 'prop-types'
 
 import './style.scss'
 
@@ -15,7 +15,7 @@ class Slider extends Component {
 
   componentDidMount() {
     if (this.content.getBoundingClientRect().width > this.container.getBoundingClientRect().width) {
-      this.setState({ canNext: true })
+      this.setState({ canNext: true }) // eslint-disable-line react/no-did-mount-set-state
     }
   }
 
@@ -24,48 +24,54 @@ class Slider extends Component {
       const previousItem = this.items[prevState.index - 1].getBoundingClientRect()
 
       return {
-        canPrevious: prevState.index - 1 > 0, // TODO
-        canNext: true, // TODO
+        canPrevious: prevState.index - 1 > 0,
+        canNext: prevState.index - 1 <= 0,
         translateWidth: Math.min(prevState.translateWidth + previousItem.width, 0),
-        index: prevState.index - 1,
+        index: Math.max(prevState.index - 1, 0),
       }
     })
   }
 
   onClickNext = () => {
     const { children } = this.props
+    const { index } = this.state
     const { width: maxWidth } = this.content.getBoundingClientRect()
+    const previousItem = this.items[index].getBoundingClientRect()
+    const containerWidth = this.container.getBoundingClientRect().width
 
-    this.setState(prevState => {
-      const previousItem = this.items[prevState.index].getBoundingClientRect()
+    if (this.hasMaxElementsDisplayed()) {
+      return
+    }
 
-      const shouldUpdate =
-        Math.max(
-          prevState.translateWidth - previousItem.width,
-          -maxWidth + this.container.getBoundingClientRect().width,
-        ) !== prevState.translateWidth
-
-      if (!shouldUpdate) {
+    this.setState(
+      prevState => {
         return {
-          canNext: false,
+          canNext: true,
+          canPrevious: prevState.index + 1 > 0,
+          translateWidth: Math.max(
+            prevState.translateWidth - previousItem.width,
+            -maxWidth + containerWidth,
+          ),
+          index: Math.min(prevState.index + 1, children.length - 1),
         }
-      }
+      },
+      () => this.setState({ canNext: !this.hasMaxElementsDisplayed() }),
+    )
+  }
 
-      return {
-        canNext: true, // TODO
-        canPrevious: true, // TODO
-        translateWidth: Math.max(
-          prevState.translateWidth - previousItem.width,
-          -maxWidth + this.container.getBoundingClientRect().width,
-        ),
-        index: prevState.index + 1 < children.length ? prevState.index + 1 : prevState.index,
-      }
-    })
+  hasMaxElementsDisplayed = () => {
+    const { index, translateWidth } = this.state
+    const { width: maxWidth } = this.content.getBoundingClientRect()
+    const previousItem = this.items[index].getBoundingClientRect()
+    const containerWidth = this.container.getBoundingClientRect().width
+    return (
+      Math.max(translateWidth - previousItem.width, -maxWidth + containerWidth) >= translateWidth
+    )
   }
 
   render() {
-    const { children } = this.props
-    const { index, translateWidth, canNext, canPrevious } = this.state
+    const { children, prevArrow, nextArrow, arrows } = this.props
+    const { translateWidth, canNext, canPrevious } = this.state
 
     return (
       <div
@@ -74,16 +80,18 @@ class Slider extends Component {
           this.container = ref
         }}
       >
-        {canPrevious && (
-          <div className="arrow left" onClick={this.onClickPrevious}>
-            <PrevArrow />
-          </div>
-        )}
-        {canNext && (
-          <div className="arrow right" onClick={this.onClickNext}>
-            <NextArrow />
-          </div>
-        )}
+        {canPrevious &&
+          arrows && (
+            <div className="arrow left" onClick={this.onClickPrevious}>
+              {prevArrow}
+            </div>
+          )}
+        {canNext &&
+          arrows && (
+            <div className="arrow right" onClick={this.onClickNext}>
+              {nextArrow}
+            </div>
+          )}
         <div
           className="content"
           style={{ transform: `translateX(${translateWidth}px)` }}
@@ -92,12 +100,21 @@ class Slider extends Component {
           }}
         >
           {React.Children.map(children, (child, index) =>
-            React.cloneElement(child, { ref: ref => (this.items[index] = ref) }),
+            React.cloneElement(child, {
+              ref: ref => (this.items[index] = ref),
+              style: { ...child.props.style, padding: 5 },
+            }),
           )}
         </div>
       </div>
     )
   }
+}
+
+Slider.propTypes = {
+  arrows: PropTypes.bool,
+  prevArrow: PropTypes.any,
+  nextArrow: PropTypes.any,
 }
 
 export default Slider

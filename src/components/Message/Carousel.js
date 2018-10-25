@@ -12,13 +12,6 @@ const Carousel = ({ content, sendMessage }) => {
     <div className={'RecastAppCarousel'}>
       <Slider
         arrows
-        centerMode
-        centerPadding="10px"
-        speed={200}
-        infinite={false}
-        draggable={false}
-        slidesToScroll={1}
-        className="Slider"
         prevArrow={<PrevArrow />}
         nextArrow={<NextArrow />}
       >
