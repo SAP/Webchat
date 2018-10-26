@@ -3,10 +3,6 @@
 
   .RecastSendButtonContainer {
     display: flex;
-
-    @media only screen and (min-width: 420px) and (min-height: 575px) {
-      display: none !important;
-    }
   }
 
 }
