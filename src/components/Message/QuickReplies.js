@@ -53,35 +53,37 @@ class QuickReplies extends Component {
       >
         <Text content={title} style={style} />
 
-        {displayQuickReplies && buttons && !!buttons.length && (
-          <Slider
-            arrows={showArrow}
-            variableWidth
-            speed={200}
-            infinite={false}
-            draggable={false}
-            prevArrow={<PrevArrow />}
-            nextArrow={<NextArrow />}
-            className="RecastAppSlider RecastAppQuickReplies--slider"
-          >
-            {buttons.map((b, i) => (
-              <div
-                ref={ref => {
-                  this.buttons[i] = ref
-                }}
-                key={i}
-                className="RecastAppQuickReplies--button"
-                onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
-                style={{
-                  border: `1px solid ${style.accentColor}`,
-                  color: style.accentColor,
-                }}
-              >
-                {truncate(b.title, 20)}
-              </div>
-            ))}
-          </Slider>
-        )}
+        {displayQuickReplies &&
+          buttons &&
+          !!buttons.length && (
+            <Slider
+              arrows={showArrow}
+              variableWidth
+              speed={200}
+              infinite={false}
+              draggable={false}
+              prevArrow={<PrevArrow />}
+              nextArrow={<NextArrow />}
+              className="RecastAppSlider RecastAppQuickReplies--slider"
+            >
+              {buttons.map((b, i) => (
+                <div
+                  ref={ref => {
+                    this.buttons[i] = ref
+                  }}
+                  key={i}
+                  className="RecastAppQuickReplies--button"
+                  onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
+                  style={{
+                    border: `1px solid ${style.accentColor}`,
+                    color: style.accentColor,
+                  }}
+                >
+                  {truncate(b.title, 20)}
+                </div>
+              ))}
+            </Slider>
+          )}
       </div>
     )
   }
