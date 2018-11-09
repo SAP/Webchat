@@ -28,7 +28,7 @@ const Button = ({ button, sendMessage }) => {
       content = (
         <div
           className="RecastAppButton"
-          onClick={() => sendMessage({ type: 'button', content: button })}
+          onClick={() => sendMessage({ type: 'button', content: button }, true)}
         >
           {formattedTitle}
         </div>
