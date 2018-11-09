@@ -313,6 +313,11 @@
 @media only screen and (min-width: 420px) and (min-height: 575px) {
   .RecastApp .RecastAppLive {
     height: 460px; } }
+.RecastApp .RecastAppInput .RecastSendButtonContainer {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
 .RecastApp .Menu {
   bottom: calc(100% + 15px);
   left: 10px;
@@ -380,11 +385,15 @@
   position: relative;
   margin-right: 0.7rem !important; }
 .RecastApp .RecastAppInput {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: relative;
   bottom: 0;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   padding: 1rem;
   color: grey;

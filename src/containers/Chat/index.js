@@ -249,6 +249,7 @@ class Chat extends Component {
         <Input
           menu={preferences.menu && preferences.menu.menu}
           onSubmit={this.sendMessage}
+          preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}
           inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}

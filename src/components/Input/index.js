@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as R from 'ramda'
 
+import SendButton from 'components/SendButton'
+
 import Menu from 'components/Menu'
 import MenuSVG from 'components/svgs/menu'
 import './style.scss'
@@ -77,7 +79,10 @@ class Input extends Component {
   sendMessage = () => {
     const content = this.state.value.trim()
     if (content) {
-      this.props.onSubmit({ type: 'text', content })
+      this.props.onSubmit({
+        type: 'text',
+        content,
+      })
       this.setState(prevState => {
         const historyValues = R.append(content, prevState.historyValues)
         const previousValues = R.append('', historyValues)
@@ -163,7 +168,7 @@ class Input extends Component {
   }
 
   render() {
-    const { enableHistoryInput, characterLimit, menu, inputPlaceholder } = this.props
+    const { enableHistoryInput, characterLimit, menu, preferences, inputPlaceholder } = this.props
     const { value, menuOpened } = this.state
 
     const showLimitCharacter = characterLimit
@@ -192,7 +197,11 @@ class Input extends Component {
         <textarea
           ref={i => (this._input = i)}
           value={value}
-          style={{ width: '100%', maxHeight: 70, resize: 'none' }}
+          style={{
+            width: '100%',
+            maxHeight: 70,
+            resize: 'none',
+          }}
           placeholder={inputPlaceholder}
           onChange={this.onInputChange}
           onKeyPress={e => {
@@ -208,7 +217,13 @@ class Input extends Component {
           }}
           rows={1}
         />
-
+        
+        <SendButton
+          preferences={preferences}
+          sendMessage={this.sendMessage}
+          value={value}
+        />
+        
         {showLimitCharacter && (
           <div className="characterLimit">{characterLimit - value.length}</div>
         )}
@@ -224,6 +239,7 @@ Input.propTypes = {
   enableHistoryInput: PropTypes.bool,
   characterLimit: PropTypes.number,
   inputPlaceholder: PropTypes.string,
+  preferences: PropTypes.object,
 }
 
 export default Input
