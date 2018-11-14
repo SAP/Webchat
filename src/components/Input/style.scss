@@ -1,7 +1,10 @@
 .RecastApp .RecastAppInput {
+  display: flex;
+  align-items: center;
   position: relative;
   bottom: 0;
   width: 100%;
+  display: flex;
 
   padding: 1rem;
   color: grey;
@@ -15,5 +18,10 @@
     padding: 5px 5px 0 0;
     font-size: 12px;
     color: #f44336;
+  }
+
+  ::placeholder {
+    color: #bcbcbc;
+    opacity: 1;
   }
 }

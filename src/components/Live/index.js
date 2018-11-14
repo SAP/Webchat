@@ -26,7 +26,8 @@ class Live extends Component {
         setTimeout(() => {
           if (this.messagesList) {
             this.messagesList.scrollTop = this.messagesList.scrollHeight
-          }}, 100)
+          }
+        }, 100)
       })
     }
   }
@@ -45,7 +46,7 @@ class Live extends Component {
 
   handleScroll = () => {
     if (!this.messagesList) {
-      return;
+      return
     }
 
     const { onScrollBottom } = this.props

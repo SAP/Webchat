@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isBrowserIE } from 'helpers'
 import * as R from 'ramda'
 
+import SendButton from 'components/SendButton'
+
+import Menu from 'components/Menu'
+import MenuSVG from 'components/svgs/menu'
 import './style.scss'
 
 // Number of minimum char to display the char limit.
@@ -14,17 +17,23 @@ class Input extends Component {
     previousValues: [],
     historyValues: [],
     indexHistory: 0,
+    menuOpened: false,
+    menuIndexes: [],
   }
 
   componentDidMount() {
     this._input.focus()
-    this._input.value = isBrowserIE() ? '' : null
+    this._input.value = ''
 
     this.onInputHeight()
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState.value !== this.state.value
+    return (
+      nextState.value !== this.state.value ||
+      nextState.menuOpened !== this.state.menuOpened ||
+      nextState.menuIndexes.length !== this.state.menuIndexes.length
+    )
   }
 
   componentDidUpdate() {
@@ -32,7 +41,7 @@ class Input extends Component {
       // Dirty fix textarea placeholder to reset style correctly
       setTimeout(() => {
         this._input.style.height = '18px'
-        this._input.value = isBrowserIE() ? '' : null
+        this._input.value = ''
         this.onInputHeight()
       }, 100)
     }
@@ -70,7 +79,10 @@ class Input extends Component {
   sendMessage = () => {
     const content = this.state.value.trim()
     if (content) {
-      this.props.onSubmit({ type: 'text', content })
+      this.props.onSubmit({
+        type: 'text',
+        content,
+      })
       this.setState(prevState => {
         const historyValues = R.append(content, prevState.historyValues)
         const previousValues = R.append('', historyValues)
@@ -131,13 +143,37 @@ class Input extends Component {
     }
   }
 
+  removeMenuIndex = () => {
+    const { menuIndexes } = this.state
+    this.setState({ menuIndexes: menuIndexes.slice(0, -1) })
+  }
+
+  addMenuIndex = i => {
+    const { menuIndexes } = this.state
+    this.setState({ menuIndexes: [...menuIndexes, i] })
+  }
+
+  getCurrentMenu = () => {
+    const { menuIndexes } = this.state
+
+    return menuIndexes.reduce((currentMenu, i) => currentMenu.call_to_actions[i], this.props.menu)
+  }
+
+  triggerMenu = () => {
+    const { menuOpened } = this.state
+    if (menuOpened) {
+      return this.setState({ menuOpened: false, menuIndexes: [] })
+    }
+    return this.setState({ menuOpened: true })
+  }
+
   render() {
-    const { enableHistoryInput, characterLimit } = this.props
-    const { value } = this.state
+    const { enableHistoryInput, characterLimit, menu, preferences, inputPlaceholder } = this.props
+    const { value, menuOpened } = this.state
 
     const showLimitCharacter = characterLimit
       ? characterLimit - value.length <= NUMBER_BEFORE_LIMIT
-      : null;
+      : null
 
     return (
       <div
@@ -146,11 +182,27 @@ class Input extends Component {
           this.inputContainer = ref
         }}
       >
+        {menu && <MenuSVG onClick={this.triggerMenu} />}
+
+        {menuOpened && (
+          <Menu
+            closeMenu={this.triggerMenu}
+            currentMenu={this.getCurrentMenu()}
+            addMenuIndex={this.addMenuIndex}
+            removeMenuIndex={this.removeMenuIndex}
+            postbackClick={value => this.setState({ value }, this.sendMessage)}
+          />
+        )}
+
         <textarea
           ref={i => (this._input = i)}
           value={value}
-          style={{ width: '100%', maxHeight: 70, resize: 'none' }}
-          placeholder={'Write a reply...'}
+          style={{
+            width: '100%',
+            maxHeight: 70,
+            resize: 'none',
+          }}
+          placeholder={inputPlaceholder}
           onChange={this.onInputChange}
           onKeyPress={e => {
             if (e.key === 'Enter') {
@@ -165,7 +217,13 @@ class Input extends Component {
           }}
           rows={1}
         />
-
+        
+        <SendButton
+          preferences={preferences}
+          sendMessage={this.sendMessage}
+          value={value}
+        />
+        
         {showLimitCharacter && (
           <div className="characterLimit">{characterLimit - value.length}</div>
         )}
@@ -175,10 +233,13 @@ class Input extends Component {
 }
 
 Input.propTypes = {
+  menu: PropTypes.object,
   onSubmit: PropTypes.func,
   onInputHeight: PropTypes.func,
   enableHistoryInput: PropTypes.bool,
   characterLimit: PropTypes.number,
+  inputPlaceholder: PropTypes.string,
+  preferences: PropTypes.object,
 }
 
 export default Input

@@ -69,7 +69,7 @@ class Chat extends Component {
     }
   }
 
-  sendMessage = attachment => {
+  sendMessage = (attachment, hide) => {
     const {
       token,
       channelId,
@@ -91,10 +91,10 @@ class Chat extends Component {
     }
 
     this.setState(
-      prevState => ({ messages: _concat(prevState.messages, [message]) }),
+      prevState => ({ messages: _concat(prevState.messages, hide ? [] : [message]) }),
       () => {
         if (sendMessagePromise) {
-          addUserMessage(message)
+          !hide && addUserMessage(message)
 
           sendMessagePromise(message)
             .then(res => {
@@ -247,9 +247,12 @@ class Chat extends Component {
               ]}
         </div>
         <Input
+          menu={preferences.menu && preferences.menu.menu}
           onSubmit={this.sendMessage}
+          preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}
+          inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}
           characterLimit={propOr(0, 'characterLimit', preferences)}
         />
       </div>
