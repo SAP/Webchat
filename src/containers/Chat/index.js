@@ -69,6 +69,12 @@ class Chat extends Component {
     }
   }
 
+  shouldHideBotReply = (responseData) => {
+    return responseData.conversation && responseData.conversation.skill === 'qna'
+    && Array.isArray(responseData.nlp) && !responseData.nlp.length
+    && Array.isArray(responseData.messages) && !responseData.messages.length;
+  }
+
   sendMessage = (attachment, hide) => {
     const {
       token,
@@ -106,7 +112,7 @@ class Chat extends Component {
                 data.messages.length === 0
                   ? [{ type: 'text', content: 'No reply', error: true }]
                   : data.messages
-              addBotMessage(messages, data)
+              if (!this.shouldHideBotReply(data)) addBotMessage(messages, data)
             })
             .catch(() => {
               addBotMessage([{ type: 'text', content: 'No reply', error: true }])
