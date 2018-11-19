@@ -13,7 +13,7 @@ class IsTyping extends Component {
   render() {
     const { image } = this.props
 
-    if (sanitizeUrl(image) === 'about:blank') {
+    if (image && sanitizeUrl(image) === 'about:blank') {
       return null
     }
 

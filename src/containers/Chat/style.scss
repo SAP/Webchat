@@ -65,3 +65,10 @@
     }
   }
 }
+@media only screen and (max-width: 420px) {
+  .RecastApp .RecastAppChat {
+    &--slogan {
+      display: none;
+    }
+  }
+}

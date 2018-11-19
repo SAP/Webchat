@@ -185,8 +185,8 @@
       -webkit-box-pack: center;
           -ms-flex-pack: center;
               justify-content: center;
-      max-height: 30px;
-      padding: 1rem;
+      height: 34px;
+      padding: 0 1rem;
       margin-left: 0.5rem;
       cursor: pointer;
       font-weight: bold;
@@ -313,10 +313,88 @@
 @media only screen and (min-width: 420px) and (min-height: 575px) {
   .RecastApp .RecastAppLive {
     height: 460px; } }
+.RecastApp .RecastAppInput .RecastSendButtonContainer {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+.RecastApp .Menu {
+  bottom: calc(100% + 15px);
+  left: 10px;
+  width: 240px;
+  position: absolute;
+  background-color: white;
+  -webkit-box-shadow: 0 0 7px 1px lightgrey;
+          box-shadow: 0 0 7px 1px lightgrey;
+  border-radius: 3px;
+  font-size: 14px; }
+  .RecastApp .Menu::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 7px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 7px 0 7px;
+    border-color: #ffffff transparent transparent transparent; }
+  .RecastApp .Menu .MenuHeader {
+    height: 40px;
+    padding: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    position: relative; }
+    .RecastApp .Menu .MenuHeader--Title {
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      margin-left: 10px; }
+    .RecastApp .Menu .MenuHeader--SVG {
+      left: 3px;
+      position: absolute; }
+  .RecastApp .Menu .MenuElement {
+    text-decoration: none;
+    height: 40px;
+    cursor: pointer;
+    color: cornflowerblue;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding-left: 0.5rem; }
+    .RecastApp .Menu .MenuElement a {
+      text-decoration: none;
+      color: cornflowerblue; }
+  .RecastApp .Menu .MenuElement + .MenuElement {
+    border-top: 1px solid lightgrey; }
+  .RecastApp .Menu .MenuHeader + .MenuElement {
+    border-top: 1px solid lightgrey; }
+.MenuSVG {
+  cursor: pointer;
+  position: relative;
+  margin-right: 0.7rem !important; }
 .RecastApp .RecastAppInput {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: relative;
   bottom: 0;
   width: 100%;
+  display: flex;
   padding: 1rem;
   color: grey;
   background: white;
@@ -330,9 +408,6 @@
     font-size: 12px;
     color: #f44336; }
   .RecastApp .RecastAppInput ::-webkit-input-placeholder {
-    color: #bcbcbc;
-    opacity: 1; }
-  .RecastApp .RecastAppInput :-ms-input-placeholder {
     color: #bcbcbc;
     opacity: 1; }
   .RecastApp .RecastAppInput ::-ms-input-placeholder {
@@ -398,6 +473,10 @@
             box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16); }
     .RecastApp .RecastAppChat--slogan {
       margin-bottom: 0; } }
+
+@media only screen and (max-width: 420px) {
+  .RecastApp .RecastAppChat--slogan {
+    display: none; } }
 .RecastApp .RecastAppExpander {
   position: fixed;
   right: 10px;

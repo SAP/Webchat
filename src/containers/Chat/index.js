@@ -133,7 +133,13 @@ class Chat extends Component {
     })
   }
 
-  sendMessage = attachment => {
+  shouldHideBotReply = (responseData) => {
+    return responseData.conversation && responseData.conversation.skill === 'qna'
+    && Array.isArray(responseData.nlp) && !responseData.nlp.length
+    && Array.isArray(responseData.messages) && !responseData.messages.length;
+  }
+
+  sendMessage = (attachment, hide) => {
     const {
       token,
       channelId,
@@ -155,10 +161,10 @@ class Chat extends Component {
     }
 
     this.setState(
-      prevState => ({ messages: _concat(prevState.messages, [message]) }),
+      prevState => ({ messages: _concat(prevState.messages, hide ? [] : [message]) }),
       () => {
         if (sendMessagePromise) {
-          addUserMessage(message)
+          !hide && addUserMessage(message)
 
           sendMessagePromise(message)
             .then(res => {
@@ -170,7 +176,7 @@ class Chat extends Component {
                 data.messages.length === 0
                   ? [{ type: 'text', content: 'No reply', error: true }]
                   : data.messages
-              addBotMessage(messages, data)
+              if (!this.shouldHideBotReply(data)) addBotMessage(messages, data)
             })
             .catch(() => {
               addBotMessage([{ type: 'text', content: 'No reply', error: true }])
@@ -319,7 +325,9 @@ class Chat extends Component {
               ]}
         </div>
         <Input
+          menu={preferences.menu && preferences.menu.menu}
           onSubmit={this.sendMessage}
+          preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}
           inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}
