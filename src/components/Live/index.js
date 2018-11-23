@@ -90,12 +90,14 @@ class Live extends Component {
     } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
-    console.log("lastMessage", lastMessage);
+    console.log('lastMessage', lastMessage)
     const shouldDisplayTyping =
-      lastMessage &&
+      (lastMessage && lastMessage.hasDelay
+        ? lastMessage.hasNextMessage
+        : lastMessage.participant.isBot === false) &&
+      showTyping &&
       !lastMessage.retry &&
-      !lastMessage.isSending &&
-      showTyping
+      !lastMessage.isSending
 
     return (
       <div
