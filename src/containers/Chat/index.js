@@ -129,7 +129,7 @@ class Chat extends Component {
                    if (message.delay) {
                      const delay = message.delay * 1000 * (index + 1);
                      console.log("Add delay", delay);
-                     this.messagesDelays[index] = setTimeout(() => addBotMessage([messages], data), delay)
+                     this.messagesDelays[index] = setTimeout(() => addBotMessage([message], data), delay)
                    } else {
                      addBotMessage([message], data)
                    }
