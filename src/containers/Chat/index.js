@@ -73,7 +73,7 @@ class Chat extends Component {
 
   componentWillUnmount() {
     if (this.messagesDelays.length) {
-      console.log("Unmount me");
+      console.log("Unmount me")
       this.messagesDelays.forEach(messageDelay => clearTimeout(messageDelay))
     }
   }
@@ -81,7 +81,7 @@ class Chat extends Component {
   shouldHideBotReply = (responseData) => {
     return responseData.conversation && responseData.conversation.skill === 'qna'
     && Array.isArray(responseData.nlp) && !responseData.nlp.length
-    && Array.isArray(responseData.messages) && !responseData.messages.length;
+    && Array.isArray(responseData.messages) && !responseData.messages.length
   }
 
   sendMessage = (attachment, userMessage) => {
@@ -106,13 +106,13 @@ class Chat extends Component {
     }
 
     if (userMessage)
-      userMessage = {...JSON.parse(JSON.stringify(backendMessage)), attachment: { type: 'text', content: userMessage}};
+      userMessage = {...JSON.parse(JSON.stringify(backendMessage)), attachment: { type: 'text', content: userMessage}}
 
     this.setState(
       prevState => ({ messages: _concat(prevState.messages, [backendMessage]) }),
       () => {
         if (sendMessagePromise) {
-          addUserMessage(userMessage || backendMessage);
+          addUserMessage(userMessage || backendMessage)
 
           sendMessagePromise(backendMessage)
             .then(res => {
@@ -125,10 +125,13 @@ class Chat extends Component {
                   ? [{ type: 'text', content: 'No reply', error: true }]
                   : data.messages
               if (!this.shouldHideBotReply(data)) {
+                 let sumDelay = 0
                  messages.forEach((message, index) => {
                    if (message.delay) {
-                     const delay = message.delay * 1000 * (index + 1);
-                     console.log("Add delay", delay);
+                     const delay = (sumDelay + message.delay) * 1000
+                     sumDelay = message.delay
+                     
+                     console.log("Add delay", delay, sumDelay)
                      this.messagesDelays[index] = setTimeout(() => addBotMessage([message], data), delay)
                    } else {
                      addBotMessage([message], data)

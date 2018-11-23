@@ -90,6 +90,7 @@ class Live extends Component {
     } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
+    console.log("lastMessage", lastMessage);
     const shouldDisplayTyping =
       lastMessage &&
       lastMessage.participant.isBot === false &&
