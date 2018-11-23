@@ -73,7 +73,6 @@ class Chat extends Component {
 
   componentWillUnmount() {
     if (this.messagesDelays.length) {
-      console.log("Unmount me")
       this.messagesDelays.forEach(messageDelay => clearTimeout(messageDelay))
     }
   }
@@ -131,7 +130,6 @@ class Chat extends Component {
                      const delay = (sumDelay + message.delay) * 1000
                      sumDelay += message.delay
 
-                     console.log("Add delay", delay, sumDelay)
                      this.messagesDelays[index] = setTimeout(() => addBotMessage([message], {
                        ...data,
                        hasDelay: true,

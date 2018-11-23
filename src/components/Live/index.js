@@ -91,7 +91,7 @@ class Live extends Component {
     } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
-    console.log('lastMessage', lastMessage)
+
     const shouldDisplayTyping =
       lastMessage && (pathOr(false, ['data', 'hasDelay'], lastMessage)
         ? pathOr(false, ['data', 'hasNextMessage'], lastMessage)
