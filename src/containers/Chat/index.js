@@ -69,7 +69,13 @@ class Chat extends Component {
     }
   }
 
-  sendMessage = attachment => {
+  shouldHideBotReply = (responseData) => {
+    return responseData.conversation && responseData.conversation.skill === 'qna'
+    && Array.isArray(responseData.nlp) && !responseData.nlp.length
+    && Array.isArray(responseData.messages) && !responseData.messages.length;
+  }
+
+  sendMessage = (attachment, userMessage) => {
     const {
       token,
       channelId,
@@ -81,7 +87,7 @@ class Chat extends Component {
     } = this.props
     const payload = { message: { attachment }, chatId }
 
-    const message = {
+    const backendMessage = {
       ...payload.message,
       isSending: true,
       id: `local-${Math.random()}`,
@@ -90,13 +96,16 @@ class Chat extends Component {
       },
     }
 
+    if (userMessage)
+      userMessage = {...JSON.parse(JSON.stringify(backendMessage)), attachment: { type: 'text', content: userMessage}};
+
     this.setState(
-      prevState => ({ messages: _concat(prevState.messages, [message]) }),
+      prevState => ({ messages: _concat(prevState.messages, [backendMessage]) }),
       () => {
         if (sendMessagePromise) {
-          addUserMessage(message)
+          addUserMessage(userMessage || backendMessage);
 
-          sendMessagePromise(message)
+          sendMessagePromise(backendMessage)
             .then(res => {
               if (!res) {
                 throw new Error('Fail send message')
@@ -106,7 +115,7 @@ class Chat extends Component {
                 data.messages.length === 0
                   ? [{ type: 'text', content: 'No reply', error: true }]
                   : data.messages
-              addBotMessage(messages, data)
+              if (!this.shouldHideBotReply(data)) addBotMessage(messages, data)
             })
             .catch(() => {
               addBotMessage([{ type: 'text', content: 'No reply', error: true }])
@@ -247,7 +256,9 @@ class Chat extends Component {
               ]}
         </div>
         <Input
+          menu={preferences.menu && preferences.menu.menu}
           onSubmit={this.sendMessage}
+          preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}
           inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}

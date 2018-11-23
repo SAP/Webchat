@@ -1,7 +1,10 @@
 .RecastApp .RecastAppInput {
+  display: flex;
+  align-items: center;
   position: relative;
   bottom: 0;
   width: 100%;
+  display: flex;
 
   padding: 1rem;
   color: grey;
