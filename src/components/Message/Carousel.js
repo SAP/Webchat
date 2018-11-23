@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Slider from 'react-slick'
+import Slider from './Slider/index';
 
 import Card from './Card'
 import { PrevArrow, NextArrow } from 'components/arrows'
@@ -12,13 +12,6 @@ const Carousel = ({ content, sendMessage }) => {
     <div className={'RecastAppCarousel'}>
       <Slider
         arrows
-        centerMode
-        centerPadding="10px"
-        speed={200}
-        infinite={false}
-        draggable={false}
-        slidesToScroll={1}
-        className="Slider"
         prevArrow={<PrevArrow />}
         nextArrow={<NextArrow />}
       >

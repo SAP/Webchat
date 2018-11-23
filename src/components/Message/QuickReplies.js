@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Slider from 'react-slick'
+import Slider from './Slider/index'
 import _map from 'lodash/map'
 import _sum from 'lodash/sum'
 
@@ -12,20 +12,6 @@ import { PrevArrow, NextArrow } from 'components/arrows'
 class QuickReplies extends Component {
   state = {
     displayQuickReplies: this.props.isLastMessage,
-    showArrow: true,
-  }
-
-  componentDidMount() {
-    const widthQuickReplies = _sum(
-      _map(this.buttons, button => {
-        const dimensions = button.getBoundingClientRect()
-        return dimensions.width
-      }),
-    )
-
-    if (widthQuickReplies <= 270) {
-      this.setState({ showArrow: false })
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,7 +27,7 @@ class QuickReplies extends Component {
 
   render() {
     const { content, style } = this.props
-    const { displayQuickReplies, showArrow } = this.state
+    const { displayQuickReplies } = this.state
     const { title, buttons } = content
 
     return (
@@ -56,16 +42,7 @@ class QuickReplies extends Component {
         {displayQuickReplies &&
           buttons &&
           !!buttons.length && (
-            <Slider
-              arrows={showArrow}
-              variableWidth
-              speed={200}
-              infinite={false}
-              draggable={false}
-              prevArrow={<PrevArrow />}
-              nextArrow={<NextArrow />}
-              className="RecastAppSlider RecastAppQuickReplies--slider"
-            >
+            <Slider arrows prevArrow={<PrevArrow />} nextArrow={<NextArrow />}>
               {buttons.map((b, i) => (
                 <div
                   ref={ref => {
