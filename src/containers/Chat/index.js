@@ -74,7 +74,7 @@ class Chat extends Component {
   componentWillUnmount() {
     if (this.messagesDelays.length) {
       console.log("Unmount me");
-      messagesDelays.forEach(messageDelay => clearTimeout(messageDelay))
+      this.messagesDelays.forEach(messageDelay => clearTimeout(messageDelay))
     }
   }
 
