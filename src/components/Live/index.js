@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import reduceRight from 'lodash/reduceRight'
+import { pathOr } from 'ramda'
 
 import Message from 'components/Message'
 import IsTyping from 'components/Message/isTyping'
@@ -92,12 +93,12 @@ class Live extends Component {
     const lastMessage = messages.slice(-1)[0]
     console.log('lastMessage', lastMessage)
     const shouldDisplayTyping =
-      (lastMessage && lastMessage.hasDelay
-        ? lastMessage.hasNextMessage
+      lastMessage && (pathOr(false, ['data', 'hasDelay'], lastMessage)
+        ? pathOr(false, ['data', 'hasNextMessage'], lastMessage)
         : lastMessage.participant.isBot === false) &&
-      showTyping &&
       !lastMessage.retry &&
-      !lastMessage.isSending
+      !lastMessage.isSending &&
+      showTyping
 
     return (
       <div
