@@ -93,7 +93,6 @@ class Live extends Component {
     console.log("lastMessage", lastMessage);
     const shouldDisplayTyping =
       lastMessage &&
-      lastMessage.participant.isBot === false &&
       !lastMessage.retry &&
       !lastMessage.isSending &&
       showTyping
