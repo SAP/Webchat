@@ -43,6 +43,8 @@ class Chat extends Component {
     inputHeight: 50, // height of input (default: 50px)
   }
 
+  messagesDelays = []
+
   componentDidMount() {
     const { sendMessagePromise, show } = this.props
 
@@ -66,6 +68,13 @@ class Chat extends Component {
 
     if (show && show !== this.props.show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.messagesDelays.length) {
+      console.log("Unmount me");
+      messagesDelays.forEach(messageDelay => clearTimeout(messageDelay))
     }
   }
 
@@ -115,7 +124,16 @@ class Chat extends Component {
                 data.messages.length === 0
                   ? [{ type: 'text', content: 'No reply', error: true }]
                   : data.messages
-              if (!this.shouldHideBotReply(data)) addBotMessage(messages, data)
+              if (!this.shouldHideBotReply(data)) {
+                 messages.forEach((message, index) => {
+                   if (message.delay) {
+                     console.log("Add delay", message.delay);
+                     this.messagesDelays[index] = setTimeout(() => addBotMessage([messages], data), message.delay)
+                   } else {
+                     addBotMessage([message], data)
+                   }
+                 })
+              }
             })
             .catch(() => {
               addBotMessage([{ type: 'text', content: 'No reply', error: true }])
