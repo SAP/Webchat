@@ -127,8 +127,9 @@ class Chat extends Component {
               if (!this.shouldHideBotReply(data)) {
                  messages.forEach((message, index) => {
                    if (message.delay) {
-                     console.log("Add delay", message.delay);
-                     this.messagesDelays[index] = setTimeout(() => addBotMessage([messages], data), message.delay)
+                     const delay = message.delay * 1000 * (index + 1);
+                     console.log("Add delay", delay);
+                     this.messagesDelays[index] = setTimeout(() => addBotMessage([messages], data), delay)
                    } else {
                      addBotMessage([message], data)
                    }
