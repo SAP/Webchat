@@ -103,6 +103,10 @@ class App extends Component {
     }
   }
 
+  componentDidCatch(error, info) {
+    console.log(error, info);
+  }
+
   toggleChat = () => {
     const { clearMessagesOnclose } = this.props
     this.setState({ expanded: !this.state.expanded }, () => {
