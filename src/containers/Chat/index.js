@@ -77,10 +77,15 @@ class Chat extends Component {
     }
   }
 
-  shouldHideBotReply = (responseData) => {
-    return responseData.conversation && responseData.conversation.skill === 'qna'
-    && Array.isArray(responseData.nlp) && !responseData.nlp.length
-    && Array.isArray(responseData.messages) && !responseData.messages.length
+  shouldHideBotReply = responseData => {
+    return (
+      responseData.conversation &&
+      responseData.conversation.skill === 'qna' &&
+      Array.isArray(responseData.nlp) &&
+      !responseData.nlp.length &&
+      Array.isArray(responseData.messages) &&
+      !responseData.messages.length
+    )
   }
 
   sendMessage = (attachment, userMessage) => {
@@ -105,7 +110,10 @@ class Chat extends Component {
     }
 
     if (userMessage)
-      userMessage = {...JSON.parse(JSON.stringify(backendMessage)), attachment: { type: 'text', content: userMessage}}
+      userMessage = {
+        ...JSON.parse(JSON.stringify(backendMessage)),
+        attachment: { type: 'text', content: userMessage },
+      }
 
     this.setState(
       prevState => ({ messages: _concat(prevState.messages, [backendMessage]) }),
@@ -124,20 +132,20 @@ class Chat extends Component {
                   ? [{ type: 'text', content: 'No reply', error: true }]
                   : data.messages
               if (!this.shouldHideBotReply(data)) {
-                 let delay = 0
-                 messages.forEach((message, index) => {
-                   if (message.delay) {
-                     this.messagesDelays[index] = setTimeout(() => addBotMessage([message], {
-                       ...data,
-                       hasDelay: true,
-                       hasNextMessage: index !== messages.length - 1
-                     }), delay)
+                let delay = 0
+                messages.forEach((message, index) => {
+                  this.messagesDelays[index] = setTimeout(
+                    () =>
+                      addBotMessage([message], {
+                        ...data,
+                        hasDelay: true,
+                        hasNextMessage: index !== messages.length - 1,
+                      }),
+                    delay,
+                  )
 
-                     delay += message.delay * 1000
-                   } else {
-                     addBotMessage([message], data)
-                   }
-                 })
+                  delay += message.delay ? message.delay * 1000 : 0
+                })
               }
             })
             .catch(() => {
