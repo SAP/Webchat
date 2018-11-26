@@ -124,17 +124,16 @@ class Chat extends Component {
                   ? [{ type: 'text', content: 'No reply', error: true }]
                   : data.messages
               if (!this.shouldHideBotReply(data)) {
-                 let sumDelay = 0
+                 let delay = 0
                  messages.forEach((message, index) => {
                    if (message.delay) {
-                     const delay = (sumDelay + message.delay) * 1000
-                     sumDelay += message.delay
-
                      this.messagesDelays[index] = setTimeout(() => addBotMessage([message], {
                        ...data,
                        hasDelay: true,
                        hasNextMessage: index !== messages.length - 1
                      }), delay)
+
+                     delay += message.delay * 1000
                    } else {
                      addBotMessage([message], data)
                    }
