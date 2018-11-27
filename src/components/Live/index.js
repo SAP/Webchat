@@ -92,10 +92,12 @@ class Live extends Component {
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
 
+    const sendMessagePromiseCondition = lastMessage && (pathOr(false, ['data', 'hasDelay'], lastMessage)
+      ? pathOr(false, ['data', 'hasNextMessage'], lastMessage)
+      : lastMessage.participant.isBot === false)
+    const pollMessageCondition = lastMessage && pathOr(false, ['attachment', 'delay'], lastMessage)
     const shouldDisplayTyping =
-      lastMessage && (pathOr(false, ['data', 'hasDelay'], lastMessage)
-        ? pathOr(false, ['data', 'hasNextMessage'], lastMessage)
-        : lastMessage.participant.isBot === false) &&
+      lastMessage && (sendMessagePromiseCondition || pollMessageCondition) &&
       !lastMessage.retry &&
       !lastMessage.isSending &&
       showTyping
