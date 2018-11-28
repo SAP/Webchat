@@ -97,6 +97,7 @@ class Chat extends Component {
       sendMessagePromise,
       addUserMessage,
       addBotMessage,
+      defaultMessageDelay,
     } = this.props
     const payload = { message: { attachment }, chatId }
 
@@ -144,7 +145,11 @@ class Chat extends Component {
                     delay,
                   )
 
-                  delay += message.delay ? message.delay * 1000 : 0
+                  delay += message.delay
+                    ? message.delay * 1000
+                    : defaultMessageDelay === null || defaultMessageDelay === undefined
+                      ? 0
+                      : defaultMessageDelay
                 })
               }
             })
@@ -321,6 +326,7 @@ Chat.propTypes = {
   containerStyle: PropTypes.object,
   show: PropTypes.bool,
   enableHistoryInput: PropTypes.bool,
+  defaultMessageDelay: PropTypes.number,
 }
 
 export default Chat

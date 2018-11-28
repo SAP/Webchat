@@ -31,4 +31,4 @@ Now, when clicking on a button, both the value and the title are sent. This way,
 
 The first versioned release of the webchat.
 
-Every breaking change, bug fix or improvement will be referenced here.  
+Every breaking change, bug fix or improvement will be referenced here.
