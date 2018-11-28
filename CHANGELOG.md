@@ -1,14 +1,20 @@
-# Version 1.0.0 (Jun 21, 2018)
+## Version 1.3.0 (Nov 28, 2018)
 
-## Description
+The dependency `react-slick` has been removed. It was used for `carousel` and `quickreplies` messages. It is replaced by a component written ourself.
 
-The first versioned release of the webchat.
+Feature action delay is now supported.
 
-Every breaking change, bug fix or improvement will be referenced here.
+## Version 1.2.0 (Sept 26, 2018)
 
-# Version 1.1.0 (Sept 08, 2018)
+Before version 1.2.0, the placeholder text displayed in the user's input was 'Write a reply'.
+In versions 1.2.0 and above, it's now configurable.
+Available as `userInputPlaceholder` (string) in the `preferences` object fetched via `getChannelPreferences()`.
 
-## Description
+## Version 1.1.1 (Sept 21, 2018)
+
+Patch preventing the apparition of "null" in the webchat's input on Edge
+
+## Version 1.1.0 (Sept 08, 2018)
 
 TL;DR: Improve the way buttons and quickReplies are handled by the webchat.
 
@@ -21,14 +27,8 @@ Previously, the value was sent as a text message, and appeared as such in the we
 
 Now, when clicking on a button, both the value and the title are sent. This way, the Bot Connector still receive the value, but the webchat can display the more user-friendly title.
 
-# Version 1.1.1 (Sept 21, 2018)
+## Version 1.0.0 (Jun 21, 2018)
 
-## Description
+The first versioned release of the webchat.
 
-Patch preventing the apparition of "null" in the webchat's input on Edge
-
-## Version 1.2.0 (Sept 26, 2018)
-
-Before version 1.2.0, the placeholder text displayed in the user's input was 'Write a reply'.  
-In versions 1.2.0 and above, it's now configurable.  
-Available as `userInputPlaceholder` (string) in the `preferences` object fetched via `getChannelPreferences()`.
+Every breaking change, bug fix or improvement will be referenced here.  
