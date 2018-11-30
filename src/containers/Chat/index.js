@@ -139,7 +139,7 @@ class Chat extends Component {
     && Array.isArray(responseData.messages) && !responseData.messages.length;
   }
 
-  sendMessage = (attachment, hide) => {
+  sendMessage = (attachment, userMessage) => {
     const {
       token,
       channelId,
@@ -151,7 +151,7 @@ class Chat extends Component {
     } = this.props
     const payload = { message: { attachment }, chatId }
 
-    const message = {
+    const backendMessage = {
       ...payload.message,
       isSending: true,
       id: `local-${Math.random()}`,
@@ -160,13 +160,16 @@ class Chat extends Component {
       },
     }
 
+    if (userMessage)
+      userMessage = {...JSON.parse(JSON.stringify(backendMessage)), attachment: { type: 'text', content: userMessage}};
+
     this.setState(
-      prevState => ({ messages: _concat(prevState.messages, hide ? [] : [message]) }),
+      prevState => ({ messages: _concat(prevState.messages, [backendMessage]) }),
       () => {
         if (sendMessagePromise) {
-          !hide && addUserMessage(message)
+          addUserMessage(userMessage || backendMessage);
 
-          sendMessagePromise(message)
+          sendMessagePromise(backendMessage)
             .then(res => {
               if (!res) {
                 throw new Error('Fail send message')
