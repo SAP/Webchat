@@ -145,11 +145,12 @@ class Chat extends Component {
                     delay,
                   )
 
-                  delay += message.delay
-                    ? message.delay * 1000
-                    : defaultMessageDelay === null || defaultMessageDelay === undefined
-                      ? 0
-                      : defaultMessageDelay * 1000
+                  delay +=
+                    message.delay || message.delay === 0
+                      ? message.delay * 1000
+                      : defaultMessageDelay === null || defaultMessageDelay === undefined
+                        ? 0
+                        : defaultMessageDelay * 1000
                 })
               }
             })
