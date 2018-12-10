@@ -1,3 +1,9 @@
+## Version 1.4.0 (Nov 28, 2018)
+
+Action delay behavior has been added.
+Bot memory is now available when using the script.
+Fix eslint
+
 ## Version 1.3.0 (Nov 28, 2018)
 
 The dependency `react-slick` has been removed. It was used for `carousel` and `quickreplies` messages. It is replaced by a component written ourself.
