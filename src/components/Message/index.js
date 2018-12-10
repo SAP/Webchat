@@ -13,7 +13,7 @@ import QuickReplies from './QuickReplies'
 import './style.scss'
 
 class Message extends Component {
-  render() {
+  render () {
     const {
       message,
       isLastMessage,
@@ -86,28 +86,28 @@ class Message extends Component {
             />
           )}
 
-          {isBot &&
-            showInfo && (
-              <div
-                className="RecastAppMessage--JsonButton"
-                onClick={() => {
-                  if (onClickShowInfo) {
-                    onClickShowInfo(message)
-                  }
-                }}
-              >
-                <img src="https://cdn.recast.ai/website/bot-builder/info.png" />
-              </div>
-            )}
+          {isBot
+            && showInfo && (
+            <div
+              className='RecastAppMessage--JsonButton'
+              onClick={() => {
+                if (onClickShowInfo) {
+                  onClickShowInfo(message)
+                }
+              }}
+            >
+              <img src='https://cdn.recast.ai/website/bot-builder/info.png' />
+            </div>
+          )}
         </div>
         {retry && (
           <div className={cx('RecastAppMessage--retry', { bot: isBot })}>
             Couldn’t send this message{' '}
-            <span onClick={onRetrySendMessage} className="button">
+            <span onClick={onRetrySendMessage} className='button'>
               Try again
             </span>{' '}
             |{' '}
-            <span onClick={onCancelSendMessage} className="button">
+            <span onClick={onCancelSendMessage} className='button'>
               Cancel
             </span>
           </div>

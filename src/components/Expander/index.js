@@ -14,13 +14,13 @@ const Expander = ({ onClick, preferences, style, show }) => (
     }}
   >
     {preferences.expanderLogo && (
-      <img className="RecastAppExpander--logo" src={preferences.expanderLogo} />
+      <img className='RecastAppExpander--logo' src={preferences.expanderLogo} />
     )}
 
     {preferences.expanderTitle}
 
     {preferences.onboardingMessage && (
-      <div className="RecastAppExpander--onboarding">{preferences.onboardingMessage}</div>
+      <div className='RecastAppExpander--onboarding'>{preferences.onboardingMessage}</div>
     )}
   </div>
 )

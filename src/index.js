@@ -10,7 +10,7 @@ if (!global._babelPolyfill) {
 }
 
 export default class RecastWebchat extends Component {
-  render() {
+  render () {
     return (
       <Provider store={store}>
         <Webchat {...this.props} />
