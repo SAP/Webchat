@@ -1,13 +1,17 @@
 {
-  "extends": [
-    "zavatta",
-    "zavatta-react",
-    "prettier",
-    "prettier/react",
-  ],
+  "settings": {
+    "react": {
+      "version": "16.1.1"
+    }
+  },
+  "extends": ["prettier", "prettier/react", "zavatta", "zavatta-react"],
   "rules": {
     "id-length": 0,
     "react/no-array-index-key": 0,
     "camelcase": 0,
-  },
+    "no-unused-vars": 0,
+    "no-inline-comments": 0,
+    "no-console": 0,
+    "max-nested-callbacks": 0
+  }
 }

@@ -11,13 +11,13 @@ class Slider extends Component {
     canNext: true,
   }
 
-  items = {}
-
-  componentDidMount() {
+  componentDidMount () {
     if (this.content.getBoundingClientRect().width > this.container.getBoundingClientRect().width) {
       this.setState({ canNext: true }) // eslint-disable-line react/no-did-mount-set-state
     }
   }
+
+  items = {}
 
   onClickPrevious = () => {
     this.setState(prevState => {
@@ -69,31 +69,31 @@ class Slider extends Component {
     )
   }
 
-  render() {
+  render () {
     const { children, prevArrow, nextArrow, arrows } = this.props
     const { translateWidth, canNext, canPrevious } = this.state
 
     return (
       <div
-        className="Slider"
+        className='Slider'
         ref={ref => {
           this.container = ref
         }}
       >
-        {canPrevious &&
-          arrows && (
-            <div className="arrow left" onClick={this.onClickPrevious}>
-              {prevArrow}
-            </div>
-          )}
-        {canNext &&
-          arrows && (
-            <div className="arrow right" onClick={this.onClickNext}>
-              {nextArrow}
-            </div>
-          )}
+        {canPrevious
+          && arrows && (
+          <div className='arrow left' onClick={this.onClickPrevious}>
+            {prevArrow}
+          </div>
+        )}
+        {canNext
+          && arrows && (
+          <div className='arrow right' onClick={this.onClickNext}>
+            {nextArrow}
+          </div>
+        )}
         <div
-          className="content"
+          className='content'
           style={{ transform: `translateX(${translateWidth}px)` }}
           ref={ref => {
             this.content = ref

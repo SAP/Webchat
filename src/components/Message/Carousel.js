@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Slider from './Slider/index';
+import Slider from './Slider/index'
 
 import Card from './Card'
 import { PrevArrow, NextArrow } from 'components/arrows'
