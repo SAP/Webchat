@@ -3,7 +3,15 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  margin-top: 5px;
+  max-width: 300px;
+  min-width: 300px;
+  margin-top: 8px !important;
+
+  &.contentNoArrow {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+  }
 
   .arrow {
     position: absolute;
