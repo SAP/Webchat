@@ -1,3 +1,7 @@
+## Version 1.4.1 (Dec 11, 2018)
+
+Fix style of Slider for Quickreplies message when having not a lot items.
+
 ## Version 1.4.0 (Nov 28, 2018)
 
 Action delay behavior has been added.

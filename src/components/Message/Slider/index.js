@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
 import './style.scss'
 
@@ -8,12 +9,13 @@ class Slider extends Component {
     index: 0,
     translateWidth: 0,
     canPrevious: false,
-    canNext: true,
+    canNext: false,
+    noArrow: true,
   }
 
   componentDidMount () {
     if (this.content.getBoundingClientRect().width > this.container.getBoundingClientRect().width) {
-      this.setState({ canNext: true }) // eslint-disable-line react/no-did-mount-set-state
+      this.setState({ canNext: true, noArrow: false }) // eslint-disable-line react/no-did-mount-set-state
     }
   }
 
@@ -71,11 +73,11 @@ class Slider extends Component {
 
   render () {
     const { children, prevArrow, nextArrow, arrows } = this.props
-    const { translateWidth, canNext, canPrevious } = this.state
+    const { translateWidth, canNext, canPrevious, noArrow } = this.state
 
     return (
       <div
-        className='Slider'
+        className={cx('Slider', { contentNoArrow: noArrow })}
         ref={ref => {
           this.container = ref
         }}
