@@ -10,18 +10,18 @@ import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
 
 import './style.scss'
 
-const NO_LOCALSTORAGE_MESSAGE =
-  'Sorry, your browser does not support web storage. Are you in localhost ?'
+const NO_LOCALSTORAGE_MESSAGE
+  = 'Sorry, your browser does not support web storage. Are you in localhost ?'
 
 @connect(
   state => ({
     isReady: state.conversation.conversationId,
-  }),
+    }),
   {
-    setCredentials,
-    setFirstMessage,
-    createConversation,
-    removeAllMessages,
+  setCredentials,
+  setFirstMessage,
+  createConversation,
+  removeAllMessages,
   },
 )
 class App extends Component {
@@ -29,7 +29,7 @@ class App extends Component {
     expanded: this.props.expanded || false,
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { channelId, token, preferences, noCredentials, onRef } = this.props
     const credentials = getCredentialsFromCookie()
     const payload = { channelId, token }
@@ -57,28 +57,28 @@ class App extends Component {
     this.props.setCredentials(payload)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     const { isReady, preferences, expanded } = nextProps
 
     if (isReady !== this.props.isReady) {
       let expanded = null
 
       switch (preferences.openingType) {
-        case 'always':
-          expanded = true
-          break
-        case 'never':
-          expanded = false
-          break
-        case 'memory':
-          if (typeof window.localStorage !== 'undefined') {
-            expanded = localStorage.getItem('isChatOpen') === 'true'
-          } else {
-            console.log(NO_LOCALSTORAGE_MESSAGE)
-          }
-          break
-        default:
-          break
+      case 'always':
+        expanded = true
+        break
+      case 'never':
+        expanded = false
+        break
+      case 'memory':
+        if (typeof window.localStorage !== 'undefined') {
+          expanded = localStorage.getItem('isChatOpen') === 'true'
+        } else {
+          console.log(NO_LOCALSTORAGE_MESSAGE)
+        }
+        break
+      default:
+        break
       }
       this.setState({ expanded })
     }
@@ -88,7 +88,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate (prevState) {
     const { onToggle } = this.props
 
     if (prevState.expanded !== this.state.expanded) {
@@ -101,6 +101,10 @@ class App extends Component {
         console.log(NO_LOCALSTORAGE_MESSAGE)
       }
     }
+  }
+
+  componentDidCatch (error, info) {
+    console.log(error, info)
   }
 
   toggleChat = () => {
@@ -116,7 +120,7 @@ class App extends Component {
     this.props.removeAllMessages()
   }
 
-  render() {
+  render () {
     const {
       preferences,
       containerMessagesStyle,
@@ -132,20 +136,21 @@ class App extends Component {
       secondaryContent,
       getLastMessage,
       enableHistoryInput,
+      defaultMessageDelay,
     } = this.props
     const { expanded } = this.state
 
     return (
-      <div className="RecastApp">
+      <div className='RecastApp'>
         <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+          rel='stylesheet'
+          type='text/css'
+          href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css'
         />
         <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+          rel='stylesheet'
+          type='text/css'
+          href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'
         />
 
         <Expander
@@ -171,6 +176,7 @@ class App extends Component {
           secondaryContent={secondaryContent}
           getLastMessage={getLastMessage}
           enableHistoryInput={enableHistoryInput}
+          defaultMessageDelay={defaultMessageDelay}
         />
       </div>
     )
@@ -198,6 +204,7 @@ App.propTypes = {
   onRef: PropTypes.func,
   clearMessagesOnclose: PropTypes.bool,
   enableHistoryInput: PropTypes.bool,
+  defaultMessageDelay: PropTypes.number,
 }
 
 export default App
