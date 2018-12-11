@@ -1,5 +1,5 @@
 {
-  "name": "ml-cai-webchat",
+  "name": "webchat",
   "version": "1.4.0",
   "description": "",
   "main": "lib/index.js",
