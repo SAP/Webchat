@@ -54,11 +54,11 @@ class Message extends Component {
     }
 
     return (
-      <div className={cx('RecastAppMessageContainer', { bot: isBot, user: !isBot })}>
-        <div className={cx('RecastAppMessage', { bot: isBot, user: !isBot })}>
+      <div className={cx('CaiAppMessageContainer', { bot: isBot, user: !isBot })}>
+        <div className={cx('CaiAppMessage', { bot: isBot, user: !isBot })}>
           {image && (
             <img
-              className={cx('RecastAppMessage--logo', { visible: displayIcon })}
+              className={cx('CaiAppMessage--logo', { visible: displayIcon })}
               src={image}
               style={{}}
             />
@@ -89,19 +89,19 @@ class Message extends Component {
           {isBot
             && showInfo && (
             <div
-              className='RecastAppMessage--JsonButton'
+              className='CaiAppMessage--JsonButton'
               onClick={() => {
                 if (onClickShowInfo) {
                   onClickShowInfo(message)
                 }
               }}
             >
-              <img src='https://cdn.recast.ai/website/bot-builder/info.png' />
+              <img src='https://cdn.cai.tools.sap/website/bot-builder/info.png' />
             </div>
           )}
         </div>
         {retry && (
-          <div className={cx('RecastAppMessage--retry', { bot: isBot })}>
+          <div className={cx('CaiAppMessage--retry', { bot: isBot })}>
             Couldn’t send this message{' '}
             <span onClick={onRetrySendMessage} className='button'>
               Try again

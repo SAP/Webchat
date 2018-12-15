@@ -9,7 +9,7 @@ import './style.scss'
 
 const Carousel = ({ content, sendMessage }) => {
   return (
-    <div className={'RecastAppCarousel'}>
+    <div className={'CaiAppCarousel'}>
       <Slider
         arrows
         prevArrow={<PrevArrow />}

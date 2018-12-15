@@ -6,7 +6,7 @@ import { store } from 'store'
 import { getChannelPreferences } from 'actions/channel'
 import App from 'containers/App'
 
-const idChatDiv = 'recast-webchat-div'
+const idChatDiv = 'cai-webchat-div'
 
 if (!document.getElementById(idChatDiv)) {
   const element = document.createElement('div')
@@ -16,7 +16,7 @@ if (!document.getElementById(idChatDiv)) {
 
 const root = document.getElementById(idChatDiv)
 
-const script = document.currentScript || document.getElementById('recast-webchat')
+const script = document.currentScript || document.getElementById('cai-webchat')
 
 const channelId = script.getAttribute('channelId')
 const token = script.getAttribute('token')

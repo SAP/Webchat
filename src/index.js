@@ -9,7 +9,7 @@ if (!global._babelPolyfill) {
   require('babel-polyfill')
 }
 
-export default class RecastWebchat extends Component {
+export default class CaiWebchat extends Component {
   render () {
     return (
       <Provider store={store}>

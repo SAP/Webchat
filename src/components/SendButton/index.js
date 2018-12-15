@@ -5,10 +5,10 @@ import './style.scss'
 
 const SendButton = ({ sendMessage, preferences, value }) => (
   <div
-    className='RecastSendButtonContainer'
+    className='CaiSendButtonContainer'
   >
     <div
-      className='RecastSendButton'
+      className='CaiSendButton'
       onClick={sendMessage}
       disabled={!value}
     >

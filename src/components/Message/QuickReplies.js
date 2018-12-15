@@ -32,7 +32,7 @@ class QuickReplies extends Component {
 
     return (
       <div
-        className='RecastAppQuickReplies'
+        className='CaiAppQuickReplies'
         ref={ref => {
           this.container = ref
         }}
@@ -49,7 +49,7 @@ class QuickReplies extends Component {
                   this.buttons[i] = ref
                 }}
                 key={i}
-                className='RecastAppQuickReplies--button'
+                className='CaiAppQuickReplies--button'
                 onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
                 style={{
                   border: `1px solid ${style.accentColor}`,

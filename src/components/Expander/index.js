@@ -6,7 +6,7 @@ import './style.scss'
 const Expander = ({ onClick, preferences, style, show }) => (
   <div
     onClick={onClick}
-    className={cx('RecastAppExpander', { open: show, close: !show })}
+    className={cx('CaiAppExpander', { open: show, close: !show })}
     style={{
       color: preferences.complementaryColor,
       backgroundColor: preferences.accentColor,
@@ -14,13 +14,13 @@ const Expander = ({ onClick, preferences, style, show }) => (
     }}
   >
     {preferences.expanderLogo && (
-      <img className='RecastAppExpander--logo' src={preferences.expanderLogo} />
+      <img className='CaiAppExpander--logo' src={preferences.expanderLogo} />
     )}
 
     {preferences.expanderTitle}
 
     {preferences.onboardingMessage && (
-      <div className='RecastAppExpander--onboarding'>{preferences.onboardingMessage}</div>
+      <div className='CaiAppExpander--onboarding'>{preferences.onboardingMessage}</div>
     )}
   </div>
 )
