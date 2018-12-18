@@ -1,3 +1,7 @@
+## Version 1.4.2 (Dec 18, 2018)
+
+Revert by adding `react-slick` dependency temporary for IE11 compatibility.
+
 ## Version 1.4.1 (Dec 11, 2018)
 
 Fix style of Slider for Quickreplies message when having not a lot items.

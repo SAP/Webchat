@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Slider from './Slider/index'
+import Slider from 'react-slick'
 
 import Card from './Card'
 import { PrevArrow, NextArrow } from 'components/arrows'
@@ -14,6 +14,13 @@ const Carousel = ({ content, sendMessage }) => {
         arrows
         prevArrow={<PrevArrow />}
         nextArrow={<NextArrow />}
+        centerMode
+        centerPadding="10px"
+        speed={200}
+        infinite={false}
+        draggable={false}
+        slidesToScroll={1}
+        className="Slider"
       >
         {content.map((card, i) => (
           <div key={i}>
