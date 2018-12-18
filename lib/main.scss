@@ -223,6 +223,51 @@
         text-decoration: none; }
     .RecastApp .RecastAppMessage .RecastAppList .RecastAppListElement + .RecastAppListElement {
       border-top: 1px solid lightgrey; }
+
+/*
+  * Slider
+  */
+.RecastAppSlider,
+.Slider {
+  max-width: 300px; }
+  .RecastAppSlider .Arrow, .RecastAppSlider .slick-next, .RecastAppSlider .slick-prev,
+  .Slider .Arrow,
+  .Slider .slick-next,
+  .Slider .slick-prev {
+    width: 25px;
+    height: 25px;
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    font-size: 20px;
+    line-height: 17px;
+    color: grey !important;
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    text-align: center; }
+    .RecastAppSlider .Arrow.slick-disabled, .RecastAppSlider .slick-disabled.slick-next, .RecastAppSlider .slick-disabled.slick-prev,
+    .Slider .Arrow.slick-disabled,
+    .Slider .slick-disabled.slick-next,
+    .Slider .slick-disabled.slick-prev {
+      display: none !important; }
+  .RecastAppSlider .slick-list,
+  .Slider .slick-list {
+    height: -webkit-fit-content;
+    height: fit-content;
+    height: -moz-fit-content; }
+  .RecastAppSlider .slick-prev:before,
+  .Slider .slick-prev:before {
+    display: none !important; }
+  .RecastAppSlider .slick-next:before,
+  .Slider .slick-next:before {
+    display: none !important; }
 .RecastApp .RecastAppButton, .RecastApp .RecastAppButton-Link {
   padding: 0.5rem;
   cursor: pointer;
@@ -238,46 +283,11 @@
   display: block; }
   .RecastApp .RecastAppButton-Link:hover {
     text-decoration: none; }
-.Slider {
-  position: relative;
+.RecastApp .RecastAppArrow {
+  background: white !important;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  overflow: hidden;
-  max-width: 300px;
-  min-width: 300px;
-  margin-top: 8px !important; }
-  .Slider.contentNoArrow {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: end;
-        -ms-flex-pack: end;
-            justify-content: flex-end;
-    padding-right: 10px; }
-  .Slider .arrow {
-    position: absolute;
-    border: solid 1px #bcbcbc;
-    border-radius: 3px;
-    padding: 3px;
-    background-color: #fff;
-    z-index: 10;
-    cursor: pointer; }
-    .Slider .arrow.right {
-      right: 0; }
-    .Slider .arrow.left {
-      left: 0; }
-  .Slider .content {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-transition: all 200ms;
-    transition: all 200ms; }
-.RecastApp .RecastAppArrow {
-  background: white !important;
   z-index: 2; }
   .RecastApp .RecastAppArrow.prev {
     left: 0; }
