@@ -4,6 +4,9 @@ import cx from 'classnames'
 
 import './style.scss'
 
+/**
+ * TODO: STILL IN DEVELOPMENT BECAUSE NOT COMPATIBLE WITH IE11 YET
+ */
 class Slider extends Component {
   state = {
     index: 0,
