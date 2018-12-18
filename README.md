@@ -138,7 +138,7 @@ export default class ReactWebchat extends Component {
 |Name|Type|Required|Description|
 |---|---|---|--|
 |onRef|function|false| Function which returns ref of the webchat|
-|channelId|string|true|Channel id (you can get in SAP Conversational AIi)|
+|channelId|string|true|Channel id (you can get in SAP Conversational AI)|
 |token|string|true|Token (you can get in React.ai)|
 |preferences|object|true| Object containing some settings|
 |getLastMessage|function|false|Function which returns the last message sent by the webchat
