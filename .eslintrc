@@ -8,6 +8,7 @@
   "rules": {
     "id-length": 0,
     "react/no-array-index-key": 0,
+    "react/no-did-mount-set-state": 0,
     "camelcase": 0,
     "no-unused-vars": 0,
     "no-inline-comments": 0,
