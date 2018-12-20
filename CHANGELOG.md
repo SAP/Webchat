@@ -2,7 +2,7 @@
 
 Improve bundle size
 - reduce dist bundle size by 34% (551kb).
-- reduce lib bundle size by 89% (449kb).
+- reduce lib bundle size by 61% (527kb).
 
 Fix input height for IE11.
 Lodash dependency has been removed.
