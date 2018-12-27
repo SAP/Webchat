@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import * as R from 'ramda'
+import append from 'ramda/es/append'
 
 import SendButton from 'components/SendButton'
 
@@ -84,8 +84,8 @@ class Input extends Component {
         content,
       })
       this.setState(prevState => {
-        const historyValues = R.append(content, prevState.historyValues)
-        const previousValues = R.append('', historyValues)
+        const historyValues = append(content, prevState.historyValues)
+        const previousValues = append('', historyValues)
 
         return {
           value: '',

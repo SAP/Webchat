@@ -15,12 +15,12 @@ const Carousel = ({ content, sendMessage }) => {
         prevArrow={<PrevArrow />}
         nextArrow={<NextArrow />}
         centerMode
-        centerPadding="10px"
+        centerPadding='10px'
         speed={200}
         infinite={false}
         draggable={false}
         slidesToScroll={1}
-        className="Slider"
+        className='Slider'
       >
         {content.map((card, i) => (
           <div key={i}>

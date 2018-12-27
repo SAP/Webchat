@@ -1,10 +1,8 @@
 const path = require('path')
-const precss = require('precss')
 const webpack = require('webpack')
-const autoprefixer = require('autoprefixer')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const env = process.env.NODE_ENV || 'development'
+const env = process.env.NODE_ENV || 'production'
 
 module.exports = {
   entry: ['./src/index.js'],
@@ -36,7 +34,7 @@ module.exports = {
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            'css-loader',
+            { loader: 'css-loader', options: { minimize: true } },
             {
               loader: 'postcss-loader',
               options: {

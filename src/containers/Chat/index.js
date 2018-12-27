@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
-import _concat from 'lodash/concat'
-import { propOr } from 'ramda'
+import propOr from 'ramda/es/propOr'
+import concat from 'ramda/es/concat'
 
 import {
   postMessage,
@@ -183,7 +183,7 @@ class Chat extends Component {
     }
 
     this.setState(
-      prevState => ({ messages: _concat(prevState.messages, [backendMessage]) }),
+      prevState => ({ messages: concat(prevState.messages, [backendMessage]) }),
       () => {
         if (sendMessagePromise) {
           addUserMessage(userMessage || backendMessage)
