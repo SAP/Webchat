@@ -27,7 +27,7 @@ class QuickReplies extends Component {
     )
 
     if (widthQuickReplies <= 270) {
-      this.setState({ showArrow: false })
+      this.setState({ showArrow: false }) // eslint-disable-line react/no-did-mount-set-state
     }
   }
 
