@@ -1,3 +1,12 @@
+## Version 1.4.3 (Dec 19, 2018)
+
+Improve bundle size
+- reduce dist bundle size by 34% (551kb).
+- reduce lib bundle size by 61% (527kb).
+
+Fix input height for IE11.
+Lodash dependency has been removed.
+
 ## Version 1.4.2 (Dec 18, 2018)
 
 Revert by adding `react-slick` dependency temporary for IE11 compatibility.

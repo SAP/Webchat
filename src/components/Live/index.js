@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import reduceRight from 'lodash/reduceRight'
-import { pathOr } from 'ramda'
+import reduceRight from 'ramda/es/reduceRight'
+import pathOr from 'ramda/es/pathOr'
 
 import Message from 'components/Message'
 import IsTyping from 'components/Message/isTyping'
@@ -65,16 +65,14 @@ class Live extends Component {
 
   fmtMessages = () => {
     return reduceRight(
-      this.props.messages,
-      (acc, cur) => {
+      (cur, acc) => {
         const nextMessage = acc[0]
-
         cur.displayIcon = !nextMessage || nextMessage.participant.isBot !== cur.participant.isBot
-
         acc.unshift(cur)
         return acc
       },
       [],
+      this.props.messages,
     )
   }
 

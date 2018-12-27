@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+import contains from 'ramda/es/contains'
 
 import Text from './Text'
 import Card from './Card'
@@ -70,7 +71,7 @@ class Message extends Component {
 
           {type === 'card' && <Card {...messageProps} sendMessage={sendMessage} />}
 
-          {['carousel', 'carouselle'].includes(type) && (
+          {contains(type, ['carousel', 'carouselle']) && (
             <Carousel {...messageProps} sendMessage={sendMessage} />
           )}
 
