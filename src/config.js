@@ -1,3 +1,3 @@
 export default {
-  apiUrl: 'https://api.recast.ai/connect/v1',
+  apiUrl: 'https://api.cai.tools.sap/connect/v1',
 }

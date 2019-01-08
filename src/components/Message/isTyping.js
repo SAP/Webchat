@@ -18,9 +18,9 @@ class IsTyping extends Component {
     }
 
     return (
-      <div className='RecastAppMessage bot'>
-        {image && <img className='RecastAppMessage--logo visible' src={image} />}
-        <img src='https://cdn.recast.ai/webchat/istyping.gif' />
+      <div className='CaiAppMessage bot'>
+        {image && <img className='CaiAppMessage--logo visible' src={image} />}
+        <img src='https://cdn.cai.tools.sap/webchat/istyping.gif' />
       </div>
     )
   }

@@ -319,7 +319,7 @@ class Chat extends Component {
 
     return (
       <div
-        className={cx('RecastAppChat', { open: show, close: !show })}
+        className={cx('CaiAppChat', { open: show, close: !show })}
         style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}
       >
         {secondaryView ? (
@@ -335,7 +335,7 @@ class Chat extends Component {
           />
         )}
         <div
-          className='RecastAppChat--content'
+          className='CaiAppChat--content'
           style={{
             height: `calc(100% - ${50 + inputHeight}px`,
           }}
@@ -358,11 +358,11 @@ class Chat extends Component {
               />,
               <div
                 key='slogan'
-                className={cx('RecastAppChat--slogan', {
-                  'RecastAppChat--slogan--hidden': !showSlogan,
+                className={cx('CaiAppChat--slogan', {
+                  'CaiAppChat--slogan--hidden': !showSlogan,
                 })}
               >
-                {'We run with Recast.AI'}
+                {'We run with SAP Conversational AI'}
               </div>,
             ]}
         </div>
