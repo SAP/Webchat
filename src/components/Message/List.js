@@ -13,22 +13,22 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const buttonTitleMaxLength = 20
 
   return (
-    <div className='RecastAppListElement'>
+    <div className='CaiAppListElement'>
       {imageUrl
         && sanitizeUrl(imageUrl) !== 'about:blank' && (
-        <img src={imageUrl} className='RecastAppListElement--img' />
+        <img src={imageUrl} className='CaiAppListElement--img' />
       )}
 
-      <div className='RecastAppListElement--container'>
-        <p className='RecastAppListElement--title'>{truncate(title, titleMaxLength)}</p>
-        <p className='RecastAppListElement--subtitle'>{truncate(subtitle, subTitleMaxLength)}</p>
+      <div className='CaiAppListElement--container'>
+        <p className='CaiAppListElement--title'>{truncate(title, titleMaxLength)}</p>
+        <p className='CaiAppListElement--subtitle'>{truncate(subtitle, subTitleMaxLength)}</p>
 
         {button
           && (button.type === 'web_url' ? (
             sanitizeUrl(button.value) !== 'about:blank' && (
               <a
                 href={button.value}
-                className='RecastAppListElement--button'
+                className='CaiAppListElement--button'
                 target='_blank'
                 rel='noopener noreferrer'
               >
@@ -37,7 +37,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
             )
           ) : (
             <div
-              className='RecastAppListElement--button'
+              className='CaiAppListElement--button'
               onClick={() => sendMessage({ type: 'text', content: button.value })}
             >
               {truncate(button.title, buttonTitleMaxLength)}
@@ -60,13 +60,13 @@ const List = ({ content, sendMessage }) => {
   const button = content.buttons && content.buttons[0]
 
   return (
-    <div className={'RecastAppList'}>
+    <div className={'CaiAppList'}>
       {content.elements.map((element, i) => (
         <ListElement key={i} {...element} sendMessage={sendMessage} />
       ))}
 
       {button && (
-        <div className='RecastAppList--button'>
+        <div className='CaiAppList--button'>
           <Button button={button} sendMessage={sendMessage} />
         </div>
       )}

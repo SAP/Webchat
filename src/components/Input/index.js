@@ -177,7 +177,7 @@ class Input extends Component {
 
     return (
       <div
-        className='RecastAppInput'
+        className='CaiAppInput'
         ref={ref => {
           this.inputContainer = ref
         }}

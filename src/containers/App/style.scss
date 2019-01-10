@@ -1,10 +1,10 @@
-.RecastApp {
+.CaiApp {
   z-index: 2147483647;
 }
 
-.RecastApp *,
-.RecastApp *:after,
-.RecastApp *:before {
+.CaiApp *,
+.CaiApp *:after,
+.CaiApp *:before {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@
   font-family: 'Roboto', Helvetica, sans-serif;
 }
 
-.RecastApp a {
+.CaiApp a {
   text-decoration: underline;
   cursor: pointer;
 
@@ -23,8 +23,8 @@
   }
 }
 
-.RecastApp img,
-.RecastApp svg {
+.CaiApp img,
+.CaiApp svg {
   max-width: 100%;
   display: block;
 }

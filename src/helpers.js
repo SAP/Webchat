@@ -10,11 +10,11 @@ export const truncate = (string, length) => {
 
 export const storeCredentialsInCookie = (chatId, conversationId, timeToLive) => {
   const payload = { chatId, conversationId }
-  Cookies.set('recast-conversation', JSON.stringify(payload), { expires: 3600 * timeToLive })
+  Cookies.set('cai-conversation', JSON.stringify(payload), { expires: 3600 * timeToLive })
 }
 
 export const getCredentialsFromCookie = () => {
-  let credentials = Cookies.get('recast-conversation')
+  let credentials = Cookies.get('cai-conversation')
 
   if (credentials) {
     try {
