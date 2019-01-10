@@ -1,3 +1,7 @@
+## Version 1.4.4 (Jan 15, 2019)
+
+- Use the new domain name https://cai.tools.sap
+
 ## Version 1.4.3 (Dec 19, 2018)
 
 Improve bundle size
