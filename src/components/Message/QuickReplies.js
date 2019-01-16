@@ -49,7 +49,7 @@ class QuickReplies extends Component {
 
     return (
       <div
-        className='CaiAppQuickReplies'
+        className='RecastAppQuickReplies CaiAppQuickReplies'
         ref={ref => {
           this.container = ref
         }}
@@ -67,7 +67,7 @@ class QuickReplies extends Component {
             draggable={false}
             prevArrow={<PrevArrow />}
             nextArrow={<NextArrow />}
-            className='CaiAppSlider CaiAppQuickReplies--slider'
+            className='RecastAppSlider RecastAppQuickReplies--slider CaiAppSlider CaiAppQuickReplies--slider'
           >
             {buttons.map((b, i) => (
               <div
@@ -75,7 +75,7 @@ class QuickReplies extends Component {
                   this.buttons[i] = ref
                 }}
                 key={i}
-                className='CaiAppQuickReplies--button'
+                className='RecastAppQuickReplies--button CaiAppQuickReplies--button'
                 onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
                 style={{
                   border: `1px solid ${style.accentColor}`,

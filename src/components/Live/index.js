@@ -106,12 +106,12 @@ class Live extends Component {
 
     return (
       <div
-        className='CaiAppLive'
+        className='RecastAppLive CaiAppLive'
         ref={ref => (this.messagesList = ref)}
         onScroll={this.handleScroll}
         style={containerMessagesStyle}
       >
-        <div className='CaiAppLive--message-container'>
+        <div className='RecastAppLive--message-container CaiAppLive--message-container'>
           {this.fmtMessages().map((message, index) => (
             <Message
               key={message.id}

@@ -20,7 +20,7 @@ const Button = ({ button, sendMessage }) => {
   case 'web_url':
     content = (
       <a
-        className='CaiAppButton-Link' href={value} target='_blank'
+        className='RecastAppButton-Link CaiAppButton-Link' href={value} target='_blank'
         rel='noopener noreferrer'>
         {formattedTitle}
       </a>
@@ -29,7 +29,7 @@ const Button = ({ button, sendMessage }) => {
   default:
     content = (
       <div
-        className='CaiAppButton'
+        className='RecastAppButton CaiAppButton'
         onClick={() => sendMessage({ type: 'button', content: button }, title)}
       >
         {formattedTitle}
