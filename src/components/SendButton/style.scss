@@ -1,10 +1,10 @@
-.CaiApp .CaiAppInput {
-  .CaiSendButtonContainer {
+.RecastApp .RecastAppInput, .CaiApp .CaiAppInput {
+  .RecastSendButtonContainer, .CaiSendButtonContainer {
     cursor: pointer;
     display: flex;
   }
 
-  .RecastSendButton {
+  .RecastSendButton, .CaiSendButton {
     width: 22px;
     height: 22px;
   }

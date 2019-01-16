@@ -1,4 +1,4 @@
-.CaiApp .CaiAppHeader {
+.RecastApp .RecastAppHeader, .CaiApp .CaiAppHeader {
   display: flex;
   align-items: center;
   border-radius: 0;
@@ -23,7 +23,7 @@
 }
 
 @media only screen and (min-width: 420px) and (min-height: 575px) {
-  .CaiApp .CaiAppHeader {
+  .RecastApp .RecastAppHeader, .CaiApp .CaiAppHeader {
     border-radius: 3px 3px 0 0;
   }
 }
