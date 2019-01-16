@@ -6,7 +6,7 @@
   "scripts": {
     "clean:lib": "rm -rf lib",
     "clean:dist": "rm -rf dist",
-    "build": "npm run clean:dist && NODE_ENV=production npm run build:webpack",
+    "build": "npm run clean:dist && SET NODE_ENV=development npm run build:webpack",
     "build:webpack": "node bin/build.js",
     "build:js": "babel src -d lib",
     "start": "npm run clean:dist && node bin/build-dev",
