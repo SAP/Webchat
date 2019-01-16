@@ -1,4 +1,4 @@
-.CaiApp .CaiAppButton {
+.RecastApp .RecastAppButton, .CaiApp .CaiAppButton {
   padding: 0.5rem;
 
   cursor: pointer;
@@ -8,14 +8,15 @@
   color: cornflowerblue;
 }
 
-.CaiApp {
-  .CaiAppButton + .CaiAppButton {
+.RecastApp, .CaiApp {
+  .RecastAppButton + .RecastAppButton, .CaiAppButton + .CaiAppButton {
     border-top: 1px solid lightgrey;
   }
 }
 
-.CaiApp .CaiAppButton-Link {
+.RecastApp .RecastAppButton-Link, .CaiApp .CaiAppButton-Link {
   @extend .CaiAppButton;
+  @extend .RecastAppButton;
   text-decoration: none;
   display: block;
   &:hover {

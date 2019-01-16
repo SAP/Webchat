@@ -8,7 +8,7 @@ const Picture = ({ content, onImageLoaded }) => {
   if (content && sanitizeUrl(content) === 'about:blank') {
     return null
   }
-  return <img onLoad={onImageLoaded} src={content} className={'CaiAppPicture'} />
+  return <img onLoad={onImageLoaded} src={content} className={'RecastAppPicture CaiAppPicture'} />
 }
 
 Picture.propTypes = {

@@ -1,3 +1,7 @@
+## Version 1.4.5 (Jan 16, 2019)
+
+Revert renaming className to be compatible with people who are overwritting the style.
+
 ## Version 1.4.4 (Jan 15, 2019)
 
 - Use the new domain name https://cai.tools.sap

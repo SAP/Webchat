@@ -1,4 +1,4 @@
-.CaiApp .CaiAppLive {
+.RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -12,7 +12,7 @@
 }
 
 @media only screen and (min-width: 420px) and (min-height: 575px) {
-  .CaiApp .CaiAppLive {
+  .RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
     height: 460px;
   }
 }
