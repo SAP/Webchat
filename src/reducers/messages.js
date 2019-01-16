@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions'
-import { uniqWith } from 'ramda'
+import uniqWith from 'ramda/es/uniqWith'
 
 const initialState = []
 

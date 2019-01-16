@@ -17,23 +17,25 @@ const Button = ({ button, sendMessage }) => {
   let content = null
 
   switch (button.type) {
-    case 'web_url':
-      content = (
-        <a className="RecastAppButton-Link" href={value} target="_blank">
-          {formattedTitle}
-        </a>
-      )
-      break
-    default:
-      content = (
-        <div
-          className="RecastAppButton"
-          onClick={() => sendMessage({ type: 'button', content: button }, title)}
-        >
-          {formattedTitle}
-        </div>
-      )
-      break
+  case 'web_url':
+    content = (
+      <a
+        className='CaiAppButton-Link' href={value} target='_blank'
+        rel='noopener noreferrer'>
+        {formattedTitle}
+      </a>
+    )
+    break
+  default:
+    content = (
+      <div
+        className='CaiAppButton'
+        onClick={() => sendMessage({ type: 'button', content: button }, title)}
+      >
+        {formattedTitle}
+      </div>
+    )
+    break
   }
 
   return content

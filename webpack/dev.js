@@ -17,7 +17,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: 'webchat.js',
-    publicPath: '/dist/'
+    publicPath: '/dist/',
   },
 
   module: {
@@ -44,7 +44,7 @@ module.exports = {
         'sass-loader',
       ],
       exclude: /node_modules/,
-    }]
+    }],
   },
 
   plugins: [
@@ -52,7 +52,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(env) }
+      'process.env': { NODE_ENV: JSON.stringify(env) },
     }),
   ],
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import reduceRight from 'lodash/reduceRight'
+import reduceRight from 'ramda/es/reduceRight'
+import pathOr from 'ramda/es/pathOr'
 
 import Message from 'components/Message'
 import IsTyping from 'components/Message/isTyping'
@@ -12,14 +13,14 @@ class Live extends Component {
     showTyping: false,
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.messagesList) {
       this.messagesList.scrollTop = this.messagesList.scrollHeight
     }
     window.addEventListener('resize', this.handleScroll)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.messages.length !== this.props.messages.length) {
       this.setState({ showTyping: true }, () => {
         // FIXME Scroll to the bottom when typing. setTimeout is a bit dirty and can be improved
@@ -32,7 +33,7 @@ class Live extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     if (prevProps.messages.length !== this.props.messages.length) {
       if (this.messagesList) {
         this.messagesList.scrollTop = this.messagesList.scrollHeight
@@ -40,7 +41,7 @@ class Live extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.handleScroll)
   }
 
@@ -64,20 +65,18 @@ class Live extends Component {
 
   fmtMessages = () => {
     return reduceRight(
-      this.props.messages,
-      (acc, cur) => {
+      (cur, acc) => {
         const nextMessage = acc[0]
-
         cur.displayIcon = !nextMessage || nextMessage.participant.isBot !== cur.participant.isBot
-
         acc.unshift(cur)
         return acc
       },
       [],
+      this.props.messages,
     )
   }
 
-  render() {
+  render () {
     const {
       messages,
       sendMessage,
@@ -90,21 +89,29 @@ class Live extends Component {
     } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
-    const shouldDisplayTyping =
-      lastMessage &&
-      lastMessage.participant.isBot === false &&
-      !lastMessage.retry &&
-      !lastMessage.isSending &&
-      showTyping
+
+    const sendMessagePromiseCondition
+      = lastMessage
+      && (pathOr(false, ['data', 'hasDelay'], lastMessage)
+        ? pathOr(false, ['data', 'hasNextMessage'], lastMessage)
+        : lastMessage.participant.isBot === false)
+    const pollMessageCondition = lastMessage && pathOr(false, ['attachment', 'delay'], lastMessage)
+    const shouldDisplayTyping = !!(
+      lastMessage
+      && (sendMessagePromiseCondition || pollMessageCondition)
+      && !lastMessage.retry
+      && !lastMessage.isSending
+      && showTyping
+    )
 
     return (
       <div
-        className="RecastAppLive"
+        className='CaiAppLive'
         ref={ref => (this.messagesList = ref)}
         onScroll={this.handleScroll}
         style={containerMessagesStyle}
       >
-        <div className="RecastAppLive--message-container">
+        <div className='CaiAppLive--message-container'>
           {this.fmtMessages().map((message, index) => (
             <Message
               key={message.id}

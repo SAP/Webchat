@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import * as R from 'ramda'
+import append from 'ramda/es/append'
 
 import SendButton from 'components/SendButton'
 
@@ -21,22 +21,22 @@ class Input extends Component {
     menuIndexes: [],
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this._input.focus()
     this._input.value = ''
 
     this.onInputHeight()
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     return (
-      nextState.value !== this.state.value ||
-      nextState.menuOpened !== this.state.menuOpened ||
-      nextState.menuIndexes.length !== this.state.menuIndexes.length
+      nextState.value !== this.state.value
+      || nextState.menuOpened !== this.state.menuOpened
+      || nextState.menuIndexes.length !== this.state.menuIndexes.length
     )
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     if (!this.state.value) {
       // Dirty fix textarea placeholder to reset style correctly
       setTimeout(() => {
@@ -84,8 +84,8 @@ class Input extends Component {
         content,
       })
       this.setState(prevState => {
-        const historyValues = R.append(content, prevState.historyValues)
-        const previousValues = R.append('', historyValues)
+        const historyValues = append(content, prevState.historyValues)
+        const previousValues = append('', historyValues)
 
         return {
           value: '',
@@ -99,7 +99,7 @@ class Input extends Component {
 
   autoGrow = () => {
     this._input.style.height = '18px'
-    this._input.style.height = this._input.scrollHeight + 'px'
+    this._input.style.height = `${this._input.scrollHeight}px`
   }
 
   handleKeyboard = keyName => {
@@ -167,7 +167,7 @@ class Input extends Component {
     return this.setState({ menuOpened: true })
   }
 
-  render() {
+  render () {
     const { enableHistoryInput, characterLimit, menu, preferences, inputPlaceholder } = this.props
     const { value, menuOpened } = this.state
 
@@ -177,7 +177,7 @@ class Input extends Component {
 
     return (
       <div
-        className="RecastAppInput"
+        className='CaiAppInput'
         ref={ref => {
           this.inputContainer = ref
         }}
@@ -217,15 +217,15 @@ class Input extends Component {
           }}
           rows={1}
         />
-        
+
         <SendButton
           preferences={preferences}
           sendMessage={this.sendMessage}
           value={value}
         />
-        
+
         {showLimitCharacter && (
-          <div className="characterLimit">{characterLimit - value.length}</div>
+          <div className='characterLimit'>{characterLimit - value.length}</div>
         )}
       </div>
     )

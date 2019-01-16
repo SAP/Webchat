@@ -1,0 +1,39 @@
+.Slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 300px;
+  min-width: 300px;
+  margin-top: 8px !important;
+
+  &.contentNoArrow {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+  }
+
+  .arrow {
+    position: absolute;
+    border: solid 1px #bcbcbc;
+    border-radius: 3px;
+    padding: 3px;
+    background-color: #fff;
+
+    &.right {
+      right: 0;
+    }
+
+    &.left {
+      left: 0;
+    }
+
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  .content {
+    display: flex;
+    transition: all 200ms;
+  }
+}

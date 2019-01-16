@@ -9,18 +9,18 @@ import './style.scss'
 
 const Carousel = ({ content, sendMessage }) => {
   return (
-    <div className={'RecastAppCarousel'}>
+    <div className={'CaiAppCarousel'}>
       <Slider
         arrows
+        prevArrow={<PrevArrow />}
+        nextArrow={<NextArrow />}
         centerMode
-        centerPadding="10px"
+        centerPadding='10px'
         speed={200}
         infinite={false}
         draggable={false}
         slidesToScroll={1}
-        className="Slider"
-        prevArrow={<PrevArrow />}
-        nextArrow={<NextArrow />}
+        className='Slider'
       >
         {content.map((card, i) => (
           <div key={i}>
