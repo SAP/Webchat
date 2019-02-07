@@ -1,6 +1,6 @@
 {
   "name": "webchat",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "ramda": "^0.25.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "react-markdown": "^4.0.6",
     "react-redux": "^5.0.6",
     "react-render": "^1.2.1",
     "react-slick": "^0.18.1",
