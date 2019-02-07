@@ -1,5 +1,5 @@
 {
-  "name": "webchat",
+  "name": "ml-cai-webchat",
   "version": "1.4.6",
   "description": "",
   "main": "lib/index.js",
@@ -12,7 +12,7 @@
     "start": "npm run clean:dist && node bin/build-dev",
     "lib": "npm run clean:lib && node bin/build-lib",
     "prettier": "prettier --write \"src/**/*.?(js|?(s)css|json)\" && eslint --fix src",
-    "lint": "eslint src",
+    "lint": "if [ -n \"$HUDSON_URL\" ]; then echo '!! linter crashes and is therefore not executed on xmake !!'; else eslint src; fi",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
