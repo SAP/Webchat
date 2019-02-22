@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import sanitizeHtml from 'sanitize-html-react'
-import ReactMarkdown from 'react-markdown';
 
 import { truncate } from 'helpers'
 
@@ -21,18 +20,13 @@ const Text = ({ content, style }) => {
   } else {
     respond = ''
   }
-  const compiledRespond = sanitizeHtml(truncate(respond, 640), {
-    allowedTags: ['b', 'i', 'em', 'strong', 'a'],
-  })
-    .replace(/&amp;/g, 'g')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
+
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
-      <ReactMarkdown
-        source={compiledRespond}
-        allowedTypes={['paragraph', 'text', 'emphasis', 'strong', 'link']}
-      />
+      {sanitizeHtml(truncate(respond, 640))
+        .replace(/&amp;/g, 'g')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')}
     </div>
   )
 }
