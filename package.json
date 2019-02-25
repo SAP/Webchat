@@ -1,6 +1,6 @@
 {
   "name": "ml-cai-webchat",
-  "version": "1.4.9",
+  "version": "1.4.10",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "classnames": "^2.2.5",
     "cookies-js": "^1.2.3",
     "extract-text-webpack-plugin": "^3.0.2",
+    "markdown-to-jsx": "^6.9.1",
     "progress-bar-webpack-plugin": "^1.10.0",
     "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
