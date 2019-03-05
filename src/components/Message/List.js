@@ -25,7 +25,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
 
         {button
           && (button.type === 'web_url' ? (
-            sanitizeUrl(button.value) !== 'about:blank' && (
+            button.value && sanitizeUrl(button.value) !== 'about:blank' && (
               <a
                 href={button.value}
                 className='RecastAppListElement--button CaiAppListElement--button'
