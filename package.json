@@ -29,6 +29,7 @@
     "ramda": "^0.25.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "react-markdown": "^4.0.6",
     "react-redux": "^5.0.6",
     "react-slick": "^0.18.1",
     "redux": "^3.7.2",
