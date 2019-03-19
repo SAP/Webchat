@@ -7,6 +7,26 @@ import { truncate } from 'helpers'
 
 import './style.scss'
 
+const allowedMarkdownTypes = [
+  'paragraph',
+  'text',
+  'emphasis',
+  'strong',
+  'link',
+  'blockquote',
+  'delete',
+  'list',
+  'listItem',
+  'heading',
+  'code',
+  'thematicBreak',
+  'table',
+  'tableHead',
+  'tableBody',
+  'tableRow',
+  'tableCell'
+];
+
 const Text = ({ content, style, isMarkdown }) => {
   let respond
 
@@ -38,7 +58,7 @@ const Text = ({ content, style, isMarkdown }) => {
       {isMarkdown ? (
         <ReactMarkdown
           source={compiledResponse}
-          allowedTypes={['paragraph', 'text', 'emphasis', 'strong', 'link']}
+          allowedTypes={allowedMarkdownTypes}
         />
       ) : (
         compiledResponse
