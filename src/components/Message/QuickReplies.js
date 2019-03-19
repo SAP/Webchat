@@ -43,7 +43,7 @@ class QuickReplies extends Component {
   }
 
   render () {
-    const { content, style } = this.props
+    const { content, style, isMarkdown } = this.props
     const { displayQuickReplies, showArrow } = this.state
     const { title, buttons } = content
 
@@ -54,7 +54,7 @@ class QuickReplies extends Component {
           this.container = ref
         }}
       >
-        <Text content={title} style={style} />
+        <Text content={title} isMarkdown={isMarkdown} style={style} />
 
         {displayQuickReplies
           && buttons

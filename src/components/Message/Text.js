@@ -1,13 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import sanitizeHtml from 'sanitize-html-react'
+import ReactMarkdown from 'react-markdown'
 
 import { truncate } from 'helpers'
 
 import './style.scss'
 
-const Text = ({ content, style }) => {
+const Text = ({ content, style, isMarkdown }) => {
   let respond
+
+  if (typeof isMarkdown !== 'boolean') {
+    isMarkdown = false
+  }
 
   if (typeof content === 'string') {
     respond = content
@@ -21,14 +26,23 @@ const Text = ({ content, style }) => {
     respond = ''
   }
 
+  const compiledResponse = sanitizeHtml(truncate(respond, 640), {
+    allowedTags: ['b', 'i', 'em', 'strong', 'a'],
+  })
+    .replace(/&amp;/g, 'g')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
-      {sanitizeHtml(truncate(respond, 640), {
-        allowedTags: ['b', 'i', 'em', 'strong', 'a'],
-      })
-        .replace(/&amp;/g, 'g')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')}
+      {isMarkdown ? (
+        <ReactMarkdown
+          source={compiledResponse}
+          allowedTypes={['paragraph', 'text', 'emphasis', 'strong', 'link']}
+        />
+      ) : (
+        compiledResponse
+      )}
     </div>
   )
 }
@@ -36,6 +50,7 @@ const Text = ({ content, style }) => {
 Text.propTypes = {
   style: PropTypes.object,
   content: PropTypes.string,
+  isMarkdown: PropTypes.bool,
 }
 
 export default Text
