@@ -24,8 +24,8 @@ const allowedMarkdownTypes = [
   'tableHead',
   'tableBody',
   'tableRow',
-  'tableCell'
-];
+  'tableCell',
+]
 
 const Text = ({ content, style, isMarkdown }) => {
   let respond
