@@ -23,10 +23,7 @@ const Text = ({ content, style }) => {
 
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
-      {sanitizeHtml(truncate(respond, 640))
-        .replace(/&amp;/g, 'g')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')}
+      {respond}
     </div>
   )
 }
