@@ -18,7 +18,6 @@ class ListElement extends Component {
     render () {
       const { title, subtitle, imageUrl, buttons, detail, sendMessage } = this.props
       const { showDetail} = this.state
-      const button = buttons[0]
           const titleMaxLength = 25
           const subTitleMaxLength = 50
           const buttonTitleMaxLength = 20
@@ -36,8 +35,8 @@ class ListElement extends Component {
                     {truncate(title, titleMaxLength)}
                 </p>
                 <p className='RecastAppListElement--subtitle CaiAppListElement--subtitle'>{truncate(subtitle, subTitleMaxLength)}</p>
-
-                {button
+              {buttons.slice(0, 3).map((button, i) => (
+                button
                   && (button.type === 'web_url' ? (
                     button.value && sanitizeUrl(button.value) !== 'about:blank' && (
                       <a
@@ -56,7 +55,8 @@ class ListElement extends Component {
                     >
                       {truncate(button.title, buttonTitleMaxLength)}
                     </div>
-                  ))}
+                  )))
+              )}
               </div>
           </div>
             {detail && (

@@ -16,7 +16,7 @@ const Buttons = ({ content, sendMessage, style }) => {
       </p>
 
       <div className='Buttons--container'>
-        {buttons.slice(0, 3).map((b, i) => (
+        {buttons.slice(0, 6).map((b, i) => (
           <Button key={i} button={b} sendMessage={sendMessage} />
         ))}
       </div>
