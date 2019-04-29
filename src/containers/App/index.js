@@ -31,7 +31,7 @@ class App extends Component {
 
   componentDidMount () {
     const { channelId, token, preferences, noCredentials, onRef } = this.props
-    const credentials = getCredentialsFromCookie()
+    const credentials = getCredentialsFromCookie(channelId)
     const payload = { channelId, token }
 
     if (onRef) {
@@ -46,7 +46,7 @@ class App extends Component {
       Object.assign(payload, credentials)
     } else {
       this.props.createConversation(channelId, token).then(({ id, chatId }) => {
-        storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive)
+        storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive, channelId)
       })
     }
 
