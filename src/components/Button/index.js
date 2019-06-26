@@ -8,7 +8,7 @@ import './style.scss'
 
 const Button = ({ button, sendMessage }) => {
   const { value, title } = button
-  const formattedTitle = truncate(title, 20)
+  const formattedTitle = truncate(title, 100)
 
   if (button.type === 'web_url' && sanitizeUrl(value) === 'about:blank') {
     return null
