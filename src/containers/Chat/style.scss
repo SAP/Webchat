@@ -49,15 +49,15 @@
   }
 }
 
-@media only screen and (min-width: 420px) and (min-height: 575px) {
+@media only screen and (min-width: 1000px) and (min-height: 900px) {
   .RecastApp .RecastAppChat, .CaiApp .CaiAppChat {
     right: 10px;
     bottom: 10px;
     border-radius: 3px;
     top: auto;
     left: auto;
-    width: 370px;
-    height: auto;
+    width: 1000px;
+    height: 900px;
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
 
     &--slogan {

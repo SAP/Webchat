@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 
-const webpackConfig = require('../webpack/prod.js')
+const webpackConfig = require('../webpack/dev')
 
 const bundler = webpack(webpackConfig)
 

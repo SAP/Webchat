@@ -73,7 +73,7 @@
    */
 
   .RecastAppText, .CaiAppText {
-    max-width: 290px;
+  /*  max-width: 290px;*/
     padding: 0.8rem;
     border-radius: 3px;
 
@@ -194,7 +194,13 @@
 
     .RecastAppListElement, .CaiAppListElement {
       display: flex;
+      flex-direction: column;
       width: 290px;
+
+      &--head {
+        display: flex;
+        width: 100%;
+      }
 
       &--img {
         width: 80px;
