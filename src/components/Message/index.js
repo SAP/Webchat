@@ -37,7 +37,7 @@ class Message extends Component {
       botMessageBackgroundColor,
     } = preferences
     const { displayIcon } = message
-    const { type, content, error, title } = message.attachment
+    const { type, content, error, title, markdown } = message.attachment
     const isBot = message.participant.isBot
 
     const image = isBot ? botPicture : userPicture
@@ -45,6 +45,7 @@ class Message extends Component {
       isBot,
       // Make sure we display the title of a button/quickReply click, and not its value
       content: title || content,
+      isMarkdown: markdown,
       onImageLoaded,
       style: {
         color: isBot ? (error ? '#fff' : botMessageColor) : complementaryColor,
@@ -55,7 +56,12 @@ class Message extends Component {
     }
 
     return (
-      <div className={cx('RecastAppMessageContainer CaiAppMessageContainer', { bot: isBot, user: !isBot })}>
+      <div
+        className={cx('RecastAppMessageContainer CaiAppMessageContainer', {
+          bot: isBot,
+          user: !isBot,
+        })}
+      >
         <div className={cx('RecastAppMessage CaiAppMessage', { bot: isBot, user: !isBot })}>
           {image && (
             <img
@@ -87,8 +93,7 @@ class Message extends Component {
             />
           )}
 
-          {isBot
-            && showInfo && (
+          {isBot && showInfo && (
             <div
               className='RecastAppMessage--JsonButton CaiAppMessage--JsonButton'
               onClick={() => {

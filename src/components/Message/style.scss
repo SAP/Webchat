@@ -79,6 +79,16 @@
 
     white-space: pre-wrap;
     overflow-wrap: break-word;
+
+
+    // Markdown
+    ul, ol {
+      list-style: disc;
+    }
+
+    ul li, ol li {
+      margin-left: 18px;
+    }
   }
 
   /*
