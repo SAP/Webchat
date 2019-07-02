@@ -1,4 +1,4 @@
-## Version 1.4.5 (July 1, 2019)
+## Version 1.4.6 (July 1, 2019)
 
 - Added markdown support using react-markdown npm library
 
