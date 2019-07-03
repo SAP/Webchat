@@ -7,10 +7,15 @@ import { truncate } from 'helpers'
 import Button from 'components/Button'
 
 const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
-  const button = buttons[0]
   const titleMaxLength = 25
   const subTitleMaxLength = 50
   const buttonTitleMaxLength = 20
+
+  let button = null
+
+  if (Array.isArray(buttons) && buttons[0]) {
+    button = buttons[0]
+  }
 
   return (
     <div className='RecastAppListElement CaiAppListElement'>
