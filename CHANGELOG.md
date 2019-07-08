@@ -1,3 +1,7 @@
+## Version 1.4.6 (July 2, 2019)
+
+- Added markdown support using react-markdown npm library
+
 ## Version 1.4.5 (Jan 16, 2019)
 
 Revert renaming className to be compatible with people who are overwritting the style.
