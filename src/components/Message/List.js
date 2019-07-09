@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { sanitizeUrl } from '@braintree/sanitize-url'
+import propOr from 'ramda/es/propOr'
 
 import { truncate } from 'helpers'
 
@@ -11,11 +12,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const subTitleMaxLength = 50
   const buttonTitleMaxLength = 20
 
-  let button = null
-
-  if (Array.isArray(buttons) && buttons[0]) {
-    button = buttons[0]
-  }
+  const button = Array.isArray(buttons) && propOr(null, 0, buttons)
 
   return (
     <div className='RecastAppListElement CaiAppListElement'>
