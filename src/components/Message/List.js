@@ -12,7 +12,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const subTitleMaxLength = 50
   const buttonTitleMaxLength = 20
 
-  const button = Array.isArray(buttons) && propOr(null, 0, buttons)
+  const button = propOr(null, 0, buttons)
 
   return (
     <div className='RecastAppListElement CaiAppListElement'>
