@@ -137,6 +137,7 @@ class App extends Component {
       getLastMessage,
       enableHistoryInput,
       defaultMessageDelay,
+      imgUrlPath
     } = this.props
     const { expanded } = this.state
 
@@ -176,6 +177,7 @@ class App extends Component {
           secondaryContent={secondaryContent}
           getLastMessage={getLastMessage}
           enableHistoryInput={enableHistoryInput}
+          imgUrlPath={imgUrlPath}
           defaultMessageDelay={defaultMessageDelay}
         />
       </div>

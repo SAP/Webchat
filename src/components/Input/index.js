@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import append from 'ramda/es/append'
 
+import Attachment from 'components/Attachment'
 import SendButton from 'components/SendButton'
 
 import Menu from 'components/Menu'
@@ -76,11 +77,11 @@ class Input extends Component {
     }
   }
 
-  sendMessage = () => {
-    const content = this.state.value.trim()
+  sendMessage = (type = 'text') => {
+    const content = this.state.value ? this.state.value.trim() : undefined
     if (content) {
       this.props.onSubmit({
-        type: 'text',
+        type: type,
         content,
       })
       this.setState(prevState => {
@@ -168,7 +169,7 @@ class Input extends Component {
   }
 
   render () {
-    const { enableHistoryInput, characterLimit, menu, preferences, inputPlaceholder } = this.props
+    const { enableHistoryInput, characterLimit, menu, preferences, inputPlaceholder, onAttach, imgUrlPath } = this.props
     const { value, menuOpened } = this.state
 
     const showLimitCharacter = characterLimit
@@ -182,7 +183,7 @@ class Input extends Component {
           this.inputContainer = ref
         }}
       >
-        {menu && <MenuSVG onClick={this.triggerMenu} />}
+        {menu && <MenuSVG onClick={this.triggerMenu}/>}
 
         {menuOpened && (
           <Menu
@@ -218,6 +219,14 @@ class Input extends Component {
           rows={1}
         />
 
+        <Attachment
+          accept={'image/*'}
+          onAttach={onAttach}
+          imgUrlPath={imgUrlPath}
+          postAttach={value => this.setState({ value }, () => this.sendMessage('picture'))
+          }
+        />
+
         <SendButton
           preferences={preferences}
           sendMessage={this.sendMessage}
@@ -235,6 +244,8 @@ class Input extends Component {
 Input.propTypes = {
   menu: PropTypes.object,
   onSubmit: PropTypes.func,
+  onAttach: PropTypes.func,
+  imgUrlPath: PropTypes.string,
   onInputHeight: PropTypes.func,
   enableHistoryInput: PropTypes.bool,
   characterLimit: PropTypes.number,

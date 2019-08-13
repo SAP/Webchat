@@ -13,10 +13,11 @@ import {
   addUserMessage,
 } from 'actions/messages'
 
+import { postAttachment } from 'actions/attachment'
+
 import Header from 'components/Header'
 import Live from 'components/Live'
 import Input from 'components/Input'
-
 import './style.scss'
 
 const MAX_GET_MEMORY_TIME = 10 * 1000 // in ms
@@ -32,13 +33,14 @@ const WRONG_MEMORY_FORMAT
     conversationId: state.conversation.conversationId,
     lastMessageId: state.conversation.lastMessageId,
     messages: state.messages,
-    }),
+  }),
   {
-  postMessage,
-  pollMessages,
-  removeMessage,
-  addUserMessage,
-  addBotMessage,
+    postMessage,
+    pollMessages,
+    removeMessage,
+    addUserMessage,
+    addBotMessage,
+    postAttachment,
   },
 )
 class Chat extends Component {
@@ -153,6 +155,11 @@ class Chat extends Component {
     )
   }
 
+  sendAttachment = (url, attachment) => {
+    const { token, postAttachment } = this.props
+    return postAttachment(url, token, attachment);
+  }
+
   sendMessage = (attachment, userMessage) => {
     const {
       token,
@@ -196,8 +203,8 @@ class Chat extends Component {
               const data = res.data
               const messages
                 = data.messages.length === 0
-                  ? [{ type: 'text', content: 'No reply', error: true }]
-                  : data.messages
+                ? [{ type: 'text', content: 'No reply', error: true }]
+                : data.messages
               if (!this.shouldHideBotReply(data)) {
                 let delay = 0
                 messages.forEach((message, index) => {
@@ -213,10 +220,10 @@ class Chat extends Component {
 
                   delay
                     += message.delay || message.delay === 0
-                      ? message.delay * 1000
-                      : defaultMessageDelay === null || defaultMessageDelay === undefined
-                        ? 0
-                        : defaultMessageDelay * 1000
+                    ? message.delay * 1000
+                    : defaultMessageDelay === null || defaultMessageDelay === undefined
+                      ? 0
+                      : defaultMessageDelay * 1000
                 })
               }
             })
@@ -314,6 +321,7 @@ class Chat extends Component {
       logoStyle,
       show,
       enableHistoryInput,
+      imgUrlPath
     } = this.props
     const { showSlogan, messages, inputHeight } = this.state
 
@@ -369,6 +377,8 @@ class Chat extends Component {
         <Input
           menu={preferences.menu && preferences.menu.menu}
           onSubmit={this.sendMessage}
+          onAttach={this.sendAttachment}
+          imgUrlPath={imgUrlPath}
           preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}
           enableHistoryInput={enableHistoryInput}

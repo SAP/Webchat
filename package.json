@@ -4,8 +4,8 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "clean:lib": "rm -rf lib",
-    "clean:dist": "rm -rf dist",
+    "clean:lib": "rmdir /s /Q lib",
+    "clean:dist": "rmdir /s /Q dist",
     "build": "npm run clean:dist && NODE_ENV=production npm run build:webpack",
     "build:webpack": "node bin/build.js",
     "build:js": "babel src -d lib",
