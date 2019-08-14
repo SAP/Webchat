@@ -1,0 +1,24 @@
+.CaiApp .SuggestionsMenu {
+  bottom: calc(100% + 15px);
+  left: 10px;
+  width: calc(100% - 20px);
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 0 7px 1px lightgrey;
+  border-radius: 3px;
+  font-size: 14px;
+
+  .rowSuggestion {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+
+    border-bottom: solid 1px #dedede;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}

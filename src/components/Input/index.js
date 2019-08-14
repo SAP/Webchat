@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import append from 'ramda/es/append'
 
 import SendButton from 'components/SendButton'
+import SuggestionsMenu from 'components/SuggestionsMenu'
 
 import Menu from 'components/Menu'
 import MenuSVG from 'components/svgs/menu'
@@ -21,22 +22,22 @@ class Input extends Component {
     menuIndexes: [],
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._input.focus()
     this._input.value = ''
 
     this.onInputHeight()
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return (
-      nextState.value !== this.state.value
-      || nextState.menuOpened !== this.state.menuOpened
-      || nextState.menuIndexes.length !== this.state.menuIndexes.length
+      nextState.value !== this.state.value ||
+      nextState.menuOpened !== this.state.menuOpened ||
+      nextState.menuIndexes.length !== this.state.menuIndexes.length
     )
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     if (!this.state.value) {
       // Dirty fix textarea placeholder to reset style correctly
       setTimeout(() => {
@@ -74,6 +75,10 @@ class Input extends Component {
     if (onInputHeight) {
       onInputHeight(this.inputContainer.clientHeight)
     }
+  }
+
+  onSelectSuggestion = value => {
+    this.setState({ value })
   }
 
   sendMessage = () => {
@@ -167,8 +172,15 @@ class Input extends Component {
     return this.setState({ menuOpened: true })
   }
 
-  render () {
-    const { enableHistoryInput, characterLimit, menu, preferences, inputPlaceholder } = this.props
+  render() {
+    const {
+      enableHistoryInput,
+      characterLimit,
+      menu,
+      preferences,
+      inputPlaceholder,
+      enableSuggestions,
+    } = this.props
     const { value, menuOpened } = this.state
 
     const showLimitCharacter = characterLimit
@@ -177,7 +189,7 @@ class Input extends Component {
 
     return (
       <div
-        className='RecastAppInput CaiAppInput'
+        className="RecastAppInput CaiAppInput"
         ref={ref => {
           this.inputContainer = ref
         }}
@@ -193,6 +205,8 @@ class Input extends Component {
             postbackClick={value => this.setState({ value }, this.sendMessage)}
           />
         )}
+
+        {enableSuggestions && <SuggestionsMenu search={value} onSelect={this.onSelectSuggestion} />}
 
         <textarea
           ref={i => (this._input = i)}
@@ -218,14 +232,10 @@ class Input extends Component {
           rows={1}
         />
 
-        <SendButton
-          preferences={preferences}
-          sendMessage={this.sendMessage}
-          value={value}
-        />
+        <SendButton preferences={preferences} sendMessage={this.sendMessage} value={value} />
 
         {showLimitCharacter && (
-          <div className='characterLimit'>{characterLimit - value.length}</div>
+          <div className="characterLimit">{characterLimit - value.length}</div>
         )}
       </div>
     )
@@ -237,6 +247,7 @@ Input.propTypes = {
   onSubmit: PropTypes.func,
   onInputHeight: PropTypes.func,
   enableHistoryInput: PropTypes.bool,
+  enableSuggestions: PropTypes.bool,
   characterLimit: PropTypes.number,
   inputPlaceholder: PropTypes.string,
   preferences: PropTypes.object,
