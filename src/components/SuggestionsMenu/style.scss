@@ -9,16 +9,20 @@
   font-size: 14px;
 
   .rowSuggestion {
-    height: 30px;
+    min-height: 30px;
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 5px 10px;
     cursor: pointer;
 
     border-bottom: solid 1px #dedede;
 
     &:last-child {
       border-bottom: 0;
+    }
+
+    &:hover {
+      background-color: #fafafa;
     }
   }
 }

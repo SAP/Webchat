@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-const algoliasearch = require('algoliasearch')
+import algoliasearch from 'algoliasearch'
+import config from '../../config'
 
 import './style.scss'
 
-const client = algoliasearch('D2L9P3MZNX', '9ae78ab9c8dbc17c237f2883148e7c2a')
-const index = client.initIndex('caiwebchat')
+const client = algoliasearch(config.ALGOLIA_APPLICATION_ID, config.ALGOLIA_SEARCH_API_KEY)
+const index = client.initIndex('spc_5')
 
 export default class SuggestionsMenu extends Component {
   state = {
@@ -17,8 +18,7 @@ export default class SuggestionsMenu extends Component {
 
     if (search !== prevProps.search) {
       index.search({ query: search }, (err, { hits } = {}) => {
-        console.log(hits)
-        this.setState({ suggestions: hits })
+        this.setState({ suggestions: hits || [] })
       })
     }
   }
@@ -29,13 +29,18 @@ export default class SuggestionsMenu extends Component {
   }
 
   render() {
+    const { search } = this.props
     const { suggestions } = this.state
+
+    if (!search) {
+      return
+    }
 
     return (
       <div className="SuggestionsMenu">
-        {suggestions.map((suggestion, index) => (
-          <div className="rowSuggestion" key={index} onClick={this.onSelect(suggestion.value)}>
-            {suggestion.value}
+        {suggestions.slice(0, 5).map((suggestion, index) => (
+          <div className="rowSuggestion" key={index} onClick={this.onSelect(suggestion.Question)}>
+            {suggestion.Question}
           </div>
         ))}
       </div>

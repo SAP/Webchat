@@ -17,6 +17,8 @@ import Header from 'components/Header'
 import Live from 'components/Live'
 import Input from 'components/Input'
 
+import config from '../../config';
+
 import './style.scss'
 
 const MAX_GET_MEMORY_TIME = 10 * 1000 // in ms
@@ -368,7 +370,7 @@ class Chat extends Component {
         </div>
         <Input
           menu={preferences.menu && preferences.menu.menu}
-          enableSuggestions={true}
+          enableSuggestions={config.ENABLE_ALGOLIA}
           onSubmit={this.sendMessage}
           preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}

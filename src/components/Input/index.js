@@ -206,7 +206,7 @@ class Input extends Component {
           />
         )}
 
-        {enableSuggestions && <SuggestionsMenu search={value} onSelect={this.onSelectSuggestion} />}
+        {enableSuggestions && !!value && <SuggestionsMenu search={value} onSelect={this.onSelectSuggestion} />}
 
         <textarea
           ref={i => (this._input = i)}
