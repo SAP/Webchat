@@ -10,12 +10,11 @@ export const truncate = (string, length) => {
 export const storeCredentialsInCookie = (chatId, conversationId, timeToLive) => {
   const payload = { chatId, conversationId }
   const maxAge = 3600 * timeToLive
-  const time = new Date().getTime()
 
   if (typeof window.localStorage !== 'undefined') {
     // if maxAge is 0 then it never expires.
     // Currently timeToLive is 0.002777777 (~1 sec) if set to never.
-    // Check if never expires or is greater the 60 seconds to save id.
+    // Check if never expires or is greater then 60 seconds to save id.
     if (maxAge === 0 || maxAge >= 60) {
       const expire = maxAge > 0 ? new Date().getTime() + (maxAge * 1000) : 0
       const localData = { expire, payload }
