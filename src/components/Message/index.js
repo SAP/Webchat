@@ -10,6 +10,7 @@ import Buttons from './Buttons'
 import Picture from './Picture'
 import Carousel from './Carousel'
 import QuickReplies from './QuickReplies'
+import Checkboxes from './Checkboxes'
 
 import './style.scss'
 
@@ -84,6 +85,8 @@ class Message extends Component {
           {type === 'list' && <List {...messageProps} sendMessage={sendMessage} />}
 
           {type === 'buttons' && <Buttons {...messageProps} sendMessage={sendMessage} />}
+
+          {type === 'checkboxes' && <Checkboxes {...messageProps} checkedColor={accentColor} sendMessage={sendMessage} />}
 
           {type === 'quickReplies' && (
             <QuickReplies

@@ -17,25 +17,60 @@ const Button = ({ button, sendMessage }) => {
   let content = null
 
   switch (button.type) {
-  case 'web_url':
-    content = (
-      <a
-        className='RecastAppButton-Link CaiAppButton-Link' href={value} target='_blank'
-        rel='noopener noreferrer'>
-        {formattedTitle}
-      </a>
-    )
-    break
-  default:
-    content = (
-      <div
-        className='RecastAppButton CaiAppButton'
-        onClick={() => sendMessage({ type: 'button', content: button }, title)}
-      >
-        {formattedTitle}
-      </div>
-    )
-    break
+    case 'web_url':
+      content = (
+        <a
+          className='RecastAppButton-Link CaiAppButton-Link' href={value} target='_blank'
+          rel='noopener noreferrer'>
+          {formattedTitle}
+        </a>
+      )
+      break
+
+    case 'checkbox_confirm':
+      content = (
+        <div
+          className='RecastAppButton CaiAppButton'
+          onClick={() => {
+            try{
+              const container = document.getElementsByClassName("CaiCheckboxes--container")
+              const len = container.length;
+              const items = container[len-1].getElementsByTagName("label")
+              const checkboxes = container[len-1].getElementsByTagName("input")
+              let selectedItems = []
+
+              if(items && checkboxes){
+                for(let i = 0; i < items.length; i++){
+                  if(checkboxes[i].checked){
+                    selectedItems.push(items[i].firstElementChild.getAttribute("data-value"))
+                  }
+                }
+
+                if(selectedItems.length !== 0){
+                  sendMessage({ type: 'checkboxes', content: selectedItems }, title)
+                }
+              }
+
+            }catch(ex){
+              console.error(ex)
+            }
+          }}
+        >
+          {formattedTitle}
+        </div>
+      )
+      break
+
+    default:
+      content = (
+        <div
+          className='RecastAppButton CaiAppButton'
+          onClick={() => sendMessage({ type: 'button', content: button }, title)}
+        >
+          {formattedTitle}
+        </div>
+      )
+      break
   }
 
   return content

@@ -219,13 +219,15 @@ class Input extends Component {
           rows={1}
         />
 
-        <Attachment
-          accept={'image/*'}
-          onAttach={onAttach}
-          imgUrlPath={imgUrlPath}
-          postAttach={value => this.setState({ value }, () => this.sendMessage('picture'))
-          }
-        />
+        {imgUrlPath && (
+          <Attachment
+            accept={'image/*'}
+            onAttach={onAttach}
+            imgUrlPath={imgUrlPath}
+            postAttach={value => this.setState({ value }, () => this.sendMessage('picture'))
+            }
+          />
+        )}
 
         <SendButton
           preferences={preferences}
