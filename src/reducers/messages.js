@@ -6,17 +6,33 @@ const initialState = []
 export default handleActions(
   {
     SET_FIRST_MESSAGE: (state, { payload: message }) => {
-      return [
-        {
-          attachment: { type: 'text', content: message },
-          id: `local-${Math.random()}`,
-          isWelcomeMessage: true,
-          participant: {
-            isBot: true,
+      if (Array.isArray(message)) {
+        const messages =
+          message.map(m => {
+            return {
+              attachment: m,
+              id: `local-${Math.random()}`,
+              isWelcomeMessage: true,
+              participant: {
+                isBot: true,
+              },
+            }
+          });
+        messages.push(...state);
+        return messages;
+      } else {
+        return [
+          {
+            attachment: { type: 'text', content: message },
+            id: `local-${Math.random()}`,
+            isWelcomeMessage: true,
+            participant: {
+              isBot: true,
+            },
           },
-        },
-        ...state,
-      ]
+          ...state,
+        ]
+      }
     },
 
     POLL_MESSAGES_SUCCESS: (state, { payload }) => {

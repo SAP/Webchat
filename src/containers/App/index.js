@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import Chat from 'containers/Chat'
 import Expander from 'components/Expander'
+import { register } from 'actions/channel'
 import { setFirstMessage, removeAllMessages } from 'actions/messages'
 import { setCredentials, createConversation } from 'actions/conversation'
 import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
@@ -16,12 +17,12 @@ const NO_LOCALSTORAGE_MESSAGE
 @connect(
   state => ({
     isReady: state.conversation.conversationId,
-    }),
+  }),
   {
-  setCredentials,
-  setFirstMessage,
-  createConversation,
-  removeAllMessages,
+    setCredentials,
+    setFirstMessage,
+    createConversation,
+    removeAllMessages,
   },
 )
 class App extends Component {
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    const { channelId, token, preferences, noCredentials, onRef } = this.props
+    const { channelId, token, preferences, noCredentials, onRef, registerUrlPath } = this.props
     const credentials = getCredentialsFromCookie(channelId)
     const payload = { channelId, token }
 
@@ -45,14 +46,20 @@ class App extends Component {
     if (credentials) {
       Object.assign(payload, credentials)
     } else {
-      this.props.createConversation(channelId, token).then(({ id, chatId }) => {
-        storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive, channelId)
-      })
+      this.props.createConversation(channelId, token)
+        .then(({ id, chatId }) => {
+          storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive, channelId)
+        })
     }
 
-    if (preferences.welcomeMessage) {
-      this.props.setFirstMessage(preferences.welcomeMessage)
-    }
+    register(registerUrlPath)
+      .then(({ replies, memory }) => {
+        if(replies)
+          preferences.welcomeMessage = replies
+        if (preferences.welcomeMessage) {
+          this.props.setFirstMessage(preferences.welcomeMessage)
+        }
+      })
 
     this.props.setCredentials(payload)
   }
@@ -64,21 +71,21 @@ class App extends Component {
       let expanded = null
 
       switch (preferences.openingType) {
-      case 'always':
-        expanded = true
-        break
-      case 'never':
-        expanded = false
-        break
-      case 'memory':
-        if (typeof window.localStorage !== 'undefined') {
-          expanded = localStorage.getItem('isChatOpen') === 'true'
-        } else {
-          console.log(NO_LOCALSTORAGE_MESSAGE)
-        }
-        break
-      default:
-        break
+        case 'always':
+          expanded = true
+          break
+        case 'never':
+          expanded = false
+          break
+        case 'memory':
+          if (typeof window.localStorage !== 'undefined') {
+            expanded = localStorage.getItem('isChatOpen') === 'true'
+          } else {
+            console.log(NO_LOCALSTORAGE_MESSAGE)
+          }
+          break
+        default:
+          break
       }
       this.setState({ expanded })
     }
@@ -137,7 +144,7 @@ class App extends Component {
       getLastMessage,
       enableHistoryInput,
       defaultMessageDelay,
-      imgUrlPath
+      imgUrlPath,
     } = this.props
     const { expanded } = this.state
 

@@ -16,7 +16,9 @@ export const getChannelPreferences = (channelId, token) => {
 export const register = (url) => {
   return axios.get(url)
     .then((response) => {
-      const memory = response.data
+      const data = response.data
+      const replies = data.replies;
+      const memory = data.conversation.memory;
       window.webchatMethods = {
         getMemory: () => {
           return { memory: memory, merge: true }
@@ -24,6 +26,6 @@ export const register = (url) => {
       }
       window.webchatData = {}
       window.webchatData.savedUserData = memory
-      return {}
+      return {replies, memory}
     });
 }
