@@ -12,6 +12,12 @@
   box-shadow: 0 1px 6px lightgrey, 0 2px 32px lightgrey;
   transition: opacity 0.3s;
 
+  // preference sticky location bottom left
+  &.chatLocationStickyLeft {
+    left: 10px;
+    right: auto;
+  }
+
   &.open {
     opacity: 1;
   }

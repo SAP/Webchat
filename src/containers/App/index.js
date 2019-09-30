@@ -25,14 +25,20 @@ const NO_LOCALSTORAGE_MESSAGE
   },
 )
 class App extends Component {
+
   state = {
     expanded: this.props.expanded || false,
+    chatLocationSticky: 'default',
+    chatDirectionOpen: 'default'
   }
 
   componentDidMount () {
     const { channelId, token, preferences, noCredentials, onRef } = this.props
     const credentials = getCredentialsFromCookie(channelId)
     const payload = { channelId, token }
+    preferences.chatLocationSticky =  this.state.chatLocationSticky;
+    preferences.chatDirectionOpen = this.state.chatDirectionOpen;
+    this.forceUpdate();
 
     if (onRef) {
       onRef(this)
@@ -59,7 +65,6 @@ class App extends Component {
 
   componentWillReceiveProps (nextProps) {
     const { isReady, preferences, expanded } = nextProps
-
     if (isReady !== this.props.isReady) {
       let expanded = null
 
@@ -89,7 +94,7 @@ class App extends Component {
   }
 
   componentDidUpdate (prevState) {
-    const { onToggle } = this.props
+    const { onToggle, preferences } = this.props
 
     if (prevState.expanded !== this.state.expanded) {
       if (typeof window.localStorage !== 'undefined') {
@@ -101,6 +106,9 @@ class App extends Component {
         console.log(NO_LOCALSTORAGE_MESSAGE)
       }
     }
+
+    preferences.chatLocationSticky =  this.state.chatLocationSticky;
+    preferences.chatDirectionOpen = this.state.chatDirectionOpen;
   }
 
   componentDidCatch (error, info) {
@@ -118,6 +126,21 @@ class App extends Component {
 
   clearMessages = () => {
     this.props.removeAllMessages()
+  }
+
+  /*TODO remove for HACKTOBER DEMO purpose */
+  handleChangeLocation = (event) => {
+    this.setState(
+      {chatLocationSticky: event.target.value}, () => {
+        this.forceUpdate();
+      });
+  }
+  
+  handleChangeDirection = (event) => {
+    this.setState(
+      {chatDirectionOpen: event.target.value}, () => {
+      this.forceUpdate();
+    });
   }
 
   render () {
@@ -139,9 +162,66 @@ class App extends Component {
       defaultMessageDelay,
     } = this.props
     const { expanded } = this.state
+    const {chatDirectionOpen, chatLocationSticky } = this.state
 
     return (
       <div className='RecastApp CaiApp'>
+        <div className="HacktoberDemo">
+          <div style={{marginBottom: '20px', display: 'inline-block', width: '100%'}}>
+            <strong>LOCATION </strong>
+            <label for="defaultLoc">
+              <input
+                onChange={this.handleChangeLocation}
+                type="radio"
+                id="defaultLoc"
+                name="location"
+                value="default"
+                checked={chatLocationSticky === "default"} />
+              &nbsp;Default (Right)&nbsp;&nbsp;
+            </label>
+            <label for="leftLoc">
+              <input
+                onChange={this.handleChangeLocation}
+                type="radio"
+                id="leftLoc"
+                name="location"
+                value="chatLocationStickyLeft"
+                checked={chatLocationSticky === "chatLocationStickyLeft"} />
+              &nbsp;Left
+            </label>
+          </div>
+          <div style={{marginBottom: '10px', display: 'inline-block', width: '100%'}}>
+            <strong>DIRECTION </strong>
+            <label for="bottom">
+              <input onChange={this.handleChangeDirection}
+                type="radio"
+                id="bottom"
+                name="direction"
+                value="default"
+                checked={chatDirectionOpen === "default"} />
+              &nbsp;Default (bottom to top)&nbsp;&nbsp;
+            </label>
+            <label for="right">
+              <input onChange={this.handleChangeDirection}
+                type="radio"
+                id="right"
+                name="direction"
+                value="chatDirectionRightLeft"
+                checked={chatDirectionOpen === "chatDirectionRightLeft"} />
+              &nbsp;Open right to left&nbsp;&nbsp;
+            </label>
+            <label for="left">
+              <input
+                onChange={this.handleChangeDirection}
+                type="radio"
+                id="left"
+                name="direction"
+                value="chatDirectionLeftRight"
+                checked={chatDirectionOpen === "chatDirectionLeftRight"} />
+              &nbsp;from left to right
+            </label>
+          </div>
+        </div>
         <link
           rel='stylesheet'
           type='text/css'
