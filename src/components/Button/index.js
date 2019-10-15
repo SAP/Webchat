@@ -8,7 +8,8 @@ import './style.scss'
 
 const Button = ({ button, sendMessage }) => {
   const { value, title } = button
-  const formattedTitle = truncate(title, 20)
+  // Increase Button length to 80 characters per SAPMLCONV-3486
+  const formattedTitle = truncate(title, 80)
 
   if (button.type === 'web_url' && sanitizeUrl(value) === 'about:blank') {
     return null
