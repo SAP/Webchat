@@ -3,7 +3,7 @@ general:
   scanType: 'npm'
   verbose: true
   whitesourceProductName: 'SHC - SAP RECAST CONVERSAT OD 2.0 1911'
-  whitesourceProductToken: '1fe0602f4bbc42998beca0213720738fddb90dff4b1241e581e04dfcb588fdf0'
+  whitesourceProductToken: '892b9b8c9a4440e2beb92a46498e9c258a36e21cfaaa41f28230f3abde0ef20c'
   whitesourceUserTokenCredentialsId: 'Whitesource_UserKey'
 steps:
   setVersion:
