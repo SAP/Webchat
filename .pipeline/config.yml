@@ -21,7 +21,7 @@ steps:
     securityVulnerabilities: true
   executePPMSComplianceCheck:
     ppmsCredentialsId: 'PPMSCompliance'
-    ppmsID: ''
+    ppmsID: '73555000100200012242'
     ppmsChangeRequestUpload: true
   writeInflux:
     influxServer: 'jenkins'
