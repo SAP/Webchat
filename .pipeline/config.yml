@@ -28,4 +28,3 @@ steps:
     wrapInNode: true
   sendNotificationMail:
     wrapInNode: true
-© 2019 GitHub, Inc.
