@@ -1,7 +1,7 @@
 {
   "devDep": "true",
   "checkPolicies": true,
-  "productVer": "1911.0.0",
+  "productVer": "1.4.13",
   "forceUpdate": true,
   "failOnError": true
 }
