@@ -2,8 +2,8 @@ general:
   gitSshKeyCredentialsId: 'SSH_github'
   scanType: 'npm'
   verbose: true
-  whitesourceProductName: 'SHC - SAP RECAST CONVERSAT OD 2.0 1911'
-  whitesourceProductToken: '892b9b8c9a4440e2beb92a46498e9c258a36e21cfaaa41f28230f3abde0ef20c'
+  whitesourceProductName: 'SHC - SAP RECAST CONVERSAT OD 2.0 1909'
+  whitesourceProductToken: 'b4b99b4630814344bbf6295ed290baa5ee11f01b8c2c4278b888ea18e5d8ac7a'
   whitesourceUserTokenCredentialsId: 'Whitesource_UserKey'
 steps:
   setVersion:
