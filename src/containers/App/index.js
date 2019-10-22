@@ -6,7 +6,7 @@ import Chat from 'containers/Chat'
 import Expander from 'components/Expander'
 import { setFirstMessage, removeAllMessages } from 'actions/messages'
 import { setCredentials, createConversation } from 'actions/conversation'
-import { storeCredentialsInCookie, getCredentialsFromCookie } from 'helpers'
+import { storeCredentialsToLocalStorage, getCredentialsFromLocalStorage } from 'helpers'
 
 import './style.scss'
 
@@ -31,7 +31,7 @@ class App extends Component {
 
   componentDidMount () {
     const { channelId, token, preferences, noCredentials, onRef } = this.props
-    const credentials = getCredentialsFromCookie(channelId)
+    const credentials = getCredentialsFromLocalStorage(channelId)
     const payload = { channelId, token }
 
     if (onRef) {
@@ -46,7 +46,7 @@ class App extends Component {
       Object.assign(payload, credentials)
     } else {
       this.props.createConversation(channelId, token).then(({ id, chatId }) => {
-        storeCredentialsInCookie(chatId, id, preferences.conversationTimeToLive, channelId)
+        storeCredentialsToLocalStorage(chatId, id, preferences.conversationTimeToLive, channelId)
       })
     }
 
