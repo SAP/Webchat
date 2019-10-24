@@ -3,27 +3,30 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import './style.scss'
 
-const Expander = ({ onClick, preferences, style, show }) => (
-  <div
-    onClick={onClick}
-    className={cx('RecastAppExpander CaiAppExpander', { open: show, close: !show })}
-    style={{
-      color: preferences.complementaryColor,
-      backgroundColor: preferences.accentColor,
-      ...style,
-    }}
-  >
-    {preferences.expanderLogo && (
-      <img className='RecastAppExpander--logo CaiAppExpander--logo' src={preferences.expanderLogo} />
-    )}
 
-    {preferences.expanderTitle}
+const Expander = ({ onClick, preferences, style, show }) => {
+  return (
+    <div
+      onClick={onClick}
+      className={cx(`RecastAppExpander CaiAppExpander ${preferences.chatLocationSticky } ${preferences.chatDirectionOpen}`, { open: show, close: !show })}
+      style={{
+        color: preferences.complementaryColor,
+        backgroundColor: preferences.accentColor,
+        ...style
+      }}
+    >
+      {preferences.expanderLogo && (
+        <img className='RecastAppExpander--logo CaiAppExpander--logo' src={preferences.expanderLogo} />
+      )}
 
-    {preferences.onboardingMessage && (
-      <div className='RecastAppExpander--onboarding CaiAppExpander--onboarding'>{preferences.onboardingMessage}</div>
-    )}
-  </div>
-)
+      {preferences.expanderTitle}
+
+      {preferences.onboardingMessage && (
+        <div className='RecastAppExpander--onboarding CaiAppExpander--onboarding'>{preferences.onboardingMessage}</div>
+      )}
+    </div>
+  )
+}
 
 Expander.propTypes = {
   preferences: PropTypes.object,

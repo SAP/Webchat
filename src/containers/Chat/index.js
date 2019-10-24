@@ -319,7 +319,7 @@ class Chat extends Component {
 
     return (
       <div
-        className={cx('RecastAppChat CaiAppChat', { open: show, close: !show })}
+        className={cx(`RecastAppChat CaiAppChat ${preferences.chatLocationSticky} ${preferences.chatDirectionOpen}`, { open: show, close: !show }, )}
         style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}
       >
         {secondaryView ? (

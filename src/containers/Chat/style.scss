@@ -59,9 +59,47 @@
     width: 370px;
     height: auto;
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
-
+    
     &--slogan {
       margin-bottom: 0;
+    }
+
+    // preference sticky location bottom left
+    &.chatLocationStickyLeft {
+      left: 10px;
+      right: auto;
+    }
+
+    &.chatDirectionLeftRight {
+      transform-origin: left;
+ 
+      &.open {
+        transform: scaleX(1);
+        opacity: 1;
+        overflow: hidden;
+      }
+
+      &.close {
+        transform: scaleX(0);
+        opacity: 0;
+        overflow: hidden;
+      }
+    }
+
+    &.chatDirectionRightLeft {
+      transform-origin: right;
+
+      &.open {
+        transform: scaleX(1);
+        opacity: 1;
+        overflow: hidden;
+      }
+    
+      &.close {
+        transform: scaleX(0);
+        opacity: 0;
+        overflow: hidden;
+      }
     }
   }
 }
