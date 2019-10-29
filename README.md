@@ -11,7 +11,7 @@
 
 ## What is a webchat?
 
-The SAP Conversational AI webchat let you **deploy a bot straight to a website**. It will be embed and available through a chat box on your pages.
+The SAP Conversational AI webchat let you **deploy a bot straight to a website**. It will be embed and available through a chat box on your pages..
 The webchat is one of the many channels available on [SAP Conversational AI](https://cai.tools.sap), and end-to-end bot building platform.
 This webchat is built using the [React](https://github.com/facebook/react) library, along with [Redux](https://github.com/reactjs/redux) for state managment.
 
