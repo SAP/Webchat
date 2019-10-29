@@ -241,6 +241,7 @@ pipeline {
 
                 // Only run for master, release, or hotfix
                 anyOf {
+                     branch 'PR-*'
                     branch 'master'
                 }
             }
