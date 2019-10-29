@@ -1,0 +1,30 @@
+general:
+  gitSshKeyCredentialsId: 'SSH_github'
+  scanType: 'npm'
+  verbose: true
+  whitesourceProductName: 'SHC - SAP RECAST CONVERSAT OD 2.0 1909'
+  whitesourceProductToken: 'b4b99b4630814344bbf6295ed290baa5ee11f01b8c2c4278b888ea18e5d8ac7a'
+  whitesourceUserTokenCredentialsId: 'Whitesource_UserKey'
+steps:
+  setVersion:
+    buildTool: 'npm'
+    commitVersion: true
+    tagPrefix: ''
+  executeBuild:
+    xMakeShipmentType: 'indirectshipment'
+  executeCheckmarxScan:
+    checkmarxCredentialsId: 'CheckmarxUser'
+    checkmarxGroupId: '110ebc45-3f3b-45c4-a2d0-781ab3050045'
+    checkmarxProject: 'ML-CAI-webchat'
+    preset: '100154'
+  executeWhitesourceScan:
+    securityVulnerabilities: true
+  executePPMSComplianceCheck:
+    ppmsCredentialsId: 'PPMSCompliance'
+    ppmsID: '73555000100200012242'
+    ppmsChangeRequestUpload: true
+  writeInflux:
+    influxServer: 'jenkins'
+    wrapInNode: true
+  sendNotificationMail:
+    wrapInNode: true
