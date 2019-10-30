@@ -352,7 +352,7 @@ pipeline {
         stage('Checkmarx') {
             when {
                 anyOf {
-                    branch 'PR-*'
+                    //branch 'PR-*'
                     branch 'master'
                 }
             }
