@@ -241,6 +241,7 @@ pipeline {
 
                 // Only run for master, release, or hotfix
                 anyOf {
+                    //branch 'PR-*'
                     branch 'master'
                 }
             }
@@ -351,6 +352,7 @@ pipeline {
         stage('Checkmarx') {
             when {
                 anyOf {
+                    //branch 'PR-*'
                     branch 'master'
                 }
             }
