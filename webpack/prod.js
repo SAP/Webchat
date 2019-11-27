@@ -4,7 +4,7 @@ const webpack = require('webpack')
 const env = process.env.NODE_ENV || 'production'
 
 module.exports = {
-  entry: ['babel-polyfill', './src/script.js'],
+  entry: ['./src/script.js'],
 
   resolve: {
     modules: ['../src', '../node_modules'].map(p => path.resolve(__dirname, p)),
