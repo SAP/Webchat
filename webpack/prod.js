@@ -31,7 +31,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           'style-loader',
-          { loader: 'css-loader', options: { minimize: true } },
+          'css-loader',
           {
             loader: 'postcss-loader',
             options: {
