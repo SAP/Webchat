@@ -1,15 +1,15 @@
 {
   "presets": [
     [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "browsers": [
-            "last 2 versions"
-          ]
-        }
-      }
-    ],
+       "@babel/preset-env", {
+         "targets": {
+           "browsers": [">1%", "not op_mini all"],
+           "node": "current"
+         },
+         "useBuiltIns": "usage",
+         "debug": false
+       }
+     ],
     "@babel/preset-react"
   ],
   "plugins": [
