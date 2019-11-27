@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = process.env.NODE_ENV || 'production'
 
@@ -49,10 +50,8 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
 
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: { warnings: false },
-      minimize: true,
+    new UglifyJsPlugin({
+      sourceMap: true,
     }),
 
     new webpack.DefinePlugin({
