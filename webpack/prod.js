@@ -1,10 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = process.env.NODE_ENV || 'production'
 
 module.exports = {
-  entry: ['babel-polyfill', './src/script.js'],
+  entry: ['./src/script.js'],
 
   resolve: {
     modules: ['../src', '../node_modules'].map(p => path.resolve(__dirname, p)),
@@ -30,7 +31,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           'style-loader',
-          { loader: 'css-loader', options: { minimize: true } },
+          'css-loader',
           {
             loader: 'postcss-loader',
             options: {
@@ -49,10 +50,8 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
 
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: { warnings: false },
-      minimize: true,
+    new UglifyJsPlugin({
+      sourceMap: true,
     }),
 
     new webpack.DefinePlugin({

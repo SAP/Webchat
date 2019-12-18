@@ -53,11 +53,18 @@ const Text = ({ content, style, isMarkdown }) => {
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
 
+  // Markdown links need to open in new window.
+  // BCP: https://support.wdf.sap.corp/sap/support/message/1980408289
+  const LinkRenderer = (props) => {
+    return <a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a>
+  }
+
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
       {isMarkdown ? (
         <ReactMarkdown
           source={compiledResponse}
+          renderers={{ link: LinkRenderer }}
           allowedTypes={allowedMarkdownTypes}
         />
       ) : (
