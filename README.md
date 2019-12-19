@@ -80,7 +80,7 @@ $> npm run prettier
 $> npm run build
 ```
 
-#### Use your webchat
+#### Use your webchat in Non-Fiori App
 
 Once you're done, build it and host it.
 To use it instead of the default one provided by SAP Conversational AI, you need to set up the Webchat channel in the **CONNECT** tab of your bot.
@@ -94,6 +94,47 @@ You'll be using the same script as the default installation, but you have **to r
 ></script>
 ```
 
+#### Use your webchat in a Fiori App
+A Fiori App doesn't use React, so `import CaiWebchat from 'webchat';` wouldn't work. For a Fiori App, the UI5 framework will inject views rendered from XML into index.html based on the controllers that those views are associated. This means one has to load the webchat script after the Fiori views are added otherwise the chatbot container will not appear in the app. This can be achieved by getting the webchat script in a deferred manner and modifying the index.html in the Fiori app like the following:
+
+``` HTML
+<head>
+...
+<!-- Application launch configuration -->
+	<script>
+		sap.ui.getCore().attachInit(function() {
+			new sap.m.App ({
+				pages : [
+					new sap.m.Page({
+						showHeader: false,
+						enableScrolling : false,
+						content : [
+							new sap.ui.core.ComponentContainer({
+								height : "100%", name : "myapp",
+								settings : {
+									id : "myapp"
+								}
+							})
+						]
+					})
+				]
+			}).placeAt("content");
+		});
+	</script>
+</head>
+<!-- UI Content -->	
+<body class="sapUiBody" role="application">
+	<!-- Application launch configuration -->
+	<div  id="content" >
+		<script defer src="https://cdn.cai.tools.sap/webchat/webchat.js"
+		channelId="xxxx"
+		token="xxxx"
+		id="cai-webchat"
+		></script>
+	</div>
+</body>
+	
+```
 ### React component
 You can import the webchat as a React component like the following example:
 ``` js
