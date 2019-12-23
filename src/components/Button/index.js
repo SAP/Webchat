@@ -10,7 +10,7 @@ const Button = ({ button, sendMessage }) => {
   const { value, title } = button
   // Increase Button length to 80 characters per SAPMLCONV-3486
   const formattedTitle = truncate(title, 80)
-  const tooltip = title && formattedTitle.length < title.length ? title : null
+  const tooltip = title && title.length > 80 ? title : null
 
   if (button.type === 'web_url' && sanitizeUrl(value) === 'about:blank') {
     return null
