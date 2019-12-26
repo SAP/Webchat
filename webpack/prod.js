@@ -51,10 +51,21 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      compressor: { warnings: false },
+      mangle: true,
+      compressor: {
+        warnings: false,
+        passes: 3,
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true
+      },
       minimize: true,
+      output: {
+        comments: false,
+      },
+      exclude: [/\.min\.js$/gi]
     }),
-
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(env) },
     }),
