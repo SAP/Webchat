@@ -40,6 +40,8 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
           {formattedTitle}
         </a>
       )
+    } else {
+      content = 'about:blank'
     }
     break
   default:
@@ -58,7 +60,10 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
         <p className='RecastAppListElement--subtitle CaiAppListElement--subtitle'>{truncate(subtitle, subTitleMaxLength)}</p>
 
         {button
-          && (content ? content : (
+          && (content ? (content !== 'about:blank' && (
+            content
+          )
+          ) : (
             <div
               className='RecastAppListElement--button CaiAppListElement--button'
               onClick={() => sendMessage({ type: 'text', content: button.value })}
