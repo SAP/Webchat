@@ -17,7 +17,17 @@ const Button = ({ button, sendMessage }) => {
 
   let content = null
 
+  // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
+  const telHref = value && value.indexOf('tel:') === 0 ? value : `tel:${value}`
   switch (button.type) {
+  case 'phonenumber':
+    content = (
+      <a
+        className='RecastAppButton-Link CaiAppButton-Link' href={telHref}>
+        {formattedTitle}
+      </a>
+    )
+    break
   case 'web_url':
     content = (
       <a
