@@ -75,6 +75,7 @@ class QuickReplies extends Component {
                   this.buttons[i] = ref
                 }}
                 key={i}
+                title={b.title.length > 20 ? b.title : null}
                 className='RecastAppQuickReplies--button CaiAppQuickReplies--button'
                 onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
                 style={{
