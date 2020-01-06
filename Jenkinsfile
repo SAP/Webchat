@@ -60,6 +60,8 @@ pipeline {
                             executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:8.12.0-alpine-build-7') {
                                 withEnv(["NPM_CONFIG_PREFIX=${env.WORKSPACE}/.npm-global"]) {
                                     sh "npm i -g npm-audit-html"
+                                    //Should be removed when the 'uglifyjs-webpack-plugin' is updated with safer version of 'serialize-javascript' dependency
+                                    sh "npx npm-force-resolutions"
                                     sh "npm audit --json >> npm-audit.json"
                                 }
                             }
