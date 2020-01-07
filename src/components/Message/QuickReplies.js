@@ -16,6 +16,10 @@ class QuickReplies extends Component {
     showArrow: true,
   }
 
+  static getDerivedStateFromProps (props, state) {
+    return { displayQuickReplies: props.isLastMessage }
+  }
+
   componentDidMount () {
     const widthQuickReplies = sum(
       values(
@@ -31,11 +35,7 @@ class QuickReplies extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    this.setState({ displayQuickReplies: nextProps.isLastMessage })
-  }
-
-  buttons = {}
+   buttons = {}
 
   doSendMessage = message => {
     this.props.sendMessage(message)
@@ -70,20 +70,21 @@ class QuickReplies extends Component {
             className='RecastAppSlider RecastAppQuickReplies--slider CaiAppSlider CaiAppQuickReplies--slider'
           >
             {buttons.map((b, i) => (
-              <div
-                ref={ref => {
-                  this.buttons[i] = ref
-                }}
-                key={i}
-                title={b.title.length > 20 ? b.title : null}
-                className='RecastAppQuickReplies--button CaiAppQuickReplies--button'
-                onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
-                style={{
-                  border: `1px solid ${style.accentColor}`,
-                  color: style.accentColor,
-                }}
-              >
-                {truncate(b.title, 20)}
+              <div key={i}>
+                <div
+                  ref={ref => {
+                    this.buttons[i] = ref
+                  }}
+                  title={b.title.length > 20 ? b.title : null}
+                  className='RecastAppQuickReplies--button CaiAppQuickReplies--button'
+                  onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
+                  style={{
+                    border: `1px solid ${style.accentColor}`,
+                    color: style.accentColor,
+                  }}
+                >
+                  {truncate(b.title, 20)}
+                </div>
               </div>
             ))}
           </Slider>

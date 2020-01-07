@@ -30,7 +30,7 @@
     "react-dom": "^16.1.1",
     "react-markdown": "^4.0.6",
     "react-redux": "^5.0.6",
-    "react-slick": "^0.18.1",
+    "react-slick": "^0.25.0",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
