@@ -13,6 +13,40 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const buttonTitleMaxLength = 20
 
   const button = propOr(null, 0, buttons)
+  if (!button) {
+    return null
+  }
+
+  // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
+  const formattedTitle = truncate(button.title, buttonTitleMaxLength)
+  const telHref = button.value && button.value.indexOf('tel:') === 0 ? button.value : `tel:${button.value}`
+  let content = null
+
+  switch (button.type) {
+  case 'phonenumber':
+    content = (
+      <a
+        className='RecastAppListElement--button CaiAppListElement--button' href={telHref}>
+        {formattedTitle}
+      </a>
+    )
+    break
+  case 'web_url':
+    if (sanitizeUrl(button.value) !== 'about:blank') {
+      content = (
+        <a
+          className='RecastAppListElement--button CaiAppListElement--button' href={button.value} target='_blank'
+          rel='noopener noreferrer'>
+          {formattedTitle}
+        </a>
+      )
+    } else {
+      content = 'about:blank'
+    }
+    break
+  default:
+    break
+  }
 
   return (
     <div className='RecastAppListElement CaiAppListElement'>
@@ -26,17 +60,9 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
         <p className='RecastAppListElement--subtitle CaiAppListElement--subtitle'>{truncate(subtitle, subTitleMaxLength)}</p>
 
         {button
-          && (button.type === 'web_url' ? (
-            sanitizeUrl(button.value) !== 'about:blank' && (
-              <a
-                href={button.value}
-                className='RecastAppListElement--button CaiAppListElement--button'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                {truncate(button.title, buttonTitleMaxLength)}
-              </a>
-            )
+          && (content ? (content !== 'about:blank' && (
+            content
+          )
           ) : (
             <div
               className='RecastAppListElement--button CaiAppListElement--button'
