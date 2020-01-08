@@ -168,9 +168,12 @@ class Chat extends Component {
       addUserMessage,
       addBotMessage,
       defaultMessageDelay,
+      readOnlyMode,
     } = this.props
     const payload = { message: { attachment }, chatId }
-
+    if (readOnlyMode) {
+      return
+    }
     const backendMessage = {
       ...payload.message,
       isSending: true,
