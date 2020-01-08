@@ -23,7 +23,7 @@ const script = document.currentScript || document.getElementById('cai-webchat')
 const channelId = script.getAttribute('channelId')
 const token = script.getAttribute('token')
 
-const readOnly = true
+const readOnly = false
 if (root && channelId && token) {
   getChannelPreferences(channelId, token).then(preferences => {
     ReactDOM.render(
