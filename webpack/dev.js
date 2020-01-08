@@ -8,7 +8,7 @@ module.exports = {
 
   entry: ['./src/script.js'],
 
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-eval-source-map',
 
   resolve: {
     modules: ['../src', '../node_modules'].map(p => path.resolve(__dirname, p)),
