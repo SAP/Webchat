@@ -364,6 +364,7 @@ class Chat extends Component {
               />,
               <div
                 key='slogan'
+                style={{ maxWidth:'23.0rem' }}
                 className={cx('RecastAppChat--slogan CaiAppChat--slogan', {
                   'RecastAppChat--slogan--hidden CaiAppChat--slogan--hidden': !showSlogan,
                 })}
