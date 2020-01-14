@@ -1,4 +1,6 @@
 
+const window = window || {}
+
 export const truncate = (string, length) => {
   if (string.length <= length) {
     return string

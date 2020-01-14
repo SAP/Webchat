@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+// const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = process.env.NODE_ENV || 'production'
@@ -18,6 +19,7 @@ module.exports = {
     publicPath: '/lib/',
     library: ['webchat'],
     libraryTarget: 'umd',
+    globalObject: 'this',
   },
 
   module: {
@@ -32,33 +34,31 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: { minimize: true } },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: () => [require('autoprefixer')],
-              },
+        loader: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: false,
             },
-            'sass-loader',
-          ],
-        }),
+          },
+        ],
+        exclude: /node_modules/,
       },
     ],
   },
 
   plugins: [
-    new ExtractTextPlugin({ filename: '[name].scss', disable: false, allChunks: true }),
+    // new ExtractTextPlugin({ filename: '[name].scss', disable: false, allChunks: true }),
 
     new webpack.NamedModulesPlugin(),
-
     new webpack.optimize.OccurrenceOrderPlugin(),
     new UglifyJsPlugin({
       sourceMap: true,
     }),
+    new MiniCssExtractPlugin({ filename: '[name].scss' }),
 
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(env) },
