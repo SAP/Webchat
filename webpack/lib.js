@@ -18,7 +18,6 @@ module.exports = {
     libraryTarget: 'umd',
     globalObject: 'typeof self !== \'undefined\' ? self : this',
   },
-  target: 'web',
   module: {
     rules: [
       {
