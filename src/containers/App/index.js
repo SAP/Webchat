@@ -165,7 +165,6 @@ class App extends Component {
           show={expanded}
           closeWebchat={this.toggleChat}
           preferences={preferences}
-          conversationId={this.props.conversationId}
           containerMessagesStyle={containerMessagesStyle}
           containerStyle={containerStyle}
           logoStyle={logoStyle}
