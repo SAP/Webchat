@@ -18,6 +18,7 @@ module.exports = {
     publicPath: '/lib/',
     library: ['webchat'],
     libraryTarget: 'umd',
+    globalObject: 'typeof self !== \'undefined\' ? self : this',
   },
   target: 'web',
   // 'typeof self !== "undefined" ? self : this',
@@ -51,7 +52,7 @@ module.exports = {
     new UglifyJsPlugin({
       sourceMap: true,
     }),
-    new MiniCssExtractPlugin({ filename: '[name].css' }),
+    new MiniCssExtractPlugin({ filename: '[name].scss' }),
 
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(env) },
