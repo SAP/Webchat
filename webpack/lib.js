@@ -7,11 +7,10 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const env = process.env.NODE_ENV || 'production'
 
 module.exports = {
-  entry: './src/index.js',
+  entry: ['./src/index.js'],
   resolve: {
     modules: ['../src', '../node_modules'].map(p => path.resolve(__dirname, p)),
   },
-  devtool: 'cheap-eval-source-map',
   output: {
     path: path.join(__dirname, '../lib'),
     filename: 'index.js',
