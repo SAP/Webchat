@@ -7,21 +7,20 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const env = process.env.NODE_ENV || 'production'
 
 module.exports = {
-  entry: ['./src/index.js'],
-
+  entry: './src/index.js',
   resolve: {
     modules: ['../src', '../node_modules'].map(p => path.resolve(__dirname, p)),
   },
-
+  devtool: 'cheap-eval-source-map',
   output: {
     path: path.join(__dirname, '../lib'),
     filename: 'index.js',
     publicPath: '/lib/',
     library: ['webchat'],
     libraryTarget: 'umd',
-    globalObject: 'this',
   },
-
+  target: 'web',
+  // 'typeof self !== "undefined" ? self : this',
   module: {
     rules: [
       {
@@ -35,15 +34,9 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: [
-          'style-loader',
           MiniCssExtractPlugin.loader,
           'css-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: false,
-            },
-          },
+          'sass-loader',
         ],
         exclude: /node_modules/,
       },
@@ -58,7 +51,7 @@ module.exports = {
     new UglifyJsPlugin({
       sourceMap: true,
     }),
-    new MiniCssExtractPlugin({ filename: '[name].scss' }),
+    new MiniCssExtractPlugin({ filename: '[name].css' }),
 
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(env) },

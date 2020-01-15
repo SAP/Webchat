@@ -8,5 +8,6 @@ bundler.run((err, stats) => {
 
   if (err) {
     console.error(err)
+    return
   }
 })

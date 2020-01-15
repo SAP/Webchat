@@ -42,7 +42,7 @@ class App extends Component {
         expanded = false
         break
       case 'memory':
-        if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
+        if (typeof window.localStorage !== 'undefined') {
           expanded = localStorage.getItem('isChatOpen') === 'true'
         } else {
           console.log(NO_LOCALSTORAGE_MESSAGE)
@@ -92,7 +92,7 @@ class App extends Component {
     const { onToggle } = this.props
 
     if (prevState.expanded !== this.state.expanded) {
-      if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
+      if (typeof window.localStorage !== 'undefined') {
         localStorage.setItem('isChatOpen', this.state.expanded)
         if (onToggle) {
           onToggle(this.state.expanded)
@@ -164,6 +164,7 @@ class App extends Component {
           show={expanded}
           closeWebchat={this.toggleChat}
           preferences={preferences}
+          conversationId={this.props.conversationId}
           containerMessagesStyle={containerMessagesStyle}
           containerStyle={containerStyle}
           logoStyle={logoStyle}
