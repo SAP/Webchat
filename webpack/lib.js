@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-// const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
@@ -20,7 +19,6 @@ module.exports = {
     globalObject: 'typeof self !== \'undefined\' ? self : this',
   },
   target: 'web',
-  // 'typeof self !== "undefined" ? self : this',
   module: {
     rules: [
       {
@@ -44,8 +42,6 @@ module.exports = {
   },
 
   plugins: [
-    // new ExtractTextPlugin({ filename: '[name].scss', disable: false, allChunks: true }),
-
     new webpack.NamedModulesPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new UglifyJsPlugin({
