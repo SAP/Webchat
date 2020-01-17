@@ -30,8 +30,8 @@ class App extends Component {
     isReady: null,
   }
   static getDerivedStateFromProps (props, state) {
-    const { isReady, preferences } = props
-    const { expanded } = state
+    const { isReady, preferences, expanded } = props
+    // const { expanded } = state
     if (isReady !== state.isReady) {
       let expanded = null
 
@@ -53,10 +53,6 @@ class App extends Component {
         break
       }
       return { expanded, isReady }
-    }
-
-    if (expanded !== undefined && expanded !== state.expanded) {
-      return { expanded }
     }
     return null
   }
