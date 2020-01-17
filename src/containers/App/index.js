@@ -31,7 +31,6 @@ class App extends Component {
   }
   static getDerivedStateFromProps (props, state) {
     const { isReady, preferences, expanded } = props
-    // const { expanded } = state
     if (isReady !== state.isReady) {
       let expanded = null
 
