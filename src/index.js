@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { store } from 'store'
+import { createStore } from 'redux'
+import reducers from './reducers'
 
 import Webchat from './containers/App'
 
@@ -10,9 +12,15 @@ import Webchat from './containers/App'
 // }
 
 export default class CaiWebchat extends Component {
+
+  constructor (props) {
+    super(props)
+    this.store = createStore(reducers)
+  }
+
   render () {
     return (
-      <Provider store={store}>
+      <Provider store={this.store}>
         <Webchat {...this.props} />
       </Provider>
     )

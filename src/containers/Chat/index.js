@@ -200,9 +200,9 @@ class Chat extends Component {
               }
               const data = res.data
               const messages
-                = data.messages.length === 0
-                  ? [{ type: 'text', content: 'No reply', error: true }]
-                  : data.messages
+              = data.messages.length === 0
+                ? [{ type: 'text', content: 'No reply', error: true }]
+                : data.messages
               if (!this.shouldHideBotReply(data)) {
                 let delay = 0
                 messages.forEach((message, index) => {
@@ -217,7 +217,7 @@ class Chat extends Component {
                   )
 
                   delay
-                    += message.delay || message.delay === 0
+                  += message.delay || message.delay === 0
                       ? message.delay * 1000
                       : defaultMessageDelay === null || defaultMessageDelay === undefined
                         ? 0
