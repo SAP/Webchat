@@ -51,6 +51,10 @@ class Chat extends Component {
   static getDerivedStateFromProps (props, state) {
     const { messages, show } = props
 
+    if (props.getLastMessage && messages && messages !== state.messages && messages.length > 0) {
+      props.getLastMessage(messages[messages.length - 1])
+    }
+
     if (messages !== state.messages || show !== state.show) {
       return { messages, show }
     }
@@ -68,11 +72,7 @@ class Chat extends Component {
 
   componentDidUpdate () {
     const { messages, show } = this.state
-
     const { getLastMessage } = this.props
-    if (getLastMessage && messages && messages.length > 0) {
-      getLastMessage(messages[messages.length - 1])
-    }
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
