@@ -125,6 +125,8 @@ class App extends Component {
       logoStyle,
       showInfo,
       sendMessagePromise,
+      loadConversationHistoryPromise,
+      conversationHistoryId,
       onClickShowInfo,
       primaryHeader,
       secondaryView,
@@ -166,6 +168,7 @@ class App extends Component {
           showInfo={showInfo}
           onClickShowInfo={onClickShowInfo}
           sendMessagePromise={sendMessagePromise}
+          loadConversationHistoryPromise={loadConversationHistoryPromise}
           primaryHeader={primaryHeader}
           secondaryView={secondaryView}
           secondaryHeader={secondaryHeader}
@@ -173,6 +176,7 @@ class App extends Component {
           getLastMessage={getLastMessage}
           enableHistoryInput={enableHistoryInput}
           defaultMessageDelay={defaultMessageDelay}
+          conversationHistoryId={conversationHistoryId}
         />
       </div>
     )
@@ -188,6 +192,8 @@ App.propTypes = {
   containerStyle: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.func,
+  conversationHistoryId: PropTypes.string,
+  loadConversationHistoryPromise: PropTypes.func,
   noCredentials: PropTypes.bool,
   primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,

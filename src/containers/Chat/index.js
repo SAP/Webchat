@@ -62,11 +62,16 @@ class Chat extends Component {
   }
 
   componentDidMount () {
-    const { sendMessagePromise, show } = this.props
+    const { sendMessagePromise, readConversationPromise, show } = this.props
 
     this._isPolling = false
     if (!sendMessagePromise && show) {
       this.doMessagesPolling()
+    }
+
+    if (this.props.loadConversationHistoryPromise && this.props.conversationHistoryId && show) {
+      const result = this.props.loadConversationHistoryPromise(this.props.conversationHistoryId)
+      result.then(conversation => this.loadConversation(conversation))
     }
   }
 
@@ -258,6 +263,29 @@ class Chat extends Component {
     this.sendMessage(message.attachment)
   }
 
+  loadConversation = res => {
+    const { addUserMessage, addBotMessage } = this.props
+
+    this.setState({ messages: [] }, () => {
+      res.forEach(item => {
+        const data = item.data || {}
+        const messages = data.messages || []
+        messages.forEach(message => {
+          if (item.isBot) {
+            addBotMessage([message], { ...data })
+          } else {
+            const input = {
+              id: item.id,
+              participant: { isBot: item.isBot },
+              attachment: message,
+            }
+            addUserMessage(input)
+          }
+        })
+      })
+    })
+  }
+
   doMessagesPolling = async () => {
     const { conversationId } = this.props
     if (this._isPolling || !conversationId) {
@@ -394,10 +422,12 @@ Chat.propTypes = {
   channelId: PropTypes.string,
   lastMessageId: PropTypes.string,
   conversationId: PropTypes.string,
+  conversationHistoryId: PropTypes.string,
   messages: PropTypes.array,
   preferences: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.func,
+  loadConversationHistoryPromise: PropTypes.func,
   primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,
   secondaryHeader: PropTypes.any,
