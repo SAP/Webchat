@@ -28,9 +28,10 @@ class App extends Component {
   state = {
     expanded: this.props.expanded || false,
     isReady: null,
+    conversationHistoryId: this.props.conversationHistoryId || '',
   }
   static getDerivedStateFromProps (props, state) {
-    const { isReady, preferences, expanded } = props
+    const { isReady, preferences, expanded, conversationHistoryId } = props
     if (isReady !== state.isReady) {
       let expanded = null
 
@@ -51,7 +52,7 @@ class App extends Component {
       default:
         break
       }
-      return { expanded, isReady }
+      return { expanded, isReady, conversationHistoryId }
     }
     return null
   }
@@ -126,7 +127,6 @@ class App extends Component {
       showInfo,
       sendMessagePromise,
       loadConversationHistoryPromise,
-      conversationHistoryId,
       onClickShowInfo,
       primaryHeader,
       secondaryView,
@@ -135,8 +135,9 @@ class App extends Component {
       getLastMessage,
       enableHistoryInput,
       defaultMessageDelay,
+      readOnlyMode,
     } = this.props
-    const { expanded } = this.state
+    const { expanded, conversationHistoryId } = this.state
 
     return (
       <div className='RecastApp CaiApp'>
@@ -177,6 +178,8 @@ class App extends Component {
           enableHistoryInput={enableHistoryInput}
           defaultMessageDelay={defaultMessageDelay}
           conversationHistoryId={conversationHistoryId}
+          readOnlyMode={readOnlyMode}
+
         />
       </div>
     )
@@ -206,6 +209,7 @@ App.propTypes = {
   onRef: PropTypes.func,
   clearMessagesOnclose: PropTypes.bool,
   enableHistoryInput: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
   defaultMessageDelay: PropTypes.number,
 }
 

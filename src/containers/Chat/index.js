@@ -173,9 +173,12 @@ class Chat extends Component {
       addUserMessage,
       addBotMessage,
       defaultMessageDelay,
+      readOnlyMode,
     } = this.props
     const payload = { message: { attachment }, chatId }
-
+    if (readOnlyMode) {
+      return
+    }
     const backendMessage = {
       ...payload.message,
       isSending: true,
@@ -348,6 +351,7 @@ class Chat extends Component {
       logoStyle,
       show,
       enableHistoryInput,
+      readOnlyMode,
     } = this.props
     const { showSlogan, messages, inputHeight } = this.state
 
@@ -366,6 +370,7 @@ class Chat extends Component {
             preferences={preferences}
             key='header'
             logoStyle={logoStyle}
+            readOnlyMode={readOnlyMode}
           />
         )}
         <div
@@ -400,7 +405,7 @@ class Chat extends Component {
               </div>,
             ]}
         </div>
-        <Input
+        { !readOnlyMode && <Input
           menu={preferences.menu && preferences.menu.menu}
           onSubmit={this.sendMessage}
           preferences={preferences}
@@ -409,6 +414,7 @@ class Chat extends Component {
           inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}
           characterLimit={propOr(0, 'characterLimit', preferences)}
         />
+        }
       </div>
     )
   }
@@ -437,6 +443,7 @@ Chat.propTypes = {
   containerStyle: PropTypes.object,
   show: PropTypes.bool,
   enableHistoryInput: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
   defaultMessageDelay: PropTypes.number,
 }
 
