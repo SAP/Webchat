@@ -28,10 +28,9 @@ class App extends Component {
   state = {
     expanded: this.props.expanded || false,
     isReady: null,
-    conversationHistoryId: this.props.conversationHistoryId || '',
   }
   static getDerivedStateFromProps (props, state) {
-    const { isReady, preferences, expanded, conversationHistoryId } = props
+    const { isReady, preferences, expanded } = props
     if (isReady !== state.isReady) {
       let expanded = null
 
@@ -52,7 +51,7 @@ class App extends Component {
       default:
         break
       }
-      return { expanded, isReady, conversationHistoryId }
+      return { expanded, isReady }
     }
     return null
   }
@@ -85,8 +84,8 @@ class App extends Component {
     this.props.setCredentials(payload)
   }
 
-  componentDidUpdate (prevState) {
-    const { onToggle } = this.props
+  componentDidUpdate (prevProps, prevState) {
+    const { onToggle, conversationHistoryId } = this.props
 
     if (prevState.expanded !== this.state.expanded) {
       if (typeof window.localStorage !== 'undefined') {
@@ -97,6 +96,9 @@ class App extends Component {
       } else {
         console.log(NO_LOCALSTORAGE_MESSAGE)
       }
+    }
+    if (prevProps.conversationHistoryId !== conversationHistoryId && this.props.loadConversationHistoryPromise) {
+      this.props.loadConversationHistoryPromise(conversationHistoryId)
     }
   }
 
@@ -128,6 +130,7 @@ class App extends Component {
       sendMessagePromise,
       loadConversationHistoryPromise,
       onClickShowInfo,
+      conversationHistoryId,
       primaryHeader,
       secondaryView,
       secondaryHeader,
@@ -137,7 +140,7 @@ class App extends Component {
       defaultMessageDelay,
       readOnlyMode,
     } = this.props
-    const { expanded, conversationHistoryId } = this.state
+    const { expanded } = this.state
 
     return (
       <div className='RecastApp CaiApp'>

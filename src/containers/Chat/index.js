@@ -75,12 +75,16 @@ class Chat extends Component {
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate (prevProps) {
     const { messages, show } = this.state
-    const { getLastMessage } = this.props
+    const { getLastMessage, conversationHistoryId } = this.props
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
+    }
+    if (show && prevProps.conversationHistoryId !== conversationHistoryId && this.props.loadConversationHistoryPromise) {
+      console.log(`Loading conversationId ${conversationHistoryId}`)
+      this.props.loadConversationHistoryPromise(conversationHistoryId)
     }
   }
 
