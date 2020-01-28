@@ -53,10 +53,6 @@ class App extends Component {
       }
       return { expanded, isReady }
     }
-
-    if (expanded !== undefined && expanded !== state.expanded) {
-      return { expanded }
-    }
     return null
   }
 
