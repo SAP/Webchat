@@ -62,14 +62,14 @@ class Chat extends Component {
   }
 
   componentDidMount () {
-    const { sendMessagePromise, readConversationPromise, show } = this.props
+    const { sendMessagePromise, loadConversationHistoryPromise, conversationHistoryId, show } = this.props
 
     this._isPolling = false
     if (!sendMessagePromise && show) {
       this.doMessagesPolling()
     }
 
-    if (this.props.loadConversationHistoryPromise && this.props.conversationHistoryId && show) {
+    if (loadConversationHistoryPromise && conversationHistoryId && show) {
       const result = this.props.loadConversationHistoryPromise(this.props.conversationHistoryId)
       result.then(conversation => this.loadConversation(conversation))
     }
