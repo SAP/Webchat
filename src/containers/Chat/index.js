@@ -83,7 +83,6 @@ class Chat extends Component {
       this.doMessagesPolling()
     }
     if (show && prevProps.conversationHistoryId !== conversationHistoryId && this.props.loadConversationHistoryPromise) {
-      console.log(`Loading conversationId ${conversationHistoryId}`)
       this.props.loadConversationHistoryPromise(conversationHistoryId)
     }
   }
