@@ -48,6 +48,21 @@ Once you're satisfied with the settings, click on the **SAVE** button. A script 
 </div>
 
 
+### Dynamically adding the script tag
+
+In case you have a dynamically loading web application (e.g. Angular based), just adding the `<script>` tag typically won't work. HTML5 does not allow `script` tags to be dynamically added using the `innerHTML` attribute. Details can be found in the [HTML5 spec](https://www.w3.org/TR/2008/WD-html5-20080610/dom.html#innerhtml0).
+
+The solution is to add the `script` tag dynamically by creating a new script element and append it to the target element.
+
+```shell
+var newScript = document.createElement("script");
+newScript.setAttribute("channelId","<MY_CHANNEL_ID>");
+newScript.setAttribute("token","<MY_TOKEN>");
+newScript.setAttribute("id","cai-webchat");
+newScript.src = "https://cdn.cai.tools.sap/webchat/webchat.js";
+document.body.appendChild(newScript);
+```
+
 ### Self-hosted webchat
 
 If you want to customize your webchat even more, you can opt for a self-hosted installatiton. Just fork this project to get started!
