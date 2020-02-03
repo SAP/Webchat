@@ -70,20 +70,20 @@ class Chat extends Component {
     }
 
     if (loadConversationHistoryPromise && conversationHistoryId && show) {
-      const result = this.props.loadConversationHistoryPromise(this.props.conversationHistoryId)
-      result.then(conversation => this.loadConversation(conversation))
+      this.props.loadConversationHistoryPromise(this.props.conversationHistoryId).then(conversation =>
+        this.loadConversation(conversation))
     }
   }
 
   componentDidUpdate (prevProps) {
     const { messages, show } = this.state
-    const { getLastMessage, conversationHistoryId } = this.props
+    const { getLastMessage, conversationHistoryId, loadConversationHistoryPromise } = this.props
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
     }
-    if (show && prevProps.conversationHistoryId !== conversationHistoryId && this.props.loadConversationHistoryPromise) {
-      this.props.loadConversationHistoryPromise(conversationHistoryId)
+    if (show && prevProps.conversationHistoryId !== conversationHistoryId && loadConversationHistoryPromise) {
+      loadConversationHistoryPromise(conversationHistoryId)
     }
   }
 
