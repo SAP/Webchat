@@ -97,9 +97,6 @@ class App extends Component {
         console.log(NO_LOCALSTORAGE_MESSAGE)
       }
     }
-    if (prevProps.conversationHistoryId !== conversationHistoryId && this.props.loadConversationHistoryPromise) {
-      this.props.loadConversationHistoryPromise(conversationHistoryId)
-    }
   }
 
   componentDidCatch (error, info) {
