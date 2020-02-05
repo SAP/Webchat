@@ -13,7 +13,7 @@ export const storeCredentialsToLocalStorage = (chatId, conversationId, timeToLiv
   const payload = { chatId, conversationId }
   const maxAge = 3600 * timeToLive
 
-  if (typeof window.localStorage !== 'undefined') {
+  if (window.localStorage) {
     // if maxAge is 0 then it never expires.
     // Currently timeToLive is 0.002777777 (~1 sec) if set to never.
     const expire = maxAge > 0 ? new Date().getTime() + (maxAge * 1000) : 0
@@ -23,7 +23,7 @@ export const storeCredentialsToLocalStorage = (chatId, conversationId, timeToLiv
 }
 
 export const getCredentialsFromLocalStorage = () => {
-  if (typeof window.localStorage !== 'undefined') {
+  if (window.localStorage) {
     const localStorageData = localStorage.getItem(conversationKey)
 
     if (localStorageData) {
