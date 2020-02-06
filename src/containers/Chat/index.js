@@ -9,6 +9,7 @@ import {
   postMessage,
   pollMessages,
   removeMessage,
+  removeAllMessages,
   addBotMessage,
   addUserMessage,
 } from 'actions/messages'
@@ -37,6 +38,7 @@ const WRONG_MEMORY_FORMAT
   postMessage,
   pollMessages,
   removeMessage,
+  removeAllMessages,
   addUserMessage,
   addBotMessage,
   },
@@ -70,20 +72,20 @@ class Chat extends Component {
     }
 
     if (loadConversationHistoryPromise && conversationHistoryId && show) {
-      this.props.loadConversationHistoryPromise(this.props.conversationHistoryId).then(conversation =>
-        this.loadConversation(conversation))
+      loadConversationHistoryPromise(conversationHistoryId).then(this.loadConversation)
     }
   }
 
   componentDidUpdate (prevProps) {
     const { messages, show } = this.state
-    const { getLastMessage, conversationHistoryId, loadConversationHistoryPromise } = this.props
+    const { getLastMessage, removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
     }
     if (show && prevProps.conversationHistoryId !== conversationHistoryId && loadConversationHistoryPromise) {
-      loadConversationHistoryPromise(conversationHistoryId)
+      removeAllMessages()
+      loadConversationHistoryPromise(conversationHistoryId).then(this.loadConversation)
     }
   }
 
