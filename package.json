@@ -11,6 +11,7 @@
     "build:js": "babel src -d lib",
     "start": "npm run clean:dist && node bin/build-dev",
     "lib": "npm run clean:lib && node bin/build-lib",
+    "lib:dev": "NODE_ENV=development npm run lib",
     "prettier": "prettier --write \"src/**/*.?(js|?(s)css|json)\" && eslint --fix src",
     "lint": "if [ -n \"$HUDSON_URL\" ]; then echo '!! linter crashes and is therefore not executed on xmake !!'; else eslint src; fi",
     "test": "echo \"Error: no test specified\" && exit 1"

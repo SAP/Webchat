@@ -84,8 +84,8 @@ class App extends Component {
     this.props.setCredentials(payload)
   }
 
-  componentDidUpdate (prevState) {
-    const { onToggle } = this.props
+  componentDidUpdate (prevProps, prevState) {
+    const { onToggle, conversationHistoryId } = this.props
 
     if (prevState.expanded !== this.state.expanded) {
       if (typeof window.localStorage !== 'undefined') {
@@ -125,7 +125,9 @@ class App extends Component {
       logoStyle,
       showInfo,
       sendMessagePromise,
+      loadConversationHistoryPromise,
       onClickShowInfo,
+      conversationHistoryId,
       primaryHeader,
       secondaryView,
       secondaryHeader,
@@ -133,6 +135,7 @@ class App extends Component {
       getLastMessage,
       enableHistoryInput,
       defaultMessageDelay,
+      readOnlyMode,
     } = this.props
     const { expanded } = this.state
 
@@ -166,6 +169,7 @@ class App extends Component {
           showInfo={showInfo}
           onClickShowInfo={onClickShowInfo}
           sendMessagePromise={sendMessagePromise}
+          loadConversationHistoryPromise={loadConversationHistoryPromise}
           primaryHeader={primaryHeader}
           secondaryView={secondaryView}
           secondaryHeader={secondaryHeader}
@@ -173,6 +177,9 @@ class App extends Component {
           getLastMessage={getLastMessage}
           enableHistoryInput={enableHistoryInput}
           defaultMessageDelay={defaultMessageDelay}
+          conversationHistoryId={conversationHistoryId}
+          readOnlyMode={readOnlyMode}
+
         />
       </div>
     )
@@ -188,6 +195,8 @@ App.propTypes = {
   containerStyle: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.func,
+  conversationHistoryId: PropTypes.string,
+  loadConversationHistoryPromise: PropTypes.func,
   noCredentials: PropTypes.bool,
   primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,
@@ -200,6 +209,7 @@ App.propTypes = {
   onRef: PropTypes.func,
   clearMessagesOnclose: PropTypes.bool,
   enableHistoryInput: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
   defaultMessageDelay: PropTypes.number,
 }
 

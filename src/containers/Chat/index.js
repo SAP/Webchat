@@ -9,6 +9,7 @@ import {
   postMessage,
   pollMessages,
   removeMessage,
+  removeAllMessages,
   addBotMessage,
   addUserMessage,
 } from 'actions/messages'
@@ -37,6 +38,7 @@ const WRONG_MEMORY_FORMAT
   postMessage,
   pollMessages,
   removeMessage,
+  removeAllMessages,
   addUserMessage,
   addBotMessage,
   },
@@ -62,20 +64,28 @@ class Chat extends Component {
   }
 
   componentDidMount () {
-    const { sendMessagePromise, show } = this.props
+    const { sendMessagePromise, loadConversationHistoryPromise, conversationHistoryId, show } = this.props
 
     this._isPolling = false
     if (!sendMessagePromise && show) {
       this.doMessagesPolling()
     }
+
+    if (loadConversationHistoryPromise && conversationHistoryId && show) {
+      loadConversationHistoryPromise(conversationHistoryId).then(this.loadConversation)
+    }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate (prevProps) {
     const { messages, show } = this.state
-    const { getLastMessage } = this.props
+    const { getLastMessage, removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
+    }
+    if (show && prevProps.conversationHistoryId !== conversationHistoryId && loadConversationHistoryPromise) {
+      removeAllMessages()
+      loadConversationHistoryPromise(conversationHistoryId).then(this.loadConversation)
     }
   }
 
@@ -168,9 +178,12 @@ class Chat extends Component {
       addUserMessage,
       addBotMessage,
       defaultMessageDelay,
+      readOnlyMode,
     } = this.props
     const payload = { message: { attachment }, chatId }
-
+    if (readOnlyMode) {
+      return
+    }
     const backendMessage = {
       ...payload.message,
       isSending: true,
@@ -200,9 +213,9 @@ class Chat extends Component {
               }
               const data = res.data
               const messages
-                = data.messages.length === 0
-                  ? [{ type: 'text', content: 'No reply', error: true }]
-                  : data.messages
+              = data.messages.length === 0
+                ? [{ type: 'text', content: 'No reply', error: true }]
+                : data.messages
               if (!this.shouldHideBotReply(data)) {
                 let delay = 0
                 messages.forEach((message, index) => {
@@ -217,7 +230,7 @@ class Chat extends Component {
                   )
 
                   delay
-                    += message.delay || message.delay === 0
+                  += message.delay || message.delay === 0
                       ? message.delay * 1000
                       : defaultMessageDelay === null || defaultMessageDelay === undefined
                         ? 0
@@ -256,6 +269,29 @@ class Chat extends Component {
   retrySendMessage = message => {
     this.props.removeMessage(message.id)
     this.sendMessage(message.attachment)
+  }
+
+  loadConversation = res => {
+    const { addUserMessage, addBotMessage } = this.props
+
+    this.setState({ messages: [] }, () => {
+      res.forEach(item => {
+        const data = item.data || {}
+        const messages = data.messages || []
+        messages.forEach(message => {
+          if (item.isBot) {
+            addBotMessage([message], { ...data })
+          } else {
+            const input = {
+              id: item.id,
+              participant: { isBot: item.isBot },
+              attachment: message,
+            }
+            addUserMessage(input)
+          }
+        })
+      })
+    })
   }
 
   doMessagesPolling = async () => {
@@ -320,6 +356,7 @@ class Chat extends Component {
       logoStyle,
       show,
       enableHistoryInput,
+      readOnlyMode,
     } = this.props
     const { showSlogan, messages, inputHeight } = this.state
 
@@ -338,6 +375,7 @@ class Chat extends Component {
             preferences={preferences}
             key='header'
             logoStyle={logoStyle}
+            readOnlyMode={readOnlyMode}
           />
         )}
         <div
@@ -373,7 +411,7 @@ class Chat extends Component {
               </div>,
             ]}
         </div>
-        <Input
+        { !readOnlyMode && <Input
           menu={preferences.menu && preferences.menu.menu}
           onSubmit={this.sendMessage}
           preferences={preferences}
@@ -382,6 +420,7 @@ class Chat extends Component {
           inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}
           characterLimit={propOr(0, 'characterLimit', preferences)}
         />
+        }
       </div>
     )
   }
@@ -395,10 +434,12 @@ Chat.propTypes = {
   channelId: PropTypes.string,
   lastMessageId: PropTypes.string,
   conversationId: PropTypes.string,
+  conversationHistoryId: PropTypes.string,
   messages: PropTypes.array,
   preferences: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.func,
+  loadConversationHistoryPromise: PropTypes.func,
   primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,
   secondaryHeader: PropTypes.any,
@@ -408,6 +449,7 @@ Chat.propTypes = {
   containerStyle: PropTypes.object,
   show: PropTypes.bool,
   enableHistoryInput: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
   defaultMessageDelay: PropTypes.number,
 }
 
