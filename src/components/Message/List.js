@@ -20,7 +20,12 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
   const formattedTitle = !button ? null : truncate(button.title, buttonTitleMaxLength)
-  const telHref = !button ? null : button.value && button.value.indexOf('tel:') === 0 ? button.value : `tel:${button.value}`
+  const telHref = () => {
+    if (!button) {
+      return null
+    }
+    return button.value && button.value.indexOf('tel:') === 0 ? button.value : `tel:${button.value}`
+  }
   let content = null
 
   switch (button && button.type) {
