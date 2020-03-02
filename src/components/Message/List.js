@@ -13,16 +13,22 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
   const buttonTitleMaxLength = 20
 
   const button = propOr(null, 0, buttons)
-  if (!button) {
-    return null
-  }
+  // https://support.wdf.sap.corp/sap/support/message/2080115903 fix
+  // if (!button) {
+  //   return null
+  // }
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
-  const formattedTitle = truncate(button.title, buttonTitleMaxLength)
-  const telHref = button.value && button.value.indexOf('tel:') === 0 ? button.value : `tel:${button.value}`
+  const formattedTitle = !button ? null : truncate(button.title, buttonTitleMaxLength)
+  const telHref = () => {
+    if (!button) {
+      return null
+    }
+    return button.value && button.value.indexOf('tel:') === 0 ? button.value : `tel:${button.value}`
+  }
   let content = null
 
-  switch (button.type) {
+  switch (button && button.type) {
   case 'phonenumber':
     content = (
       <a
