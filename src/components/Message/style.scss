@@ -89,6 +89,21 @@
     ul li, ol li {
       margin-left: 18px;
     }
+
+    strong, b{
+      font-family: '72-Bold','Roboto', Helvetica, sans-serif;
+    }
+
+    em,i {
+      font-family: '72-Italic','Roboto', Helvetica, sans-serif;
+    }
+
+    strong em,
+    b em,
+    strong i,
+    b i {
+      font-family: '72-BoldItalic','Roboto', Helvetica, sans-serif;
+    }
   }
 
   /*
