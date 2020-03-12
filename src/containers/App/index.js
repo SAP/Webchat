@@ -42,7 +42,7 @@ class App extends Component {
         expanded = false
         break
       case 'memory':
-        if (typeof window.localStorage !== 'undefined') {
+        if (window.localStorage) {
           expanded = localStorage.getItem('isChatOpen') === 'true'
         } else {
           console.log(NO_LOCALSTORAGE_MESSAGE)
@@ -88,7 +88,7 @@ class App extends Component {
     const { onToggle, conversationHistoryId } = this.props
 
     if (prevState.expanded !== this.state.expanded) {
-      if (typeof window.localStorage !== 'undefined') {
+      if (window.localStorage) {
         localStorage.setItem('isChatOpen', this.state.expanded)
         if (onToggle) {
           onToggle(this.state.expanded)
