@@ -48,6 +48,19 @@ class Chat extends Component {
     inputHeight: 50, // height of input (default: 50px)
   }
 
+  static getDerivedStateFromProps (props, state) {
+    const { messages, show } = props
+
+    if (props.getLastMessage && messages && messages !== state.messages && messages.length > 0) {
+      props.getLastMessage(messages[messages.length - 1])
+    }
+
+    if (messages !== state.messages || show !== state.show) {
+      return { messages, show }
+    }
+    return null
+  }
+
   componentDidMount () {
     const { sendMessagePromise, show } = this.props
 
@@ -57,19 +70,11 @@ class Chat extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { messages, show } = nextProps
+  componentDidUpdate () {
+    const { messages, show } = this.state
+    const { getLastMessage } = this.props
 
-    if (messages !== this.state.messages) {
-      this.setState({ messages }, () => {
-        const { getLastMessage } = this.props
-        if (getLastMessage) {
-          getLastMessage(messages[messages.length - 1])
-        }
-      })
-    }
-
-    if (show && show !== this.props.show && !this.props.sendMessagePromise && !this._isPolling) {
+    if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
     }
   }
@@ -254,7 +259,8 @@ class Chat extends Component {
   }
 
   doMessagesPolling = async () => {
-    if (this._isPolling) {
+    const { conversationId } = this.props
+    if (this._isPolling || !conversationId) {
       return
     }
     this._isPolling = true
@@ -263,7 +269,7 @@ class Chat extends Component {
     let index = 0
 
     do {
-      const { lastMessageId, conversationId, channelId, token } = this.props
+      const { lastMessageId, channelId, token } = this.props
       let shouldWaitXseconds = false
       let timeToSleep = 0
       try {

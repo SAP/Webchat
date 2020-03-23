@@ -46,18 +46,34 @@ const Text = ({ content, style, isMarkdown }) => {
     respond = ''
   }
 
-  const compiledResponse = sanitizeHtml(truncate(respond, 640), {
+  let maxLengthLimit = 640
+  // JIRA: https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4904
+  if (isMarkdown) {
+    // Remove markdown tags and replace [Link Name Text](http:url...) with 'Link Name Text' only.
+    const displayText = respond.replace(/__|\*|#|(?:\[([^\]]*)\]\([^)]*\))/gm, '$1')
+    // Increase the max length limit to include any markdown (links) strings, to avoid losing the href strings.
+    maxLengthLimit += Math.max(respond.length - displayText.length, 0)
+  }
+
+  const compiledResponse = sanitizeHtml(truncate(respond, maxLengthLimit), {
     allowedTags: ['b', 'i', 'em', 'strong', 'a'],
   })
     .replace(/&amp;/g, 'g')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
 
+  // Markdown links need to open in new window.
+  // BCP: https://support.wdf.sap.corp/sap/support/message/1980408289
+  const LinkRenderer = (props) => {
+    return <a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a>
+  }
+
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
       {isMarkdown ? (
         <ReactMarkdown
           source={compiledResponse}
+          renderers={{ link: LinkRenderer }}
           allowedTypes={allowedMarkdownTypes}
         />
       ) : (

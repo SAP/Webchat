@@ -6,6 +6,7 @@ export const getChannelPreferences = (channelId, token) => {
     baseURL: config.apiUrl,
     headers: {
       Authorization: token,
+      'X-Token': token,
       Accept: 'application/json',
     },
   })

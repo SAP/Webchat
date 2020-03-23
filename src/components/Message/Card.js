@@ -12,7 +12,8 @@ const Card = ({ content, sendMessage, onImageLoaded }) => {
   if (imageUrl && sanitizeUrl(imageUrl) === 'about:blank') {
     return null
   }
-
+  // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-6296
+  // Need to check if buttons is null before rendering the button html.
   return (
     <div className={'RecastAppCard CaiAppCard'}>
       {imageUrl && <img src={imageUrl} onLoad={onImageLoaded} className='RecastAppCard--img CaiAppCard--img' />}
@@ -22,7 +23,7 @@ const Card = ({ content, sendMessage, onImageLoaded }) => {
         {subtitle && <p className='Card--text-subtitle'>{truncate(subtitle, 80)}</p>}
       </div>
 
-      {buttons.length ? (
+      {buttons && buttons.length ? (
         <div className='RecastAppCard--button-container CaiAppCard--button-container'>
           {buttons.slice(0, 3).map((b, i) => (
             <Button key={i} button={b} sendMessage={sendMessage} />

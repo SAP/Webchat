@@ -3,14 +3,14 @@ import { createAction } from 'redux-actions'
 export const postMessage = createAction('API:POST_MESSAGE', (channelId, token, data) => ({
   url: `/webhook/${channelId}`,
   method: 'post',
-  headers: { Authorization: token },
+  headers: { Authorization: token, 'X-Token': token },
   data,
 }))
 
 export const getMessages = createAction('API:GET_MESSAGES', (channelId, token, conversationId) => ({
   url: `/webhook/${channelId}/conversations/${conversationId}/messages`,
   method: 'get',
-  headers: { Authorization: token },
+  headers: { Authorization: token, 'X-Token': token },
 }))
 
 export const pollMessages = createAction(
@@ -18,7 +18,7 @@ export const pollMessages = createAction(
   (channelId, token, conversationId, lastMessageId) => ({
     url: `/webhook/${channelId}/conversations/${conversationId}/poll`,
     method: 'get',
-    headers: { Authorization: token },
+    headers: { Authorization: token, 'X-Token': token },
     query: { last_message_id: lastMessageId }, // eslint-disable-line camelcase
   }),
 )

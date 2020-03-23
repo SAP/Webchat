@@ -12,25 +12,19 @@ class Live extends Component {
   state = {
     showTyping: false,
   }
-
+  static getDerivedStateFromProps (props, state) {
+    if (props.messages.length !== state.msgLength) {
+      // only show the busy indicate if the count increase.
+      // (on error the cancel will remove the message, so we do not want the busy indicator)
+      return { showTyping: props.messages.length > state.msgLength, msgLength: props.messages.length }
+    }
+    return null
+  }
   componentDidMount () {
     if (this.messagesList) {
       this.messagesList.scrollTop = this.messagesList.scrollHeight
     }
     window.addEventListener('resize', this.handleScroll)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.messages.length !== this.props.messages.length) {
-      this.setState({ showTyping: true }, () => {
-        // FIXME Scroll to the bottom when typing. setTimeout is a bit dirty and can be improved
-        setTimeout(() => {
-          if (this.messagesList) {
-            this.messagesList.scrollTop = this.messagesList.scrollHeight
-          }
-        }, 100)
-      })
-    }
   }
 
   componentDidUpdate (prevProps) {
