@@ -10,9 +10,11 @@ import './style.scss'
 const allowedMarkdownTypes = [
   'paragraph',
   'text',
+  'break',
   'emphasis',
   'strong',
   'link',
+  'image',
   'blockquote',
   'delete',
   'list',
