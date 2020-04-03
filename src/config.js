@@ -1,3 +1,10 @@
-export default {
-  apiUrl: 'https://api.cai.tools.sap/connect/v1',
-}
+const config = (() => {
+  const script = document.currentScript || document.getElementById('cai-webchat')
+  const apiRoot = script.getAttribute('apiRoot') || 'https://api.cai.tools.sap'
+
+  return {
+    apiUrl: `${apiRoot}${apiRoot.slice(-1) === '/' ? '' : '/'}connect/v1`,
+  }
+})()
+
+export default config
