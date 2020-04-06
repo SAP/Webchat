@@ -413,6 +413,7 @@ class Chat extends Component {
         </div>
         { !readOnlyMode && <Input
           menu={preferences.menu && preferences.menu.menu}
+          isOpen={show}
           onSubmit={this.sendMessage}
           preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}
