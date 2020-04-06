@@ -1,6 +1,6 @@
 {
   "name": "ml-cai-webchat",
-  "version": "1.4.22",
+  "version": "1.4.23",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
