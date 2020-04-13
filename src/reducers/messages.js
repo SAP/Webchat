@@ -55,7 +55,7 @@ export default handleActions(
       const getMessageTemplate = content => ({
         attachment: content,
         data: payload.data,
-        id: `local-${Math.random()}`,
+        id: content.message_id || `local-${Math.random()}`,
         participant: {
           isBot: true,
         },

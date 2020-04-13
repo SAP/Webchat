@@ -18,7 +18,16 @@ class Input extends Component {
     historyValues: [],
     indexHistory: 0,
     menuOpened: false,
+    isOpen: false,
+    hasFocus: false,
     menuIndexes: [],
+  }
+
+  static getDerivedStateFromProps (props, state) {
+    if (!props.isOpen) {
+      return { isOpen: props.isOpen, hasFocus: false }
+    }
+    return { isOpen: props.isOpen }
   }
 
   componentDidMount () {
@@ -33,10 +42,14 @@ class Input extends Component {
       nextState.value !== this.state.value
       || nextState.menuOpened !== this.state.menuOpened
       || nextState.menuIndexes.length !== this.state.menuIndexes.length
+      || nextState.isOpen !== this.state.isOpen
     )
   }
 
   componentDidUpdate () {
+    if (this.state.isOpen && !this.state.hasFocus) {
+      this.setFocusState()
+    }
     if (!this.state.value) {
       // Dirty fix textarea placeholder to reset style correctly
       setTimeout(() => {
@@ -47,6 +60,13 @@ class Input extends Component {
     }
 
     this.onInputHeight()
+  }
+
+  setFocusState () {
+    setTimeout(() => {
+      this._input.focus()
+      this.setState({ hasFocus: true })
+    }, 100)
   }
 
   onInputChange = e => {
@@ -233,6 +253,7 @@ class Input extends Component {
 }
 
 Input.propTypes = {
+  isOpen: PropTypes.bool,
   menu: PropTypes.object,
   onSubmit: PropTypes.func,
   onInputHeight: PropTypes.func,

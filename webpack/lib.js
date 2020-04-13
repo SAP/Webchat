@@ -10,6 +10,7 @@ module.exports = {
   resolve: {
     modules: ['../src', '../node_modules'].map(p => path.resolve(__dirname, p)),
   },
+  devtool: env === 'production' ? 'none' : 'eval-source-map',
   output: {
     path: path.join(__dirname, '../lib'),
     filename: 'index.js',

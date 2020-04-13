@@ -54,7 +54,9 @@ class Message extends Component {
         accentColor,
       },
     }
-
+    if (!showInfo && type === 'client_data') {
+      return null // ignore type client_data
+    }
     return (
       <div
         className={cx('RecastAppMessageContainer CaiAppMessageContainer', {
@@ -92,7 +94,11 @@ class Message extends Component {
               isLastMessage={isLastMessage}
             />
           )}
-
+          {isBot && showInfo && type === 'client_data' && (
+            <div className={cx('RecastAppMessage--retry CaiAppMessage--retry', { bot: isBot })}>
+              Custom JSON message type. Not visible in channels.
+            </div>
+          )}
           {isBot && showInfo && (
             <div
               className='RecastAppMessage--JsonButton CaiAppMessage--JsonButton'
