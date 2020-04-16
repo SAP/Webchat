@@ -7,7 +7,7 @@ import { truncate } from 'helpers'
 
 import './style.scss'
 
-const _getVaildTelHref = (button, readOnlyMode) => {
+const _getValidTelHref = (button, readOnlyMode) => {
   const { value } = button
   if (!readOnlyMode && value) {
     return value.indexOf('tel:') === 0 ? value : `tel:${value}`
@@ -48,7 +48,7 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
     content = (
       <a
         className={linkClassName}
-        href={_getVaildTelHref(button, readOnlyMode)}>
+        href={_getValidTelHref(button, readOnlyMode)}>
         {formattedTitle}
       </a>
     )

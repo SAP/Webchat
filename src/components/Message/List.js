@@ -8,7 +8,7 @@ import { truncate } from 'helpers'
 
 import Button from 'components/Button'
 
-const _getVaildTelHref = (button, readOnlyMode) => {
+const _getValidTelHref = (button, readOnlyMode) => {
   const value = propOr(null, 'value', button)
   if (!readOnlyMode && value) {
     return value.indexOf('tel:') === 0 ? value : `tel:${value}`
@@ -48,7 +48,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnly
     content = (
       <a
         className={buttonClassName}
-        href={_getVaildTelHref(button, readOnlyMode)}>
+        href={_getValidTelHref(button, readOnlyMode)}>
         {buttonTitle}
       </a>
     )
