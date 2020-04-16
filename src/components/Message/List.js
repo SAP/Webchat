@@ -45,7 +45,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnly
   const buttonTitleMaxLength = 20
 
   const button = propOr(null, 0, buttons)
-  const type = propOr('none', type, button)
+  const type = propOr('none', 'type', button)
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
   const buttonTitle = _getButtonTitle(button, buttonTitleMaxLength)
