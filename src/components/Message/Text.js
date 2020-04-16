@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import sanitizeHtml from 'sanitize-html-react'
 import ReactMarkdown from 'react-markdown'
+import cx from 'classnames'
 
 import { truncate } from 'helpers'
 
@@ -67,7 +68,13 @@ const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
   // Markdown links need to open in new window.
   // BCP: https://support.wdf.sap.corp/sap/support/message/1980408289
   const LinkRenderer = (props) => {
-    return <a href={readOnlyMode ? '#' : props.href} target={readOnlyMode ? '_self' : '_blank'} rel='noopener noreferrer'>{props.children}</a>
+    return (
+      <a
+        className={cx({ 'CaiAppButton--ReadOnly': readOnlyMode })}
+        href={readOnlyMode ? '#' : props.href}
+        target={readOnlyMode ? '_self' : '_blank'}
+        rel='noopener noreferrer'>{props.children}
+      </a>)
   }
 
   return (
