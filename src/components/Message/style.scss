@@ -217,6 +217,11 @@
       font-weight: bold;
       border-radius: 25px;
     }
+
+    &--ReadOnly {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   /*

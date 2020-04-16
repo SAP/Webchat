@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { sanitizeUrl } from '@braintree/sanitize-url'
+import cx from 'classnames'
 
 import { truncate } from 'helpers'
 
 import './style.scss'
 
-const Button = ({ button, sendMessage }) => {
+const Button = ({ button, sendMessage, readOnlyMode }) => {
   const { value, title } = button
   // Increase Button length to 80 characters per SAPMLCONV-3486
   const formattedTitle = truncate(title, 80)
@@ -24,7 +25,7 @@ const Button = ({ button, sendMessage }) => {
   case 'phonenumber':
     content = (
       <a
-        className='RecastAppButton-Link CaiAppButton-Link' href={telHref}>
+        className={cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })} href={readOnlyMode ? null : telHref}>
         {formattedTitle}
       </a>
     )
@@ -32,7 +33,7 @@ const Button = ({ button, sendMessage }) => {
   case 'web_url':
     content = (
       <a
-        className='RecastAppButton-Link CaiAppButton-Link' href={value} target='_blank'
+        className={cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })} href={readOnlyMode ? null : value} target='_blank'
         rel='noopener noreferrer'>
         {formattedTitle}
       </a>
@@ -42,7 +43,7 @@ const Button = ({ button, sendMessage }) => {
     content = (
       <div
         title={tooltip}
-        className='RecastAppButton CaiAppButton'
+        className={cx('RecastAppButton CaiAppButton', { 'CaiAppButton--ReadOnly': readOnlyMode })}
         onClick={() => sendMessage({ type: 'button', content: button }, title)}
       >
         {formattedTitle}
@@ -57,6 +58,7 @@ const Button = ({ button, sendMessage }) => {
 Button.propTypes = {
   button: PropTypes.object,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Button

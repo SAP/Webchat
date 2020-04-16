@@ -90,7 +90,7 @@ ListElement.propTypes = {
   sendMessage: PropTypes.func,
 }
 
-const List = ({ content, sendMessage }) => {
+const List = ({ content, sendMessage, readOnlyMode }) => {
   const button = content.buttons && content.buttons[0]
 
   return (
@@ -101,7 +101,10 @@ const List = ({ content, sendMessage }) => {
 
       {button && (
         <div className='RecastAppList--button CaiAppList--button'>
-          <Button button={button} sendMessage={sendMessage} />
+          <Button
+            button={button}
+            sendMessage={sendMessage}
+            readOnlyMode={readOnlyMode} />
         </div>
       )}
     </div>
@@ -111,6 +114,7 @@ const List = ({ content, sendMessage }) => {
 List.propTypes = {
   content: PropTypes.object,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default List

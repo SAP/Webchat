@@ -6,6 +6,11 @@
 
   font-weight: bold;
   color: cornflowerblue;
+
+  &--ReadOnly {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .RecastApp, .CaiApp {
