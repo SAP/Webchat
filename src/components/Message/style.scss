@@ -336,6 +336,11 @@
         color: cornflowerblue;
         text-decoration: none;
       }
+
+      &--ReadOnly {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
     }
 
     .RecastAppListElement + .RecastAppListElement, .CaiAppListElement + .CaiAppListElement {

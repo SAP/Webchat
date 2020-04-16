@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { sanitizeUrl } from '@braintree/sanitize-url'
 import propOr from 'ramda/es/propOr'
+import cx from 'classnames'
 
 import { truncate } from 'helpers'
 
 import Button from 'components/Button'
 
-const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
+const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnlyMode }) => {
   const titleMaxLength = 25
   const subTitleMaxLength = 50
   const buttonTitleMaxLength = 20
@@ -20,19 +21,15 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
   const formattedTitle = !button ? null : truncate(button.title, buttonTitleMaxLength)
-  const telHref = () => {
-    if (!button) {
-      return null
-    }
-    return button.value && button.value.indexOf('tel:') === 0 ? button.value : `tel:${button.value}`
-  }
   let content = null
-
+  let telHref = ''
   switch (button && button.type) {
   case 'phonenumber':
+    telHref = button.value && button.value.indexOf('tel:') === 0 ? button.value : `tel:${button.value}`
     content = (
       <a
-        className='RecastAppListElement--button CaiAppListElement--button' href={telHref}>
+        className={cx('RecastAppListElement--button CaiAppListElement--button', { 'CaiAppListElement--ReadOnly': readOnlyMode })}
+        href={readOnlyMode ? '#' : telHref}>
         {formattedTitle}
       </a>
     )
@@ -41,7 +38,9 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
     if (sanitizeUrl(button.value) !== 'about:blank') {
       content = (
         <a
-          className='RecastAppListElement--button CaiAppListElement--button' href={button.value} target='_blank'
+          className={cx('RecastAppListElement--button CaiAppListElement--button', { 'CaiAppListElement--ReadOnly': readOnlyMode })}
+          href={readOnlyMode ? '#' : button.value || '#'}
+          target={readOnlyMode ? '_self' : '_blank'}
           rel='noopener noreferrer'>
           {formattedTitle}
         </a>
@@ -71,7 +70,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
           )
           ) : (
             <div
-              className='RecastAppListElement--button CaiAppListElement--button'
+              className={cx('RecastAppListElement--button CaiAppListElement--button', { 'CaiAppListElement--ReadOnly': readOnlyMode })}
               onClick={() => sendMessage({ type: 'text', content: button.value })}
             >
               {truncate(button.title, buttonTitleMaxLength)}
@@ -88,6 +87,7 @@ ListElement.propTypes = {
   imageUrl: PropTypes.string,
   buttons: PropTypes.array,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 const List = ({ content, sendMessage, readOnlyMode }) => {
@@ -96,7 +96,10 @@ const List = ({ content, sendMessage, readOnlyMode }) => {
   return (
     <div className={'RecastAppList CaiAppList'}>
       {content.elements.map((element, i) => (
-        <ListElement key={i} {...element} sendMessage={sendMessage} />
+        <ListElement
+          key={i} {...element}
+          sendMessage={sendMessage}
+          readOnlyMode={readOnlyMode} />
       ))}
 
       {button && (

@@ -29,7 +29,7 @@ const allowedMarkdownTypes = [
   'tableCell',
 ]
 
-const Text = ({ content, style, isMarkdown }) => {
+const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
   let respond
 
   if (typeof isMarkdown !== 'boolean') {
@@ -67,7 +67,7 @@ const Text = ({ content, style, isMarkdown }) => {
   // Markdown links need to open in new window.
   // BCP: https://support.wdf.sap.corp/sap/support/message/1980408289
   const LinkRenderer = (props) => {
-    return <a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a>
+    return <a href={readOnlyMode ? '#' : props.href} target={readOnlyMode ? '_self' : '_blank'} rel='noopener noreferrer'>{props.children}</a>
   }
 
   return (
@@ -89,6 +89,7 @@ Text.propTypes = {
   style: PropTypes.object,
   content: PropTypes.string,
   isMarkdown: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Text

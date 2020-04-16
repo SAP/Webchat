@@ -25,7 +25,8 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
   case 'phonenumber':
     content = (
       <a
-        className={cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })} href={readOnlyMode ? null : telHref}>
+        className={cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })}
+        href={readOnlyMode ? '#' : telHref}>
         {formattedTitle}
       </a>
     )
@@ -33,7 +34,9 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
   case 'web_url':
     content = (
       <a
-        className={cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })} href={readOnlyMode ? null : value} target='_blank'
+        className={cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })}
+        href={readOnlyMode ? '#' : value}
+        target={readOnlyMode ? '_self' : '_blank'}
         rel='noopener noreferrer'>
         {formattedTitle}
       </a>
