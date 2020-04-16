@@ -7,8 +7,29 @@ import { truncate } from 'helpers'
 
 import './style.scss'
 
+const _getVaildTelHref = (button, readOnlyMode) => {
+  const { value } = button
+  if (!readOnlyMode && value) {
+    return value.indexOf('tel:') === 0 ? value : `tel:${value}`
+  }
+  return '#'
+}
+
+const _getUrlInfo = (button, readOnlyMode) => {
+  const { value } = button
+  const target = readOnlyMode ? '_self' : '_blank'
+  const href = readOnlyMode || !value ? '#' : value
+  return {
+    target,
+    href,
+  }
+}
+
 const Button = ({ button, sendMessage, readOnlyMode }) => {
-  const { value, title } = button
+  if (!button) {
+    return null
+  }
+  const { value, title, type } = button
   // Increase Button length to 80 characters per SAPMLCONV-3486
   const formattedTitle = truncate(title, 80)
   const tooltip = title && title.length > 80 ? title : null
@@ -20,13 +41,14 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
   let content = null
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
-  const telHref = value && value.indexOf('tel:') === 0 ? value : `tel:${value}`
-  switch (button.type) {
+  const linkClassName = cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })
+  const { href, target } = _getUrlInfo(button, readOnlyMode)
+  switch (type) {
   case 'phonenumber':
     content = (
       <a
-        className={cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })}
-        href={readOnlyMode ? '#' : telHref}>
+        className={linkClassName}
+        href={_getVaildTelHref(button, readOnlyMode)}>
         {formattedTitle}
       </a>
     )
@@ -34,9 +56,9 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
   case 'web_url':
     content = (
       <a
-        className={cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })}
-        href={readOnlyMode ? '#' : value}
-        target={readOnlyMode ? '_self' : '_blank'}
+        className={linkClassName}
+        href={href}
+        target={target}
         rel='noopener noreferrer'>
         {formattedTitle}
       </a>
