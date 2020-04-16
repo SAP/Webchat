@@ -9,34 +9,26 @@ import { truncate } from 'helpers'
 import Button from 'components/Button'
 
 const _getVaildTelHref = (button, readOnlyMode) => {
-  if (button) {
-    const { value } = button
-    if (!readOnlyMode && value) {
-      return value.indexOf('tel:') === 0 ? value : `tel:${value}`
-    }
+  const value = propOr(null, 'value', button)
+  if (!readOnlyMode && value) {
+    return value.indexOf('tel:') === 0 ? value : `tel:${value}`
   }
   return '#'
 }
 
 const _getUrlInfo = (button, readOnlyMode) => {
-  if (button) {
-    const { value } = button
-    const target = readOnlyMode ? '_self' : '_blank'
-    const href = readOnlyMode || !value ? '#' : value
-    return {
-      target,
-      href,
-    }
+  const value = propOr('#', 'value', button)
+  const target = readOnlyMode ? '_self' : '_blank'
+  const href = readOnlyMode ? '#' : value
+  return {
+    target,
+    href,
   }
-  return {}
 }
 
 const _getButtonTitle = (button, buttonTitleMaxLength) => {
-  if (button) {
-    const { title } = button
-    return title ? truncate(title, buttonTitleMaxLength) : null
-  }
-  return null
+  const title = propOr(null, 'title', button)
+  return title ? truncate(title, buttonTitleMaxLength) : null
 }
 
 const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnlyMode }) => {
@@ -50,14 +42,13 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnly
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
   const buttonTitle = _getButtonTitle(button, buttonTitleMaxLength)
   const buttonClassName = cx('RecastAppListElement--button CaiAppListElement--button', { 'CaiAppListElement--ReadOnly': readOnlyMode })
-  const telHref = _getVaildTelHref(button, readOnlyMode)
   let content = null
   switch (type) {
   case 'phonenumber':
     content = (
       <a
         className={buttonClassName}
-        href={telHref}>
+        href={_getVaildTelHref(button, readOnlyMode)}>
         {buttonTitle}
       </a>
     )
