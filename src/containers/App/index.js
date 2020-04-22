@@ -6,7 +6,7 @@ import Chat from 'containers/Chat'
 import Expander from 'components/Expander'
 import { setFirstMessage, removeAllMessages } from 'actions/messages'
 import { setCredentials, createConversation } from 'actions/conversation'
-import { storeCredentialsToLocalStorage, getCredentialsFromLocalStorage } from 'helpers'
+import { getCredentialsFromLocalStorage } from 'helpers'
 
 import './style.scss'
 
@@ -72,9 +72,10 @@ class App extends Component {
     if (credentials) {
       Object.assign(payload, credentials)
     } else {
-      this.props.createConversation(channelId, token).then(({ id, chatId }) => {
-        storeCredentialsToLocalStorage(chatId, id, preferences.conversationTimeToLive)
-      })
+      // Wait until a message is being send before creating the conversation.
+      // this.props.createConversation(channelId, token).then(({ id, chatId }) => {
+      //   storeCredentialsToLocalStorage(chatId, id, preferences.conversationTimeToLive)
+      // })
     }
 
     if (preferences.welcomeMessage) {

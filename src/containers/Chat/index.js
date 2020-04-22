@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import cx from 'classnames'
 import propOr from 'ramda/es/propOr'
 import concat from 'ramda/es/concat'
+import { storeCredentialsToLocalStorage } from 'helpers'
+import { createConversation } from 'actions/conversation'
 
 import {
   postMessage,
@@ -37,6 +39,7 @@ const WRONG_MEMORY_FORMAT
   {
   postMessage,
   pollMessages,
+  createConversation,
   removeMessage,
   removeAllMessages,
   addUserMessage,
@@ -168,7 +171,7 @@ class Chat extends Component {
     )
   }
 
-  sendMessage = (attachment, userMessage) => {
+  _sendMessage = (attachment, userMessage) => {
     const {
       token,
       channelId,
@@ -260,6 +263,33 @@ class Chat extends Component {
         }
       },
     )
+  }
+
+  sendMessage = (attachment, userMessage) => {
+    const {
+      token,
+      channelId,
+      preferences,
+      conversationId,
+      sendMessagePromise,
+      readOnlyMode,
+    } = this.props
+    if (readOnlyMode) {
+      return
+    }
+    if (!sendMessagePromise && !conversationId) {
+      // // First time sending a message and no conversationId, so create one.
+      // This will cause the component to be updated and polling will start automatically
+      this.props.createConversation(channelId, token).then(({ id, chatId }) => {
+        storeCredentialsToLocalStorage(chatId, id, preferences.conversationTimeToLive)
+        this._sendMessage(attachment, userMessage)
+      }).catch(err => {
+        console.error('Creating the Conversation has failed, unable to post message')
+        console.error(err)
+      })
+    } else {
+      this._sendMessage(attachment, userMessage)
+    }
   }
 
   cancelSendMessage = message => {
