@@ -61,6 +61,10 @@ class Chat extends Component {
     }
 
     if (messages !== state.messages || show !== state.show) {
+      const { isSending } = state.messages.length > 0 && state.messages.slice(-1)[0]
+      if (isSending && state.messages.length > messages.length) {
+        return { show }
+      }
       return { messages, show }
     }
     return null
