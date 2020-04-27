@@ -31,7 +31,9 @@ class Input extends Component {
   }
 
   componentDidMount () {
-    this._input.focus()
+    if (this.state.isOpen) {
+      this.setFocusState()
+    }
     this._input.value = ''
 
     this.onInputHeight()
@@ -47,7 +49,7 @@ class Input extends Component {
   }
 
   componentDidUpdate () {
-    if (this.state.isOpen && !this.state.hasFocus) {
+    if (this.state.isOpen) {
       this.setFocusState()
     }
     if (!this.state.value) {
@@ -63,10 +65,12 @@ class Input extends Component {
   }
 
   setFocusState () {
-    setTimeout(() => {
-      this._input.focus()
-      this.setState({ hasFocus: true })
-    }, 100)
+    if (!this.state.hasFocus && this._input) {
+      setTimeout(() => {
+        this._input.focus()
+        this.setState({ hasFocus: true })
+      }, 100)
+    }
   }
 
   onInputChange = e => {
