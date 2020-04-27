@@ -175,6 +175,42 @@ class Chat extends Component {
     )
   }
 
+  _onSendMessagePromiseCompleted = (res) => {
+    const {
+      addBotMessage,
+      defaultMessageDelay,
+    } = this.props
+    if (!res) {
+      throw new Error('Fail send message')
+    }
+    const data = res.data
+    const messages
+    = data.messages.length === 0
+      ? [{ type: 'text', content: 'No reply', error: true }]
+      : data.messages
+    if (!this.shouldHideBotReply(data)) {
+      let delay = 0
+      messages.forEach((message, index) => {
+        this.messagesDelays[index] = setTimeout(
+          () =>
+            addBotMessage([message], {
+              ...data,
+              hasDelay: true,
+              hasNextMessage: index !== messages.length - 1,
+            }),
+          delay,
+        )
+
+        delay
+        += message.delay || message.delay === 0
+            ? message.delay * 1000
+            : defaultMessageDelay === null || defaultMessageDelay === undefined
+              ? 0
+              : defaultMessageDelay * 1000
+      })
+    }
+  }
+
   _sendMessage = (attachment, userMessage) => {
     const {
       token,
@@ -184,7 +220,6 @@ class Chat extends Component {
       sendMessagePromise,
       addUserMessage,
       addBotMessage,
-      defaultMessageDelay,
       readOnlyMode,
     } = this.props
     const payload = { message: { attachment }, chatId }
@@ -215,35 +250,7 @@ class Chat extends Component {
 
           sendMessagePromise(backendMessage)
             .then(res => {
-              if (!res) {
-                throw new Error('Fail send message')
-              }
-              const data = res.data
-              const messages
-              = data.messages.length === 0
-                ? [{ type: 'text', content: 'No reply', error: true }]
-                : data.messages
-              if (!this.shouldHideBotReply(data)) {
-                let delay = 0
-                messages.forEach((message, index) => {
-                  this.messagesDelays[index] = setTimeout(
-                    () =>
-                      addBotMessage([message], {
-                        ...data,
-                        hasDelay: true,
-                        hasNextMessage: index !== messages.length - 1,
-                      }),
-                    delay,
-                  )
-
-                  delay
-                  += message.delay || message.delay === 0
-                      ? message.delay * 1000
-                      : defaultMessageDelay === null || defaultMessageDelay === undefined
-                        ? 0
-                        : defaultMessageDelay * 1000
-                })
-              }
+              this._onSendMessagePromiseCompleted(res)
             })
             .catch(() => {
               addBotMessage([{ type: 'text', content: 'No reply', error: true }])
@@ -436,7 +443,7 @@ class Chat extends Component {
               />,
               <div
                 key='slogan'
-                style={{ maxWidth:'23.0rem' }}
+                style={{ maxWidth: '23.0rem' }}
                 className={cx('RecastAppChat--slogan CaiAppChat--slogan', {
                   'RecastAppChat--slogan--hidden CaiAppChat--slogan--hidden': !showSlogan,
                 })}
