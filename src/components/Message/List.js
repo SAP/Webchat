@@ -2,48 +2,67 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { sanitizeUrl } from '@braintree/sanitize-url'
 import propOr from 'ramda/es/propOr'
+import cx from 'classnames'
 
 import { truncate } from 'helpers'
 
 import Button from 'components/Button'
 
-const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
+const _getValidTelHref = (button, readOnlyMode) => {
+  const value = propOr(null, 'value', button)
+  if (!readOnlyMode && value) {
+    return value.indexOf('tel:') === 0 ? value : `tel:${value}`
+  }
+  return '#'
+}
+
+const _getUrlInfo = (button, readOnlyMode) => {
+  const value = propOr('#', 'value', button)
+  const target = readOnlyMode ? '_self' : '_blank'
+  const href = readOnlyMode ? '#' : value
+  return {
+    target,
+    href,
+  }
+}
+
+const _getButtonTitle = (button, buttonTitleMaxLength) => {
+  const title = propOr(null, 'title', button)
+  return title ? truncate(title, buttonTitleMaxLength) : null
+}
+
+const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnlyMode }) => {
   const titleMaxLength = 25
   const subTitleMaxLength = 50
   const buttonTitleMaxLength = 20
 
   const button = propOr(null, 0, buttons)
-  // https://support.wdf.sap.corp/sap/support/message/2080115903 fix
-  // if (!button) {
-  //   return null
-  // }
+  const type = propOr('none', 'type', button)
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
-  const formattedTitle = !button ? null : truncate(button.title, buttonTitleMaxLength)
-  const telHref = () => {
-    if (!button) {
-      return null
-    }
-    return button.value && button.value.indexOf('tel:') === 0 ? button.value : `tel:${button.value}`
-  }
+  const buttonTitle = _getButtonTitle(button, buttonTitleMaxLength)
+  const buttonClassName = cx('RecastAppListElement--button CaiAppListElement--button', { 'CaiAppListElement--ReadOnly': readOnlyMode })
   let content = null
-
-  switch (button && button.type) {
+  switch (type) {
   case 'phonenumber':
     content = (
       <a
-        className='RecastAppListElement--button CaiAppListElement--button' href={telHref}>
-        {formattedTitle}
+        className={buttonClassName}
+        href={_getValidTelHref(button, readOnlyMode)}>
+        {buttonTitle}
       </a>
     )
     break
   case 'web_url':
     if (sanitizeUrl(button.value) !== 'about:blank') {
+      const { href, target } = _getUrlInfo(button, readOnlyMode)
       content = (
         <a
-          className='RecastAppListElement--button CaiAppListElement--button' href={button.value} target='_blank'
+          className={buttonClassName}
+          href={href}
+          target={target}
           rel='noopener noreferrer'>
-          {formattedTitle}
+          {buttonTitle}
         </a>
       )
     } else {
@@ -71,10 +90,10 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage }) => {
           )
           ) : (
             <div
-              className='RecastAppListElement--button CaiAppListElement--button'
+              className={buttonClassName}
               onClick={() => sendMessage({ type: 'text', content: button.value })}
             >
-              {truncate(button.title, buttonTitleMaxLength)}
+              {buttonTitle}
             </div>
           ))}
       </div>
@@ -88,20 +107,27 @@ ListElement.propTypes = {
   imageUrl: PropTypes.string,
   buttons: PropTypes.array,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
-const List = ({ content, sendMessage }) => {
+const List = ({ content, sendMessage, readOnlyMode }) => {
   const button = content.buttons && content.buttons[0]
 
   return (
     <div className={'RecastAppList CaiAppList'}>
       {content.elements.map((element, i) => (
-        <ListElement key={i} {...element} sendMessage={sendMessage} />
+        <ListElement
+          key={i} {...element}
+          sendMessage={sendMessage}
+          readOnlyMode={readOnlyMode} />
       ))}
 
       {button && (
         <div className='RecastAppList--button CaiAppList--button'>
-          <Button button={button} sendMessage={sendMessage} />
+          <Button
+            button={button}
+            sendMessage={sendMessage}
+            readOnlyMode={readOnlyMode} />
         </div>
       )}
     </div>
@@ -111,6 +137,7 @@ const List = ({ content, sendMessage }) => {
 List.propTypes = {
   content: PropTypes.object,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default List
