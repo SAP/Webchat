@@ -30,8 +30,12 @@ class App extends Component {
     isReady: null,
   }
   static getDerivedStateFromProps (props, state) {
-    const { isReady, preferences, expanded } = props
-    if (isReady !== state.isReady) {
+    const { isReady, preferences } = props
+
+    // Since the conversation is only created after the first submit
+    // need to check if the current state is expanded to avoid webchat being collasped
+    // when the conversation is created.
+    if (isReady !== state.isReady && !state.expanded) {
       let expanded = null
 
       switch (preferences.openingType) {
@@ -53,7 +57,7 @@ class App extends Component {
       }
       return { expanded, isReady }
     }
-    return null
+    return { isReady }
   }
 
   componentDidMount () {
