@@ -297,6 +297,11 @@
       font-weight: bold;
       border-radius: 25px;
     }
+
+    &--ReadOnly {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   /*
@@ -410,6 +415,11 @@
         font-weight: bold;
         color: cornflowerblue;
         text-decoration: none;
+      }
+
+      &--ReadOnly {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     }
 

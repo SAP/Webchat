@@ -27,6 +27,7 @@ class Message extends Component {
       onCancelSendMessage,
       showInfo,
       onClickShowInfo,
+      readOnlyMode,
     } = this.props
     const {
       botPicture,
@@ -46,6 +47,7 @@ class Message extends Component {
       // Make sure we display the title of a button/quickReply click, and not its value
       content: title || content,
       isMarkdown: markdown,
+      readOnlyMode,
       onImageLoaded,
       style: {
         color: isBot ? (error ? '#fff' : botMessageColor) : complementaryColor,
@@ -142,6 +144,7 @@ Message.propTypes = {
   showInfo: PropTypes.bool,
   onClickShowInfo: PropTypes.func,
   error: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Message

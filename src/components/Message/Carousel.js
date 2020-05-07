@@ -7,7 +7,7 @@ import { PrevArrow, NextArrow } from 'components/arrows'
 
 import './style.scss'
 
-const Carousel = ({ content, sendMessage }) => {
+const Carousel = ({ content, sendMessage, readOnlyMode }) => {
   return (
     <div className={'RecastAppCarousel CaiAppCarousel'}>
       <Slider
@@ -24,7 +24,7 @@ const Carousel = ({ content, sendMessage }) => {
       >
         {content.map((card, i) => (
           <div key={i}>
-            <Card content={card} sendMessage={sendMessage} />
+            <Card content={card} sendMessage={sendMessage} readOnlyMode={readOnlyMode} />
           </div>
         ))}
       </Slider>
@@ -35,6 +35,7 @@ const Carousel = ({ content, sendMessage }) => {
 Carousel.propTypes = {
   content: PropTypes.array,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Carousel

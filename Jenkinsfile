@@ -36,7 +36,7 @@ pipeline {
                             qualityBadge.setStatus('running')
                         }
                         measureDuration(script: this, measurementName: 'eslint_duration') {
-                            executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:8.12.0-alpine-build-7') {
+                            executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:10.15.1-alpine-build-1') {
                                 sh "npm install"
                                 sh "npm run lint"
                             }
@@ -57,7 +57,7 @@ pipeline {
                 stage('npm audit') {
                     steps {
                         measureDuration(script: this, measurementName: 'npmaudit_duration') {
-                            executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:8.12.0-alpine-build-7') {
+                            executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:10.15.1-alpine-build-1') {
                                 withEnv(["NPM_CONFIG_PREFIX=${env.WORKSPACE}/.npm-global"]) {
                                     sh "npm i -g npm-audit-html"
                                     sh "npm i -g npm@6.12.0"
