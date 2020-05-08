@@ -116,6 +116,7 @@
       padding: 0.5rem;
       overflow-x: auto;
       background-color: #ddd;
+      border: 1px solid gray
     }
   
     blockquote {
@@ -128,10 +129,27 @@
       border-left: .25em solid gray;
     }
   
-    ul, ol {
-      list-style: disc;
+    ol {
+      display: block;
+      list-style-type: decimal;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      padding-inline-start: 1em;
     }
-
+  
+    ul {
+      margin-block-start: 0;
+      margin-block-end: 0;
+      list-style-type: disc;
+      padding-inline-start: 1em;
+    }
+  
+    ul ul {
+      list-style-type: circle;
+    }
+  
     ul li, ol li {
       margin-left: 18px;
     }
@@ -155,6 +173,66 @@
     b i {
       font-family: '72-BoldItalic','Roboto', Helvetica, sans-serif;
     }
+
+    h1 {
+      display: block;
+      font-size: 2em;
+      margin-block-start: 0.67em;
+      margin-block-end: 0.67em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h2 {
+      display: block;
+      font-size: 1.5em;
+      margin-block-start: 0.83em;
+      margin-block-end: 0.83em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h3 {
+      display: block;
+      font-size: 1.17em;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h4 {
+      display: block;
+      margin-block-start: 1.33em;
+      margin-block-end: 1.33em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h5 {
+      display: block;
+      font-size: 0.83em;
+      margin-block-start: 1.67em;
+      margin-block-end: 1.67em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h6 {
+      display: block;
+      font-size: 0.67em;
+      margin-block-start: 2.33em;
+      margin-block-end: 2.33em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
     table {
       width: 100%;
       border-spacing: 0;
@@ -167,12 +245,14 @@
       border-left-style: solid;
       padding: 0.5rem 0.25rem;
     }
+
     td {
       border-bottom-style: solid;
       border-left-style: solid;
       border-width: 1px;
       padding: 0.5rem;
     }
+
     th:last-child, td:last-child {
       border-right-style: solid;     
     }
@@ -216,6 +296,11 @@
       cursor: pointer;
       font-weight: bold;
       border-radius: 25px;
+    }
+
+    &--ReadOnly {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 
@@ -330,6 +415,11 @@
         font-weight: bold;
         color: cornflowerblue;
         text-decoration: none;
+      }
+
+      &--ReadOnly {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     }
 

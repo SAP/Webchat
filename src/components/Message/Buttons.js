@@ -7,7 +7,7 @@ import { truncate } from 'helpers'
 
 import './style.scss'
 
-const Buttons = ({ content, sendMessage, style }) => {
+const Buttons = ({ content, sendMessage, style, readOnlyMode }) => {
   const { title, buttons } = content
   return (
     <div className='Buttons'>
@@ -17,7 +17,11 @@ const Buttons = ({ content, sendMessage, style }) => {
 
       <div className='Buttons--container'>
         {buttons.slice(0, 3).map((b, i) => (
-          <Button key={i} button={b} sendMessage={sendMessage} />
+          <Button
+            key={i}
+            button={b}
+            sendMessage={sendMessage}
+            readOnlyMode={readOnlyMode} />
         ))}
       </div>
     </div>
@@ -28,6 +32,7 @@ Buttons.propTypes = {
   style: PropTypes.object,
   content: PropTypes.object,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Buttons
