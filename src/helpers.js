@@ -1,10 +1,13 @@
 
 export const truncate = (string, length) => {
-  if (string.length <= length) {
-    return string
-  }
+  if (typeof string === 'string') {
+    if (string.length <= length) {
+      return string
+    }
 
-  return `${string.slice(0, length - 3)}...`
+    return `${string.slice(0, length - 3)}...`
+  }
+  return ''
 }
 
 const conversationKey = 'cai-conversation'
@@ -41,3 +44,11 @@ export const getCredentialsFromLocalStorage = () => {
   }
   return null
 }
+
+export const safeArrayOfItem = (items) => {
+  if (items && Array.isArray(items)) {
+    return items
+  }
+  return []
+}
+

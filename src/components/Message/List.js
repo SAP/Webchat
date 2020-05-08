@@ -4,7 +4,7 @@ import { sanitizeUrl } from '@braintree/sanitize-url'
 import propOr from 'ramda/es/propOr'
 import cx from 'classnames'
 
-import { truncate } from 'helpers'
+import { truncate, safeArrayOfItem } from 'helpers'
 
 import Button from 'components/Button'
 
@@ -115,7 +115,7 @@ const List = ({ content, sendMessage, readOnlyMode }) => {
 
   return (
     <div className={'RecastAppList CaiAppList'}>
-      {content.elements.map((element, i) => (
+      {safeArrayOfItem(content && content.elements).map((element, i) => (
         <ListElement
           key={i} {...element}
           sendMessage={sendMessage}

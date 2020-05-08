@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { sanitizeUrl } from '@braintree/sanitize-url'
 
-import { truncate } from 'helpers'
+import { truncate, safeArrayOfItem } from 'helpers'
 
 import Button from 'components/Button'
 
@@ -25,7 +25,7 @@ const Card = ({ content, sendMessage, onImageLoaded, readOnlyMode }) => {
 
       {buttons && buttons.length ? (
         <div className='RecastAppCard--button-container CaiAppCard--button-container'>
-          {buttons.slice(0, 3).map((b, i) => (
+          {safeArrayOfItem(buttons).slice(0, 3).map((b, i) => (
             <Button
               key={i}
               button={b}
