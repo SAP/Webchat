@@ -38,9 +38,18 @@ class QuickReplies extends Component {
 
    buttons = {}
 
+   _messageHasAlreadyBeenSent = false
   doSendMessage = message => {
-    this.props.sendMessage(message)
-    this.setState({ displayQuickReplies: false })
+    // BCP https://support.wdf.sap.corp/sap/support/message/2070183780
+    // Handle double click on slow systems
+    // Once the _messageHasAlreadyBeenSent is true,
+    // then one button click has already been send.
+    if (!this._messageHasAlreadyBeenSent) {
+      this._messageHasAlreadyBeenSent = true
+      this.setState({ displayQuickReplies: false }, () => {
+        this.props.sendMessage(message)
+      })
+    }
   }
 
   render () {
