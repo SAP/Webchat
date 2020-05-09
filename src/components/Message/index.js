@@ -39,6 +39,10 @@ class Message extends Component {
     } = preferences
     const { displayIcon } = message
     const { type, content, error, title, markdown } = message.attachment
+    if (!content) {
+      console.error('Missing content unable to proceed')
+      return null
+    }
     const isBot = message.participant.isBot
 
     const image = isBot ? botPicture : userPicture

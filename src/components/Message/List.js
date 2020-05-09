@@ -111,7 +111,8 @@ ListElement.propTypes = {
 }
 
 const List = ({ content, sendMessage, readOnlyMode }) => {
-  const button = content.buttons && content.buttons[0]
+  const { buttons } = content
+  const button = propOr(null, 0, buttons)
 
   return (
     <div className={'RecastAppList CaiAppList'}>
