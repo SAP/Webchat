@@ -241,6 +241,7 @@ export const loadConversationHistoryPromise = (conversationId) => {
       const results = [{ data: { messages: [] }, id: `local-${Math.random()}`, isBot: false }, { data: { messages: [] }, id: `local-${Math.random()}`, isBot: true }]
       results[0].data.messages.push(listFreeStyleUserMessage)
       results[1].data.messages.push()
+      // eslint-disable-next-line array-callback-return
       listItems.map((item) => {
         results[1].data.messages.push(item)
       })
