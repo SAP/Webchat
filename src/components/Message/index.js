@@ -14,6 +14,15 @@ import QuickReplies from './QuickReplies'
 import './style.scss'
 
 class Message extends Component {
+  state = {
+    exceptionThrownOccurred: false,
+  }
+
+  componentDidCatch (error, info) {
+    this.setState({ exceptionThrownOccurred: true })
+    console.error(error, info)
+  }
+
   render () {
     const {
       message,
@@ -39,6 +48,21 @@ class Message extends Component {
     } = preferences
     const { displayIcon } = message
     const { type, content, error, title, markdown } = message.attachment
+    const { exceptionThrownOccurred } = this.state
+    if (exceptionThrownOccurred) {
+      const style = {
+        color: '#fff',
+        backgroundColor: '#f44336',
+        padding: '1.0rem',
+        textAlign: 'center',
+      }
+
+      return (
+        <div style={style} className={'RecastAppText CaiAppText'}>
+          An Error has occured, unable to display this message
+        </div>
+      )
+    }
     if (!content) {
       console.error('Missing content unable to proceed')
       return null
