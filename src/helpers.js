@@ -1,6 +1,6 @@
 
 export const truncate = (string, length) => {
-  console.assert(typeof string === 'string', `Expected a 'string', but got a type:'${typeof string}' - '${string}'`)
+//  console.assert(typeof string === 'string', `Expected a 'string', but got a type:'${typeof string}' - '${string}'`)
   if (typeof string === 'string') {
     if (string.length <= length) {
       return string
@@ -47,7 +47,7 @@ export const getCredentialsFromLocalStorage = () => {
 }
 
 export const safeArrayOfItem = (items) => {
-  console.assert(items && Array.isArray(items), `Expected a array of items, but got a type:'${typeof items}' - '${items}'`)
+  console.assert(items && Array.isArray(items), `Expected a array of items, but got a type:'${typeof items}'`)
   if (items && Array.isArray(items)) {
     return items
   }
