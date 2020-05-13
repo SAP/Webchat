@@ -54,3 +54,25 @@ export const safeArrayOfItem = (items) => {
   return []
 }
 
+export const safeBooleanValue = (flag) => {
+  if (typeof flag === 'boolean') {
+    return flag
+  } else if (typeof flag === 'string') {
+    return flag.toLowerCase() === 'true'
+  }
+  return false
+}
+
+export const safeStringValue = (content) => {
+  if (typeof content === 'string') {
+    return content
+  } else if (typeof content === 'object') {
+    return JSON.stringify(content)
+  } else if (typeof content === 'number') {
+    return content.toString()
+  } else if (content === undefined) {
+    return 'undefined'
+  }
+  return ''
+}
+
