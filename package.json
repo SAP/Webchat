@@ -23,7 +23,6 @@
     "@braintree/sanitize-url": "^2.1.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.5",
-    "markdown-to-jsx": "^6.9.1",
     "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
     "ramda": "^0.25.0",
