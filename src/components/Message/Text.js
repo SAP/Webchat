@@ -4,7 +4,7 @@ import sanitizeHtml from 'sanitize-html-react'
 import ReactMarkdown from 'react-markdown'
 import cx from 'classnames'
 
-import { truncate } from 'helpers'
+import { truncate, safeStringValue } from 'helpers'
 
 import './style.scss'
 
@@ -31,22 +31,10 @@ const allowedMarkdownTypes = [
 ]
 
 const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
-  let respond
+  const respond = safeStringValue(content)
 
   if (typeof isMarkdown !== 'boolean') {
     isMarkdown = false
-  }
-
-  if (typeof content === 'string') {
-    respond = content
-  } else if (typeof content === 'object') {
-    respond = JSON.stringify(content)
-  } else if (typeof content === 'number') {
-    respond = content.toString()
-  } else if (content === undefined) {
-    respond = 'undefined'
-  } else {
-    respond = ''
   }
 
   let maxLengthLimit = 640

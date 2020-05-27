@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import contains from 'ramda/es/contains'
+import { safeBooleanValue } from 'helpers'
 
 import Text from './Text'
 import Card from './Card'
@@ -14,6 +15,15 @@ import QuickReplies from './QuickReplies'
 import './style.scss'
 
 class Message extends Component {
+  state = {
+    exceptionThrownOccurred: false,
+  }
+
+  componentDidCatch (error, info) {
+    this.setState({ exceptionThrownOccurred: true })
+    console.error(error, info)
+  }
+
   render () {
     const {
       message,
@@ -37,16 +47,35 @@ class Message extends Component {
       botMessageColor,
       botMessageBackgroundColor,
     } = preferences
-    const { displayIcon } = message
-    const { type, content, error, title, markdown } = message.attachment
-    const isBot = message.participant.isBot
+    const { displayIcon, attachment, participant } = message
+    const { type, content, error, title, markdown } = attachment
+    const { exceptionThrownOccurred } = this.state
+    if (exceptionThrownOccurred) {
+      const style = {
+        color: '#fff',
+        backgroundColor: '#f44336',
+        padding: '1.0rem',
+        textAlign: 'center',
+      }
+
+      return (
+        <div style={style} className={'RecastAppText CaiAppText'}>
+          An Error has occured, unable to display this message
+        </div>
+      )
+    }
+    if (!content) {
+      console.error('Missing content unable to proceed')
+      return null
+    }
+    const { isBot } = participant
 
     const image = isBot ? botPicture : userPicture
     const messageProps = {
       isBot,
       // Make sure we display the title of a button/quickReply click, and not its value
       content: title || content,
-      isMarkdown: markdown,
+      isMarkdown: safeBooleanValue(markdown),
       readOnlyMode,
       onImageLoaded,
       style: {

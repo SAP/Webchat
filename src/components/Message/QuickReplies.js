@@ -6,7 +6,7 @@ import map from 'ramda/es/map'
 import values from 'ramda/es/values'
 import cx from 'classnames'
 
-import { truncate } from 'helpers'
+import { truncate, safeArrayOfItem } from 'helpers'
 
 import Text from './Text'
 import { PrevArrow, NextArrow } from 'components/arrows'
@@ -79,7 +79,7 @@ class QuickReplies extends Component {
             nextArrow={<NextArrow />}
             className='RecastAppSlider RecastAppQuickReplies--slider CaiAppSlider CaiAppQuickReplies--slider'
           >
-            {buttons.map((b, i) => (
+            {safeArrayOfItem(buttons).map((b, i) => (
               <div key={i}>
                 <div
                   ref={ref => {
