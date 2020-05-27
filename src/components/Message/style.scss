@@ -8,6 +8,9 @@
   }
 }
 
+.slick-track {
+  min-width: 280px;
+}
 .RecastApp .RecastAppMessage, .CaiApp .CaiAppMessage {
   display: flex;
   flex-direction: row-reverse;
