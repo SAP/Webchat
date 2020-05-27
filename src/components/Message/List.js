@@ -91,7 +91,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnly
           ) : (
             <div
               className={buttonClassName}
-              onClick={() => sendMessage({ type: 'text', content: button.value })}
+              onClick={() => sendMessage({ type: 'button', content: button }, _getButtonTitle(button, 480))}
             >
               {buttonTitle}
             </div>
