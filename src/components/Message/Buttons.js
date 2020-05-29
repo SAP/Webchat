@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Button from 'components/Button'
 
-import { truncate } from 'helpers'
+import { truncate, safeArrayOfItem } from 'helpers'
 
 import './style.scss'
 
@@ -16,7 +16,7 @@ const Buttons = ({ content, sendMessage, style, readOnlyMode }) => {
       </p>
 
       <div className='Buttons--container'>
-        {buttons.slice(0, 3).map((b, i) => (
+        {safeArrayOfItem(buttons).slice(0, 3).map((b, i) => (
           <Button
             key={i}
             button={b}

@@ -1,10 +1,14 @@
 
 export const truncate = (string, length) => {
-  if (string.length <= length) {
-    return string
-  }
+//  console.assert(typeof string === 'string', `Expected a 'string', but got a type:'${typeof string}' - '${string}'`)
+  if (typeof string === 'string') {
+    if (string.length <= length) {
+      return string
+    }
 
-  return `${string.slice(0, length - 3)}...`
+    return `${string.slice(0, length - 3)}...`
+  }
+  return ''
 }
 
 export const getCredentialCookieName = (channelId) => {
@@ -43,3 +47,34 @@ export const getCredentialsFromLocalStorage = (channelId) => {
   }
   return null
 }
+
+export const safeArrayOfItem = (items) => {
+  console.assert(items && Array.isArray(items), `Expected a array of items, but got a type:'${typeof items}'`)
+  if (items && Array.isArray(items)) {
+    return items
+  }
+  return []
+}
+
+export const safeBooleanValue = (flag) => {
+  if (typeof flag === 'boolean') {
+    return flag
+  } else if (typeof flag === 'string') {
+    return flag.toLowerCase() === 'true'
+  }
+  return false
+}
+
+export const safeStringValue = (content) => {
+  if (typeof content === 'string') {
+    return content
+  } else if (typeof content === 'object') {
+    return JSON.stringify(content)
+  } else if (typeof content === 'number') {
+    return content.toString()
+  } else if (content === undefined) {
+    return 'undefined'
+  }
+  return ''
+}
+
