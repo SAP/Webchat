@@ -11,7 +11,7 @@ class IsTyping extends Component {
   }
 
   render () {
-    const { image } = this.props
+    const { image, onImageLoaded } = this.props
 
     if (image && sanitizeUrl(image) === 'about:blank') {
       return null
@@ -20,7 +20,7 @@ class IsTyping extends Component {
     return (
       <div className='RecastAppMessage CaiAppMessage bot'>
         {image && <img className='RecastAppMessage--logo CaiAppMessage--logo visible' src={image} />}
-        <img src='https://cdn.cai.tools.sap/webchat/istyping.gif' />
+        <img src='https://cdn.cai.tools.sap/webchat/istyping.gif' onLoad={onImageLoaded} />
       </div>
     )
   }
@@ -29,6 +29,7 @@ class IsTyping extends Component {
 IsTyping.propTypes = {
   image: PropTypes.string,
   callAfterTimeout: PropTypes.func,
+  onImageLoaded: PropTypes.func,
   timeout: PropTypes.number,
 }
 
