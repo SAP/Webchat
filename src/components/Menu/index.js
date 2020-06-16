@@ -26,8 +26,23 @@ class Menu extends Component {
     }
   }
 
+  handleMenuSelection = action => {
+    if (action) {
+      const { type, title, payload } = action
+      const data = {
+        type: 'button',
+        content: {
+          title,
+          value: payload,
+          type,
+        }
+      }
+      this.props.postbackClick(data)
+    }
+  }
+
   render () {
-    const { currentMenu, addMenuIndex, removeMenuIndex, postbackClick, closeMenu } = this.props
+    const { currentMenu, addMenuIndex, removeMenuIndex, closeMenu } = this.props
     const { title, call_to_actions } = currentMenu
 
     return (
@@ -48,7 +63,7 @@ class Menu extends Component {
                 key={index}
                 className='MenuElement'
                 onClick={() => {
-                  postbackClick(action.payload)
+                  this.handleMenuSelection(action)
                   closeMenu()
                 }}
               >
