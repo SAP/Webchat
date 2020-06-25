@@ -99,7 +99,11 @@ class Input extends Component {
       onInputHeight(this.inputContainer.clientHeight)
     }
   }
-
+  sendMenuSelection = (action) => {
+    if (action) {
+      this.props.onSubmit(action)
+    }
+  }
   sendMessage = () => {
     const content = this.state.value.trim()
     if (content) {
@@ -214,7 +218,7 @@ class Input extends Component {
             currentMenu={this.getCurrentMenu()}
             addMenuIndex={this.addMenuIndex}
             removeMenuIndex={this.removeMenuIndex}
-            postbackClick={value => this.setState({ value }, this.sendMessage)}
+            postbackClick={action => this.sendMenuSelection(action)}
           />
         )}
 

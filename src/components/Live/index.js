@@ -128,6 +128,7 @@ class Live extends Component {
 
           {shouldDisplayTyping && (
             <IsTyping
+              onImageLoaded={this.onImageLoaded}
               image={preferences.botPicture}
               callAfterTimeout={() => this.setState({ showTyping: false })}
               timeout={20000}
