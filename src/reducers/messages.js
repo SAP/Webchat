@@ -28,9 +28,11 @@ export default handleActions(
     },
 
     POST_MESSAGE_ERROR: (state, { payload }) => {
+      const { status, statusText } = payload.response
       const message = {
         ...payload.message,
         retry: true,
+        conversationExpired: status === 404 && statusText === 'Conversation has Expired',
         id: `local-${Math.random()}`,
         participant: {
           isBot: false,
@@ -43,7 +45,9 @@ export default handleActions(
     REMOVE_MESSAGE: (state, { payload: messageId }) => {
       const newState = Object.assign([], state)
       const indexMessage = state.findIndex(message => message.id === messageId)
-      newState.splice(indexMessage, 1)
+      if (indexMessage >= 0) {
+        newState.splice(indexMessage, 1)
+      }
       return newState
     },
 

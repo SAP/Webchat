@@ -28,7 +28,8 @@ export default store => next => action => {
       return res.data.results
     })
     .catch(err => {
-      dispatch({ type: `${prefix}_ERROR`, payload: data })
+      const { response } = err
+      dispatch({ type: `${prefix}_ERROR`, payload: { ...data, response } })
       throw new Error(err)
     })
 }

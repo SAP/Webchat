@@ -14,6 +14,10 @@ export default handleActions(
       return { ...state, ...payload }
     },
 
+    REMOVE_CONVERSATION_ID: (state) => {
+      return { ...state, conversationId: '' }
+    },
+
     CREATE_CONVERSATION_SUCCESS: (state, { payload: conversation }) => {
       const { id, chatId } = conversation
       return { ...state, chatId, conversationId: id }
