@@ -28,18 +28,22 @@ export default handleActions(
     },
 
     POST_MESSAGE_ERROR: (state, { payload }) => {
-      const { status, statusText } = payload.response
-      const message = {
-        ...payload.message,
+      const { response, message } = payload
+      const { status, statusText } = response
+
+      const msg = {
+        ...message,
         retry: true,
-        conversationExpired: status === 404 && statusText === 'Conversation has Expired',
-        id: `local-${Math.random()}`,
+        conversationExpired: status === 404
+          && typeof statusText === 'string'
+          && statusText.includes('check if the conversation is deleted'),
+       id: `local-${Math.random()}`,
         participant: {
           isBot: false,
         },
       }
 
-      return [...state, ...[message]]
+      return [...state, ...[msg]]
     },
 
     REMOVE_MESSAGE: (state, { payload: messageId }) => {
