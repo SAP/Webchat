@@ -85,8 +85,8 @@ class Chat extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    const { messages, show } = this.state
-    const { getLastMessage, removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
+    const { show } = this.state
+    const { removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
@@ -379,7 +379,7 @@ class Chat extends Component {
         shouldPoll = false
         errorCount++
       }
- 
+
       /**
        * Note: If the server returns a waitTime != 0, it means that conversation has no new messages since 2 minutes.
        * So, let's poll to check new messages every "waitTime" seconds (waitTime = 120 seconds per default)
