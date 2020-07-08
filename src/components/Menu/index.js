@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { safeArrayOfItem } from 'helpers'
 
 import ArrowLeft from 'components/svgs/arrowLeft'
 import ArrowRight from 'components/svgs/arrowRight'
@@ -44,7 +45,6 @@ class Menu extends Component {
   render () {
     const { currentMenu, addMenuIndex, removeMenuIndex, closeMenu } = this.props
     const { title, call_to_actions } = currentMenu
-
     return (
       <div className='Menu' ref={node => (this.node = node)}>
         {!!title && (
@@ -54,7 +54,7 @@ class Menu extends Component {
           </div>
         )}
 
-        {call_to_actions.map((action, index) => {
+        {safeArrayOfItem(call_to_actions).map((action, index) => {
           let component = false
           switch (action.type) {
           case 'postback':
