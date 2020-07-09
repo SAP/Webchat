@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import append from 'ramda/es/append'
 
 import SendButton from 'components/SendButton'
+import { safeArrayOfItem } from 'helpers'
 
 import Menu from 'components/Menu'
 import MenuSVG from 'components/svgs/menu'
@@ -198,6 +199,9 @@ class Input extends Component {
   render () {
     const { enableHistoryInput, characterLimit, menu, preferences, inputPlaceholder } = this.props
     const { value, menuOpened } = this.state
+    const { call_to_actions } = menu || []
+    const menuActions = safeArrayOfItem(call_to_actions)
+    const showMenuIcon = menuActions.length > 0
 
     const showLimitCharacter = characterLimit
       ? characterLimit - value.length <= NUMBER_BEFORE_LIMIT
@@ -210,7 +214,7 @@ class Input extends Component {
           this.inputContainer = ref
         }}
       >
-        {menu && <MenuSVG onClick={this.triggerMenu} />}
+        {showMenuIcon && <MenuSVG onClick={this.triggerMenu} />}
 
         {menuOpened && (
           <Menu
