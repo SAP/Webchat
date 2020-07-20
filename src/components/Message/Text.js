@@ -2,17 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import sanitizeHtml from 'sanitize-html-react'
 import ReactMarkdown from 'react-markdown'
+import cx from 'classnames'
 
-import { truncate } from 'helpers'
+import { truncate, safeStringValue } from 'helpers'
 
 import './style.scss'
 
 const allowedMarkdownTypes = [
   'paragraph',
   'text',
+  'break',
   'emphasis',
   'strong',
   'link',
+  'image',
   'blockquote',
   'delete',
   'list',
@@ -27,23 +30,11 @@ const allowedMarkdownTypes = [
   'tableCell',
 ]
 
-const Text = ({ content, style, isMarkdown }) => {
-  let respond
+const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
+  const respond = safeStringValue(content)
 
   if (typeof isMarkdown !== 'boolean') {
     isMarkdown = false
-  }
-
-  if (typeof content === 'string') {
-    respond = content
-  } else if (typeof content === 'object') {
-    respond = JSON.stringify(content)
-  } else if (typeof content === 'number') {
-    respond = content.toString()
-  } else if (content === undefined) {
-    respond = 'undefined'
-  } else {
-    respond = ''
   }
 
   let maxLengthLimit = 640
@@ -65,7 +56,13 @@ const Text = ({ content, style, isMarkdown }) => {
   // Markdown links need to open in new window.
   // BCP: https://support.wdf.sap.corp/sap/support/message/1980408289
   const LinkRenderer = (props) => {
-    return <a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a>
+    return (
+      <a
+        className={cx({ 'CaiAppButton--ReadOnly': readOnlyMode })}
+        href={readOnlyMode ? '#' : props.href}
+        target={readOnlyMode ? '_self' : '_blank'}
+        rel='noopener noreferrer'>{props.children}
+      </a>)
   }
 
   return (
@@ -87,6 +84,7 @@ Text.propTypes = {
   style: PropTypes.object,
   content: PropTypes.string,
   isMarkdown: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Text

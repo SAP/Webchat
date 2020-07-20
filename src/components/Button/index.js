@@ -1,13 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { sanitizeUrl } from '@braintree/sanitize-url'
+import cx from 'classnames'
 
 import { truncate } from 'helpers'
 
 import './style.scss'
 
-const Button = ({ button, sendMessage }) => {
-  const { value, title } = button
+const _getValidTelHref = (button, readOnlyMode) => {
+  const { value } = button
+  if (!readOnlyMode && value) {
+    return value.indexOf('tel:') === 0 ? value : `tel:${value}`
+  }
+  return '#'
+}
+
+const _getUrlInfo = (button, readOnlyMode) => {
+  const { value } = button
+  const target = readOnlyMode ? '_self' : '_blank'
+  const href = readOnlyMode || !value ? '#' : value
+  return {
+    target,
+    href,
+  }
+}
+
+const Button = ({ button, sendMessage, readOnlyMode }) => {
+  if (!button) {
+    return null
+  }
+  const { value, title, type } = button
   // Increase Button length to 80 characters per SAPMLCONV-3486
   const formattedTitle = truncate(title, 80)
   const tooltip = title && title.length > 80 ? title : null
@@ -19,12 +41,14 @@ const Button = ({ button, sendMessage }) => {
   let content = null
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
-  const telHref = value && value.indexOf('tel:') === 0 ? value : `tel:${value}`
-  switch (button.type) {
+  const linkClassName = cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })
+  const { href, target } = _getUrlInfo(button, readOnlyMode)
+  switch (type) {
   case 'phonenumber':
     content = (
       <a
-        className='RecastAppButton-Link CaiAppButton-Link' href={telHref}>
+        className={linkClassName}
+        href={_getValidTelHref(button, readOnlyMode)}>
         {formattedTitle}
       </a>
     )
@@ -32,7 +56,9 @@ const Button = ({ button, sendMessage }) => {
   case 'web_url':
     content = (
       <a
-        className='RecastAppButton-Link CaiAppButton-Link' href={value} target='_blank'
+        className={linkClassName}
+        href={href}
+        target={target}
         rel='noopener noreferrer'>
         {formattedTitle}
       </a>
@@ -42,7 +68,7 @@ const Button = ({ button, sendMessage }) => {
     content = (
       <div
         title={tooltip}
-        className='RecastAppButton CaiAppButton'
+        className={cx('RecastAppButton CaiAppButton', { 'CaiAppButton--ReadOnly': readOnlyMode })}
         onClick={() => sendMessage({ type: 'button', content: button }, title)}
       >
         {formattedTitle}
@@ -57,6 +83,7 @@ const Button = ({ button, sendMessage }) => {
 Button.propTypes = {
   button: PropTypes.object,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Button

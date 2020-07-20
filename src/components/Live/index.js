@@ -80,6 +80,7 @@ class Live extends Component {
       containerMessagesStyle,
       showInfo,
       onClickShowInfo,
+      readOnlyMode,
     } = this.props
     const { showTyping } = this.state
     const lastMessage = messages.slice(-1)[0]
@@ -121,11 +122,13 @@ class Live extends Component {
               showInfo={showInfo}
               onClickShowInfo={onClickShowInfo}
               error={message.error}
+              readOnlyMode={readOnlyMode}
             />
           ))}
 
           {shouldDisplayTyping && (
             <IsTyping
+              onImageLoaded={this.onImageLoaded}
               image={preferences.botPicture}
               callAfterTimeout={() => this.setState({ showTyping: false })}
               timeout={20000}
@@ -144,6 +147,7 @@ Live.propTypes = {
   onRetrySendMessage: PropTypes.func,
   onCancelSendMessage: PropTypes.func,
   showInfo: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Live

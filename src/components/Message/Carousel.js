@@ -4,10 +4,11 @@ import Slider from 'react-slick'
 
 import Card from './Card'
 import { PrevArrow, NextArrow } from 'components/arrows'
+import { safeArrayOfItem } from 'helpers'
 
 import './style.scss'
 
-const Carousel = ({ content, sendMessage }) => {
+const Carousel = ({ content, sendMessage, readOnlyMode }) => {
   return (
     <div className={'RecastAppCarousel CaiAppCarousel'}>
       <Slider
@@ -22,9 +23,9 @@ const Carousel = ({ content, sendMessage }) => {
         slidesToScroll={1}
         className='Slider'
       >
-        {content.map((card, i) => (
+        {safeArrayOfItem(content).map((card, i) => (
           <div key={i}>
-            <Card content={card} sendMessage={sendMessage} />
+            <Card content={card} sendMessage={sendMessage} readOnlyMode={readOnlyMode} />
           </div>
         ))}
       </Slider>
@@ -35,6 +36,7 @@ const Carousel = ({ content, sendMessage }) => {
 Carousel.propTypes = {
   content: PropTypes.array,
   sendMessage: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Carousel

@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { sanitizeUrl } from '@braintree/sanitize-url'
 
-import { truncate } from 'helpers'
+import { truncate, safeArrayOfItem } from 'helpers'
 
 import Button from 'components/Button'
 
-const Card = ({ content, sendMessage, onImageLoaded }) => {
+const Card = ({ content, sendMessage, onImageLoaded, readOnlyMode }) => {
   const { title, subtitle, imageUrl, buttons } = content
 
   if (imageUrl && sanitizeUrl(imageUrl) === 'about:blank') {
@@ -25,8 +25,12 @@ const Card = ({ content, sendMessage, onImageLoaded }) => {
 
       {buttons && buttons.length ? (
         <div className='RecastAppCard--button-container CaiAppCard--button-container'>
-          {buttons.slice(0, 3).map((b, i) => (
-            <Button key={i} button={b} sendMessage={sendMessage} />
+          {safeArrayOfItem(buttons).slice(0, 3).map((b, i) => (
+            <Button
+              key={i}
+              button={b}
+              sendMessage={sendMessage}
+              readOnlyMode={readOnlyMode} />
           ))}
         </div>
       ) : null}
@@ -38,6 +42,7 @@ Card.propTypes = {
   content: PropTypes.object,
   sendMessage: PropTypes.func,
   onImageLoaded: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
 }
 
 export default Card

@@ -4,11 +4,14 @@ import { connect } from 'react-redux'
 import cx from 'classnames'
 import propOr from 'ramda/es/propOr'
 import concat from 'ramda/es/concat'
+import { storeCredentialsToLocalStorage } from 'helpers'
+import { createConversation } from 'actions/conversation'
 
 import {
   postMessage,
   pollMessages,
   removeMessage,
+  removeAllMessages,
   addBotMessage,
   addUserMessage,
 } from 'actions/messages'
@@ -36,7 +39,9 @@ const WRONG_MEMORY_FORMAT
   {
   postMessage,
   pollMessages,
+  createConversation,
   removeMessage,
+  removeAllMessages,
   addUserMessage,
   addBotMessage,
   },
@@ -56,26 +61,38 @@ class Chat extends Component {
     }
 
     if (messages !== state.messages || show !== state.show) {
+      const { isSending } = state.messages.length > 0 && state.messages.slice(-1)[0]
+      if (isSending && state.messages.length > messages.length) {
+        return { show }
+      }
       return { messages, show }
     }
     return null
   }
 
   componentDidMount () {
-    const { sendMessagePromise, show } = this.props
+    const { sendMessagePromise, loadConversationHistoryPromise, conversationHistoryId, show } = this.props
 
     this._isPolling = false
     if (!sendMessagePromise && show) {
       this.doMessagesPolling()
     }
+
+    if (loadConversationHistoryPromise && conversationHistoryId && show) {
+      loadConversationHistoryPromise(conversationHistoryId).then(this.loadConversation)
+    }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate (prevProps) {
     const { messages, show } = this.state
-    const { getLastMessage } = this.props
+    const { getLastMessage, removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
+    }
+    if (show && prevProps.conversationHistoryId !== conversationHistoryId && loadConversationHistoryPromise) {
+      removeAllMessages()
+      loadConversationHistoryPromise(conversationHistoryId).then(this.loadConversation)
     }
   }
 
@@ -158,7 +175,43 @@ class Chat extends Component {
     )
   }
 
-  sendMessage = (attachment, userMessage) => {
+  _onSendMessagePromiseCompleted = (res) => {
+    const {
+      addBotMessage,
+      defaultMessageDelay,
+    } = this.props
+    if (!res) {
+      throw new Error('Fail send message')
+    }
+    const data = res.data
+    const messages
+    = data.messages.length === 0
+      ? [{ type: 'text', content: 'No reply', error: true }]
+      : data.messages
+    if (!this.shouldHideBotReply(data)) {
+      let delay = 0
+      messages.forEach((message, index) => {
+        this.messagesDelays[index] = setTimeout(
+          () =>
+            addBotMessage([message], {
+              ...data,
+              hasDelay: true,
+              hasNextMessage: index !== messages.length - 1,
+            }),
+          delay,
+        )
+
+        delay
+        += message.delay || message.delay === 0
+            ? message.delay * 1000
+            : defaultMessageDelay === null || defaultMessageDelay === undefined
+              ? 0
+              : defaultMessageDelay * 1000
+      })
+    }
+  }
+
+  _sendMessage = (attachment, userMessage) => {
     const {
       token,
       channelId,
@@ -167,10 +220,12 @@ class Chat extends Component {
       sendMessagePromise,
       addUserMessage,
       addBotMessage,
-      defaultMessageDelay,
+      readOnlyMode,
     } = this.props
     const payload = { message: { attachment }, chatId }
-
+    if (readOnlyMode) {
+      return
+    }
     const backendMessage = {
       ...payload.message,
       isSending: true,
@@ -195,35 +250,7 @@ class Chat extends Component {
 
           sendMessagePromise(backendMessage)
             .then(res => {
-              if (!res) {
-                throw new Error('Fail send message')
-              }
-              const data = res.data
-              const messages
-                = data.messages.length === 0
-                  ? [{ type: 'text', content: 'No reply', error: true }]
-                  : data.messages
-              if (!this.shouldHideBotReply(data)) {
-                let delay = 0
-                messages.forEach((message, index) => {
-                  this.messagesDelays[index] = setTimeout(
-                    () =>
-                      addBotMessage([message], {
-                        ...data,
-                        hasDelay: true,
-                        hasNextMessage: index !== messages.length - 1,
-                      }),
-                    delay,
-                  )
-
-                  delay
-                    += message.delay || message.delay === 0
-                      ? message.delay * 1000
-                      : defaultMessageDelay === null || defaultMessageDelay === undefined
-                        ? 0
-                        : defaultMessageDelay * 1000
-                })
-              }
+              this._onSendMessagePromiseCompleted(res)
             })
             .catch(() => {
               addBotMessage([{ type: 'text', content: 'No reply', error: true }])
@@ -249,6 +276,33 @@ class Chat extends Component {
     )
   }
 
+  sendMessage = (attachment, userMessage) => {
+    const {
+      token,
+      channelId,
+      preferences,
+      conversationId,
+      sendMessagePromise,
+      readOnlyMode,
+    } = this.props
+    if (readOnlyMode) {
+      return
+    }
+    if (!sendMessagePromise && !conversationId) {
+      // // First time sending a message and no conversationId, so create one.
+      // This will cause the component to be updated and polling will start automatically
+      this.props.createConversation(channelId, token).then(({ id, chatId }) => {
+        storeCredentialsToLocalStorage(chatId, id, preferences.conversationTimeToLive, channelId)
+        this._sendMessage(attachment, userMessage)
+      }).catch(err => {
+        console.error('Creating the Conversation has failed, unable to post message')
+        console.error(err)
+      })
+    } else {
+      this._sendMessage(attachment, userMessage)
+    }
+  }
+
   cancelSendMessage = message => {
     this.props.removeMessage(message.id)
   }
@@ -256,6 +310,29 @@ class Chat extends Component {
   retrySendMessage = message => {
     this.props.removeMessage(message.id)
     this.sendMessage(message.attachment)
+  }
+
+  loadConversation = res => {
+    const { addUserMessage, addBotMessage } = this.props
+
+    this.setState({ messages: [] }, () => {
+      res.forEach(item => {
+        const data = item.data || {}
+        const messages = data.messages || []
+        messages.forEach(message => {
+          if (item.isBot) {
+            addBotMessage([message], { ...data })
+          } else {
+            const input = {
+              id: item.id,
+              participant: { isBot: item.isBot },
+              attachment: message,
+            }
+            addUserMessage(input)
+          }
+        })
+      })
+    })
   }
 
   doMessagesPolling = async () => {
@@ -320,6 +397,7 @@ class Chat extends Component {
       logoStyle,
       show,
       enableHistoryInput,
+      readOnlyMode,
     } = this.props
     const { showSlogan, messages, inputHeight } = this.state
 
@@ -338,6 +416,7 @@ class Chat extends Component {
             preferences={preferences}
             key='header'
             logoStyle={logoStyle}
+            readOnlyMode={readOnlyMode}
           />
         )}
         <div
@@ -361,9 +440,11 @@ class Chat extends Component {
                 showInfo={showInfo}
                 onClickShowInfo={onClickShowInfo}
                 containerMessagesStyle={containerMessagesStyle}
+                readOnlyMode={readOnlyMode}
               />,
               <div
                 key='slogan'
+                style={{ maxWidth: '23.0rem' }}
                 className={cx('RecastAppChat--slogan CaiAppChat--slogan', {
                   'RecastAppChat--slogan--hidden CaiAppChat--slogan--hidden': !showSlogan,
                 })}
@@ -372,8 +453,9 @@ class Chat extends Component {
               </div>,
             ]}
         </div>
-        <Input
+        { !readOnlyMode && <Input
           menu={preferences.menu && preferences.menu.menu}
+          isOpen={show}
           onSubmit={this.sendMessage}
           preferences={preferences}
           onInputHeight={height => this.setState({ inputHeight: height })}
@@ -381,6 +463,7 @@ class Chat extends Component {
           inputPlaceholder={propOr('Write a reply', 'userInputPlaceholder', preferences)}
           characterLimit={propOr(0, 'characterLimit', preferences)}
         />
+        }
       </div>
     )
   }
@@ -394,10 +477,12 @@ Chat.propTypes = {
   channelId: PropTypes.string,
   lastMessageId: PropTypes.string,
   conversationId: PropTypes.string,
+  conversationHistoryId: PropTypes.string,
   messages: PropTypes.array,
   preferences: PropTypes.object,
   showInfo: PropTypes.bool,
   sendMessagePromise: PropTypes.func,
+  loadConversationHistoryPromise: PropTypes.func,
   primaryHeader: PropTypes.func,
   secondaryView: PropTypes.bool,
   secondaryHeader: PropTypes.any,
@@ -407,6 +492,7 @@ Chat.propTypes = {
   containerStyle: PropTypes.object,
   show: PropTypes.bool,
   enableHistoryInput: PropTypes.bool,
+  readOnlyMode: PropTypes.bool,
   defaultMessageDelay: PropTypes.number,
 }
 

@@ -8,6 +8,9 @@
   }
 }
 
+.slick-track {
+  min-width: 280px;
+}
 .RecastApp .RecastAppMessage, .CaiApp .CaiAppMessage {
   display: flex;
   flex-direction: row-reverse;
@@ -82,13 +85,181 @@
 
 
     // Markdown
-    ul, ol {
-      list-style: disc;
+    :first-child {
+      margin-block-start: 0px;
+      margin-top: 0px;   
+    }
+  
+    :last-child {
+      margin-block-end: 0px;
+      margin-bottom: 0px;    
     }
 
+    li p {
+      margin-block-end: 0px;
+      margin-bottom: 0px;   
+    }
+
+    p {
+      display: block;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+    }
+  
+    pre {
+      display: block;
+      white-space: pre;
+      margin: 1em 0;
+    }
+    
+    pre code {
+      display: block;
+      padding: 0.5rem;
+      overflow-x: auto;
+      background-color: #ddd;
+      border: 1px solid gray
+    }
+  
+    blockquote {
+      display: block;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      padding: 0.1em 1.33em;
+      border-left: .25em solid gray;
+    }
+  
+    ol {
+      display: block;
+      list-style-type: decimal;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      padding-inline-start: 1em;
+    }
+  
+    ul {
+      margin-block-start: 0;
+      margin-block-end: 0;
+      list-style-type: disc;
+      padding-inline-start: 1em;
+    }
+  
+    ul ul {
+      list-style-type: circle;
+    }
+  
     ul li, ol li {
       margin-left: 18px;
     }
+
+    strong, b{
+      font-family: '72-Bold','Roboto', Helvetica, sans-serif;
+    }
+
+    cite, em, i {
+      font-family: '72-Italic','Roboto', Helvetica, sans-serif;
+    }
+
+    code {
+      font-family: Menlo, monospace, '72', '72full', 'Roboto', Helvetica, sans-serif;
+      font-size: 0.83em;
+    }
+  
+    strong em,
+    b em,
+    strong i,
+    b i {
+      font-family: '72-BoldItalic','Roboto', Helvetica, sans-serif;
+    }
+
+    h1 {
+      display: block;
+      font-size: 2em;
+      margin-block-start: 0.67em;
+      margin-block-end: 0.67em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h2 {
+      display: block;
+      font-size: 1.5em;
+      margin-block-start: 0.83em;
+      margin-block-end: 0.83em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h3 {
+      display: block;
+      font-size: 1.17em;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h4 {
+      display: block;
+      margin-block-start: 1.33em;
+      margin-block-end: 1.33em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h5 {
+      display: block;
+      font-size: 0.83em;
+      margin-block-start: 1.67em;
+      margin-block-end: 1.67em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    h6 {
+      display: block;
+      font-size: 0.67em;
+      margin-block-start: 2.33em;
+      margin-block-end: 2.33em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      font-weight: bold;
+    }
+  
+    table {
+      width: 100%;
+      border-spacing: 0;
+    }
+  
+    th {
+      border-width: 1px;
+      border-top-style: solid;
+      border-bottom-style: solid;
+      border-left-style: solid;
+      padding: 0.5rem 0.25rem;
+    }
+
+    td {
+      border-bottom-style: solid;
+      border-left-style: solid;
+      border-width: 1px;
+      padding: 0.5rem;
+    }
+
+    th:last-child, td:last-child {
+      border-right-style: solid;     
+    }
+  
   }
 
   /*
@@ -128,6 +299,11 @@
       cursor: pointer;
       font-weight: bold;
       border-radius: 25px;
+    }
+
+    &--ReadOnly {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 
@@ -242,6 +418,11 @@
         font-weight: bold;
         color: cornflowerblue;
         text-decoration: none;
+      }
+
+      &--ReadOnly {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     }
 
