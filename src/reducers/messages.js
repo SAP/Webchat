@@ -36,7 +36,7 @@ export default handleActions(
         retry: true,
         conversationExpired: status === 404
           && typeof statusText === 'string'
-          && statusText.includes('check if the conversation is deleted'),
+          && statusText.includes('Conversation not found'),
        id: `local-${Math.random()}`,
         participant: {
           isBot: false,
