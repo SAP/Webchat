@@ -28,22 +28,30 @@ export default handleActions(
     },
 
     POST_MESSAGE_ERROR: (state, { payload }) => {
-      const message = {
-        ...payload.message,
+      const { response, message } = payload
+      const { status, statusText } = response
+
+      const msg = {
+        ...message,
         retry: true,
-        id: `local-${Math.random()}`,
+        conversationExpired: status === 404
+          && typeof statusText === 'string'
+          && statusText.includes('Conversation not found'),
+       id: `local-${Math.random()}`,
         participant: {
           isBot: false,
         },
       }
 
-      return [...state, ...[message]]
+      return [...state, ...[msg]]
     },
 
     REMOVE_MESSAGE: (state, { payload: messageId }) => {
       const newState = Object.assign([], state)
       const indexMessage = state.findIndex(message => message.id === messageId)
-      newState.splice(indexMessage, 1)
+      if (indexMessage >= 0) {
+        newState.splice(indexMessage, 1)
+      }
       return newState
     },
 
