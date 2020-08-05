@@ -29,7 +29,7 @@ export default store => next => action => {
     })
     .catch(err => {
       const { response } = err
-      dispatch({ type: `${prefix}_ERROR`, payload: { ...data, response: { response } } })
+      dispatch({ type: `${prefix}_ERROR`, payload: { ...data, error: { response } } })
       throw new Error(err)
     })
 }
