@@ -15,7 +15,7 @@ export default handleActions(
     },
 
     REMOVE_CONVERSATION_ID: (state) => {
-      return { ...state, conversationId: '' }
+      return { ...state, conversationId: '', lastMessageId: null }
     },
 
     CREATE_CONVERSATION_SUCCESS: (state, { payload: conversation }) => {

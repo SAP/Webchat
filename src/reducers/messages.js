@@ -28,15 +28,17 @@ export default handleActions(
     },
 
     POST_MESSAGE_ERROR: (state, { payload }) => {
-      const { response, message } = payload
-      const { status, statusText } = response
+      const { error, message } = payload
+      const { response } = error
+      const { status, data } = response
+      const errorMessage = data && data.message
 
       const msg = {
         ...message,
         retry: true,
         conversationExpired: status === 404
-          && typeof statusText === 'string'
-          && statusText.includes('Conversation not found'),
+          && typeof errorMessage === 'string'
+          && errorMessage.includes('Conversation not found'),
        id: `local-${Math.random()}`,
         participant: {
           isBot: false,
