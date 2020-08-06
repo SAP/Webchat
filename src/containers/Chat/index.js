@@ -305,6 +305,13 @@ class Chat extends Component {
   }
 
   cancelSendMessage = message => {
+    this.props.removeMessage(message.id)
+    if (message.conversationExpired) {
+      this.props.removeConversationId()
+    }
+  }
+
+  retrySendMessage = message => {
     if (message.conversationExpired) {
       // Removing the conversation id will cause the sendmessage to create new one.
       // Polling will pickup the new id on the next poll.
@@ -317,11 +324,6 @@ class Chat extends Component {
       this.props.removeMessage(message.id)
       this.sendMessage(message.attachment)
     }
-   }
-
-  retrySendMessage = message => {
-    this.props.removeMessage(message.id)
-    this.sendMessage(message.attachment)
   }
 
   loadConversation = res => {
