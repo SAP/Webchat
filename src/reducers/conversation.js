@@ -30,6 +30,16 @@ export default handleActions(
         ? { ...state, lastMessageId: messages[messagesLength - 1].id }
         : state
     },
+    
+    POLL_MESSAGES_ERROR: (state, { payload }) => {
+      const { error } = payload
+      const { response } = error
+      const { status, data } = response
+      const errorMessage = data && data.message
+      return status === 404 && errorMessage === 'Conversation not found'
+        ? { ...state, conversationId: '', lastMessageId: null }
+        : state
+    },
 
     GET_MESSAGES_SUCCESS: (state, { payload: { messages } }) => {
       const messagesLength = messages.length
