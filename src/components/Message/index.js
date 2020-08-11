@@ -26,23 +26,23 @@ class Message extends Component {
 
   _isValidRenderType = (type) => {
     if (type && typeof type === 'string') {
-      switch(type.toLowerCase()) {
-        case 'text':
-        case 'card':
-        case 'picture':
-        case 'carousel':
-        case 'carouselle':
-        case 'list':
-        case 'buttons':
-        case 'quickreplies':
-        case 'quickreply':
-        case 'button':
-          return true
-        case 'client_data':
-          return false
-        default:
-          console.info(`Unknown type ${type}`)
-        break;
+      switch (type.toLowerCase()) {
+      case 'text':
+      case 'card':
+      case 'picture':
+      case 'carousel':
+      case 'carouselle':
+      case 'list':
+      case 'buttons':
+      case 'quickreplies':
+      case 'quickreply':
+      case 'button':
+        return true
+      case 'client_data':
+        return false
+      default:
+        console.info(`Unknown type ${type}`)
+        break
       }
     }
     return false
