@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
 import uniqWith from 'ramda/es/uniqWith'
+import propOr from 'ramda/es/propOr'
 
 const initialState = []
 
@@ -28,10 +29,11 @@ export default handleActions(
     },
 
     POST_MESSAGE_ERROR: (state, { payload }) => {
-      const { error, message } = payload
-      const { response } = error
+      const { message } = payload
+      const error = propOr({}, 'error', payload)
+      const response = propOr({}, 'response', error)
       const { status, data } = response
-      const errorMessage = data && data.message
+      const errorMessage = propOr(null, 'message', data)
 
       const msg = {
         ...message,
