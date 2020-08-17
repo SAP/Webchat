@@ -28,6 +28,7 @@ class Message extends Component {
     if (type && typeof type === 'string') {
       switch(type.toLowerCase()) {
         case 'text':
+        case 'action': // trigger_skill return type
         case 'card':
         case 'picture':
         case 'carousel':
@@ -100,6 +101,7 @@ class Message extends Component {
       content: title || content,
       isMarkdown: safeBooleanValue(markdown),
       readOnlyMode,
+      isLastMessage,
       onImageLoaded,
       style: {
         color: isBot ? (error ? '#fff' : botMessageColor) : complementaryColor,
@@ -127,7 +129,7 @@ class Message extends Component {
             />
           )}
 
-          {type === 'text' && <Text {...messageProps} />}
+          {(type === 'text' || type === 'action') && <Text {...messageProps} />}
 
           {type === 'picture' && <Picture {...messageProps} />}
 
