@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions'
+import propOr from 'ramda/es/propOr'
 
 const initialState = {
   token: '',
@@ -28,6 +29,17 @@ export default handleActions(
 
       return messagesLength !== 0
         ? { ...state, lastMessageId: messages[messagesLength - 1].id }
+        : state
+    },
+
+    POLL_MESSAGES_ERROR: (state, { payload }) => {
+      const error = propOr({}, 'error', payload)
+      const response = propOr({}, 'response', error)
+      const { status, data } = response
+      const errorMessage = propOr(null, 'message', data)
+
+      return status === 404 && errorMessage === 'Conversation not found'
+        ? { ...state, conversationId: '', lastMessageId: null }
         : state
     },
 
