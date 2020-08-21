@@ -25,7 +25,7 @@ const _getUrlInfo = (button, readOnlyMode) => {
   }
 }
 
-const Button = ({ button, sendMessage, readOnlyMode }) => {
+const Button = ({ button, sendMessage, readOnlyMode, isLastMessage }) => {
   if (!button) {
     return null
   }
@@ -33,7 +33,7 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
   // Increase Button length to 80 characters per SAPMLCONV-3486
   const formattedTitle = truncate(title, 80)
   const tooltip = title && title.length > 80 ? title : null
-
+  const disableButton = readOnlyMode || (!isLastMessage && type === 'trigger_skill')
   if (button.type === 'web_url' && sanitizeUrl(value) === 'about:blank') {
     return null
   }
@@ -41,14 +41,14 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
   let content = null
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
-  const linkClassName = cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': readOnlyMode })
-  const { href, target } = _getUrlInfo(button, readOnlyMode)
+  const linkClassName = cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': disableButton })
+  const { href, target } = _getUrlInfo(button, disableButton)
   switch (type) {
   case 'phonenumber':
     content = (
       <a
         className={linkClassName}
-        href={_getValidTelHref(button, readOnlyMode)}>
+        href={_getValidTelHref(button, disableButton)}>
         {formattedTitle}
       </a>
     )
@@ -68,8 +68,10 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
     content = (
       <div
         title={tooltip}
-        className={cx('RecastAppButton CaiAppButton', { 'CaiAppButton--ReadOnly': readOnlyMode })}
-        onClick={() => sendMessage({ type: 'button', content: button }, title)}
+        className={cx('RecastAppButton CaiAppButton', { 'CaiAppButton--ReadOnly': disableButton })}
+        onClick={() => {
+          !disableButton && sendMessage({ type: 'button', content: button }, title)
+        }}
       >
         {formattedTitle}
       </div>
@@ -81,6 +83,7 @@ const Button = ({ button, sendMessage, readOnlyMode }) => {
 }
 
 Button.propTypes = {
+  isLastMessage: PropTypes.bool,
   button: PropTypes.object,
   sendMessage: PropTypes.func,
   readOnlyMode: PropTypes.bool,

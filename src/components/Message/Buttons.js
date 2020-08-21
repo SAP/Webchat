@@ -7,7 +7,7 @@ import { truncate, safeArrayOfItem } from 'helpers'
 
 import './style.scss'
 
-const Buttons = ({ content, sendMessage, style, readOnlyMode }) => {
+const Buttons = ({ content, sendMessage, style, readOnlyMode, isLastMessage }) => {
   const { title, buttons } = content
   return (
     <div className='Buttons'>
@@ -21,6 +21,7 @@ const Buttons = ({ content, sendMessage, style, readOnlyMode }) => {
             key={i}
             button={b}
             sendMessage={sendMessage}
+            isLastMessage={isLastMessage}
             readOnlyMode={readOnlyMode} />
         ))}
       </div>
@@ -29,6 +30,7 @@ const Buttons = ({ content, sendMessage, style, readOnlyMode }) => {
 }
 
 Buttons.propTypes = {
+  isLastMessage: PropTypes.bool,
   style: PropTypes.object,
   content: PropTypes.object,
   sendMessage: PropTypes.func,
