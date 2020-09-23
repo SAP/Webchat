@@ -8,7 +8,7 @@ import { safeArrayOfItem } from 'helpers'
 
 import './style.scss'
 
-const Carousel = ({ content, sendMessage, readOnlyMode }) => {
+const Carousel = ({ content, sendMessage, readOnlyMode, isLastMessage }) => {
   return (
     <div className={'RecastAppCarousel CaiAppCarousel'}>
       <Slider
@@ -25,7 +25,7 @@ const Carousel = ({ content, sendMessage, readOnlyMode }) => {
       >
         {safeArrayOfItem(content).map((card, i) => (
           <div key={i}>
-            <Card content={card} sendMessage={sendMessage} readOnlyMode={readOnlyMode} />
+            <Card isLastMessage={isLastMessage} content={card} sendMessage={sendMessage} readOnlyMode={readOnlyMode} />
           </div>
         ))}
       </Slider>
@@ -34,6 +34,7 @@ const Carousel = ({ content, sendMessage, readOnlyMode }) => {
 }
 
 Carousel.propTypes = {
+  isLastMessage: PropTypes.bool,
   content: PropTypes.array,
   sendMessage: PropTypes.func,
   readOnlyMode: PropTypes.bool,

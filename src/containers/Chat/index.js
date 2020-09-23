@@ -5,7 +5,7 @@ import cx from 'classnames'
 import propOr from 'ramda/es/propOr'
 import concat from 'ramda/es/concat'
 import { storeCredentialsToLocalStorage } from 'helpers'
-import { createConversation } from 'actions/conversation'
+import { createConversation, removeConversationId } from 'actions/conversation'
 
 import {
   postMessage,
@@ -44,6 +44,7 @@ const WRONG_MEMORY_FORMAT
   removeAllMessages,
   addUserMessage,
   addBotMessage,
+  removeConversationId,
   },
 )
 class Chat extends Component {
@@ -84,8 +85,8 @@ class Chat extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    const { messages, show } = this.state
-    const { getLastMessage, removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
+    const { show } = this.state
+    const { removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
@@ -305,11 +306,24 @@ class Chat extends Component {
 
   cancelSendMessage = message => {
     this.props.removeMessage(message.id)
+    if (message.conversationExpired) {
+      this.props.removeConversationId()
+    }
   }
 
   retrySendMessage = message => {
-    this.props.removeMessage(message.id)
-    this.sendMessage(message.attachment)
+    if (message.conversationExpired) {
+      // Removing the conversation id will cause the sendmessage to create new one.
+      // Polling will pickup the new id on the next poll.
+      this.props.removeConversationId()
+      setTimeout(() => {
+        this.props.removeMessage(message.id)
+        this.sendMessage(message.attachment)
+      }, 100)
+    } else {
+      this.props.removeMessage(message.id)
+      this.sendMessage(message.attachment)
+    }
   }
 
   loadConversation = res => {
@@ -336,17 +350,20 @@ class Chat extends Component {
   }
 
   doMessagesPolling = async () => {
-    const { conversationId } = this.props
-    if (this._isPolling || !conversationId) {
+    if (this._isPolling || !this.props.conversationId) {
       return
     }
     this._isPolling = true
 
     let shouldPoll = true
-    let index = 0
+    let errorCount = 0
 
     do {
-      const { lastMessageId, channelId, token } = this.props
+      const { lastMessageId, channelId, token, conversationId } = this.props
+      if (!conversationId) {
+        // coversation id expired?
+        break
+      }
       let shouldWaitXseconds = false
       let timeToSleep = 0
       try {
@@ -359,26 +376,26 @@ class Chat extends Component {
         shouldPoll = waitTime === 0
         shouldWaitXseconds = waitTime > 0
         timeToSleep = waitTime * 1000
+        errorCount = 0
       } catch (err) {
         shouldPoll = false
+        errorCount++
       }
-      index++
 
       /**
        * Note: If the server returns a waitTime != 0, it means that conversation has no new messages since 2 minutes.
        * So, let's poll to check new messages every "waitTime" seconds (waitTime = 120 seconds per default)
        */
       if (shouldWaitXseconds) {
-        index = 0
         await new Promise(resolve => {
           this.timeoutResolve = resolve
           this.timeout = setTimeout(resolve, timeToSleep)
         })
         this.timeout = null
-      } else if (!shouldPoll && index < 4) {
+      } else if (!shouldPoll && errorCount < 4) {
         await new Promise(resolve => setTimeout(resolve, 300))
       }
-    } while (shouldPoll || index < 4)
+    } while (shouldPoll || errorCount < 4)
     this._isPolling = false
   }
 

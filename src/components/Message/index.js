@@ -24,6 +24,30 @@ class Message extends Component {
     console.error(error, info)
   }
 
+  _isValidRenderType = (type) => {
+    if (type && typeof type === 'string') {
+      switch (type.toLowerCase()) {
+      case 'text':
+      case 'action': // trigger_skill return type
+      case 'card':
+      case 'picture':
+      case 'carousel':
+      case 'carouselle':
+      case 'list':
+      case 'buttons':
+      case 'quickreplies':
+      case 'quickreply':
+      case 'button':
+        return true
+      case 'client_data':
+        return false
+      default:
+        console.info(`Unknown type ${type}`)
+        break
+      }
+    }
+    return false
+  }
   render () {
     const {
       message,
@@ -77,6 +101,7 @@ class Message extends Component {
       content: title || content,
       isMarkdown: safeBooleanValue(markdown),
       readOnlyMode,
+      isLastMessage,
       onImageLoaded,
       style: {
         color: isBot ? (error ? '#fff' : botMessageColor) : complementaryColor,
@@ -85,8 +110,8 @@ class Message extends Component {
         accentColor,
       },
     }
-    if (!showInfo && type === 'client_data') {
-      return null // ignore type client_data
+    if (!showInfo && !this._isValidRenderType(type)) {
+      return null // ignore unknown types
     }
     return (
       <div
@@ -104,7 +129,7 @@ class Message extends Component {
             />
           )}
 
-          {type === 'text' && <Text {...messageProps} />}
+          {(type === 'text' || type === 'action') && <Text {...messageProps} />}
 
           {type === 'picture' && <Picture {...messageProps} />}
 

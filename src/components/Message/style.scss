@@ -159,6 +159,7 @@
 
     strong, b{
       font-family: '72-Bold','Roboto', Helvetica, sans-serif;
+      font-weight: bold;
     }
 
     cite, em, i {
@@ -175,6 +176,7 @@
     strong i,
     b i {
       font-family: '72-BoldItalic','Roboto', Helvetica, sans-serif;
+      font-weight: bold;
     }
 
     h1 {
@@ -303,7 +305,7 @@
 
     &--ReadOnly {
       opacity: 0.5;
-      cursor: not-allowed;
+      cursor: text;
     }
   }
 
@@ -422,7 +424,7 @@
 
       &--ReadOnly {
         opacity: 0.5;
-        cursor: not-allowed;
+        cursor: text;
       }
     }
 

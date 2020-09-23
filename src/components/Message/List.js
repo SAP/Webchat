@@ -31,31 +31,32 @@ const _getButtonTitle = (button, buttonTitleMaxLength) => {
   return title ? truncate(title, buttonTitleMaxLength) : null
 }
 
-const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnlyMode }) => {
+const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnlyMode, isLastMessage }) => {
   const titleMaxLength = 25
   const subTitleMaxLength = 50
   const buttonTitleMaxLength = 20
 
   const button = propOr(null, 0, buttons)
   const type = propOr('none', 'type', button)
+  const disableButton = readOnlyMode || (!isLastMessage && type === 'trigger_skill')
 
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
   const buttonTitle = _getButtonTitle(button, buttonTitleMaxLength)
-  const buttonClassName = cx('RecastAppListElement--button CaiAppListElement--button', { 'CaiAppListElement--ReadOnly': readOnlyMode })
+  const buttonClassName = cx('RecastAppListElement--button CaiAppListElement--button', { 'CaiAppListElement--ReadOnly': disableButton })
   let content = null
   switch (type) {
   case 'phonenumber':
     content = (
       <a
         className={buttonClassName}
-        href={_getValidTelHref(button, readOnlyMode)}>
+        href={_getValidTelHref(button, disableButton)}>
         {buttonTitle}
       </a>
     )
     break
   case 'web_url':
     if (sanitizeUrl(button.value) !== 'about:blank') {
-      const { href, target } = _getUrlInfo(button, readOnlyMode)
+      const { href, target } = _getUrlInfo(button, disableButton)
       content = (
         <a
           className={buttonClassName}
@@ -91,7 +92,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnly
           ) : (
             <div
               className={buttonClassName}
-              onClick={() => sendMessage({ type: 'button', content: button }, _getButtonTitle(button, 480))}
+              onClick={() => { !disableButton && sendMessage({ type: 'button', content: button }, _getButtonTitle(button, 480))}}
             >
               {buttonTitle}
             </div>
@@ -102,6 +103,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnly
 }
 
 ListElement.propTypes = {
+  isLastMessage: PropTypes.bool,
   title: PropTypes.string,
   subtitle: PropTypes.string,
   imageUrl: PropTypes.string,
@@ -110,7 +112,7 @@ ListElement.propTypes = {
   readOnlyMode: PropTypes.bool,
 }
 
-const List = ({ content, sendMessage, readOnlyMode }) => {
+const List = ({ content, sendMessage, readOnlyMode, isLastMessage }) => {
   const { buttons } = content
   const button = propOr(null, 0, buttons)
 
@@ -120,6 +122,7 @@ const List = ({ content, sendMessage, readOnlyMode }) => {
         <ListElement
           key={i} {...element}
           sendMessage={sendMessage}
+          isLastMessage={isLastMessage}
           readOnlyMode={readOnlyMode} />
       ))}
 
@@ -128,6 +131,7 @@ const List = ({ content, sendMessage, readOnlyMode }) => {
           <Button
             button={button}
             sendMessage={sendMessage}
+            isLastMessage={isLastMessage}
             readOnlyMode={readOnlyMode} />
         </div>
       )}
@@ -136,6 +140,7 @@ const List = ({ content, sendMessage, readOnlyMode }) => {
 }
 
 List.propTypes = {
+  isLastMessage: PropTypes.bool,
   content: PropTypes.object,
   sendMessage: PropTypes.func,
   readOnlyMode: PropTypes.bool,

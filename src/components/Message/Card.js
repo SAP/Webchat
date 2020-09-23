@@ -6,7 +6,7 @@ import { truncate, safeArrayOfItem } from 'helpers'
 
 import Button from 'components/Button'
 
-const Card = ({ content, sendMessage, onImageLoaded, readOnlyMode }) => {
+const Card = ({ content, sendMessage, onImageLoaded, readOnlyMode, isLastMessage }) => {
   const { title, subtitle, imageUrl, buttons } = content
 
   if (imageUrl && sanitizeUrl(imageUrl) === 'about:blank') {
@@ -30,6 +30,7 @@ const Card = ({ content, sendMessage, onImageLoaded, readOnlyMode }) => {
               key={i}
               button={b}
               sendMessage={sendMessage}
+              isLastMessage={isLastMessage}
               readOnlyMode={readOnlyMode} />
           ))}
         </div>
@@ -39,6 +40,7 @@ const Card = ({ content, sendMessage, onImageLoaded, readOnlyMode }) => {
 }
 
 Card.propTypes = {
+  isLastMessage: PropTypes.bool,
   content: PropTypes.object,
   sendMessage: PropTypes.func,
   onImageLoaded: PropTypes.func,
