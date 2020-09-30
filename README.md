@@ -82,9 +82,9 @@ $> npm run build
 
 #### Use your webchat
 
-Once you're done, build it and host it.
-To use it instead of the default one provided by SAP Conversational AI, you need to set up the Webchat channel in the **CONNECT** tab of your bot.
-You'll be using the same script as the default installation, but you have **to replace the src field by your own URL**.
+Once you're done, build and host it.
+To use it instead of the default one provided by SAP Conversational AI, you will need to set up the Webchat channel in the **CONNECT** tab of your bot.
+You'll be using the same script as the default installation, but you will have **to replace the src field by your own URL**.
 
 
 ```
@@ -160,7 +160,7 @@ this.webchat.clearMessages();
 ### Bot Memory management
 One thing you might want to do is to send custom data from your website to the bot, like the name of the logged in user, his ID, the page he is currently on (to send product suggestions for example). To do that, you can define a `window.webchatMethods.getMemory` function, the webchat will call it before sending user messages, and send your arbitrary payload along with the message to the bot.
 
-If you use SAP Conversational AI's bot-builder (you should :)), your payload will be put in the memory of the conversation, meaning that you will be able to access this data in your bot-builder. Let's say you send this as payload : `{ "userName": "Dominik", "userId": 123456 }`, you will then be able to send this as a greeting message : `Hello {{ memory.userName }} ! How do you do ?`.
+If you use SAP Conversational AI's bot-builder (you should :)), your payload will be put in the memory of the conversation, i.e. you will be able to access this data in your bot-builder. Let's say you send this as payload : `{ "userName": "Dominik", "userId": 123456 }`, you will then be able to send this as a greeting message : `Hello {{ memory.userName }} ! How do you do ?`.
 
 `window.webchatMethods.getMemory` must return a JSON object or a Promise resolving a JSON object :
   - `{ "memory": { ... }, "merge": <boolean> }`
@@ -261,7 +261,7 @@ Learn more about:
 
 Copyright (c) [2016] SAP Conversational AI
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
+Permissions are hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
 to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
 and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
