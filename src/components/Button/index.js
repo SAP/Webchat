@@ -40,7 +40,7 @@ const Button = ({ button, sendMessage, readOnlyMode, isLastMessage }) => {
 
   let content = null
 
-  // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
+  // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the phonenumber options
   const linkClassName = cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': disableButton })
   const { href, target } = _getUrlInfo(button, disableButton)
   switch (type) {
