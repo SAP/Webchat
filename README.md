@@ -2,7 +2,7 @@
   <img src="assets/header.png" />
 </div>
 
-# SAP Conversational AI Webchat
+# SAP Conversational Artifical Webchat
 | [Default Usage](#usage) | [Self-Hosted Installation](#self-hosted-webchat) | [Getting Started on SAP Conversational AI]( #getting-started-with-sap-conversational-ai) | [License](#license) |
 |---|---|---|---|
 <div>
