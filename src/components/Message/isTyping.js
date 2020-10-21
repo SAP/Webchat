@@ -6,24 +6,48 @@ import { propOr } from 'ramda'
 import './style.scss'
 
 class IsTyping extends Component {
-  componentWillUnmount () {
-    if (this._timer) {
-      clearTimeout(this._timer)
-    }
+  constructor (props) {
+    super(props)
+    this._setTimeoutCallBack = this._setTimeoutCallBack.bind(this)
+    this._timer = null
   }
 
-  render () {
-    const { image, onImageLoaded, callAfterTimeout } = this.props
-    const timeout = propOr(20000, 'timeout', this.props)
-    if (image && sanitizeUrl(image) === 'about:blank') {
-      return null
-    }
+  shouldComponentUpdate (nextProps) {
+    return this.props.timeout !== nextProps.timeout
+      || this.props.callAfterTimeout !== nextProps.callAfterTimeout
+  }
 
+  componentDidUpdate () {
+    this._setTimeoutCallBack()
+  }
+
+  componentWillUnmount () {
     if (this._timer) {
       clearTimeout(this._timer)
       this._timer = null
     }
-    this._timer = setTimeout(callAfterTimeout, timeout)
+  }
+
+  _setTimeoutCallBack = () => {
+    const callback = () => {
+      this._timer = null
+      if (typeof this.props.callAfterTimeout === 'function') {
+        this.props.callAfterTimeout()
+      }
+    }
+    const timeout = propOr(20000, 'timeout', this.props)
+    if (this._timer) {
+      clearTimeout(this._timer)
+      this._timer = null
+    }
+    this._timer = setTimeout(callback, timeout)
+  }
+
+  render () {
+    const { image, onImageLoaded } = this.props
+    if (image && sanitizeUrl(image) === 'about:blank') {
+      return null
+    }
 
     return (
       <div className='RecastAppMessage CaiAppMessage bot'>
