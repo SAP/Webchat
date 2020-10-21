@@ -87,6 +87,7 @@ class Live extends Component {
     const isBot = pathOr(false, ['participant', 'isBot'], lastMessage)
     const delayVal = pathOr(5, ['attachment', 'delay'], lastMessage)
     // add 2 seconds to the delay to allow for api lag.
+    // See https://sapjira.wdf.sap.corp/browse/SAPMLCONV-13428 for requirements
     const maxDelay = ((typeof delayVal === 'string' ? parseFloat(delayVal) : delayVal) + 2) * 1000
     const timeoutAmount = isBot ? maxDelay : 20000
 
