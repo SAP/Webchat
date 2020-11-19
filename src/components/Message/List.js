@@ -40,7 +40,7 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnly
   const type = propOr('none', 'type', button)
   const disableButton = readOnlyMode || (!isLastMessage && type === 'trigger_skill')
 
-  // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the pnonenumber options
+  // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the phonenumber options
   const buttonTitle = _getButtonTitle(button, buttonTitleMaxLength)
   const buttonClassName = cx('RecastAppListElement--button CaiAppListElement--button', { 'CaiAppListElement--ReadOnly': disableButton })
   let content = null
