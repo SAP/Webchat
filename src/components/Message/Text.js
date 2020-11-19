@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import sanitizeHtml from 'sanitize-html-react'
 import ReactMarkdown from 'react-markdown'
+import gfm from 'remark-gfm'
+
 import cx from 'classnames'
 
 import { truncate, safeStringValue } from 'helpers'
@@ -69,10 +71,11 @@ const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
     <div style={style} className={'RecastAppText CaiAppText'}>
       {isMarkdown ? (
         <ReactMarkdown
-          source={compiledResponse}
+          plugins={[gfm]}
           renderers={{ link: LinkRenderer }}
           allowedTypes={allowedMarkdownTypes}
-        />
+        >{compiledResponse}
+        </ReactMarkdown>
       ) : (
         compiledResponse
       )}
