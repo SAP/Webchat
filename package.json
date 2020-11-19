@@ -1,6 +1,6 @@
 {
   "name": "webchat",
-  "version": "1.4.9",
+  "version": "1.4.33",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
