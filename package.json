@@ -1,6 +1,6 @@
 {
   "name": "ml-cai-webchat",
-  "version": "1.4.32",
+  "version": "1.4.33",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -28,12 +28,13 @@
     "ramda": "^0.25.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "react-markdown": "^4.0.6",
+    "react-markdown": "^5.0.0",
     "react-redux": "^7.1.1",
     "react-slick": "^0.25.2",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "redux-thunk": "^2.3.0",
+    "remark-gfm": "^1.0.0",
     "sanitize-html-react": "^1.13.0",
     "valid-url": "^1.0.9"
   },
