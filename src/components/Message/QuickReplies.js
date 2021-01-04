@@ -6,7 +6,7 @@ import map from 'ramda/es/map'
 import values from 'ramda/es/values'
 import cx from 'classnames'
 
-import { truncate, safeArrayOfItem } from 'helpers'
+import { truncate, safeArrayOfItem, validButtonContent } from 'helpers'
 
 import Text from './Text'
 import { PrevArrow, NextArrow } from 'components/arrows'
@@ -87,7 +87,7 @@ class QuickReplies extends Component {
                   }}
                   title={b.title.length > 20 ? b.title : null}
                   className={cx('RecastAppQuickReplies--button CaiAppQuickReplies--button', { 'CaiAppQuickReplies--ReadOnly': readOnlyMode })}
-                  onClick={() => this.doSendMessage({ type: 'quickReply', content: b })}
+                  onClick={() => this.doSendMessage({ type: 'quickReply', content: validButtonContent(b) })}
                   style={{
                     border: `1px solid ${style.accentColor}`,
                     color: style.accentColor,

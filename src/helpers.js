@@ -78,3 +78,16 @@ export const safeStringValue = (content) => {
   return ''
 }
 
+export const validButtonContent = (element) => {
+  if (element) {
+    const { type, value, title } = element
+    const data = {
+      type,
+      value,
+      title,
+    }
+    return data
+  }
+  return element
+}
+

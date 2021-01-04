@@ -4,7 +4,7 @@ import { sanitizeUrl } from '@braintree/sanitize-url'
 import propOr from 'ramda/es/propOr'
 import cx from 'classnames'
 
-import { truncate, safeArrayOfItem } from 'helpers'
+import { truncate, safeArrayOfItem, validButtonContent } from 'helpers'
 
 import Button from 'components/Button'
 
@@ -92,7 +92,11 @@ const ListElement = ({ title, subtitle, imageUrl, buttons, sendMessage, readOnly
           ) : (
             <div
               className={buttonClassName}
-              onClick={() => { !disableButton && sendMessage({ type: 'button', content: button }, _getButtonTitle(button, 480))}}
+              onClick={() => {
+                // eslint-disable-next-line no-unused-expressions
+                !disableButton
+                && sendMessage({ type: 'button', content: validButtonContent(button) }, _getButtonTitle(button, 480))
+              }}
             >
               {buttonTitle}
             </div>
