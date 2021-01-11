@@ -354,10 +354,13 @@ class Chat extends Component {
       return
     }
     this._isPolling = true
-
+    const MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING = 6
+    // After 15 x 120 sec the loop should stop around ~35 minutes
+    // Need to verify if this will be ok for the Human to Human chat
+    const MAX_POLLING_NUMBER_WITHOUT_MESSAGES = 15 + MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING
     let shouldPoll = true
     let errorCount = 0
-
+    let numberCallsWithoutAnyMessages = 0
     do {
       const { lastMessageId, channelId, token, conversationId } = this.props
       if (!conversationId) {
@@ -367,12 +370,14 @@ class Chat extends Component {
       let shouldWaitXseconds = false
       let timeToSleep = 0
       try {
-        const { waitTime } = await this.props.pollMessages(
+        const { waitTime, messages } = await this.props.pollMessages(
           channelId,
           token,
           conversationId,
           lastMessageId,
         )
+        numberCallsWithoutAnyMessages = messages && messages.length ? 0 : numberCallsWithoutAnyMessages + 1
+        console.info(`numberCallsWithoutAnyMessages: ${numberCallsWithoutAnyMessages}`)
         shouldPoll = waitTime === 0
         shouldWaitXseconds = waitTime > 0
         timeToSleep = waitTime * 1000
@@ -385,17 +390,25 @@ class Chat extends Component {
       /**
        * Note: If the server returns a waitTime != 0, it means that conversation has no new messages since 2 minutes.
        * So, let's poll to check new messages every "waitTime" seconds (waitTime = 120 seconds per default)
+       * If the waitTime is 0 and the number of calls without a message is greater then 3 minutes
+       * wait for 120 seconds before tring again.
        */
-      if (shouldWaitXseconds) {
+      if (numberCallsWithoutAnyMessages < MAX_POLLING_NUMBER_WITHOUT_MESSAGES
+        && (shouldWaitXseconds || numberCallsWithoutAnyMessages >= MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING)) {
+        console.assert(!(shouldWaitXseconds === false
+          && numberCallsWithoutAnyMessages === MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING)
+        , 'Polling should have returned a wait time (defaulting to 120 sec.)')
         await new Promise(resolve => {
           this.timeoutResolve = resolve
-          this.timeout = setTimeout(resolve, timeToSleep)
+          this.timeout = setTimeout(resolve, timeToSleep || 120000)
         })
         this.timeout = null
       } else if (!shouldPoll && errorCount < 4) {
         await new Promise(resolve => setTimeout(resolve, 300))
       }
-    } while (shouldPoll || errorCount < 4)
+    } while (numberCallsWithoutAnyMessages < MAX_POLLING_NUMBER_WITHOUT_MESSAGES
+      && (shouldPoll || errorCount < 4))
+    console.info(`Stopped polling loop because # of calls without any mesages ${numberCallsWithoutAnyMessages} or # of errors ${errorCount}, `)
     this._isPolling = false
   }
 
