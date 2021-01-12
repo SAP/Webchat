@@ -377,7 +377,7 @@ class Chat extends Component {
           lastMessageId,
         )
         numberCallsWithoutAnyMessages = messages && messages.length ? 0 : numberCallsWithoutAnyMessages + 1
-        console.info(`numberCallsWithoutAnyMessages: ${numberCallsWithoutAnyMessages}`)
+        // console.info(`numberCallsWithoutAnyMessages: ${numberCallsWithoutAnyMessages}`)
         shouldPoll = waitTime === 0
         shouldWaitXseconds = waitTime > 0
         timeToSleep = waitTime * 1000
