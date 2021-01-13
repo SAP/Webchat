@@ -380,10 +380,10 @@ class Chat extends Component {
           conversationId,
           lastMessageId,
         )
-        numberCallsWithoutAnyMessages = messages && messages.length ? 0 : numberCallsWithoutAnyMessages + 1
-        // console.info(`numberCallsWithoutAnyMessages: ${numberCallsWithoutAnyMessages}`)
         shouldPoll = waitTime === 0
         shouldWaitXseconds = waitTime > 0
+        // If the waittime is set then set numberCallsWithoutAnyMessages to 0 (Wait time is controlled by the backend)
+        numberCallsWithoutAnyMessages = shouldWaitXseconds || (messages && messages.length) ? 0 : numberCallsWithoutAnyMessages + 1
         timeToSleep = waitTime * 1000
         errorCount = 0
       } catch (err) {
@@ -395,7 +395,7 @@ class Chat extends Component {
        * Note: If the server returns a waitTime != 0, it means that conversation has no new messages since 2 minutes.
        * So, let's poll to check new messages every "waitTime" seconds (waitTime = 120 seconds per default)
        * If the waitTime is 0 and the number of calls without a message is greater then 3 minutes
-       * wait for 120 seconds before tring again.
+       * wait for 120 seconds before trying again.
        */
       if (shouldWaitXseconds || numberCallsWithoutAnyMessages >= MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING) {
         console.assert(!(shouldWaitXseconds === false
