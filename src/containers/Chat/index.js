@@ -88,6 +88,13 @@ class Chat extends Component {
     const { show } = this.state
     const { removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
 
+    // If the bot is closed and there is a timeout clear and it will stop polling
+    if (!show && this.timeout) {
+      clearTimeout(this.timeout)
+      this.timeoutResolve()
+      this.timeout = null
+    }
+
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
     }
@@ -355,9 +362,6 @@ class Chat extends Component {
     }
     this._isPolling = true
     const MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING = 6
-    // After 15 x 120 sec the loop should stop around ~35 minutes
-    // Need to verify if this will be ok for the Human to Human chat
-    const MAX_POLLING_NUMBER_WITHOUT_MESSAGES = 15 + MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING
     let shouldPoll = true
     let errorCount = 0
     let numberCallsWithoutAnyMessages = 0
@@ -393,8 +397,7 @@ class Chat extends Component {
        * If the waitTime is 0 and the number of calls without a message is greater then 3 minutes
        * wait for 120 seconds before tring again.
        */
-      if (numberCallsWithoutAnyMessages < MAX_POLLING_NUMBER_WITHOUT_MESSAGES
-        && (shouldWaitXseconds || numberCallsWithoutAnyMessages >= MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING)) {
+      if (shouldWaitXseconds || numberCallsWithoutAnyMessages >= MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING) {
         console.assert(!(shouldWaitXseconds === false
           && numberCallsWithoutAnyMessages === MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING)
         , 'Polling should have returned a wait time (defaulting to 120 sec.)')
@@ -406,9 +409,15 @@ class Chat extends Component {
       } else if (!shouldPoll && errorCount < 4) {
         await new Promise(resolve => setTimeout(resolve, 300))
       }
-    } while (numberCallsWithoutAnyMessages < MAX_POLLING_NUMBER_WITHOUT_MESSAGES
-      && (shouldPoll || errorCount < 4))
-    console.info(`Stopped polling loop because # of calls without any mesages ${numberCallsWithoutAnyMessages} or # of errors ${errorCount}, `)
+      const { show } = this.state
+      if (!show) {
+        // Stop the polling if the bot has been closed
+        console.info('WebChat is closed')
+        break
+      }
+
+    } while (shouldPoll || errorCount < 4)
+    console.info('Stopped polling loop')
     this._isPolling = false
   }
 
