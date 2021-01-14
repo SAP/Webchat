@@ -88,8 +88,9 @@ class Chat extends Component {
     const { show } = this.state
     const { removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
 
-    // If the bot is closed and there is a timeout clear and it will stop polling
+    // If the bot is closed and there is a timeout set, clear the timeout to stop message polling.
     if (!show && this.timeout) {
+      console.debug('Clear wait polling wait timeout')
       clearTimeout(this.timeout)
       this.timeoutResolve()
       this.timeout = null
@@ -393,8 +394,8 @@ class Chat extends Component {
         errorCount++
       }
 
-      // Need to check if we are close again here since polling can take 30 sec to return and we do not wait to
-      // set the timeout to call again in 120 sec if we are closed now.
+      // Need to check if we are close again, since polling can take 30 sec to return. Avoid
+      // setting the timeout to call again in 120 sec if we are closed.
       if (!this.state.show) {
         // Stop the polling if the bot has been closed
         console.debug('WebChat is closed')
