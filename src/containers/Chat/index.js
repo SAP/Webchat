@@ -365,10 +365,12 @@ class Chat extends Component {
     let shouldPoll = true
     let errorCount = 0
     let numberCallsWithoutAnyMessages = 0
+    console.debug('Message Polling is starting')
     do {
       const { lastMessageId, channelId, token, conversationId } = this.props
-      if (!conversationId) {
-        // coversation id expired?
+      // Stop if the bot is closed or the conversation id is no longer found.
+      if (!this.state.show || !conversationId) {
+        console.debug(!this.state.show ? 'WebChat is closed' : 'conversationId is not found')
         break
       }
       let shouldWaitXseconds = false
@@ -391,6 +393,14 @@ class Chat extends Component {
         errorCount++
       }
 
+      // Need to check if we are close again here since polling can take 30 sec to return and we do not wait to
+      // set the timeout to call again in 120 sec if we are closed now.
+      if (!this.state.show) {
+        // Stop the polling if the bot has been closed
+        console.debug('WebChat is closed')
+        break
+      }
+
       /**
        * Note: If the server returns a waitTime != 0, it means that conversation has no new messages since 2 minutes.
        * So, let's poll to check new messages every "waitTime" seconds (waitTime = 120 seconds per default)
@@ -398,9 +408,9 @@ class Chat extends Component {
        * wait for 120 seconds before trying again.
        */
       if (shouldWaitXseconds || numberCallsWithoutAnyMessages >= MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING) {
-        console.assert(!(shouldWaitXseconds === false
-          && numberCallsWithoutAnyMessages === MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING)
-        , 'Polling should have returned a wait time (defaulting to 120 sec.)')
+        if (shouldWaitXseconds === false && numberCallsWithoutAnyMessages === MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING) {
+          console.warn('Polling should have returned a wait time (defaulting to 120 sec.)')
+        }
         await new Promise(resolve => {
           this.timeoutResolve = resolve
           this.timeout = setTimeout(resolve, timeToSleep || 120000)
@@ -409,15 +419,8 @@ class Chat extends Component {
       } else if (!shouldPoll && errorCount < 4) {
         await new Promise(resolve => setTimeout(resolve, 300))
       }
-      const { show } = this.state
-      if (!show) {
-        // Stop the polling if the bot has been closed
-        console.info('WebChat is closed')
-        break
-      }
-
     } while (shouldPoll || errorCount < 4)
-    console.info('Stopped polling loop')
+    console.debug('Message polling has stopped')
     this._isPolling = false
   }
 
