@@ -90,7 +90,7 @@ class Chat extends Component {
 
     // If the bot is closed and there is a timeout set, clear the timeout to stop message polling.
     if (!show && this.timeout) {
-      console.debug('Clear wait polling wait timeout')
+      console.debug('Clear message polling timeout')
       clearTimeout(this.timeout)
       this.timeoutResolve()
       this.timeout = null
