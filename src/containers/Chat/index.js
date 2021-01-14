@@ -373,9 +373,9 @@ class Chat extends Component {
    * Check if there is a wait time return from the backend, otherwise increase the number
    * of calls if no messages.
    *
-   * @param {*} currentCount 
-   * @param {*} shouldWaitXseconds 
-   * @param {*} messages 
+   * @param {*} currentCount
+   * @param {*} shouldWaitXseconds
+   * @param {*} messages
    */
   _deteremNumberCallsWithoutAnyMessages = (currentCount, shouldWaitXseconds, messages) => {
     // If the waittime is set or messages has items then return 0
@@ -386,8 +386,8 @@ class Chat extends Component {
   /**
    * Determine if we should set the timeout to wait before calling the backend again.
    *
-   * @param {*} shouldWaitXseconds 
-   * @param {*} numberCallsWithoutAnyMessages 
+   * @param {*} shouldWaitXseconds
+   * @param {*} numberCallsWithoutAnyMessages
    */
   _shouldSetWaitTime = (shouldWaitXseconds, numberCallsWithoutAnyMessages) => {
     // Check if there is a waitTime specified by the backend or we have exceeded the number of calls without a message
