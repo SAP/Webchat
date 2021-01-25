@@ -24,10 +24,12 @@ module.exports = {
     rules: [{
       test: /\.js$/,
       loader: 'babel-loader',
-      exclude: /node-modules/,
+      exclude: [/(node-modules|resources|core-js)/],
       options: {
-        presets: ['@babel/react'],
+        presets: ['@babel/preset-env', '@babel/preset-react'],
+        babelrc: true,
         cacheDirectory: true,
+        sourceMaps: true,
       },
     }, {
       test: /\.scss$/,
