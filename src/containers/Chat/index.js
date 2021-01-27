@@ -500,9 +500,6 @@ class Chat extends Component {
         )}
         <div
           className='RecastAppChat--content CaiAppChat--content'
-          style={{
-            height: `calc(100% - ${50 + inputHeight}px`,
-          }}
           key='content'
         >
           {secondaryView
