@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { sanitizeUrl } from '@braintree/sanitize-url'
 import cx from 'classnames'
 
-import { truncate } from 'helpers'
+import { truncate, validButtonContent } from 'helpers'
 
 import './style.scss'
 
@@ -43,6 +43,7 @@ const Button = ({ button, sendMessage, readOnlyMode, isLastMessage }) => {
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-4781 - Support the phonenumber options
   const linkClassName = cx('RecastAppButton-Link CaiAppButton-Link', { 'CaiAppButton--ReadOnly': disableButton })
   const { href, target } = _getUrlInfo(button, disableButton)
+  const bData = validButtonContent(button)
   switch (type) {
   case 'phonenumber':
     content = (
@@ -70,7 +71,8 @@ const Button = ({ button, sendMessage, readOnlyMode, isLastMessage }) => {
         title={tooltip}
         className={cx('RecastAppButton CaiAppButton', { 'CaiAppButton--ReadOnly': disableButton })}
         onClick={() => {
-          !disableButton && sendMessage({ type: 'button', content: button }, title)
+          // eslint-disable-next-line no-unused-expressions
+          !disableButton && sendMessage({ type: 'button', content: bData }, title)
         }}
       >
         {formattedTitle}

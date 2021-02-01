@@ -49,7 +49,9 @@ export const getCredentialsFromLocalStorage = (channelId) => {
 }
 
 export const safeArrayOfItem = (items) => {
-  console.assert(items && Array.isArray(items), `Expected a array of items, but got a type:'${typeof items}'`)
+  // Assert is for testing only
+  // BCP: https://support.wdf.sap.corp/sap/support/message/2080400256
+  // console.assert(items && Array.isArray(items), `Expected a array of items, but got a type:'${typeof items}'`)
   if (items && Array.isArray(items)) {
     return items
   }
@@ -76,5 +78,18 @@ export const safeStringValue = (content) => {
     return 'undefined'
   }
   return ''
+}
+
+export const validButtonContent = (element) => {
+  if (element) {
+    const { type, value, title } = element
+    const data = {
+      type,
+      value,
+      title,
+    }
+    return data
+  }
+  return element
 }
 
