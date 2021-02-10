@@ -3,6 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  max-width: 370px;
   height: 100%;
   z-index: 2147483647;
 
@@ -49,7 +50,7 @@
   }
 }
 
-@media only screen and (min-width: 420px) and (min-height: 575px) {
+@media only screen and (min-width: 420px) {
   .RecastApp .RecastAppChat, .CaiApp .CaiAppChat {
     right: 10px;
     bottom: 10px;
