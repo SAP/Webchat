@@ -2,7 +2,7 @@
 @Library(['piper-lib', 'piper-lib-os']) _
 
 def qualityBadge = addEmbeddableBadgeConfiguration(id: "quality", subject: "Quality")
-def testsBadge = addEmbeddableBadgeConfiguration(id: "tests", subject: "Tests")
+def testsBadge = addEmbeddableBadgeConfiguration(id: "tests", subject: "Tests", status: "Not Applicable", color: "green")
 def sonarQubeBadge = addEmbeddableBadgeConfiguration(id: "sonarqube", subject: "SonarQube")
 def xMakeBuildBadge = addEmbeddableBadgeConfiguration(id: "xmake", subject: "xMake Build")
 def checkmarxBadge = addEmbeddableBadgeConfiguration(id: "checkmarx", subject: "Checkmarx")
@@ -111,7 +111,14 @@ pipeline {
                 }
             }
         }
-       //stage('Tests') {
+        stage('Tests') {
+            steps {
+                script {
+                    testsBadge.setStatus('Not Applicable')
+                }
+            }
+        }
+
 //            agent { label 'docker-compose' }
 //            steps {
 //                lock(resource: "${env.JOB_NAME}/10", inversePrecedence: true) {
