@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+import { isMobile } from 'helpers'
 import './style.scss'
 
 const Expander = ({ onClick, preferences, style, show }) => (
   <div
     onClick={onClick}
-    className={cx('RecastAppExpander CaiAppExpander', { open: show, close: !show })}
+    className={cx('RecastAppExpander CaiAppExpander', { CaiAppExpanderMobile: isMobile, open: show, close: !show })}
     style={{
       color: preferences.complementaryColor,
       backgroundColor: preferences.accentColor,
