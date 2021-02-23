@@ -14,6 +14,11 @@
   transition: transform 0.3s, opacity 0.6s;
   transform-origin: bottom;
 
+  &.CaiAppChatMobile {
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+  }
   &.open {
     transform: scaleY(1);
     opacity: 1;
