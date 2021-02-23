@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import cx from 'classnames'
 import propOr from 'ramda/es/propOr'
 import concat from 'ramda/es/concat'
-import { storeCredentialsToLocalStorage } from 'helpers'
+import { storeCredentialsToLocalStorage, isMobile } from 'helpers'
 import { createConversation, removeConversationId } from 'actions/conversation'
 
 import {
@@ -482,7 +482,7 @@ class Chat extends Component {
 
     return (
       <div
-        className={cx('RecastAppChat CaiAppChat', { open: show, close: !show })}
+        className={cx('RecastAppChat CaiAppChat', { CaiAppChatMobile: isMobile, open: show, close: !show })}
         style={{ backgroundColor: preferences.backgroundColor, ...containerStyle }}
       >
         {secondaryView ? (
@@ -499,7 +499,7 @@ class Chat extends Component {
           />
         )}
         <div
-          className='RecastAppChat--content CaiAppChat--content'
+          className={cx('RecastAppChat--content CaiAppChat--content', { 'CaiAppChatMobile--content': isMobile })}
           key='content'
         >
           {secondaryView
