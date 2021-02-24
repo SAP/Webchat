@@ -1,5 +1,5 @@
-import * as channel from 'actions/channel'
-import chai, { expect } from 'chai'
+
+import chai from 'chai'
 import like from 'chai-like'
 
 chai.use(like)
