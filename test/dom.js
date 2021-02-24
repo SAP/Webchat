@@ -50,6 +50,12 @@ window.webchatMethods = {
     return { memory, merge: true }
   },
 }
-
+window.matchMedia = function () {
+  return {
+    matches: false,
+    addListener () { /* */ },
+    removeListener () { /* */ },
+  }
+}
 Object.defineProperty(window, 'localStorage', { value: global.localStorage, configurable: true, enumerable: true, writable: true })
 copyProps(window, global)
