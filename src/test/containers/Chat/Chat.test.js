@@ -1,6 +1,6 @@
 import React from 'react'
 import { configure, mount, shallow } from 'enzyme'
-import { expect, assert } from 'chai'
+import { expect } from 'chai'
 import { Provider } from 'react-redux'
 
 import { store, sampleMessages } from 'test/mockStore'
@@ -33,9 +33,14 @@ describe('<Chat>', () => {
           preferences={preferences} />
       </Provider>
     )
-    expect(wrapper.find('Chat').exists()).to.equal(true)
-    wrapper.unmount()
+    const chat = wrapper.find('Chat')
+    expect(chat.exists()).to.equal(true)
+
+    // Stop polling
+    chat.setState({ show: false })
+    chat.update()
     setTimeout(() => {
+      wrapper.unmount()
       done()
     }, 100)
   })
