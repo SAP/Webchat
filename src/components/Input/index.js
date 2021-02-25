@@ -68,7 +68,7 @@ class Input extends Component {
   setFocusState () {
     if (!this.state.hasFocus && this._input) {
       setTimeout(() => {
-        // this._input.focus()
+        this._input.focus()
         this.setState({ hasFocus: true })
       }, 100)
     }
