@@ -1,6 +1,6 @@
 export const createrPreference = (params) => {
   const { noColors, menu, headerTitle } = params
-  const preferences = {
+  const pref = {
     headerTitle: headerTitle || 'Chat with me!',
     expanderTitle: 'Expand',
     userInputPlaceholder: 'User',
@@ -9,14 +9,14 @@ export const createrPreference = (params) => {
   }
 
   if (!noColors) {
-    preferences.accentColor = 'blue'
-    preferences.complementaryColor = 'red'
-    preferences.backgroundColor = 'white'
-    preferences.botMessageColor = 'gray'
-    preferences.botMessageBackgroundColor = 'blue'
+    pref.accentColor = 'blue'
+    pref.complementaryColor = 'red'
+    pref.backgroundColor = 'white'
+    pref.botMessageColor = 'gray'
+    pref.botMessageBackgroundColor = 'blue'
   }
   if (menu) {
-    preferences.menu = { menu: {
+    pref.menu = { menu: {
       title: 'Menu Title',
       call_to_actions: [
         {
@@ -32,7 +32,7 @@ export const createrPreference = (params) => {
     } }
   }
 
-  return preferences
+  return pref
 }
 
 export let preferences = createrPreference({ noColors: false })

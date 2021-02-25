@@ -1,5 +1,5 @@
 import configureStore from 'redux-mock-store'
-import apiMiddleware from '../middlewares/api'
+import apiMiddleware from 'middlewares/api'
 import { getChannelPreferences, setPreferences } from 'actions/channel'
 import { setCredentials, createConversation } from 'actions/conversation'
 import {
@@ -27,22 +27,19 @@ const buildSampleMessages = () => {
 export const sampleMessages = buildSampleMessages()
 
 export const buildInitialState = (params) => {
-  const { conversationId, channelId, token, configuration } = params
-  const initialState = { channel: {}, conversation: {}, configuration: {}, session: {} }
-  if (configuration) {
-    initialState.configuration = configuration
-  }
+  const { conversationId, channelId, token } = params
+  const initState = { conversation: {} }
   if (conversationId) {
-    initialState.conversation.conversationId = conversationId
+    initState.conversation.conversationId = conversationId
   }
   if (channelId) {
-    initialState.conversation.channelId = channelId
+    initState.conversation.channelId = channelId
   }
   if (token) {
-    initialState.conversation.token = token
+    initState.conversation.token = token
   }
-  initialState.messages = sampleMessages
-  return initialState
+  initState.messages = sampleMessages
+  return initState
 }
 
 export const initialState = buildInitialState({ conversationId: 'conId123', channelId: 'chanId123', token: 'tokenId123' })
