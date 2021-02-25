@@ -14,7 +14,7 @@ export const createButtonElement = (title, value, type) => {
 }
 
 export const createCardHeaderElement = (title, subtitle, params) => {
-  const { description, status1, status1State, status2, status2State, status3, status3State, image } = params
+  const { image } = params
   const message = {
     title: { value: title || 'Testing', dataType: 'text' },
   }
@@ -49,7 +49,7 @@ export const createCardModel = (params) => {
 }
 
 export const createListModel = (params, numberOfItems) => {
-  const { addHeader, addInLineButton, addFooterButtons } = params
+  const { addInLineButton } = params
   const message = {
     type: 'list',
     content: {

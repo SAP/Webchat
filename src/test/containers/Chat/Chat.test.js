@@ -62,9 +62,6 @@ describe('<Chat>', () => {
     expect(instance._shouldSetWaitTime(false, 6), 'No waittime, count above threshold').to.equal(true)
     assert.isUndefined(instance.shouldHideBotReply({}), 'shouldHideBotReply')
     instance._onSendMessagePromiseCompleted({ data: { messages: [] } })
-    // instance.sendMessage({ id: 'testId', type: 'text', content: 'Text' }, true)
-    // instance.retrySendMessage({ id: 'testId', type: 'text', content: 'Text' })
-    // instance.retrySendMessage({ id: 'testId', type: 'text', content: 'Text', conversationExpired: true })
     instance.getMemoryOptions('chatId').then((data) => {
       expect(data.merge).to.equal(true)
       done()

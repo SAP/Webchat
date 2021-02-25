@@ -17,7 +17,9 @@ describe('Middleware::Api', () => {
     it('should pass the intercepted action to next', () => {
       nockScope = nockScope.reply(200, { status: 'ok' })
       const nextArgs = []
-      const fakeNext = (...args) => { nextArgs.push(args) }
+      const fakeNext = (...args) => {
+        nextArgs.push(args)
+      }
       const fakeStore = { getState: () => { /* */ } }
 
       const action = { type: 'SET_MESSAGES' }
@@ -40,7 +42,9 @@ describe('Middleware::Api', () => {
     it('should call url with error', (done) => {
       nockScope = nockScope.reply(400, { status: 'Bad Request' })
       const fakeNext = (...args) => { /* */ }
-      const dispatch = (data) => { return data.foo.none }
+      const dispatch = (data) => {
+        return data.foo.none
+      }
       const fakeStore = { dispatch, getState: () => { /* */ } }
       const action = { type: 'API:BAD_POST', payload: { query: 'hdkhdkjsadhkjd' } }
 
