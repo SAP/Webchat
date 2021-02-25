@@ -61,6 +61,8 @@ const expectedActions = [
   removeMessage,
 ]
 
-export const createStore = (state) => { return mockStore(state, expectedActions) }
+export const createStore = (state) => {
+  return mockStore(state, expectedActions)
+}
 
 export const store = mockStore(initialState, expectedActions)

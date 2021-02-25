@@ -11,6 +11,8 @@ const createButton = (params, readOnlyMode) => {
       button={params} />
   )
 }
+const buttonUrlValues = { value: 'http://wwww.sap.com', title: 'Url', type: 'web_url' }
+const phonenumber = { value: 'tel:123-123-1234', title: 'Phone number 2', type: 'phonenumber' }
 
 describe('<Button>', () => {
 
@@ -24,31 +26,19 @@ describe('<Button>', () => {
     wrapper.unmount()
   })
   it('should render url', () => {
-    const wrapper = mount(createButton({ value: 'http://wwww.sap.com', title: 'Url', type: 'web_url' }, false))
-    expect(wrapper.find('a').exists()).to.equal(true)
-    expect(
-      wrapper.containsMatchingElement(
-        <a
-          className='RecastAppButton-Link CaiAppButton-Link' href='http://wwww.sap.com' target='_blank'
-          rel='noopener noreferrer'>
-          Url
-        </a>
-      )
-    ).to.equal(true)
+    const wrapper = mount(createButton(buttonUrlValues, false))
+    const anchor = wrapper.find('a')
+    expect(anchor.exists()).to.equal(true)
+    expect(anchor.prop('href')).to.equal(buttonUrlValues.value)
+    expect(anchor.prop('target')).to.equal('_blank')
     wrapper.unmount()
   })
   it('should render url readonly', () => {
-    const wrapper = mount(createButton({ value: 'http://wwww.sap.com', title: 'Url', type: 'web_url' }, true))
-    expect(wrapper.find('a').exists()).to.equal(true)
-    expect(
-      wrapper.containsMatchingElement(
-        <a
-          className='RecastAppButton-Link CaiAppButton-Link CaiAppButton--ReadOnly' href='#' target='_self'
-          rel='noopener noreferrer'>
-          Url
-        </a>
-      )
-    ).to.equal(true)
+    const wrapper = mount(createButton(buttonUrlValues, true))
+    const anchor = wrapper.find('a')
+    expect(anchor.exists()).to.equal(true)
+    expect(anchor.prop('href')).to.equal('#')
+    expect(anchor.prop('target')).to.equal('_self')
     wrapper.unmount()
   })
   it('handle render invalid url', () => {
@@ -57,38 +47,24 @@ describe('<Button>', () => {
     wrapper.unmount()
   })
   it('should render phone', () => {
-    const wrapper = mount(createButton({ value: 'tel:123-123-1234', title: 'Title', type: 'phonenumber' }, false))
-    expect(wrapper.find('a').exists()).to.equal(true)
-    expect(
-      wrapper.containsMatchingElement(
-        <a className='RecastAppButton-Link CaiAppButton-Link' href='tel:123-123-1234'>
-          Title
-        </a>
-      )
-    ).to.equal(true)
+    const wrapper = mount(createButton({ value: '123-123-1234', title: 'Title', type: 'phonenumber' }, false))
+    const anchor = wrapper.find('a')
+    expect(anchor.exists()).to.equal(true)
+    expect(anchor.prop('href')).to.equal('tel:123-123-1234')
     wrapper.unmount()
   })
   it('should render phone 2', () => {
-    const wrapper = mount(createButton({ value: '123-123-1234', title: 'Phone number 2', type: 'phonenumber' }, false))
-    expect(wrapper.find('a').exists()).to.equal(true)
-    expect(
-      wrapper.containsMatchingElement(
-        <a className='RecastAppButton-Link CaiAppButton-Link' href='tel:123-123-1234'>
-          Phone number 2
-        </a>
-      )
-    ).to.equal(true)
+    const wrapper = mount(createButton(phonenumber, false))
+    const anchor = wrapper.find('a')
+    expect(anchor.exists()).to.equal(true)
+    expect(anchor.prop('href')).to.equal(phonenumber.value)
     wrapper.unmount()
   })
   it('should render phone readonly', () => {
-    const wrapper = mount(createButton({ value: '123-123-1234', title: 'Read Only', type: 'phonenumber' }, true))
-    expect(wrapper.find('a').exists()).to.equal(true)
-    expect(
-      wrapper.containsMatchingElement(
-        <a className='RecastAppButton-Link CaiAppButton-Link CaiAppButton--ReadOnly' href='#'>
-          Read Only
-        </a>)
-    ).to.equal(true)
+    const wrapper = mount(createButton(phonenumber, true))
+    const anchor = wrapper.find('a')
+    expect(anchor.exists()).to.equal(true)
+    expect(anchor.prop('href')).to.equal('#')
     wrapper.unmount()
   })
 })

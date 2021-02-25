@@ -177,7 +177,7 @@ export const createMessage = (type, text, params, numberOfItems) => {
 export const createAttachment = (id, type, isBot, params) => {
   const { text, markdown, delay } = params
   const message = createMessage(type, text, params)
-  const attachment = {
+  return {
     attachment: {
       ...message,
     },
@@ -188,5 +188,4 @@ export const createAttachment = (id, type, isBot, params) => {
     markdown: markdown || false,
     delay: delay || 0,
   }
-  return attachment
 }
