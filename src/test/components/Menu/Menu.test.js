@@ -42,7 +42,7 @@ describe('<Menu>', () => {
     console.info(removeMenuIndexDiv.debug())
     removeMenuIndexDiv.simulate('click')
     assert.isTrue(removeIndex)
- 
+
     wrapper.unmount()
   })
 })
