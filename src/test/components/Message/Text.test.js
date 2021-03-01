@@ -14,7 +14,6 @@ describe('<Text>', () => {
         content={'- This is a text message.  **bold test**  see https://wwww.sap.com'}
         preferences={preferences} />
     )
-    console.info(wrapper.debug())
     expect(wrapper.find('Text').exists()).to.equal(true)
     expect(wrapper.find('ReactMarkdown').exists(), 'Markdown test').to.equal(true)
     expect(wrapper.find('ul').exists(), 'ul item test').to.equal(true)

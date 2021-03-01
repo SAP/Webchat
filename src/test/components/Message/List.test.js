@@ -5,30 +5,31 @@ import { expect } from 'chai'
 import { preferences } from 'test/preferenceUtil'
 import List from 'components/Message/List'
 
+const imageUrl = 'https://image.gif'
 const uimodel = {
   elements: [
     {
-      title: 'Title',
-      subtitle: 'subtitle',
-      imageUrl: 'https://image.gif',
+      title: 'Title 1',
+      subtitle: 'subtitle 1',
+      imageUrl,
       buttons: [{ value: 'hi', type: 'postback', title: 'Test' }],
     },
     {
-      title: 'Title',
-      subtitle: 'subtitle',
-      imageUrl: 'https://image.gif',
+      title: 'Title 2',
+      subtitle: 'subtitle 2',
+      imageUrl,
       buttons: [{ value: 'tel:1231231234', type: 'phonenumber', title: 'Test' }],
     },
     {
-      title: 'Title',
-      subtitle: 'subtitle',
-      imageUrl: 'https://image.gif',
+      title: 'Title 3',
+      subtitle: 'subtitle 3',
+      imageUrl,
       buttons: [{ value: 'https://sap.com', type: 'web_url', title: 'Test' }],
     },
     {
-      title: 'Title',
-      subtitle: 'subtitle',
-      imageUrl: 'https://image.gif',
+      title: 'Title 4',
+      subtitle: 'subtitle 4',
+      imageUrl,
       buttons: [{ value: 'abc123', type: 'web_url', title: 'Test' }],
     },
   ],
