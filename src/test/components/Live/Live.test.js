@@ -50,10 +50,18 @@ describe('<Live>', () => {
     // Test methods when the message list ref is null.
     instance.messagesList = null
     // These methods do not return anything, just make sure they do not crash
-    assert.doesNotThrow(() => { instance.onImageLoaded() }, 'Exception thrown for onImageLoaded')
-    assert.doesNotThrow(() => { instance.handleScroll() }, 'Exception thrown for onImageLoaded')
-    assert.doesNotThrow(() => { instance.componentDidUpdate({ messages: [msg1, msg2] }) }, 'Exception thrown for componentDidUpdate')
-    assert.doesNotThrow(() => { instance.componentDidMount() }, 'Exception thrown for componentDidMount')
+    assert.doesNotThrow(() => {
+      instance.onImageLoaded()
+    }, 'Exception thrown for onImageLoaded')
+    assert.doesNotThrow(() => {
+      instance.handleScroll()
+    }, 'Exception thrown for onImageLoaded')
+    assert.doesNotThrow(() => {
+      instance.componentDidUpdate({ messages: [msg1, msg2] })
+    }, 'Exception thrown for componentDidUpdate')
+    assert.doesNotThrow(() => {
+      instance.componentDidMount()
+    }, 'Exception thrown for componentDidMount')
     wrapper.unmount()
   })
 
