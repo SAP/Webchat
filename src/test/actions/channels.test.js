@@ -16,13 +16,6 @@ describe('Action Channel', () => {
     const channelId = 'TestChannelId'
     const token = 'TestTokenId'
     const getChannelPreferencesAction = channel.getChannelPreferences(channelId, token)
-    const expectedAction = {
-      type: 'API:GET_CHANNEL_PREFERENCES',
-      payload: {
-        url: `/webhook/${channelId}/preferences`,
-        method: 'get',
-      },
-    }
     getChannelPreferencesAction.then((data) => {
       console.info('Return data in channel test', data)
       done()
