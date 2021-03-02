@@ -22,7 +22,6 @@ describe('<App>', () => {
     const wrapper = mount(
       <Provider store={store}>
         <App
-          applicationId='1234567890-1'
           clearMessagesOnclose
           isReady
           preferences={{ openingType: 'always', welcomeMessage: 'Hello there' }}
@@ -50,7 +49,6 @@ describe('<App>', () => {
     const wrapper = mount(
       <Provider store={store}>
         <App
-          applicationId='1234567890-1'
           noCredentials
           isReady
           preferences={{ openingType: 'memory' }}
@@ -69,7 +67,6 @@ describe('<App>', () => {
     const wrapper = mount(
       <Provider store={store}>
         <App
-          applicationId='1234567890-1'
           isReady
           onRef={() => { callBackRef = true }}
           preferences={{ openingType: 'never' }}
