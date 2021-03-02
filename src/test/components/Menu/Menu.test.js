@@ -39,7 +39,6 @@ describe('<Menu>', () => {
     instance.handleMenuSelection({ type: 'postback', title: 'Post back' })
     assert.isTrue(postback)
     const removeMenuIndexDiv = wrapper.find('div').at(1)
-    console.info(removeMenuIndexDiv.debug())
     removeMenuIndexDiv.simulate('click')
     assert.isTrue(removeIndex)
 

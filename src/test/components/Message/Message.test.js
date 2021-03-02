@@ -11,7 +11,7 @@ describe('<Message>', () => {
   it('should render unknown type', () => {
     const wrapper = mount(
       <Message
-        message={createAttachment('1001', 'Unknown', true, { text: 'Message Text' })}
+        message={createAttachment('1001', 'Unknown', true, { text: '(Unknone) Message Text' })}
         isLastMessage
         onRetrySendMessage={() => { /* */ }}
         onCancelSendMessage={() => { /* */ }}
@@ -23,7 +23,7 @@ describe('<Message>', () => {
     wrapper.unmount()
   })
   it('should render missing content', () => {
-    const model = createAttachment('1001', 'Unknown', true, { text: 'Message Text' })
+    const model = createAttachment('1001', 'Unknown', true, { text: 'Missing Content' })
     model.attachment.content = null
     const wrapper = mount(
       <Message
@@ -44,7 +44,7 @@ describe('<Message>', () => {
     let clicked = false
     const wrapper = mount(
       <Message
-        message={createAttachment('1001', 'test', true, { text: 'Message Text' })}
+        message={createAttachment('1001', 'test', true, { text: 'Show Information Message Text' })}
         showInfo
         onClickShowInfo={(() => { clicked = true })}
         retry

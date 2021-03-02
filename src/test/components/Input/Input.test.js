@@ -7,14 +7,16 @@ import Input from 'components/Input'
 
 describe('<Input>', () => {
   it('should render', () => {
-    const menu = {}
-    menu.title = 'Menu 1'
-    menu.call_to_actions = [{ type: 'nested',
-      title: 'Nested',
-      call_to_actions: [{ title: 'Pay Bill', type: 'postback' }] },
-    { type: 'postback', title: 'Post back' },
-    { type: 'Link', title: 'Link back' },
-    { type: 'foo' }]
+    const menu = {
+      title: 'Menu 1',
+      call_to_actions: [{ type: 'nested',
+        title: 'Nested',
+        call_to_actions: [{ title: 'Pay Bill', type: 'postback' }] },
+      { type: 'postback', title: 'Post back' },
+      { type: 'Link', title: 'Link back' },
+      { type: 'foo' }],
+    }
+
     const wrapper = mount(
       <Input
         characterLimit={10}
