@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 
 import { store, sampleMessages } from 'test/mockStore'
 import { preferences } from 'test/preferenceUtil'
+import { conversationHistoryId, loadConversationHistoryPromise, sendMessagePromise } from 'test/codyEmulateTest'
 
 import Adapter from 'enzyme-adapter-react-16'
 
@@ -62,10 +63,38 @@ describe('<Chat>', () => {
     expect(instance._shouldSetWaitTime(false, 6), 'No waittime, count above threshold').to.equal(true)
     assert.isUndefined(instance.shouldHideBotReply({}), 'shouldHideBotReply')
     instance._onSendMessagePromiseCompleted({ data: { messages: [] } })
+    instance.retrySendMessage({ id: 'testId', type: 'text', content: 'Text', conversationExpired: true })
     instance.getMemoryOptions('chatId').then((data) => {
       expect(data.merge).to.equal(true)
+      wrapper.unmount()
       done()
     })
   })
 
+  it('Test Cody', (done) => {
+    const codywrapper = mount(
+      <Provider store={store} >
+        <Chat
+          show
+          conversationId={null}
+          sendMessagePromise={sendMessagePromise}
+          conversationHistoryId={conversationHistoryId}
+          loadConversationHistoryPromise={loadConversationHistoryPromise}
+          preferences={preferences} />
+      </Provider>
+    )
+    const ChatApp = codywrapper.find('Chat')
+    const instance = ChatApp.instance()
+    instance.componentDidUpdate({ conversationHistoryId: 'abc' }, {})
+    instance.sendMessage({ id: 'testId', type: 'text', content: 'Text' }, true)
+    assert.throws(instance._onSendMessagePromiseCompleted, Error, 'Fail send message')
+    sendMessagePromise({ attachment: { content: 'hi' } }).then((res) => {
+      instance._onSendMessagePromiseCompleted(res)
+    })
+
+    setTimeout(() => {
+      codywrapper.unmount()
+      done()
+    }, 500)
+  })
 })
