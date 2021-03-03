@@ -1,13 +1,15 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import { expect } from 'chai'
+import { assert, expect } from 'chai'
 
 import Button from 'components/Button'
 
+let sendMessageFlag = false
 const createButton = (params, readOnlyMode) => {
   return (
     <Button
       readOnlyMode={readOnlyMode}
+      sendMessage={() => { sendMessageFlag = true }}
       button={params} />
   )
 }
@@ -21,8 +23,14 @@ describe('<Button>', () => {
     expect(wrapper.find('Button').exists()).to.equal(false)
   })
   it('should render', () => {
-    const wrapper = mount(createButton({ value: 'Value', title: 'Title', type: 'postback' }, false))
+    sendMessageFlag = false
+    const wrapper = mount(createButton({
+      value: 'Value',
+      title: 'Title This is a very lone text to see if the tooltip part will be added after 80 characters of text.',
+      type: 'postback' }, false))
     expect(wrapper.find('Button').exists()).to.equal(true)
+    wrapper.find('Button').simulate('click')
+    assert.isTrue(sendMessageFlag, 'Button click simulation')
     wrapper.unmount()
   })
   it('should render url', () => {
