@@ -142,7 +142,15 @@ class App extends Component {
       defaultMessageDelay,
       readOnlyMode,
     } = this.props
-    const { expanded } = this.state
+    const { expanded } = this.state;
+
+    const fontFamilyRule = `
+      .RecastApp *,
+      .RecastApp *:after,
+      .RecastApp *:before {
+        font-family: ${preferences.fontFamily}
+      }
+    `;
 
     return (
       <div className='RecastApp CaiApp'>
@@ -156,6 +164,8 @@ class App extends Component {
           type='text/css'
           href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'
         />
+
+        {preferences.fontFamily && (<style>{fontFamilyRule}</style>)}
 
         <Expander
           show={!expanded}
