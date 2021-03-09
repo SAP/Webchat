@@ -2,7 +2,7 @@
 @Library(['piper-lib', 'piper-lib-os']) _
 
 def qualityBadge = addEmbeddableBadgeConfiguration(id: "quality", subject: "Quality")
-def testsBadge = addEmbeddableBadgeConfiguration(id: "tests", subject: "Tests", subject: "Tests")
+def testsBadge = addEmbeddableBadgeConfiguration(id: "tests", subject: "Tests")
 def sonarQubeBadge = addEmbeddableBadgeConfiguration(id: "sonarqube", subject: "SonarQube")
 def xMakeBuildBadge = addEmbeddableBadgeConfiguration(id: "xmake", subject: "xMake Build")
 def checkmarxBadge = addEmbeddableBadgeConfiguration(id: "checkmarx", subject: "Checkmarx")
