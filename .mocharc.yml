@@ -1,0 +1,25 @@
+# This is the Mocha config file
+allow-uncaught: true
+async-only: false
+bail: false
+check-leaks: false
+color: true
+delay: false
+diff: true
+exit: false
+extension: 'js'
+forbid-only: false
+forbid-pending: false
+full-trace: true
+growl: false
+inline-diffs: false
+recursive: false
+require: ['./test/errorHandle.js','esm','@babel/register','mock-local-storage','jsdom-global/register','ignore-styles','./test/helpers.js','./test/dom.js']
+retries: 1
+slow: 75
+sort: false
+timeout: false # same as "no-timeout: true" or "timeout: 0"
+trace-warnings: true # node flags ok
+ui: 'bdd'
+v8-stack-trace-limit: 100 # V8 flags are prepended with "v8-"
+watch: false

@@ -1,0 +1,8 @@
+{
+  "lines": 80,
+  "statements": 80,
+  "functions": 80,
+  "branches": 80,
+  "exclude": ["test", "src/test", "src/__test__", "dist", "webpack", "bin"]
+  }
+  
