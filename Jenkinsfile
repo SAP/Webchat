@@ -163,7 +163,6 @@ pipeline {
                    script {
                        FAILED_STAGE = env.STAGE_NAME
                    }
-                   setBadgeStatus(BADGE_MAP['tests'], STATUS_MAP["${currentBuild.currentResult}"])a
                }
                aborted {
                    script {
