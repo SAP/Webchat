@@ -112,7 +112,6 @@ pipeline {
             }
         }
         stage('Tests') {
-            agent { label 'docker-compose' }
             steps {
                lock(resource: "${env.JOB_NAME}/10", inversePrecedence: true) {
                    milestone 10
