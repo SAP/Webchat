@@ -112,11 +112,6 @@ pipeline {
             }
         }
         stage('Tests') {
-            steps {
-                script {
-                    testsBadge.setStatus('Not Applicable')
-                }
-            }
             agent { label 'docker-compose' }
             steps {
                lock(resource: "${env.JOB_NAME}/10", inversePrecedence: true) {
