@@ -117,81 +117,81 @@ pipeline {
                     testsBadge.setStatus('Not Applicable')
                 }
             }
+            agent { label 'docker-compose' }
+            steps {
+               lock(resource: "${env.JOB_NAME}/10", inversePrecedence: true) {
+                   milestone 10
+                   script {
+                       testsBadge.setStatus('running')
+                   }
+                   checkout scm
+                   setupPipelineEnvironment script: this
+                   measureDuration(script: this, measurementName: 'tests_duration') {
+                       sh 'make test'
+                   }
+               }
+            }
+            post {
+               always {
+                   publishTestResults(
+                       script: this,
+                       junit: [
+                           active:true,
+                           allowEmptyResults:true,
+                           archive: true,
+                           pattern: '**/reports/mocha.xml',
+                           updateResults: true
+                       ],
+                       cobertura: [
+                           active:true,
+                           allowEmptyResults:true,
+                           archive:true,
+                           pattern: '**/coverage/cobertura/cobertura-coverage.xml'
+                       ],
+                       html: [
+                           active:true,
+                           allowEmptyResults:true,
+                           archive:true,
+                           name: 'NYC/Mocha',
+                           path: '**/coverage/html'
+                       ],
+                       lcov: [
+                           active:true,
+                           allowEmptyResults:true,
+                           archive:true,
+                           name: 'LCOV Coverage',
+                           path: '**/coverage/lcov/lcov-report'
+                       ]
+                   )
+                   junit 'reports/mocha.xml'
+                   cobertura coberturaReportFile: 'coverage/cobertura/cobertura-coverage.xml'
+                   script {
+                       FAILED_STAGE = env.STAGE_NAME
+                   }
+                   setBadgeStatus(BADGE_MAP['tests'], STATUS_MAP["${currentBuild.currentResult}"])a
+               }
+               aborted {
+                   script {
+                       testsBadge.setStatus('aborted')
+                   }
+               }
+               failure {
+                   script {
+                       testsBadge.setStatus('failing')
+                   }
+               }
+               success {
+                   script {
+                       testsBadge.setStatus('passing')
+                   }
+               }
+               unstable {
+                   script {
+                       testsBadge.setStatus('unstable')
+                   }
+               }
+            }
         }
-
-//            agent { label 'docker-compose' }
-//            steps {
-//                lock(resource: "${env.JOB_NAME}/10", inversePrecedence: true) {
-//                    milestone 10
-//                    script {
-//                        testsBadge.setStatus('running')
-//                    }
-//                    checkout scm
-//                    setupPipelineEnvironment script: this
-//                    measureDuration(script: this, measurementName: 'tests_duration') {
-//                        sh 'make test'
-//                    }
-//                }
-//            }
-//            post {
-//                always {
-//                    publishTestResults(
-//                        script: this,
-//                        junit: [
-//                            active:true,
-//                            allowEmptyResults:true,
-//                            archive: true,
-//                            pattern: '**/reports/mocha.xml',
-//                            updateResults: true
-//                        ],
-//                        cobertura: [
-//                            active:true,
-//                            allowEmptyResults:true,
-//                            archive:true,
-//                            pattern: '**/coverage/cobertura/cobertura-coverage.xml'
-//                        ],
-//                        html: [
-//                            active:true,
-//                            allowEmptyResults:true,
-//                            archive:true,
-//                            name: 'NYC/Mocha',
-//                            path: '**/coverage/html'
-//                        ],
-//                        lcov: [
-//                            active:true,
-//                            allowEmptyResults:true,
-//                            archive:true,
-//                            name: 'LCOV Coverage',
-//                            path: '**/coverage/lcov/lcov-report'
-//                        ]
-//                    )
-//                    junit 'reports/mocha.xml'
-//                    script {
-//                        FAILED_STAGE = env.STAGE_NAME
-//                    }
-//                }
-//                aborted {
-//                    script {
-//                        testsBadge.setStatus('aborted')
-//                    }
-//                }
-//                failure {
-//                    script {
-//                        testsBadge.setStatus('failing')
-//                    }
-//                }
-//                success {
-//                    script {
-//                        testsBadge.setStatus('passing')
-//                    }
-//                }
-//                unstable {
-//                    script {
-//                        testsBadge.setStatus('unstable')
-//                    }
-//                }
-//            }
-//        }
         stage('SonarQube') {
             when {
                 anyOf {
