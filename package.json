@@ -29,6 +29,7 @@
     "@braintree/sanitize-url": "^2.1.0",
     "@types/react": "16.8.22",
     "axios": "^0.21.1",
+    "chai-like": "^1.1.1",
     "classnames": "^2.2.5",
     "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
