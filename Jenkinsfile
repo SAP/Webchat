@@ -121,11 +121,7 @@ pipeline {
                    checkout scm
                    setupPipelineEnvironment script: this
                    measureDuration(script: this, measurementName: 'tests_duration') {
-                       sh 'npm run-script testHtml'
-                       sh 'npm run-script coverage:lcov'
-                       sh 'npm run-script coverage:clover'
-                       sh 'npm run-script coverage:cobertura'
-                       sh 'npm run-script coverage:lcov'
+                       sh 'npm run testHtml && npm run coverage:clover && npm run coverage:cobertura && npm run coverage:lcov && npm run coverage:html'
                    }
                }
             }
