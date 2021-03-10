@@ -2,7 +2,7 @@
   <img src="assets/header.png" />
 </div>
 
-# SAP Conversational AI Webchat [![Tests](https://jenkins.ml.only.sap/buildStatus/icon?job=CAI%2FML-CAI-webchat%2Ffix-release-dashboard-badge&config=tests&style=plastic)](https://jenkins.ml.only.sap/job/CAI/job/ML-CAI-webchat/job/fix-release-dashboard-badge/)
+# SAP Conversational AI Webchat
 | [Default Usage](#usage) | [Self-Hosted Installation](#self-hosted-webchat) | [Getting Started on SAP Conversational AI]( #getting-started-with-sap-conversational-ai) | [License](#license) |
 |---|---|---|---|
 <div>
