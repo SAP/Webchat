@@ -3,5 +3,6 @@
   "checkPolicies": true,
   "productVer": "current",
   "forceUpdate": true,
+  "ignoreNpmLsErrors": true,
   "failOnError": true
 }
