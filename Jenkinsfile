@@ -422,7 +422,7 @@ pipeline {
                         }
                         stashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
                             measureDuration(script: this, measurementName: 'whitesource_duration') {
-                                whitesourceExecuteScan script: this, scanType: 'npm', whitesourceProjectNames: "ml-cai-webchat - current"
+                                whitesourceExecuteScan script: this, scanType: 'npm', whitesourceProjectNames: ['ml-cai-webchat - current']
                             }
                         }
                     }
@@ -477,7 +477,7 @@ pipeline {
                         }
                         stashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
                             measureDuration(script: this, measurementName: 'ppms_duration') {
-                                sapCheckPPMSCompliance script: this, scanType: 'whitesource', whitesourceProjectNames: "ml-cai-webchat - current"
+                                sapCheckPPMSCompliance script: this, scanType: 'whitesource', whitesourceProjectNames: ['ml-cai-webchat - current']
                             }
 
                           }
