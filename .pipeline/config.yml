@@ -27,7 +27,7 @@ steps:
   sapCheckPPMSCompliance:
     ppmsCredentialsId: 'PPMSCompliance'
     ppmsChangeRequestUpload: true
-    ppmsID: '73554900100200012173'
+    ppmsID: '73555000100200012242'
   writeInflux:
     influxServer: 'jenkins'
     wrapInNode: true
