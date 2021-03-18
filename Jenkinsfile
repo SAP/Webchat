@@ -358,6 +358,7 @@ pipeline {
                 anyOf {
                     //branch 'PR-*'
                     branch 'master'
+                    branch 'fx_piper_methods'
                 }
             }
             steps {
@@ -369,7 +370,7 @@ pipeline {
                     checkout scm
                     setupPipelineEnvironment script: this
                     measureDuration(script: this, measurementName: 'checkmarx_duration') {
-                        executeCheckmarxScan script: this
+                        checkmarxExecuteScan script: this
                     }
                 }
             }
@@ -406,6 +407,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'PR-*'
+                    branch 'fx_piper_methods'
                 }
             }
             steps {
@@ -417,12 +419,10 @@ pipeline {
                         setupPipelineEnvironment script: this
                         script {
                             whiteSourceBadge.setStatus('running')
-                            def package_json = readJSON file: 'package.json'
-                            env.VERSION_TXT = package_json['version']
                         }
                         stashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
                             measureDuration(script: this, measurementName: 'whitesource_duration') {
-                                executeWhitesourceScan script: this, scanType: 'npm', whitesourceProjectNames: "ml-cai-webchat - ${env.VERSION_TXT}"
+                                whitesourceExecuteScan script: this, scanType: 'npm', whitesourceProjectNames: ['ml-cai-webchat - current']
                             }
                         }
                     }
@@ -462,6 +462,7 @@ pipeline {
                     // Always run for release and hotfix
                     branch 'master'
                     branch 'PR-*'
+                    branch 'fx_piper_methods'
                 }
             }
             steps {
@@ -473,12 +474,10 @@ pipeline {
                         setupPipelineEnvironment script: this
                         script {
                           ppmsBadge.setStatus('running')
-                          def package_json = readJSON file: 'package.json'
-                          env.VERSION_TXT = package_json['version']
                         }
                         stashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
                             measureDuration(script: this, measurementName: 'ppms_duration') {
-                                executePPMSComplianceCheck script: this, scanType: 'whitesource', whitesourceProjectNames: "ml-cai-webchat - ${env.VERSION_TXT}"
+                                sapCheckPPMSCompliance script: this, scanType: 'whitesource', whitesourceProjectNames: ['ml-cai-webchat - current']
                             }
 
                           }

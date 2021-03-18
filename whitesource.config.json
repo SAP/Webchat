@@ -1,7 +1,8 @@
 {
   "devDep": "true",
   "checkPolicies": true,
-  "productVer": "1.4.34",
+  "productVer": "current",
   "forceUpdate": true,
+  "ignoreNpmLsErrors": true,
   "failOnError": true
 }
