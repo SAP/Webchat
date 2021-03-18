@@ -5,6 +5,7 @@ general:
   whitesourceProductName: 'SHC - SAP CONVERSATIONAL AI PAL'
   whitesourceProductToken: '2cb973cbfa874f47b07a0adc60e0cee431c14992f6484b90a2b6d0073e8ef695'
   whitesourceUserTokenCredentialsId: 'Whitesource_UserKey'
+  sapPiperDownloadCredentialsId: 'd9e23346-ab04-4c23-add9-409af338fdab'
 steps:
   setVersion:
     buildTool: 'npm'
@@ -12,18 +13,22 @@ steps:
     tagPrefix: ''
   executeBuild:
     xMakeShipmentType: 'indirectshipment'
-  executeCheckmarxScan:
+  checkmarxExecuteScan:
     checkmarxCredentialsId: 'CheckmarxUser'
     checkmarxGroupId: '110ebc45-3f3b-45c4-a2d0-781ab3050045'
     checkmarxProject: 'ML-CAI-webchat'
     preset: '100154'
-  executeWhitesourceScan:
+ whitesourceExecuteScan:
     securityVulnerabilities: true
-  executePPMSComplianceCheck:
+    buildTool: 'npm'
+    buildDescriptorFile: './package.json'
+    buildDescriptorExcludeList: ['**/codymini/**/package.json']
+    whitesourceProductVersion: 'current'
+  sapCheckPPMSCompliance:
     ppmsCredentialsId: 'PPMSCompliance'
-    ppmsID: '73555000100200012242'
     ppmsChangeRequestUpload: true
-  writeInflux:
+    ppmsID: '73554900100200012173'
+   writeInflux:
     influxServer: 'jenkins'
     wrapInNode: true
   sendNotificationMail:
