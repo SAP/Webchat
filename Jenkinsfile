@@ -477,7 +477,7 @@ pipeline {
                         }
                         stashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
                             measureDuration(script: this, measurementName: 'ppms_duration') {
-                                executePPMSComplianceCheck script: this, scanType: 'whitesource', whitesourceProjectNames: "ml-cai-webchat - current"
+                                sapCheckPPMSCompliance script: this, scanType: 'whitesource', whitesourceProjectNames: "ml-cai-webchat - current"
                             }
 
                           }
