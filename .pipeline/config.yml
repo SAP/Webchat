@@ -18,7 +18,7 @@ steps:
     checkmarxGroupId: '110ebc45-3f3b-45c4-a2d0-781ab3050045'
     checkmarxProject: 'ML-CAI-webchat'
     preset: '100154'
- whitesourceExecuteScan:
+  whitesourceExecuteScan:
     securityVulnerabilities: true
     buildTool: 'npm'
     buildDescriptorFile: './package.json'
@@ -27,8 +27,8 @@ steps:
   sapCheckPPMSCompliance:
     ppmsCredentialsId: 'PPMSCompliance'
     ppmsChangeRequestUpload: true
-    ppmsID: '73554900100200012173'
-   writeInflux:
+    ppmsID: '73555000100200012242'
+  writeInflux:
     influxServer: 'jenkins'
     wrapInNode: true
   sendNotificationMail:
