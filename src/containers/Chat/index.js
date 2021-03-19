@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import cx from 'classnames'
 import propOr from 'ramda/es/propOr'
 import concat from 'ramda/es/concat'
-import { storeCredentialsToLocalStorage, isMobile } from 'helpers'
+import { storeCredentialsToLocalStorage } from 'helpers'
 import { createConversation, removeConversationId } from 'actions/conversation'
 
 import {
