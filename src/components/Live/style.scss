@@ -1,5 +1,5 @@
 .RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
-  height: calc(100vh - 120px); // Adjust for the header and footer area
+  height: 72vh; // Adjust for the header and footer area
   min-height: 200px;
   display: flex;
   flex-direction: column;
@@ -12,7 +12,7 @@
   }
 }
 
-@media only screen and (min-height: 575px) {
+@media only screen and (min-width: 420px) and (min-height: 575px) {
   .RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
     height: 460px;
   }
