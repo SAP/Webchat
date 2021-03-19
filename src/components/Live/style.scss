@@ -1,5 +1,5 @@
 .RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
-  height: 100%;
+  height: calc(100vh - 120px); // Adjust for the header and footer area
   min-height: 200px;
   display: flex;
   flex-direction: column;
@@ -11,39 +11,9 @@
     padding-bottom: 25px;
   }
 }
-@media only screen and (max-height: 375px) {
-  .RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
-    height: 200px;
-  }
-  .CaiAppChatMobile .RecastAppLive{
-    height: 100%;
-  }
-}
-
-
-@media only screen and (min-height: 375px) and (max-height: 475px) {
-  .RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
-    height: 260px;
-  }
-  .CaiAppChatMobile .RecastAppLive{
-    height: 100%;
-  }
-}
-
-@media only screen and (min-height: 475px) and (max-height: 575px) {
-  .RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
-    height: 360px;
-  }
-  .CaiAppChatMobile .RecastAppLive{
-    height: 100%;
-  }
-}
 
 @media only screen and (min-height: 575px) {
   .RecastApp .RecastAppLive, .CaiApp .CaiAppLive {
     height: 460px;
-  }
-  .CaiAppChatMobile .RecastAppLive{
-    height: 100%;
   }
 }
