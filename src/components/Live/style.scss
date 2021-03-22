@@ -5,6 +5,7 @@
   flex-direction: column;
 
   overflow-y: scroll;
+  overscroll-behavior: contain;
 
   &--message-container {
     flex-grow: 1;
