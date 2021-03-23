@@ -90,15 +90,3 @@ export const validButtonContent = (element) => {
   }
   return element
 }
-
-const toMatch = [
-  /Android/i,
-  /webOS/i,
-  /iPhone/i,
-  /BlackBerry/i,
-  /Windows Phone/i,
-]
-
-export const isMobile = toMatch.some((toMatchItem) => {
-  return navigator.userAgent.match(toMatchItem)
-})

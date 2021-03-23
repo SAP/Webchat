@@ -5,7 +5,6 @@ import {
   safeBooleanValue,
   safeStringValue,
   validButtonContent,
-  isMobile,
   getCredentialsFromLocalStorage,
   storeCredentialsToLocalStorage,
 } from 'helpers'
@@ -15,7 +14,6 @@ describe('Test the helper utilities', () => {
     assert.equal(truncate('abcdef extra text', 6), 'abc...')
     assert.equal(truncate('abcdef', 30), 'abcdef')
     assert.equal(truncate({ }, 30), '')
-    assert.isFalse(isMobile, 'Testing is isMobile')
   })
 
   it('Valid String test', () => {
