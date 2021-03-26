@@ -56,8 +56,10 @@ class Input extends Component {
     if (!this.state.value) {
       // Dirty fix textarea placeholder to reset style correctly
       setTimeout(() => {
-        this._input.style.height = '18px'
-        this._input.value = ''
+        if (this._input) {
+          this._input.style.height = '18px'
+          this._input.value = ''
+        }
         this.onInputHeight()
       }, 100)
     }
@@ -68,7 +70,9 @@ class Input extends Component {
   setFocusState () {
     if (!this.state.hasFocus && this._input) {
       setTimeout(() => {
-        this._input.focus()
+        if (this._input) {
+          this._input.focus()
+        }
         this.setState({ hasFocus: true })
       }, 100)
     }
@@ -146,8 +150,10 @@ class Input extends Component {
           () => {
             // Trick to go to the end of the line when pressing ArrowUp key
             setTimeout(() => {
-              this._input.selectionStart = this._input.value.length
-              this._input.selectionEnd = this._input.value.length
+              if (this._input) {
+                this._input.selectionStart = this._input.value.length
+                this._input.selectionEnd = this._input.value.length
+              }
             }, 10)
           },
         )

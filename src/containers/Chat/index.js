@@ -499,7 +499,7 @@ class Chat extends Component {
           />
         )}
         <div
-          className='RecastAppChat--content CaiAppChat--content'
+          className={cx('RecastAppChat--content CaiAppChat--content')}
           key='content'
         >
           {secondaryView
