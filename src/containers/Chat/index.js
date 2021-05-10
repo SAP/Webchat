@@ -26,6 +26,7 @@ const MAX_GET_MEMORY_TIME = 10 * 1000 // in ms
 const FAILED_TO_GET_MEMORY = 'Could not get memory from webchatMethods.getMemory :'
 const WRONG_MEMORY_FORMAT
   = 'Wrong memory format, expecting : { "memory": <json>, "merge": <boolean> }'
+const MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING = 6
 
 @connect(
   state => ({
@@ -87,6 +88,14 @@ class Chat extends Component {
   componentDidUpdate (prevProps) {
     const { show } = this.state
     const { removeAllMessages, conversationHistoryId, loadConversationHistoryPromise } = this.props
+
+    // If the bot is closed and there is a timeout set, clear the timeout to stop message polling.
+    if (!show && this.timeout) {
+      console.debug('Clear message polling timeout')
+      clearTimeout(this.timeout)
+      this.timeoutResolve()
+      this.timeout = null
+    }
 
     if (show && !this.props.sendMessagePromise && !this._isPolling) {
       this.doMessagesPolling()
@@ -349,25 +358,67 @@ class Chat extends Component {
     })
   }
 
+  /**
+   * Determine if should stop message polling because the Bot is closed or the conversation ID is undefined/expired
+   */
+  _shouldStopMessagePolling = () => {
+    if (!this.state.show || !this.props.conversationId) {
+      console.debug(!this.state.show ? 'WebChat is closed' : 'conversationId is not found')
+      return true
+    }
+    return false
+  }
+
+  /**
+   * Check if there is a wait time return from the backend, otherwise increase the number
+   * of calls if no messages.
+   *
+   * @param {*} currentCount
+   * @param {*} shouldWaitXseconds
+   * @param {*} messages
+   */
+  _deteremNumberCallsWithoutAnyMessages = (currentCount, shouldWaitXseconds, messages) => {
+    // If the waittime is set or messages has items then return 0
+    // Wait time should be controlled by the backend.
+    return shouldWaitXseconds || (messages && messages.length) ? 0 : currentCount + 1
+  }
+
+  /**
+   * Determine if we should set the timeout to wait before calling the backend again.
+   *
+   * @param {*} shouldWaitXseconds
+   * @param {*} numberCallsWithoutAnyMessages
+   */
+  _shouldSetWaitTime = (shouldWaitXseconds, numberCallsWithoutAnyMessages) => {
+    // Check if there is a waitTime specified by the backend or we have exceeded the number of calls without a message
+    if (shouldWaitXseconds || numberCallsWithoutAnyMessages >= MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING) {
+      if (shouldWaitXseconds === false && numberCallsWithoutAnyMessages === MAX_NUMBER_WITHOUT_MESSAGES_BEFORE_WAITING) {
+        console.warn('Polling should have returned a wait time (defaulting to 120 sec.)')
+      }
+      return true
+    }
+    return false
+  }
+
   doMessagesPolling = async () => {
     if (this._isPolling || !this.props.conversationId) {
       return
     }
     this._isPolling = true
-
     let shouldPoll = true
     let errorCount = 0
-
+    let numberCallsWithoutAnyMessages = 0
+    console.debug('Message Polling is starting')
     do {
       const { lastMessageId, channelId, token, conversationId } = this.props
-      if (!conversationId) {
-        // coversation id expired?
+      // Stop if the bot is closed or the conversation id is no longer found.
+      if (this._shouldStopMessagePolling()) {
         break
       }
       let shouldWaitXseconds = false
       let timeToSleep = 0
       try {
-        const { waitTime } = await this.props.pollMessages(
+        const { waitTime, messages } = await this.props.pollMessages(
           channelId,
           token,
           conversationId,
@@ -375,6 +426,7 @@ class Chat extends Component {
         )
         shouldPoll = waitTime === 0
         shouldWaitXseconds = waitTime > 0
+        numberCallsWithoutAnyMessages = this._deteremNumberCallsWithoutAnyMessages(numberCallsWithoutAnyMessages, shouldWaitXseconds, messages)
         timeToSleep = waitTime * 1000
         errorCount = 0
       } catch (err) {
@@ -382,20 +434,30 @@ class Chat extends Component {
         errorCount++
       }
 
+      // Need to check if we are close again, since polling can take 30 sec to return. Avoid
+      // setting the timeout to call again in 120 sec if we are closed.
+      if (this._shouldStopMessagePolling()) {
+        // Stop the polling if the bot has been closed
+        break
+      }
+
       /**
        * Note: If the server returns a waitTime != 0, it means that conversation has no new messages since 2 minutes.
        * So, let's poll to check new messages every "waitTime" seconds (waitTime = 120 seconds per default)
+       * If the waitTime is 0 and the number of calls without a message is greater then 3 minutes
+       * wait for 120 seconds before trying again.
        */
-      if (shouldWaitXseconds) {
+      if (this._shouldSetWaitTime(shouldWaitXseconds, numberCallsWithoutAnyMessages)) {
         await new Promise(resolve => {
           this.timeoutResolve = resolve
-          this.timeout = setTimeout(resolve, timeToSleep)
+          this.timeout = setTimeout(resolve, timeToSleep || 120000)
         })
         this.timeout = null
       } else if (!shouldPoll && errorCount < 4) {
         await new Promise(resolve => setTimeout(resolve, 300))
       }
     } while (shouldPoll || errorCount < 4)
+    console.debug('Message polling has stopped')
     this._isPolling = false
   }
 
@@ -437,7 +499,7 @@ class Chat extends Component {
           />
         )}
         <div
-          className='RecastAppChat--content CaiAppChat--content'
+          className={cx('RecastAppChat--content CaiAppChat--content')}
           key='content'
         >
           {secondaryView

@@ -92,4 +92,3 @@ export const validButtonContent = (element) => {
   }
   return element
 }
-

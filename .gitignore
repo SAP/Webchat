@@ -5,3 +5,5 @@ dist
 lib
 .idea/
 lib
+coverage
+.nyc_output
