@@ -31,6 +31,39 @@ const allowedMarkdownTypes = [
   'tableRow',
   'tableCell',
 ]
+const getValidMarkDownTextString = (isMarkdown, compiledResponse) => {
+  // Due to a bug in the markdown need to escape the // in the text part of a link
+  // Example of issue in markdown [https://foo](https://foo) doesn't work,
+  // but [https:\/\/foo](https://foo) seems to fix the issue
+  // BCP: https://support.wdf.sap.corp/sap/support/message/2180153653
+  if (isMarkdown) {
+  // Search the text starting with [ with :// and ends with ]
+    let vaildMarkDownText = compiledResponse
+    // the regexp to do this will not eval in safari and cause it to crash, so had to do it the hard way
+    // loop over the text...
+    // const regex = /(?<=\[)(.*?)(:\/\/)(.*)(?=\])/gm
+    // if (vaildMarkDownText && vaildMarkDownText.match(regex)) {
+    //   vaildMarkDownText = vaildMarkDownText.replace(regex, '$1:\\/\\/$3')
+    // }
+    let lastIndex = vaildMarkDownText.indexOf('[', lastIndex)
+    while (lastIndex >= 0) {
+      const endPos = vaildMarkDownText.indexOf(']', lastIndex + 1)
+      // Check if there is another [] in the compiledResponse
+      const inRange = vaildMarkDownText.indexOf('[', lastIndex + 1)
+      const numberOfChar = Math.max(1, endPos - lastIndex)
+      const textPart = vaildMarkDownText.substr(lastIndex, numberOfChar)
+      if (textPart.indexOf('://') > 0 && endPos > 0 && (inRange < 0 || inRange > endPos)) {
+        // Have to escape the :// in the Text part to render and act correctly in the markdown.
+        const replaceText = textPart.replace('://', ':\\/\\/')
+        vaildMarkDownText = `${vaildMarkDownText.substr(0, lastIndex)}${replaceText}${vaildMarkDownText.substr(endPos)}`
+      }
+      lastIndex = vaildMarkDownText.indexOf('[', lastIndex + 1)
+    }
+    return vaildMarkDownText
+  }
+
+  return null
+}
 
 const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
   const respond = safeStringValue(content)
@@ -66,17 +99,8 @@ const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
         rel='noopener noreferrer'>{props.children}
       </a>)
   }
-  // Due to a bug in the markdown need to escape the // in the text part of a link
-  // Example of issue in markdown [https://foo](https://foo) doesn't work,
-  // but [https:\/\/foo](https://foo) seems to fix the issue
-  // BCP: https://support.wdf.sap.corp/sap/support/message/2180153653
-  let markDownResponse = isMarkdown ? compiledResponse : null
+  const markDownResponse = getValidMarkDownTextString(isMarkdown, compiledResponse)
 
-  // Search the text starting with [ with :// and ends with ]
-  const regex = /(?<=\[)(.*?)(:\/\/)(.*)(?=\])/gm
-  if (markDownResponse && markDownResponse.match(regex)) {
-    markDownResponse = markDownResponse.replace(regex, '$1:\\/\\/$3')
-  }
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
       {isMarkdown ? (
