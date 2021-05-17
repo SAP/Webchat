@@ -66,15 +66,24 @@ const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
         rel='noopener noreferrer'>{props.children}
       </a>)
   }
+  // Due to a bug in the markdown need to escape the // in the text part of a link
+  // Example of issue in markdown [https://foo](https://foo) doesn't work,
+  // but [https:\/\/foo](https://foo) seems to fix the issue
+  // BCP: https://support.wdf.sap.corp/sap/support/message/2180153653
+  let markDownResponse = isMarkdown ? compiledResponse : null
 
+  // Search the text starting with [ with :// and ends with ]
+  const regex = /(?<=\[)(.*?)(:\/\/)(.*)(?=\])/gm
+  if (markDownResponse && markDownResponse.match(regex)) {
+    markDownResponse = markDownResponse.replace(regex, '$1:\\/\\/$3')
+  }
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
       {isMarkdown ? (
         <ReactMarkdown
           plugins={[gfm]}
           renderers={{ link: LinkRenderer }}
-          allowedTypes={allowedMarkdownTypes}
-        >{compiledResponse}
+          allowedTypes={allowedMarkdownTypes}>{markDownResponse}
         </ReactMarkdown>
       ) : (
         compiledResponse
