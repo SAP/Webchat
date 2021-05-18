@@ -1,9 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { expect } from 'chai'
+import { assert, expect } from 'chai'
 
 import { preferences } from 'test/preferenceUtil'
-import Text from 'components/Message/Text'
+import Text, { getValidMarkDownLinkString } from 'components/Message/Text'
 
 describe('<Text>', () => {
   it('should render MarkDown', () => {
@@ -40,6 +40,23 @@ describe('<Text>', () => {
     expect(anchor.exists()).to.equal(true)
     expect(anchor.prop('href')).to.equal('#')
     wrapper.unmount()
+  })
+  it('Markdown link validation test', () => {
+    assert.isNull(getValidMarkDownLinkString(false, 'Testing text'), 'Not a markdown')
+    assert.isNull(getValidMarkDownLinkString(true), 'Missing markdown text')
+    expect(getValidMarkDownLinkString(true, '[Testing text]'), 'Text markdown').to.equal('[Testing text]')
+    expect(getValidMarkDownLinkString(true,
+      '[see this link https://www.sap.com](https://www.sap.com)'), 'Link with text markdown').to.equal(
+      '[see this link https:\\/\\/www.sap.com](https://www.sap.com)')
+    expect(getValidMarkDownLinkString(true,
+      '[https://www.sap.com](https://www.sap.com)[https://www.sap.com](https://www.sap.com)'), '2 Link with text markdown').to.equal(
+      '[https:\\/\\/www.sap.com](https://www.sap.com)[https:\\/\\/www.sap.com](https://www.sap.com)')
+    expect(getValidMarkDownLinkString(true,
+      '(https://www.sap.com)'), 'Standard Link markdown').to.equal(
+      '(https://www.sap.com)')
+    expect(getValidMarkDownLinkString(true,
+      '[Here is a normal Text](https://www.sap.com)'), 'Standard Link normal text markdown').to.equal(
+      '[Here is a normal Text](https://www.sap.com)')
   })
 })
 

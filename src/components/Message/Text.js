@@ -31,12 +31,14 @@ const allowedMarkdownTypes = [
   'tableRow',
   'tableCell',
 ]
-const getValidMarkDownTextString = (isMarkdown, compiledResponse) => {
+
+// Export for unit test
+export const getValidMarkDownLinkString = (isMarkdown, compiledResponse) => {
   // Due to a bug in the markdown need to escape the // in the text part of a link
   // Example of issue in markdown [https://foo](https://foo) doesn't work,
   // but [https:\/\/foo](https://foo) seems to fix the issue
   // BCP: https://support.wdf.sap.corp/sap/support/message/2180153653
-  if (isMarkdown) {
+  if (isMarkdown && compiledResponse) {
   // Search the text starting with [ with :// and ends with ]
     let vaildMarkDownText = compiledResponse
     // the regexp to do this will not eval in safari and cause it to crash, so had to do it the hard way
@@ -99,7 +101,7 @@ const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
         rel='noopener noreferrer'>{props.children}
       </a>)
   }
-  const markDownResponse = getValidMarkDownTextString(isMarkdown, compiledResponse)
+  const markDownResponse = getValidMarkDownLinkString(isMarkdown, compiledResponse)
 
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
