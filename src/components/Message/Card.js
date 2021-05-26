@@ -5,13 +5,20 @@ import { sanitizeUrl } from '@braintree/sanitize-url'
 import { truncate, safeArrayOfItem } from 'helpers'
 
 import Button from 'components/Button'
+import { propOr } from 'ramda'
 
 const Card = ({ content, sendMessage, onImageLoaded, readOnlyMode, isLastMessage }) => {
-  const { title, subtitle, imageUrl, buttons } = content
+  const title = propOr('', 'title', content)
+  const subtitle = propOr(null, 'subtitle', content)
+  const buttons = propOr(null, 'buttons', content)
+  let imageUrl = propOr(null, 'imageUrl', content)
 
   if (imageUrl && sanitizeUrl(imageUrl) === 'about:blank') {
-    return null
+    console.warn('Warning the image url is not supported')
+    // If the image is invalid still show the card without the image
+    imageUrl = null
   }
+
   // https://sapjira.wdf.sap.corp/browse/SAPMLCONV-6296
   // Need to check if buttons is null before rendering the button html.
   return (

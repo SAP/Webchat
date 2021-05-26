@@ -1,9 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { expect } from 'chai'
+import { assert, expect } from 'chai'
 
 import { preferences } from 'test/preferenceUtil'
-import Text from 'components/Message/Text'
+import Text, { getValidMarkDownLinkString } from 'components/Message/Text'
 
 describe('<Text>', () => {
   it('should render MarkDown', () => {
@@ -40,6 +40,11 @@ describe('<Text>', () => {
     expect(anchor.exists()).to.equal(true)
     expect(anchor.prop('href')).to.equal('#')
     wrapper.unmount()
+  })
+  it('Markdown link validation test', () => {
+    assert.isNull(getValidMarkDownLinkString(false, 'Testing text'), 'Not a markdown')
+    assert.isNull(getValidMarkDownLinkString(true), 'Missing markdown text')
+    expect(getValidMarkDownLinkString(true, '[Testing text]'), 'Text markdown').to.equal('[Testing text]')
   })
 })
 

@@ -32,6 +32,16 @@ const allowedMarkdownTypes = [
   'tableCell',
 ]
 
+// Export for unit test
+export const getValidMarkDownLinkString = (isMarkdown, compiledResponse) => {
+  if (isMarkdown && compiledResponse) {
+  // Search the text starting with [ with :// and ends with ]
+    return compiledResponse
+  }
+
+  return null
+}
+
 const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
   const respond = safeStringValue(content)
 
@@ -66,6 +76,7 @@ const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
         rel='noopener noreferrer'>{props.children}
       </a>)
   }
+  const markDownResponse = getValidMarkDownLinkString(isMarkdown, compiledResponse)
 
   return (
     <div style={style} className={'RecastAppText CaiAppText'}>
@@ -73,8 +84,7 @@ const Text = ({ content, style, isMarkdown, readOnlyMode }) => {
         <ReactMarkdown
           plugins={[gfm]}
           renderers={{ link: LinkRenderer }}
-          allowedTypes={allowedMarkdownTypes}
-        >{compiledResponse}
+          allowedTypes={allowedMarkdownTypes}>{markDownResponse}
         </ReactMarkdown>
       ) : (
         compiledResponse
