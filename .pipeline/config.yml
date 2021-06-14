@@ -6,6 +6,7 @@ general:
   whitesourceProductToken: '2cb973cbfa874f47b07a0adc60e0cee431c14992f6484b90a2b6d0073e8ef695'
   whitesourceUserTokenCredentialsId: 'Whitesource_UserKey'
   sapPiperDownloadCredentialsId: 'd9e23346-ab04-4c23-add9-409af338fdab'
+  acknowledgeDeprecatedStepUsage: true
 steps:
   setVersion:
     buildTool: 'npm'
