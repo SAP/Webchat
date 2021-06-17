@@ -51,7 +51,7 @@ describe('<Button>', () => {
   })
   it('handle render invalid url', () => {
     const wrapper = mount(createButton({ value: 'Testing', title: 'Url', type: 'web_url' }, false))
-    expect(wrapper.find('a').exists()).to.equal(false)
+    expect(wrapper.find('a').exists()).to.equal(true)
     wrapper.unmount()
   })
   it('should render phone', () => {

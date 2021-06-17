@@ -25,7 +25,7 @@ describe('<Picture>', () => {
         preferences={preferences} />
     )
     expect(wrapper.find('Picture').exists()).to.equal(true)
-    expect(wrapper.find('img').exists()).to.equal(false)
+    expect(wrapper.find('img').exists()).to.equal(true)
     wrapper.unmount()
   })
 })
