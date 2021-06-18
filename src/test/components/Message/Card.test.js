@@ -10,11 +10,12 @@ describe('<Card>', () => {
     const wrapper = mount(
       <Card
         isLastMessage
-        content={{ title: 'Title', imageUrl: 'badurl' }}
+        // eslint-disable-next-line no-script-url
+        content={{ title: 'Title', imageUrl: 'javascript:alert(document.domain)' }}
         preferences={preferences}
         onClick={() => { /* */ }} />
     )
-    expect(wrapper.find('img').exists()).to.equal(true)
+    expect(wrapper.find('img').exists()).to.equal(false)
     wrapper.unmount()
   })
 
