@@ -18,13 +18,9 @@
     "testHtml": "MOCHA_TEST=true nyc --reporter=html --report-dir coverage/html mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/mocha.xml 'src/**/*.test.js'",
     "coverage": "nyc report --cache false --reporter=html --report-dir coverage/html",
     "coverage:clover": "nyc report --cache false --reporter=clover --report-dir coverage/clover",
-    //&& sudo chown -R 1000:999 coverage/clover",
     "coverage:cobertura": "nyc report --cache false --reporter=cobertura --report-dir coverage/cobertura", 
-    //&& sudo chown -R 1000:999 coverage/cobertura",
     "coverage:html": "nyc report --cache false --reporter=html --report-dir coverage/html",
-    //&& sudo chown -R 1000:999 coverage/html",
     "coverage:lcov": "nyc report --cache false --reporter=lcov --report-dir coverage/lcov"
-    //&& sudo chown -R 1000:999 coverage/lcov"
   },
   "keywords": [],
   "author": "",
