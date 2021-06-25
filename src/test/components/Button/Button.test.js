@@ -50,7 +50,8 @@ describe('<Button>', () => {
     wrapper.unmount()
   })
   it('handle render invalid url', () => {
-    const wrapper = mount(createButton({ value: 'Testing', title: 'Url', type: 'web_url' }, false))
+    // eslint-disable-next-line no-script-url
+    const wrapper = mount(createButton({ value: 'javascript:alert(document.domain)', title: 'Url', type: 'web_url' }, false))
     expect(wrapper.find('a').exists()).to.equal(false)
     wrapper.unmount()
   })

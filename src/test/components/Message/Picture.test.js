@@ -21,7 +21,8 @@ describe('<Picture>', () => {
     const wrapper = mount(
       <Picture
         isLastMessage
-        content={'badimage'}
+        // eslint-disable-next-line no-script-url
+        content={'javascript:alert(document.domain)'}
         preferences={preferences} />
     )
     expect(wrapper.find('Picture').exists()).to.equal(true)
