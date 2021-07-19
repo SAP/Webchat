@@ -45,7 +45,7 @@ pipeline {
                     post {
                         always {
                             archiveArtifacts artifacts: '**/eslint.jslint.xml', allowEmptyArchive: true
-                             checksPublishResults script: this, eslint: [
+                             publishCheckResults script: this, eslint: [
                                 active: true,
                                 archive: true,
                                 pattern: '**/eslint.jslint.xml',
