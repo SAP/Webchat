@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library(['piper-lib', 'piper-lib-os']) _
+@Library(['piper-lib@1.104.0', 'piper-lib-os']) _
 
 def qualityBadge = addEmbeddableBadgeConfiguration(id: "quality", subject: "Quality")
 def testsBadge = addEmbeddableBadgeConfiguration(id: "tests", subject: "Tests")
@@ -35,7 +35,7 @@ pipeline {
                         script {
                             qualityBadge.setStatus('running')
                         }
-                        durationMeasure(script: this, measurementName: 'eslint_duration') {
+                        measureDuration(script: this, measurementName: 'eslint_duration') {
                             executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:10.15.1-alpine-build-1') {
                                 sh "npm install"
                                 sh "npm run lint"
