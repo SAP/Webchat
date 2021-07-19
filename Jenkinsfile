@@ -35,7 +35,7 @@ pipeline {
                         script {
                             qualityBadge.setStatus('running')
                         }
-                        measureDuration(script: this, measurementName: 'eslint_duration') {
+                        durationMeasure(script: this, measurementName: 'eslint_duration') {
                             executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:10.15.1-alpine-build-1') {
                                 sh "npm install"
                                 sh "npm run lint"
