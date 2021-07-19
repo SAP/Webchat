@@ -4,6 +4,7 @@ import axios from 'axios'
 import { pathOr, propOr } from 'ramda'
 
 let lastProcessed = null
+let createdConversation = false
 
 function waitforTime (milisec) {
   return new Promise(resolve => { setTimeout(resolve, milisec) })
@@ -26,8 +27,7 @@ const delayBetweenMessages = async (messages, dispatch) => {
     if (lastMessageId !== msg.id) {
     // If there is a delay in this message wait before showing the next message.
       const messageDelay = pathOr(0, ['attachment', 'delay'], msg) * 1000
-      const delay = messageDelay
-      await waitforTime(delay)
+      await waitforTime(messageDelay)
     }
   }
 }
@@ -54,7 +54,8 @@ export default store => next => action => {
 
   return axios(options)
     .then(res => {
-      const isFirstCall = propOr(null, 'last_message_id', query) === null
+      createdConversation = createdConversation || prefix === 'POLL_MESSAGES'
+      const isFirstCall = propOr(null, 'last_message_id', query) === null && !createdConversation
       if (prefix === 'POLL_MESSAGES' && !isFirstCall) {
         const messages = pathOr([], ['data', 'results', 'messages'], res)
         delayBetweenMessages(messages, dispatch)
