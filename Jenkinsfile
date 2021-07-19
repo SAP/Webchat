@@ -35,8 +35,8 @@ pipeline {
                         script {
                             qualityBadge.setStatus('running')
                         }
-                        measureDuration(script: this, measurementName: 'eslint_duration') {
-                            executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:10.15.1-alpine-build-1') {
+                        durationMeasure(script: this, measurementName: 'eslint_duration') {
+                            dockerExecute(script: this, dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:10.15.1-alpine-build-1') {
                                 sh "npm install"
                                 sh "npm run lint"
                             }
@@ -45,7 +45,7 @@ pipeline {
                     post {
                         always {
                             archiveArtifacts artifacts: '**/eslint.jslint.xml', allowEmptyArchive: true
-                             publishCheckResults script: this, eslint: [
+                             checksPublishResults script: this, eslint: [
                                 active: true,
                                 archive: true,
                                 pattern: '**/eslint.jslint.xml',
@@ -56,8 +56,8 @@ pipeline {
                 }
                 stage('npm audit') {
                     steps {
-                        measureDuration(script: this, measurementName: 'npmaudit_duration') {
-                            executeDocker(dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:10.15.1-alpine-build-1') {
+                        durationMeasure(script: this, measurementName: 'npmaudit_duration') {
+                            dockerExecute(script: this, dockerImage: 'docker.wdf.sap.corp:50001/com.sap.cai/node-dev:10.15.1-alpine-build-1') {
                                 withEnv(["NPM_CONFIG_PREFIX=${env.WORKSPACE}/.npm-global"]) {
                                     sh "npm i -g npm-audit-html"
                                     sh "npm i -g npm@6.12.0"
@@ -72,7 +72,7 @@ pipeline {
                     post {
                         always {
                             archiveArtifacts artifacts: "**/npm-audit.json", allowEmptyArchive: true
-                            publishTestResults script: this, html: [
+                            testsPublishResults script: this, html: [
                                 active: true,
                                 allowEmpty: true,
                                 archive: true,
@@ -120,14 +120,14 @@ pipeline {
                    }
                    checkout scm
                    setupPipelineEnvironment script: this
-                   measureDuration(script: this, measurementName: 'tests_duration') {
+                   durationMeasure(script: this, measurementName: 'tests_duration') {
                        sh 'npm run testHtml && npm run coverage:clover && npm run coverage:cobertura && npm run coverage:lcov && npm run coverage:html'
                    }
                }
             }
             post {
                always {
-                   publishTestResults(
+                   testsPublishResults(
                        script: this,
                        junit: [
                            active:true,
@@ -190,6 +190,7 @@ pipeline {
                 anyOf {
                     branch 'PR-*'
                     branch 'master'
+                    branch 'fix_use-new-piper'
                 }
             }
             steps {
@@ -202,9 +203,9 @@ pipeline {
                         def package_json = readJSON file: 'package.json'
                         env.VERSION_TXT = package_json['version']
                     }
-                    measureDuration(script: this, measurementName: 'sonarqube_pr_voter_duration') {
-                        setVersion script:this, commitVersion: false
-                        stashFiles(script: this) {
+                    durationMeasure(script: this, measurementName: 'sonarqube_pr_voter_duration') {
+                        artifactPrepareVersion script:this, commitVersion: false
+                        pipelineStashFiles(script: this) {
                             sonarExecuteScan(script: this, isVoter: true, projectVersion: "${env.VERSION_TXT}", instance: 'SAP_EE_sonar', githubTokenCredentialsId: 'sonarqube_voter')
                         }
                     }
@@ -258,14 +259,14 @@ pipeline {
                       }
                       checkout scm
                       setupPipelineEnvironment script: this
-                      measureDuration(script: this, measurementName: 'xmake_build_duration') {
+                      durationMeasure(script: this, measurementName: 'xmake_build_duration') {
                         script {
                             if (env.BRANCH_NAME == 'master') {
                                 env.XMAKEBUILDQUALITY = 'Milestone'
-                                setVersion script: this, versioningTemplate: '${version}-${timestamp}'
+                                artifactPrepareVersion script: this, versioningTemplate: '${version}-${timestamp}'
                             }
                         }
-                        stashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
+                        pipelineStashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
                             executeBuild script: this, buildType: 'xMakeStage', xMakeBuildQuality: env.XMAKEBUILDQUALITY
                             executeBuild script: this, buildType: 'xMakePromote', xMakeBuildQuality: env.XMAKEBUILDQUALITY
                         }
@@ -320,7 +321,7 @@ pipeline {
 //            }
 //            checkout scm
 //            setupPipelineEnvironment script: this
-//            measureDuration(script: this, measurementName: 'docker_build_duration') {
+//            durationMeasure(script: this, measurementName: 'docker_build_duration') {
 //                build job: '/SAP-Conversational-AI-Docker/ML-CAI-assistantui-web/master', parameters: [string(name: 'ARTIFACT_VERSION', value: globalPipelineEnvironment.getArtifactVersion()), string(name: 'XMAKE_BUILD_QUALITY', value: env.XMAKEBUILDQUALITY)], wait: false
 //            }
 //        }
@@ -358,7 +359,7 @@ pipeline {
                 anyOf {
                     //branch 'PR-*'
                     branch 'master'
-                    branch 'fx_piper_methods'
+                    branch 'fix_use-new-piper'
                 }
             }
             steps {
@@ -369,7 +370,7 @@ pipeline {
                     }
                     checkout scm
                     setupPipelineEnvironment script: this
-                    measureDuration(script: this, measurementName: 'checkmarx_duration') {
+                    durationMeasure(script: this, measurementName: 'checkmarx_duration') {
                         checkmarxExecuteScan script: this
                     }
                 }
@@ -407,7 +408,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'PR-*'
-                    branch 'fx_piper_methods'
+                    branch 'fix_use-new-piper'
                 }
             }
             steps {
@@ -420,8 +421,8 @@ pipeline {
                         script {
                             whiteSourceBadge.setStatus('running')
                         }
-                        stashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
-                            measureDuration(script: this, measurementName: 'whitesource_duration') {
+                        pipelineStashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
+                            durationMeasure(script: this, measurementName: 'whitesource_duration') {
                                 whitesourceExecuteScan script: this, scanType: 'npm', whitesourceProjectNames: ['ml-cai-webchat - current']
                             }
                         }
@@ -462,7 +463,7 @@ pipeline {
                     // Always run for release and hotfix
                     branch 'master'
                     branch 'PR-*'
-                    branch 'fx_piper_methods'
+                    branch 'fix_use-new-piper'
                 }
             }
             steps {
@@ -475,8 +476,8 @@ pipeline {
                         script {
                           ppmsBadge.setStatus('running')
                         }
-                        stashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
-                            measureDuration(script: this, measurementName: 'ppms_duration') {
+                        pipelineStashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
+                            durationMeasure(script: this, measurementName: 'ppms_duration') {
                                 sapCheckPPMSCompliance script: this, scanType: 'whitesource', whitesourceProjectNames: ['ml-cai-webchat - current']
                             }
 
@@ -526,7 +527,7 @@ pipeline {
                 echo e.getMessage()
               }
           }
-          sendNotificationMail script: this
+          mailSendNotification script: this
           cleanWs()
         }
         failure {
