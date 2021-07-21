@@ -267,8 +267,8 @@ pipeline {
                             }
                         }
                         pipelineStashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
-                            executeBuild script: this, buildType: 'xMakeStage', xMakeBuildQuality: env.XMAKEBUILDQUALITY
-                            executeBuild script: this, buildType: 'xMakePromote', xMakeBuildQuality: env.XMAKEBUILDQUALITY
+                            executeBuild script: this, gitCommitId: commonPipelineEnvironment.gitCommitId, buildType: 'xMakeStage', xMakeBuildQuality: env.XMAKEBUILDQUALITY
+                            executeBuild script: this, gitCommitId: commonPipelineEnvironment.gitCommitId, buildType: 'xMakePromote', xMakeBuildQuality: env.XMAKEBUILDQUALITY
                         }
                       }
                     }
