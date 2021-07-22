@@ -424,7 +424,9 @@ class Chat extends Component {
           conversationId,
           lastMessageId,
         )
-        shouldPoll = waitTime === 0
+        // Handle the case where waitTime is null
+        const waitingTime = typeof waitTime === 'number' ? waitTime : 0
+        shouldPoll = waitingTime === 0
         shouldWaitXseconds = waitTime > 0
         numberCallsWithoutAnyMessages = this._deteremNumberCallsWithoutAnyMessages(numberCallsWithoutAnyMessages, shouldWaitXseconds, messages)
         timeToSleep = waitTime * 1000
