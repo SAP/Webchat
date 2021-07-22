@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library(['piper-lib@1.104.0', 'piper-lib-os']) _
+@Library(['piper-lib', 'piper-lib-os']) _
 
 def qualityBadge = addEmbeddableBadgeConfiguration(id: "quality", subject: "Quality")
 def testsBadge = addEmbeddableBadgeConfiguration(id: "tests", subject: "Tests")
