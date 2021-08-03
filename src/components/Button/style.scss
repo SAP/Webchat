@@ -11,6 +11,8 @@
     opacity: 0.5;
     cursor: text;
   }
+
+  overflow-wrap: break-word;
 }
 
 .RecastApp, .CaiApp {
@@ -27,4 +29,8 @@
   &:hover {
     text-decoration: none;
   }
+
+// .RecastApp .RecastAppButton, .RecastApp .RecastAppButton-Link, .RecastApp .CaiApp .CaiAppButton-Link, .CaiApp .RecastApp .CaiAppButton-Link, .CaiApp .CaiAppButton, .CaiApp .RecastApp .RecastAppButton-Link, .RecastApp .CaiApp .RecastAppButton-Link, .CaiApp .CaiAppButton-Link {
+//   overflow-wrap: break-word;
+// }
 }
