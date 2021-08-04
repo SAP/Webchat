@@ -352,7 +352,11 @@
 
     &--text {
       padding: 0.4rem;
-
+      overflow: hidden;
+      word-wrap: break-word;
+      word-break: break-word;
+      overflow-wrap: break-word;
+  
       &-title {
         font-weight: bold;
       }
