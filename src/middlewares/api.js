@@ -54,7 +54,7 @@ export default store => next => action => {
 
   return axios(options)
     .then(res => {
-      createdConversation = createdConversation || prefix === 'POLL_MESSAGES'
+      createdConversation = createdConversation || prefix === 'CREATE_CONVERSATION'
       const isFirstCall = propOr(null, 'last_message_id', query) === null && !createdConversation
       if (prefix === 'POLL_MESSAGES' && !isFirstCall) {
         const messages = pathOr([], ['data', 'results', 'messages'], res)
