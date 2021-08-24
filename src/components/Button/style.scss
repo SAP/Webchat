@@ -6,6 +6,11 @@
 
   font-weight: bold;
   color: cornflowerblue;
+  
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
 
   &--ReadOnly {
     opacity: 0.5;

@@ -101,7 +101,6 @@ class Live extends Component {
       lastMessage
       && (sendMessagePromiseCondition || pollMessageCondition)
       && !lastMessage.retry
-      && !lastMessage.isSending
       && showTyping
     )
 

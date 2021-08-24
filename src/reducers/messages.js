@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 import uniqWith from 'ramda/es/uniqWith'
 import propOr from 'ramda/es/propOr'
+import { ascend, prop, sortWith } from 'ramda'
 
 const initialState = []
 
@@ -24,6 +25,14 @@ export default handleActions(
       return uniqWith((m1, m2) => m1.id === m2.id, [...state, ...payload.messages])
     },
 
+    ADD_MESSAGES: (state, { payload }) => {
+      // Avoid adding duplicate messages
+      const uniqMessageList = uniqWith((m1, m2) => m1.id === m2.id, [...state, ...payload.messages])
+      // Handle the case where the messages are dispatched out of order,
+      // make sure the list is sorted by the received at date
+      return sortWith([ascend(prop('receivedAt'))], uniqMessageList)
+    },
+
     GET_MESSAGES_SUCCESS: (state, { payload: messages }) => {
       return messages
     },
@@ -41,7 +50,7 @@ export default handleActions(
         conversationExpired: status === 404
           && typeof errorMessage === 'string'
           && errorMessage.includes('Conversation not found'),
-       id: `local-${Math.random()}`,
+        id: `local-${Math.random()}`,
         participant: {
           isBot: false,
         },

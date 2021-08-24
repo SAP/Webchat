@@ -1,6 +1,6 @@
 {
   "name": "webchat",
-  "version": "1.4.35",
+  "version": "1.4.37",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -17,16 +17,16 @@
     "test": "MOCHA_TEST=true nyc --reporter=text mocha 'src/**/*.test.js'",
     "testHtml": "MOCHA_TEST=true nyc --reporter=html --report-dir coverage/html mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/mocha.xml 'src/**/*.test.js'",
     "coverage": "nyc report --cache false --reporter=html --report-dir coverage/html",
-    "coverage:clover": "nyc report --cache false --reporter=clover --report-dir coverage/clover && chown -R 1000:999 coverage/clover",
-    "coverage:cobertura": "nyc report --cache false --reporter=cobertura --report-dir coverage/cobertura && chown -R 1000:999 coverage/cobertura",
-    "coverage:html": "nyc report --cache false --reporter=html --report-dir coverage/html && chown -R 1000:999 coverage/html",
-    "coverage:lcov": "nyc report --cache false --reporter=lcov --report-dir coverage/lcov && chown -R 1000:999 coverage/lcov"
+    "coverage:clover": "nyc report --cache false --reporter=clover --report-dir coverage/clover",
+    "coverage:cobertura": "nyc report --cache false --reporter=cobertura --report-dir coverage/cobertura", 
+    "coverage:html": "nyc report --cache false --reporter=html --report-dir coverage/html",
+    "coverage:lcov": "nyc report --cache false --reporter=lcov --report-dir coverage/lcov"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@braintree/sanitize-url": "^2.1.0",
+    "@braintree/sanitize-url": "^5.0.2",
     "@types/react": "16.8.22",
     "axios": "^0.21.1",
     "classnames": "^2.2.5",
@@ -59,6 +59,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.6.0",
     "@babel/runtime": "7.12.1",
+    "@ui5/cli": "^2.0.2",
     "autoprefixer": "^9.6.1",
     "axios-mock-adapter": "^1.18.2",
     "babel-eslint": "^10.0.3",
@@ -78,7 +79,6 @@
     "eslint-config-zavatta-react": "^2.3.1",
     "eslint-plugin-react": "^7.14.3",
     "esm": "^3.2.25",
-    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "ignore-styles": "^5.0.1",
     "jsdom": "^16.4.0",
@@ -99,7 +99,7 @@
     "sass-loader": "^7.3.1",
     "sinon": "^9.2.4",
     "style-loader": "^1.0.0",
-    "uglifyjs-webpack-plugin": "^1.1.2",
+    "uglifyjs-webpack-plugin": "2.2.0",
     "webpack": "^4.41.2",
     "webpack-dev-server": "^3.9.0"
   },
