@@ -146,7 +146,7 @@ class App extends Component {
 
     return (
       <div className='RecastApp CaiApp'>
-        <link
+        {/* <link
           rel='stylesheet'
           type='text/css'
           href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css'
@@ -155,7 +155,7 @@ class App extends Component {
           rel='stylesheet'
           type='text/css'
           href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'
-        />
+        /> */}
 
         <Expander
           show={!expanded}
