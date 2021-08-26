@@ -12,6 +12,13 @@ import Picture from './Picture'
 import Carousel from './Carousel'
 import QuickReplies from './QuickReplies'
 
+// Replace cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css with ours to avoid
+// conflicts in other slick.scss
+import './styleMin.scss'
+
+// Replace cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css with ours to avoid
+// conflicts in other slick.scss
+import './styleThemeMin.scss'
 import './style.scss'
 
 class Message extends Component {
