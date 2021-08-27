@@ -253,7 +253,7 @@ class Chat extends Component {
     }
 
     this.setState(
-      prevState => ({ messages: concat(prevState.messages, [backendMessage]) }),
+      prevState => ({ messages: concat(prevState.messages, [userMessage || backendMessage]) }),
       () => {
         if (sendMessagePromise) {
           addUserMessage(userMessage || backendMessage)
