@@ -8,6 +8,7 @@ import { safeArrayOfItem } from 'helpers'
 import Menu from 'components/Menu'
 import MenuSVG from 'components/svgs/menu'
 import './style.scss'
+import { pathOr } from 'ramda'
 
 // Number of minimum char to display the char limit.
 const NUMBER_BEFORE_LIMIT = 5
@@ -106,7 +107,8 @@ class Input extends Component {
   }
   sendMenuSelection = (action) => {
     if (action) {
-      this.props.onSubmit(action)
+      const title = pathOr(null, ['content', 'title'], action)
+      this.props.onSubmit(action, title)
     }
   }
   sendMessage = () => {
@@ -115,7 +117,7 @@ class Input extends Component {
       this.props.onSubmit({
         type: 'text',
         content,
-      })
+      }, content.title)
       this.setState(prevState => {
         const historyValues = append(content, prevState.historyValues)
         const previousValues = append('', historyValues)
