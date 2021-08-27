@@ -10,6 +10,7 @@ import { truncate, safeArrayOfItem, validButtonContent } from 'helpers'
 
 import Text from './Text'
 import { PrevArrow, NextArrow } from 'components/arrows'
+import { pathOr } from 'ramda'
 
 class QuickReplies extends Component {
   state = {
@@ -46,8 +47,9 @@ class QuickReplies extends Component {
     // then one button click has already been send.
     if (!this._messageHasAlreadyBeenSent) {
       this._messageHasAlreadyBeenSent = true
+      const title = pathOr(null, ['content', 'title'], message)
       this.setState({ displayQuickReplies: false }, () => {
-        this.props.sendMessage(message)
+        this.props.sendMessage(message, title)
       })
     }
   }
