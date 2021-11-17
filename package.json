@@ -6,7 +6,7 @@
   "scripts": {
     "clean:lib": "rm -rf lib",
     "clean:dist": "rm -rf dist",
-    "build": "npm run clean:dist && NODE_ENV=production npm run build:webpack",
+    "build": "npm run clean:dist && cross-env NODE_ENV=production npm run build:webpack",
     "build:webpack": "node bin/build.js",
     "build:js": "babel src -d lib",
     "start": "npm run clean:dist && node bin/build-dev",
@@ -18,7 +18,7 @@
     "testHtml": "MOCHA_TEST=true nyc --reporter=html --report-dir coverage/html mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/mocha.xml 'src/**/*.test.js'",
     "coverage": "nyc report --cache false --reporter=html --report-dir coverage/html",
     "coverage:clover": "nyc report --cache false --reporter=clover --report-dir coverage/clover",
-    "coverage:cobertura": "nyc report --cache false --reporter=cobertura --report-dir coverage/cobertura", 
+    "coverage:cobertura": "nyc report --cache false --reporter=cobertura --report-dir coverage/cobertura",
     "coverage:html": "nyc report --cache false --reporter=html --report-dir coverage/html",
     "coverage:lcov": "nyc report --cache false --reporter=lcov --report-dir coverage/lcov"
   },
@@ -70,6 +70,7 @@
     "chai": "^4.3.0",
     "chai-like": "^1.1.1",
     "core-js": "3.3.6",
+    "cross-env": "^7.0.3",
     "css-loader": "^3.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
