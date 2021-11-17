@@ -28,13 +28,19 @@ const token = script.getAttribute('token')
 const readOnly = false
 if (root && channelId && token) {
   getChannelPreferences(channelId, token).then(preferences => {
+    const scriptPreferences = {
+      ...preferences,
+      ...script.dataset,
+    }
+
     ReactDOM.render(
       <Provider store={store}>
         <App
           token={token}
           channelId={channelId}
-          preferences={preferences}
-          readOnlyMode={readOnly} />
+          preferences={scriptPreferences}
+          readOnlyMode={readOnly}
+        />
       </Provider>,
       root,
     )
