@@ -110,7 +110,12 @@ class App extends Component {
   }
 
   toggleChat = () => {
-    const { clearMessagesOnclose } = this.props
+    const { clearMessagesOnclose, preferences } = this.props
+
+    if (preferences.doHistoryBack === 'true') {
+      return window.history.back()
+    }
+
     this.setState({ expanded: !this.state.expanded }, () => {
       if (!this.state.expanded && clearMessagesOnclose) {
         this.clearMessages()
