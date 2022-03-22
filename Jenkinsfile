@@ -423,7 +423,7 @@ pipeline {
                         }
                         pipelineStashFiles(script: this, stashIncludes: [buildDescriptor: '**/**']) {
                             durationMeasure(script: this, measurementName: 'whitesource_duration') {
-                                whitesourceExecuteScan script: this, scanType: 'npm', whitesourceProjectNames: ['ml-cai-webchat - current']
+                                whitesourceExecuteScan script: this, scanType: 'unifiedAgent', whitesourceProjectNames: ['ml-cai-webchat - current']
                             }
                         }
                     }
