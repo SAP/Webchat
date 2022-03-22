@@ -28,7 +28,7 @@
   "dependencies": {
     "@braintree/sanitize-url": "^6.0.0",
     "@types/react": "16.8.22",
-    "axios": "^0.21.1",
+    "axios": "^0.26.1",
     "classnames": "^2.2.5",
     "prop-types": "^15.8.1",
     "query-string": "^5.0.1",
