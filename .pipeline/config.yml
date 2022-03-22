@@ -26,7 +26,7 @@ steps:
       - pom.xml
     productVersion: 'current'
     customScanVersion: 'current'
-     projectName: 'ml-cai-webchat'
+    projectName: 'ml-cai-webchat'
     verbose: true
     stashContent:
       - buildDescriptor
