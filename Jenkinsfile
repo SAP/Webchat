@@ -12,7 +12,7 @@ def ppmsBadge = addEmbeddableBadgeConfiguration(id: "ppms", subject: "PPMS")
 def FAILED_STAGE = 'Unknown'
 
 pipeline {
-    agent { label 'cai' }
+    agent { label 'slave-b' }
     options { skipDefaultCheckout() }
 
     stages {
