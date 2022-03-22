@@ -27,6 +27,12 @@ steps:
     productVersion: 'current'
     customScanVersion: 'current'
     verbose: true
+    stashContent:
+      - buildDescriptor
+      - checkmarx
+      - classFiles
+      - opensourceConfiguration
+      - tests
   sapCheckPPMSCompliance:
     ppmsCredentialsId: 'PPMSCompliance'
     ppmsChangeRequestUpload: true
