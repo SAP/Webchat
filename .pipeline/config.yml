@@ -20,10 +20,13 @@ steps:
     preset: '100154'
   whitesourceExecuteScan:
     securityVulnerabilities: true
-    buildTool: 'npm'
-    buildDescriptorFile: './package.json'
-    buildDescriptorExcludeList: ['**/codymini/**/package.json']
-    whitesourceProductVersion: 'current'
+    #buildTool: 'npm'
+    buildDescriptorFile: 'package.json'
+    buildDescriptorExcludeList: 
+      - pom.xml
+    productVersion: 'current'
+    customScanVersion: 'current'
+    verbose: true
   sapCheckPPMSCompliance:
     ppmsCredentialsId: 'PPMSCompliance'
     ppmsChangeRequestUpload: true
