@@ -1,6 +1,6 @@
 {
   "name": "ml-cai-webchat",
-  "version": "1.4.44",
+  "version": "1.4.45",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "prettier": "prettier --write \"src/**/*.?(js|?(s)css|json)\" && eslint --fix src",
     "lint": "if [ -n \"$HUDSON_URL\" ]; then echo '!! linter crashes and is therefore not executed on xmake !!'; else eslint src; fi",
     "test": "MOCHA_TEST=true nyc --reporter=text mocha 'src/**/*.test.js'",
-    "testHtml": "MOCHA_TEST=true nyc --reporter=html --report-dir coverage/html mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/mocha.xml 'src/**/*.test.js'",
+    "testHtml": "MOCHA_TEST=true nyc --reporter=html --report-dir coverage/html mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/mocha.xml -exit --timeout 30000 'src/**/*.test.js'",
     "coverage": "nyc report --cache false --reporter=html --report-dir coverage/html",
     "coverage:clover": "nyc report --cache false --reporter=clover --report-dir coverage/clover",
     "coverage:cobertura": "nyc report --cache false --reporter=cobertura --report-dir coverage/cobertura",
