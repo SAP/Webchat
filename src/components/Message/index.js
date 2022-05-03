@@ -55,7 +55,7 @@ class Message extends Component {
     }
     return false
   }
-  render () {
+  render () { // NOSONAR
     const {
       message,
       isLastMessage,
@@ -79,8 +79,12 @@ class Message extends Component {
       botMessageBackgroundColor,
     } = preferences
     const { displayIcon, attachment, participant } = message
-    const { type, content, error, title, markdown } = attachment
+    const { type, content, error, title, markdown, welcomeMessage } = attachment
     const { exceptionThrownOccurred } = this.state
+    if (welcomeMessage) {
+      // Ignore unsupported WebClient feature
+      return null
+    }
     if (exceptionThrownOccurred) {
       const style = {
         color: '#fff',
