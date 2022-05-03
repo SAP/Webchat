@@ -23,6 +23,10 @@ const delayBetweenMessages = async (messages, dispatch) => {
     dispatch({ type: 'SET_CREDENTIALS', payload: { lastMessageId } })
   }
   for (const msg of messages) {
+    if (pathOr(false, ['attachment', 'welcomeMessage'], msg)) {
+      // Skip new WebClient welcome messages Feature
+      continue
+    }
     dispatch({ type: 'ADD_MESSAGES', payload: { messages: [msg] } })
     if (lastMessageId !== msg.id) {
     // If there is a delay in this message wait before showing the next message.
