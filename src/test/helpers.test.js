@@ -7,6 +7,7 @@ import {
   validButtonContent,
   getCredentialsFromLocalStorage,
   storeCredentialsToLocalStorage,
+  isLastMessageForIndex,
 } from 'helpers'
 
 describe('Test the helper utilities', () => {
@@ -49,6 +50,47 @@ describe('Test the helper utilities', () => {
     assert.isNull(getCredentialsFromLocalStorage('channelId', 1, { firstname: 'test', lastname: 'user' }))
     storeCredentialsToLocalStorage('chatId', 'conversation-Id', 1, 'channelId')
     assert.propertyVal(getCredentialsFromLocalStorage('channelId', 1), 'conversationId', 'conversation-Id')
+  })
+
+  it('Test isLastMessageForIndex', () => {
+    assert.isFalse(isLastMessageForIndex(), 'No params')
+    assert.isFalse(isLastMessageForIndex([], 0), 'Empty params')
+    assert.isTrue(isLastMessageForIndex([{ attachment: { type: 'foo' } }], 0), 'Is first and last message')
+    assert.isTrue(isLastMessageForIndex([
+      { attachment: { type: 'quickreplies' } },
+      { attachment: { type: 'client_data' } }], 0), 'Has client data after the first (quickreplies) message')
+    assert.isFalse(isLastMessageForIndex([
+      { attachment: { type: 'text' } },
+      { attachment: { type: 'client_data' } }], 0), 'Has client data after the first (text) message')
+    assert.isTrue(isLastMessageForIndex([
+      { attachment: { type: 'quickreplies' } },
+      { attachment: { type: 'client_data' } },
+      { attachment: { type: 'client_data' } }], 0), 'Has two client data after the first message')
+    assert.isTrue(isLastMessageForIndex([{ attachment: { type: 'client_data' } }], 0), 'Only client data')
+    assert.isFalse(isLastMessageForIndex([
+      { attachment: { type: 'quickreplies' } },
+      { attachment: { type: 'client_data' } },
+      { attachment: { type: 'buttons' } },
+      { attachment: { type: 'client_data' } }], 0))
+    assert.isFalse(isLastMessageForIndex([
+      { attachment: { type: 'quickreplies' } },
+      { attachment: { type: 'client_data' } },
+      { attachment: { type: 'buttons' } },
+      { attachment: { type: 'client_data' } }], 1))
+    assert.isTrue(isLastMessageForIndex([
+      { attachment: { type: 'button' } },
+      { attachment: { type: 'client_data' } },
+      { attachment: { type: 'quickreplies' } },
+      { attachment: { type: 'client_data' } }], 2))
+    assert.isFalse(isLastMessageForIndex([
+      { attachment: { type: 'quickreplies' } },
+      { attachment: { type: 'buttons' } }], 2), 'Test out of range')
+    assert.isTrue(isLastMessageForIndex([
+      { attachment: { type: 'quickreplies' } },
+      { attachment: { type: 'buttons' } }], 1), 'Test is Last one')
+    assert.isFalse(isLastMessageForIndex([
+      { attachment: { type: 'quickreplies' } },
+      { attachment: { type: 'buttons' } }], 0), 'Is First message')
   })
 })
 
