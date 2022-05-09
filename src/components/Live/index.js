@@ -6,6 +6,8 @@ import pathOr from 'ramda/es/pathOr'
 import Message from 'components/Message'
 import IsTyping from 'components/Message/isTyping'
 
+import { isLastMessageForIndex } from 'helpers'
+
 import './style.scss'
 
 class Live extends Component {
@@ -119,7 +121,7 @@ class Live extends Component {
               sendMessage={sendMessage}
               preferences={preferences}
               onImageLoaded={this.onImageLoaded}
-              isLastMessage={messages.length === index + 1}
+              isLastMessage={isLastMessageForIndex(messages, index)}
               retry={message.retry}
               isSending={message.isSending}
               onRetrySendMessage={() => onRetrySendMessage(message)}
