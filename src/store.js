@@ -1,9 +1,8 @@
-import reducers from 'reducers'
-import thunk from 'redux-thunk'
-import { createStore, applyMiddleware, compose } from 'redux'
-
 import api from 'middlewares/api'
+import { configureStore } from '@reduxjs/toolkit'
+import reducer from 'reducers/reducer'
 
-const middlewares = [thunk, api]
-
-export const store = compose(applyMiddleware(...middlewares))(createStore)(reducers)
+export const store = configureStore({
+  reducer,
+  middleware: [api],
+})
