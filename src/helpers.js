@@ -1,4 +1,6 @@
 
+import { pathOr } from 'ramda'
+
 export const truncate = (string, length) => {
 //  console.assert(typeof string === 'string', `Expected a 'string', but got a type:'${typeof string}' - '${string}'`)
   if (typeof string === 'string') {
@@ -83,12 +85,40 @@ export const safeStringValue = (content) => {
 export const validButtonContent = (element) => {
   if (element) {
     const { type, value, title } = element
-    const data = {
+    return {
       type,
       value,
       title,
     }
-    return data
   }
   return element
+}
+
+/**
+ * Determine if this is the last message, ignore client_data types at the end
+ * Only for Quick Replies
+ *
+ * @param {*} messages - Array of messages
+ * @param {*} index - 0 based index to test
+ * @returns
+ */
+export const isLastMessageForIndex = (messages, index) => {
+  if (messages && Array.isArray(messages) && index >= 0 && index < messages.length) {
+    let offset = 1
+    const messageType = pathOr('', ['attachment', 'type'], messages[index])
+    if (typeof messageType === 'string' && messageType.toLowerCase() === 'quickreplies') {
+      // Loop back to the index to adjust offset for client_data type
+      for (let i = messages.length - 1; i > index; --i) {
+        const type = pathOr('', ['attachment', 'type'], messages[i])
+        if (typeof type === 'string' && type.toLowerCase() === 'client_data') {
+          offset++
+        } else {
+          break
+        }
+      }
+    }
+    // Should return true if this is a type client_data and is the last message?
+    return messages.length === index + offset
+  }
+  return false // No messsage or index out of range
 }
