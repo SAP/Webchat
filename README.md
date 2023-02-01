@@ -9,6 +9,8 @@
 <a href="https://slack.cai.tools.sap/">💬 Questions / Comments? Join the discussion on our community Slack channel!</a>
 </div>
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/Webchat)](https://api.reuse.software/info/github.com/SAP/Webchat)
+
 ## What is a webchat?
 
 The SAP Conversational AI webchat let you **deploy a bot straight to a website**. It will be embed and available through a chat box on your pages.
