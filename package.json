@@ -60,7 +60,7 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/register": "^7.17.7",
     "@babel/runtime": "7.12.1",
-    "@ui5/cli": "^2.14.9",
+    "@ui5/cli": "^3.0.7",
     "autoprefixer": "^9.8.8",
     "axios-mock-adapter": "^1.18.2",
     "babel-eslint": "^10.0.3",
