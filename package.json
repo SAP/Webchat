@@ -89,7 +89,7 @@
     "mocha-junit-reporter": "^2.0.2",
     "mock-local-storage": "^1.1.22",
     "nock": "^13.2.4",
-    "node-sass": "^4.14.0",
+    "node-sass": "^9.0.0",
     "nyc": "^15.1.0",
     "path": "^0.12.7",
     "postcss-loader": "^3.0.0",
